@@ -1,0 +1,464 @@
+defmodule ExStreamClient.Users do
+  @moduledoc "
+	Modules for interacting with the `users` group of OpenAI APIs
+
+	API Reference: https://platform.openai.com/docs/api-reference/users
+	"
+  require Logger
+  @doc ~S"
+	Reactivate user
+	
+	### Required Arguments:
+		- `user_id`
+		- `payload`: ReactivateUserRequest
+	"
+  @spec reactivate_user(String.t(), ExStreamClient.Model.ReactivateUserRequest.t()) ::
+          {:ok, ExStreamClient.Model.ReactivateUserResponse.t()} | {:error, any()}
+  def reactivate_user(user_id, payload) do
+    request_opts =
+      [url: "/api/v2/users/#{user_id}/reactivate", method: :post, params: %{}] ++ [json: payload]
+
+    r =
+      Req.new(request_opts)
+      |> Req.Request.append_response_steps(
+        decode: fn {request, response} ->
+          case response.status do
+            code when code in 200..299 ->
+              parsed =
+                Codegen.convert_response(
+                  {:ok, response.body},
+                  {:component, "ReactivateUserResponse"}
+                )
+
+              {request, %{response | body: {:ok, parsed}}}
+
+            _ ->
+              {request, response}
+          end
+        end
+      )
+
+    ExStreamClient.Client.request(r)
+  end
+
+  @doc ~S"
+	Upsert users
+	
+	### Required Arguments:
+		- `payload`: UpdateUsersRequest
+	"
+  @spec update_users(ExStreamClient.Model.UpdateUsersRequest.t()) ::
+          {:ok, ExStreamClient.Model.UpdateUsersResponse.t()} | {:error, any()}
+  def update_users(payload) do
+    request_opts = [url: "/api/v2/users", method: :post, params: %{}] ++ [json: payload]
+
+    r =
+      Req.new(request_opts)
+      |> Req.Request.append_response_steps(
+        decode: fn {request, response} ->
+          case response.status do
+            code when code in 200..299 ->
+              parsed =
+                Codegen.convert_response(
+                  {:ok, response.body},
+                  {:component, "UpdateUsersResponse"}
+                )
+
+              {request, %{response | body: {:ok, parsed}}}
+
+            _ ->
+              {request, response}
+          end
+        end
+      )
+
+    ExStreamClient.Client.request(r)
+  end
+
+  @doc ~S"
+	Partially update user
+	
+	### Required Arguments:
+		- `payload`: UpdateUsersPartialRequest
+	"
+  @spec update_users_partial(ExStreamClient.Model.UpdateUsersPartialRequest.t()) ::
+          {:ok, ExStreamClient.Model.UpdateUsersResponse.t()} | {:error, any()}
+  def update_users_partial(payload) do
+    request_opts = [url: "/api/v2/users", method: :patch, params: %{}] ++ [json: payload]
+
+    r =
+      Req.new(request_opts)
+      |> Req.Request.append_response_steps(
+        decode: fn {request, response} ->
+          case response.status do
+            code when code in 200..299 ->
+              parsed =
+                Codegen.convert_response(
+                  {:ok, response.body},
+                  {:component, "UpdateUsersResponse"}
+                )
+
+              {request, %{response | body: {:ok, parsed}}}
+
+            _ ->
+              {request, response}
+          end
+        end
+      )
+
+    ExStreamClient.Client.request(r)
+  end
+
+  @doc ~S"
+	Query users
+	
+	### Required Arguments:
+		
+	### Optional Arguments:
+		- `payload`: QueryUsersPayload
+	"
+  @spec query_users() :: {:ok, ExStreamClient.Model.QueryUsersResponse.t()} | {:error, any()}
+  @spec query_users(payload: ExStreamClient.Model.QueryUsersPayload.t()) ::
+          {:ok, ExStreamClient.Model.QueryUsersResponse.t()} | {:error, any()}
+  def query_users(opts \\ []) do
+    request_opts =
+      [
+        url: "/api/v2/users",
+        method: :get,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:payload]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+          |> Map.new()
+      ] ++ []
+
+    r =
+      Req.new(request_opts)
+      |> Req.Request.append_response_steps(
+        decode: fn {request, response} ->
+          case response.status do
+            code when code in 200..299 ->
+              parsed =
+                Codegen.convert_response({:ok, response.body}, {:component, "QueryUsersResponse"})
+
+              {request, %{response | body: {:ok, parsed}}}
+
+            _ ->
+              {request, response}
+          end
+        end
+      )
+
+    ExStreamClient.Client.request(r)
+  end
+
+  @doc ~S"
+	Delete Users
+	
+	### Required Arguments:
+		- `payload`: DeleteUsersRequest
+	"
+  @spec delete_users(ExStreamClient.Model.DeleteUsersRequest.t()) ::
+          {:ok, ExStreamClient.Model.DeleteUsersResponse.t()} | {:error, any()}
+  def delete_users(payload) do
+    request_opts = [url: "/api/v2/users/delete", method: :post, params: %{}] ++ [json: payload]
+
+    r =
+      Req.new(request_opts)
+      |> Req.Request.append_response_steps(
+        decode: fn {request, response} ->
+          case response.status do
+            code when code in 200..299 ->
+              parsed =
+                Codegen.convert_response(
+                  {:ok, response.body},
+                  {:component, "DeleteUsersResponse"}
+                )
+
+              {request, %{response | body: {:ok, parsed}}}
+
+            _ ->
+              {request, response}
+          end
+        end
+      )
+
+    ExStreamClient.Client.request(r)
+  end
+
+  @doc ~S"
+	Reactivate users
+	
+	### Required Arguments:
+		- `payload`: ReactivateUsersRequest
+	"
+  @spec reactivate_users(ExStreamClient.Model.ReactivateUsersRequest.t()) ::
+          {:ok, ExStreamClient.Model.ReactivateUsersResponse.t()} | {:error, any()}
+  def reactivate_users(payload) do
+    request_opts =
+      [url: "/api/v2/users/reactivate", method: :post, params: %{}] ++ [json: payload]
+
+    r =
+      Req.new(request_opts)
+      |> Req.Request.append_response_steps(
+        decode: fn {request, response} ->
+          case response.status do
+            code when code in 200..299 ->
+              parsed =
+                Codegen.convert_response(
+                  {:ok, response.body},
+                  {:component, "ReactivateUsersResponse"}
+                )
+
+              {request, %{response | body: {:ok, parsed}}}
+
+            _ ->
+              {request, response}
+          end
+        end
+      )
+
+    ExStreamClient.Client.request(r)
+  end
+
+  @doc ~S"
+	Export user
+	
+	### Required Arguments:
+		- `user_id`
+	"
+  @spec export_user(String.t()) ::
+          {:ok, ExStreamClient.Model.ExportUserResponse.t()} | {:error, any()}
+  def export_user(user_id) do
+    request_opts = [url: "/api/v2/users/#{user_id}/export", method: :get, params: %{}] ++ []
+
+    r =
+      Req.new(request_opts)
+      |> Req.Request.append_response_steps(
+        decode: fn {request, response} ->
+          case response.status do
+            code when code in 200..299 ->
+              parsed =
+                Codegen.convert_response({:ok, response.body}, {:component, "ExportUserResponse"})
+
+              {request, %{response | body: {:ok, parsed}}}
+
+            _ ->
+              {request, response}
+          end
+        end
+      )
+
+    ExStreamClient.Client.request(r)
+  end
+
+  @doc ~S"
+	Deactivate users
+	
+	### Required Arguments:
+		- `payload`: DeactivateUsersRequest
+	"
+  @spec deactivate_users(ExStreamClient.Model.DeactivateUsersRequest.t()) ::
+          {:ok, ExStreamClient.Model.DeactivateUsersResponse.t()} | {:error, any()}
+  def deactivate_users(payload) do
+    request_opts =
+      [url: "/api/v2/users/deactivate", method: :post, params: %{}] ++ [json: payload]
+
+    r =
+      Req.new(request_opts)
+      |> Req.Request.append_response_steps(
+        decode: fn {request, response} ->
+          case response.status do
+            code when code in 200..299 ->
+              parsed =
+                Codegen.convert_response(
+                  {:ok, response.body},
+                  {:component, "DeactivateUsersResponse"}
+                )
+
+              {request, %{response | body: {:ok, parsed}}}
+
+            _ ->
+              {request, response}
+          end
+        end
+      )
+
+    ExStreamClient.Client.request(r)
+  end
+
+  @doc ~S"
+	Restore users
+	
+	### Required Arguments:
+		- `payload`: RestoreUsersRequest
+	"
+  @spec restore_users(ExStreamClient.Model.RestoreUsersRequest.t()) ::
+          {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  def restore_users(payload) do
+    request_opts = [url: "/api/v2/users/restore", method: :post, params: %{}] ++ [json: payload]
+
+    r =
+      Req.new(request_opts)
+      |> Req.Request.append_response_steps(
+        decode: fn {request, response} ->
+          case response.status do
+            code when code in 200..299 ->
+              parsed = Codegen.convert_response({:ok, response.body}, {:component, "Response"})
+              {request, %{response | body: {:ok, parsed}}}
+
+            _ ->
+              {request, response}
+          end
+        end
+      )
+
+    ExStreamClient.Client.request(r)
+  end
+
+  @doc ~S"
+	Unblock user
+	
+	### Required Arguments:
+		- `payload`: UnblockUsersRequest
+	"
+  @spec unblock_users(ExStreamClient.Model.UnblockUsersRequest.t()) ::
+          {:ok, ExStreamClient.Model.UnblockUsersResponse.t()} | {:error, any()}
+  def unblock_users(payload) do
+    request_opts = [url: "/api/v2/users/unblock", method: :post, params: %{}] ++ [json: payload]
+
+    r =
+      Req.new(request_opts)
+      |> Req.Request.append_response_steps(
+        decode: fn {request, response} ->
+          case response.status do
+            code when code in 200..299 ->
+              parsed =
+                Codegen.convert_response(
+                  {:ok, response.body},
+                  {:component, "UnblockUsersResponse"}
+                )
+
+              {request, %{response | body: {:ok, parsed}}}
+
+            _ ->
+              {request, response}
+          end
+        end
+      )
+
+    ExStreamClient.Client.request(r)
+  end
+
+  @doc ~S"
+	Block user
+	
+	### Required Arguments:
+		- `payload`: BlockUsersRequest
+	"
+  @spec block_users(ExStreamClient.Model.BlockUsersRequest.t()) ::
+          {:ok, ExStreamClient.Model.BlockUsersResponse.t()} | {:error, any()}
+  def block_users(payload) do
+    request_opts = [url: "/api/v2/users/block", method: :post, params: %{}] ++ [json: payload]
+
+    r =
+      Req.new(request_opts)
+      |> Req.Request.append_response_steps(
+        decode: fn {request, response} ->
+          case response.status do
+            code when code in 200..299 ->
+              parsed =
+                Codegen.convert_response({:ok, response.body}, {:component, "BlockUsersResponse"})
+
+              {request, %{response | body: {:ok, parsed}}}
+
+            _ ->
+              {request, response}
+          end
+        end
+      )
+
+    ExStreamClient.Client.request(r)
+  end
+
+  @doc ~S"
+	Get list of blocked Users
+	
+	### Required Arguments:
+		
+	### Optional Arguments:
+		- `user_id`
+	"
+  @spec get_blocked_users() ::
+          {:ok, ExStreamClient.Model.GetBlockedUsersResponse.t()} | {:error, any()}
+  @spec get_blocked_users(user_id: String.t()) ::
+          {:ok, ExStreamClient.Model.GetBlockedUsersResponse.t()} | {:error, any()}
+  def get_blocked_users(opts \\ []) do
+    request_opts =
+      [
+        url: "/api/v2/users/block",
+        method: :get,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:user_id]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+          |> Map.new()
+      ] ++ []
+
+    r =
+      Req.new(request_opts)
+      |> Req.Request.append_response_steps(
+        decode: fn {request, response} ->
+          case response.status do
+            code when code in 200..299 ->
+              parsed =
+                Codegen.convert_response(
+                  {:ok, response.body},
+                  {:component, "GetBlockedUsersResponse"}
+                )
+
+              {request, %{response | body: {:ok, parsed}}}
+
+            _ ->
+              {request, response}
+          end
+        end
+      )
+
+    ExStreamClient.Client.request(r)
+  end
+
+  @doc ~S"
+	Deactivate user
+	
+	### Required Arguments:
+		- `user_id`
+		- `payload`: DeactivateUserRequest
+	"
+  @spec deactivate_user(String.t(), ExStreamClient.Model.DeactivateUserRequest.t()) ::
+          {:ok, ExStreamClient.Model.DeactivateUserResponse.t()} | {:error, any()}
+  def deactivate_user(user_id, payload) do
+    request_opts =
+      [url: "/api/v2/users/#{user_id}/deactivate", method: :post, params: %{}] ++ [json: payload]
+
+    r =
+      Req.new(request_opts)
+      |> Req.Request.append_response_steps(
+        decode: fn {request, response} ->
+          case response.status do
+            code when code in 200..299 ->
+              parsed =
+                Codegen.convert_response(
+                  {:ok, response.body},
+                  {:component, "DeactivateUserResponse"}
+                )
+
+              {request, %{response | body: {:ok, parsed}}}
+
+            _ ->
+              {request, response}
+          end
+        end
+      )
+
+    ExStreamClient.Client.request(r)
+  end
+end

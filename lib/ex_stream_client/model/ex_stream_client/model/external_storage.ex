@@ -1,0 +1,36 @@
+defmodule ExStreamClient.Model.ExternalStorage do
+  @moduledoc "Schema representing a ExternalStorage"
+  use ExStreamClient.Jason
+
+  defstruct [
+    :path,
+    :storage_name,
+    :abs_account_name,
+    :abs_client_id,
+    :abs_client_secret,
+    :abs_tenant_id,
+    :bucket,
+    :gcs_credentials,
+    :s3_api_key,
+    :s3_custom_endpoint,
+    :s3_region,
+    :s3_secret_key,
+    :storage_type
+  ]
+
+  @type t :: %__MODULE__{
+          path: String.t() | nil,
+          storage_name: String.t() | nil,
+          abs_account_name: String.t() | nil,
+          abs_client_id: String.t() | nil,
+          abs_client_secret: String.t() | nil,
+          abs_tenant_id: String.t() | nil,
+          bucket: String.t() | nil,
+          gcs_credentials: String.t() | nil,
+          s3_api_key: String.t() | nil,
+          s3_custom_endpoint: String.t() | nil,
+          s3_region: String.t() | nil,
+          s3_secret_key: String.t() | nil,
+          storage_type: integer() | nil
+        }
+end

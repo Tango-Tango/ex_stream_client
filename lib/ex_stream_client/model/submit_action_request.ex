@@ -4,13 +4,13 @@ defmodule ExStreamClient.Model.SubmitActionRequest do
   @enforce_keys [:action_type, :item_id]
   defstruct [
     :user,
+    :delete_reaction,
+    :delete_message,
+    :unban,
+    :ban,
     :custom,
     :mark_reviewed,
-    :delete_message,
     :delete_activity,
-    :delete_reaction,
-    :ban,
-    :unban,
     :delete_user,
     :user_id,
     :action_type,
@@ -19,13 +19,13 @@ defmodule ExStreamClient.Model.SubmitActionRequest do
 
   @type t :: %__MODULE__{
           user: ExStreamClient.Model.UserRequest.t() | nil,
+          delete_reaction: ExStreamClient.Model.DeleteReactionRequest.t() | nil,
+          delete_message: ExStreamClient.Model.DeleteMessageRequest.t() | nil,
+          unban: ExStreamClient.Model.UnbanActionRequest.t() | nil,
+          ban: ExStreamClient.Model.BanActionRequest.t() | nil,
           custom: ExStreamClient.Model.CustomActionRequest.t() | nil,
           mark_reviewed: ExStreamClient.Model.MarkReviewedRequest.t() | nil,
-          delete_message: ExStreamClient.Model.DeleteMessageRequest.t() | nil,
           delete_activity: ExStreamClient.Model.DeleteActivityRequest.t() | nil,
-          delete_reaction: ExStreamClient.Model.DeleteReactionRequest.t() | nil,
-          ban: ExStreamClient.Model.BanActionRequest.t() | nil,
-          unban: ExStreamClient.Model.UnbanActionRequest.t() | nil,
           delete_user: ExStreamClient.Model.DeleteUserRequest.t() | nil,
           user_id: String.t() | nil,
           action_type:

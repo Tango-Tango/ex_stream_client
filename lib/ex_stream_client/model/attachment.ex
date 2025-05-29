@@ -4,9 +4,9 @@ defmodule ExStreamClient.Model.Attachment do
   @enforce_keys [:custom]
   defstruct [
     :type,
-    :title,
     :text,
     :fields,
+    :title,
     :color,
     :fallback,
     :custom,
@@ -32,9 +32,9 @@ defmodule ExStreamClient.Model.Attachment do
 
   @type t :: %__MODULE__{
           type: String.t() | nil,
-          title: String.t() | nil,
           text: String.t() | nil,
           fields: [ExStreamClient.Model.Field.t()] | nil,
+          title: String.t() | nil,
           color: String.t() | nil,
           fallback: String.t() | nil,
           custom: map(),

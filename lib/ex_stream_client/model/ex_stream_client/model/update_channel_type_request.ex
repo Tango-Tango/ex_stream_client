@@ -1,0 +1,68 @@
+defmodule ExStreamClient.Model.UpdateChannelTypeRequest do
+  @moduledoc "Schema representing a UpdateChannelTypeRequest"
+  use ExStreamClient.Jason
+  @enforce_keys [:automod, :automod_behavior, :max_message_length]
+  defstruct [
+    :permissions,
+    :search,
+    :replies,
+    :commands,
+    :reactions,
+    :automod,
+    :automod_behavior,
+    :max_message_length,
+    :allowed_flag_reasons,
+    :automod_thresholds,
+    :blocklist,
+    :blocklist_behavior,
+    :blocklists,
+    :connect_events,
+    :custom_events,
+    :grants,
+    :mark_messages_pending,
+    :mutes,
+    :partition_size,
+    :partition_ttl,
+    :polls,
+    :push_notifications,
+    :quotes,
+    :read_events,
+    :reminders,
+    :skip_last_msg_update_for_system_msgs,
+    :typing_events,
+    :uploads,
+    :url_enrichment
+  ]
+
+  @type t :: %__MODULE__{
+          permissions: [ExStreamClient.Model.PolicyRequest.t()] | nil,
+          search: boolean() | nil,
+          replies: boolean() | nil,
+          commands: [String.t()] | nil,
+          reactions: boolean() | nil,
+          automod: :AI | :simple | :disabled,
+          automod_behavior: :shadow_block | :block | :flag,
+          max_message_length: integer(),
+          allowed_flag_reasons: [String.t()] | nil,
+          automod_thresholds: ExStreamClient.Model.Thresholds.t() | nil,
+          blocklist: String.t() | nil,
+          blocklist_behavior: (:shadow_block | :block | :flag) | nil,
+          blocklists: [ExStreamClient.Model.BlockListOptions.t()] | nil,
+          connect_events: boolean() | nil,
+          custom_events: boolean() | nil,
+          grants: map() | nil,
+          mark_messages_pending: boolean() | nil,
+          mutes: boolean() | nil,
+          partition_size: integer() | nil,
+          partition_ttl: String.t() | nil,
+          polls: boolean() | nil,
+          push_notifications: boolean() | nil,
+          quotes: boolean() | nil,
+          read_events: boolean() | nil,
+          reminders: boolean() | nil,
+          skip_last_msg_update_for_system_msgs: boolean() | nil,
+          typing_events: boolean() | nil,
+          uploads: boolean() | nil,
+          url_enrichment: boolean() | nil
+        }
+end

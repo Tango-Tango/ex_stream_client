@@ -1,0 +1,12 @@
+defmodule ExStreamClient.Model.RingSettingsResponse do
+  @moduledoc "Schema representing a RingSettingsResponse"
+  use ExStreamClient.Jason
+  @enforce_keys [:auto_cancel_timeout_ms, :incoming_call_timeout_ms, :missed_call_timeout_ms]
+  defstruct [:auto_cancel_timeout_ms, :incoming_call_timeout_ms, :missed_call_timeout_ms]
+
+  @type t :: %__MODULE__{
+          auto_cancel_timeout_ms: integer(),
+          incoming_call_timeout_ms: integer(),
+          missed_call_timeout_ms: integer()
+        }
+end

@@ -1,0 +1,13 @@
+defmodule ExStreamClient.Model.EgressRTMPResponse do
+  @moduledoc "Schema representing a EgressRTMPResponse"
+  use ExStreamClient.Jason
+  @enforce_keys [:name, :started_at]
+  defstruct [:name, :started_at, :stream_key, :stream_url]
+
+  @type t :: %__MODULE__{
+          name: String.t(),
+          started_at: float(),
+          stream_key: String.t() | nil,
+          stream_url: String.t() | nil
+        }
+end

@@ -1,0 +1,7 @@
+defmodule ExStreamClient.Model.UnmuteResponse do
+  @moduledoc "Schema representing a UnmuteResponse"
+  use ExStreamClient.Jason
+  @enforce_keys [:duration]
+  defstruct [:duration, :non_existing_users]
+  @type t :: %__MODULE__{duration: String.t(), non_existing_users: [String.t()] | nil}
+end

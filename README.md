@@ -25,3 +25,8 @@ Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_do
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at <https://hexdocs.pm/ex_stream_client>.
 
+
+## Acknowledgements
+
+This project includes code adapted from [ex_openai](https://github.com/dvcrn/ex_openai),
+which is licensed under the MIT License. We thought the idea to generate client code via the Elixir AST was a great one!

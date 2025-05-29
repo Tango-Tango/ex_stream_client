@@ -1,6 +1,12 @@
-# ExStreamClient
+# ex_stream_client
 
-**TODO: Add description**
+A client for [Stream](https://getstream.io) REST APIs in Elixir - auto generated from their [OpenAPI specification](https://github.com/GetStream/protocol).
+
+## Features
+
+- Auto-generated from the OpenAPI specification
+- Fully typed and documented APIs
+- Utilizes [Req](https://github.com/wojtekmach/req) for HTTP requests by default.
 
 ## Installation
 

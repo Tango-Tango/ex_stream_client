@@ -3,35 +3,35 @@ defmodule ExStreamClient.Model.ChannelStateResponseFields do
   use ExStreamClient.Jason
   @enforce_keys [:members, :messages, :pinned_messages, :threads]
   defstruct [
-    :hidden,
-    :messages,
-    :threads,
-    :read,
-    :membership,
     :channel,
-    :members,
-    :pinned_messages,
     :draft,
+    :hidden,
     :hide_messages_before,
+    :members,
+    :membership,
+    :messages,
     :pending_messages,
+    :pinned_messages,
     :push_preferences,
+    :read,
+    :threads,
     :watcher_count,
     :watchers
   ]
 
   @type t :: %__MODULE__{
-          hidden: boolean() | nil,
-          messages: [ExStreamClient.Model.MessageResponse.t()],
-          threads: [ExStreamClient.Model.ThreadStateResponse.t()],
-          read: [ExStreamClient.Model.ReadStateResponse.t()] | nil,
-          membership: ExStreamClient.Model.ChannelMember.t() | nil,
           channel: ExStreamClient.Model.ChannelResponse.t() | nil,
-          members: [ExStreamClient.Model.ChannelMember.t()],
-          pinned_messages: [ExStreamClient.Model.MessageResponse.t()],
           draft: ExStreamClient.Model.DraftResponse.t() | nil,
+          hidden: boolean() | nil,
           hide_messages_before: float() | nil,
+          members: [ExStreamClient.Model.ChannelMember.t()],
+          membership: ExStreamClient.Model.ChannelMember.t() | nil,
+          messages: [ExStreamClient.Model.MessageResponse.t()],
           pending_messages: [ExStreamClient.Model.PendingMessageResponse.t()] | nil,
+          pinned_messages: [ExStreamClient.Model.MessageResponse.t()],
           push_preferences: ExStreamClient.Model.ChannelPushPreferences.t() | nil,
+          read: [ExStreamClient.Model.ReadStateResponse.t()] | nil,
+          threads: [ExStreamClient.Model.ThreadStateResponse.t()],
           watcher_count: integer() | nil,
           watchers: [ExStreamClient.Model.UserResponse.t()] | nil
         }

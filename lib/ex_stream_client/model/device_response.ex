@@ -3,24 +3,24 @@ defmodule ExStreamClient.Model.DeviceResponse do
   use ExStreamClient.Jason
   @enforce_keys [:created_at, :id, :push_provider, :user_id]
   defstruct [
-    :disabled,
-    :id,
     :created_at,
-    :user_id,
-    :push_provider,
+    :disabled,
     :disabled_reason,
+    :id,
+    :push_provider,
     :push_provider_name,
+    :user_id,
     :voip
   ]
 
   @type t :: %__MODULE__{
-          disabled: boolean() | nil,
-          id: String.t(),
           created_at: float(),
-          user_id: String.t(),
-          push_provider: String.t(),
+          disabled: boolean() | nil,
           disabled_reason: String.t() | nil,
+          id: String.t(),
+          push_provider: String.t(),
           push_provider_name: String.t() | nil,
+          user_id: String.t(),
           voip: boolean() | nil
         }
 end

@@ -2,6 +2,6 @@ defmodule ExStreamClient.Model.DeleteCommandResponse do
   @moduledoc "Schema representing a DeleteCommandResponse"
   use ExStreamClient.Jason
   @enforce_keys [:duration, :name]
-  defstruct [:name, :duration]
-  @type t :: %__MODULE__{name: String.t(), duration: String.t()}
+  defstruct [:duration, :name]
+  @type t :: %__MODULE__{duration: String.t(), name: String.t()}
 end

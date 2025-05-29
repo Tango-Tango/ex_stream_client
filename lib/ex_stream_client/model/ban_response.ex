@@ -2,15 +2,15 @@ defmodule ExStreamClient.Model.BanResponse do
   @moduledoc "Schema representing a BanResponse"
   use ExStreamClient.Jason
   @enforce_keys [:created_at]
-  defstruct [:reason, :user, :shadow, :channel, :created_at, :expires, :banned_by]
+  defstruct [:banned_by, :channel, :created_at, :expires, :reason, :shadow, :user]
 
   @type t :: %__MODULE__{
-          reason: String.t() | nil,
-          user: ExStreamClient.Model.UserResponse.t() | nil,
-          shadow: boolean() | nil,
+          banned_by: ExStreamClient.Model.UserResponse.t() | nil,
           channel: ExStreamClient.Model.ChannelResponse.t() | nil,
           created_at: float(),
           expires: float() | nil,
-          banned_by: ExStreamClient.Model.UserResponse.t() | nil
+          reason: String.t() | nil,
+          shadow: boolean() | nil,
+          user: ExStreamClient.Model.UserResponse.t() | nil
         }
 end

@@ -2,14 +2,14 @@ defmodule ExStreamClient.Model.QueryReviewQueueResponse do
   @moduledoc "Schema representing a QueryReviewQueueResponse"
   use ExStreamClient.Jason
   @enforce_keys [:action_config, :duration, :items, :stats]
-  defstruct [:next, :prev, :items, :stats, :duration, :action_config]
+  defstruct [:action_config, :duration, :items, :next, :prev, :stats]
 
   @type t :: %__MODULE__{
+          action_config: map(),
+          duration: String.t(),
+          items: [ExStreamClient.Model.ReviewQueueItemResponse.t()],
           next: String.t() | nil,
           prev: String.t() | nil,
-          items: [ExStreamClient.Model.ReviewQueueItemResponse.t()],
-          stats: map(),
-          duration: String.t(),
-          action_config: map()
+          stats: map()
         }
 end

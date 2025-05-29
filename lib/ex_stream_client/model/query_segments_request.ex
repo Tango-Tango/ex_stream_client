@@ -2,13 +2,13 @@ defmodule ExStreamClient.Model.QuerySegmentsRequest do
   @moduledoc "Schema representing a QuerySegmentsRequest"
   use ExStreamClient.Jason
   @enforce_keys [:filter]
-  defstruct [:next, :prev, :sort, :filter, :limit]
+  defstruct [:filter, :limit, :next, :prev, :sort]
 
   @type t :: %__MODULE__{
+          filter: map(),
+          limit: integer() | nil,
           next: String.t() | nil,
           prev: String.t() | nil,
-          sort: [ExStreamClient.Model.SortParamRequest.t()] | nil,
-          filter: map(),
-          limit: integer() | nil
+          sort: [ExStreamClient.Model.SortParamRequest.t()] | nil
         }
 end

@@ -14,26 +14,26 @@ defmodule ExStreamClient.Model.MessageChangeSet do
     :text
   ]
   defstruct [
-    :silent,
-    :text,
-    :pin,
-    :custom,
     :attachments,
+    :custom,
     :html,
     :mentioned_user_ids,
     :mml,
-    :quoted_message_id
+    :pin,
+    :quoted_message_id,
+    :silent,
+    :text
   ]
 
   @type t :: %__MODULE__{
-          silent: boolean(),
-          text: boolean(),
-          pin: boolean(),
-          custom: boolean(),
           attachments: boolean(),
+          custom: boolean(),
           html: boolean(),
           mentioned_user_ids: boolean(),
           mml: boolean(),
-          quoted_message_id: boolean()
+          pin: boolean(),
+          quoted_message_id: boolean(),
+          silent: boolean(),
+          text: boolean()
         }
 end

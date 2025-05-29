@@ -3,22 +3,22 @@ defmodule ExStreamClient.Model.SendMessageRequest do
   use ExStreamClient.Jason
   @enforce_keys [:message]
   defstruct [
+    :force_moderation,
+    :keep_channel_hidden,
     :message,
     :pending,
-    :skip_push,
-    :skip_enrich_url,
     :pending_message_metadata,
-    :force_moderation,
-    :keep_channel_hidden
+    :skip_enrich_url,
+    :skip_push
   ]
 
   @type t :: %__MODULE__{
+          force_moderation: boolean() | nil,
+          keep_channel_hidden: boolean() | nil,
           message: ExStreamClient.Model.MessageRequest.t(),
           pending: boolean() | nil,
-          skip_push: boolean() | nil,
-          skip_enrich_url: boolean() | nil,
           pending_message_metadata: map() | nil,
-          force_moderation: boolean() | nil,
-          keep_channel_hidden: boolean() | nil
+          skip_enrich_url: boolean() | nil,
+          skip_push: boolean() | nil
         }
 end

@@ -2,13 +2,13 @@ defmodule ExStreamClient.Model.UpdateExternalStorageResponse do
   @moduledoc "Schema representing a UpdateExternalStorageResponse"
   use ExStreamClient.Jason
   @enforce_keys [:bucket, :duration, :name, :path, :type]
-  defstruct [:name, :type, :path, :duration, :bucket]
+  defstruct [:bucket, :duration, :name, :path, :type]
 
   @type t :: %__MODULE__{
-          name: String.t(),
-          type: :abs | :gcs | :s3,
-          path: String.t(),
+          bucket: String.t(),
           duration: String.t(),
-          bucket: String.t()
+          name: String.t(),
+          path: String.t(),
+          type: :abs | :gcs | :s3
         }
 end

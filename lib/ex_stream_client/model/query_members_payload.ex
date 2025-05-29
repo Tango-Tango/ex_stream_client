@@ -2,17 +2,17 @@ defmodule ExStreamClient.Model.QueryMembersPayload do
   @moduledoc "Schema representing a QueryMembersPayload"
   use ExStreamClient.Jason
   @enforce_keys [:filter_conditions, :type]
-  defstruct [:id, :offset, :type, :user, :sort, :limit, :user_id, :members, :filter_conditions]
+  defstruct [:filter_conditions, :id, :limit, :members, :offset, :sort, :type, :user, :user_id]
 
   @type t :: %__MODULE__{
+          filter_conditions: map(),
           id: String.t() | nil,
+          limit: integer() | nil,
+          members: [ExStreamClient.Model.ChannelMember.t()] | nil,
           offset: integer() | nil,
+          sort: [ExStreamClient.Model.SortParamRequest.t()] | nil,
           type: String.t(),
           user: ExStreamClient.Model.UserRequest.t() | nil,
-          sort: [ExStreamClient.Model.SortParamRequest.t()] | nil,
-          limit: integer() | nil,
-          user_id: String.t() | nil,
-          members: [ExStreamClient.Model.ChannelMember.t()] | nil,
-          filter_conditions: map()
+          user_id: String.t() | nil
         }
 end

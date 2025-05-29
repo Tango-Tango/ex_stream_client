@@ -2,11 +2,11 @@ defmodule ExStreamClient.Model.UnreadCountsChannelType do
   @moduledoc "Schema representing a UnreadCountsChannelType"
   use ExStreamClient.Jason
   @enforce_keys [:channel_count, :channel_type, :unread_count]
-  defstruct [:channel_type, :unread_count, :channel_count]
+  defstruct [:channel_count, :channel_type, :unread_count]
 
   @type t :: %__MODULE__{
+          channel_count: integer(),
           channel_type: String.t(),
-          unread_count: integer(),
-          channel_count: integer()
+          unread_count: integer()
         }
 end

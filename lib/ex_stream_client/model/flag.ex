@@ -3,40 +3,40 @@ defmodule ExStreamClient.Model.Flag do
   use ExStreamClient.Jason
   @enforce_keys [:created_at, :entity_id, :entity_type, :result, :updated_at]
   defstruct [
-    :reason,
-    :type,
-    :user,
-    :result,
-    :labels,
-    :custom,
     :created_at,
-    :updated_at,
-    :review_queue_item_id,
-    :review_queue_item,
+    :custom,
+    :entity_creator_id,
     :entity_id,
     :entity_type,
-    :entity_creator_id,
-    :moderation_payload,
     :is_streamed_content,
-    :moderation_payload_hash
+    :labels,
+    :moderation_payload,
+    :moderation_payload_hash,
+    :reason,
+    :result,
+    :review_queue_item,
+    :review_queue_item_id,
+    :type,
+    :updated_at,
+    :user
   ]
 
   @type t :: %__MODULE__{
-          reason: String.t() | nil,
-          type: String.t() | nil,
-          user: ExStreamClient.Model.User.t() | nil,
-          result: [map()],
-          labels: [String.t()] | nil,
-          custom: map() | nil,
           created_at: float(),
-          updated_at: float(),
-          review_queue_item_id: String.t() | nil,
-          review_queue_item: ExStreamClient.Model.ReviewQueueItem.t() | nil,
+          custom: map() | nil,
+          entity_creator_id: String.t() | nil,
           entity_id: String.t(),
           entity_type: String.t(),
-          entity_creator_id: String.t() | nil,
-          moderation_payload: ExStreamClient.Model.ModerationPayload.t() | nil,
           is_streamed_content: boolean() | nil,
-          moderation_payload_hash: String.t() | nil
+          labels: [String.t()] | nil,
+          moderation_payload: ExStreamClient.Model.ModerationPayload.t() | nil,
+          moderation_payload_hash: String.t() | nil,
+          reason: String.t() | nil,
+          result: [map()],
+          review_queue_item: ExStreamClient.Model.ReviewQueueItem.t() | nil,
+          review_queue_item_id: String.t() | nil,
+          type: String.t() | nil,
+          updated_at: float(),
+          user: ExStreamClient.Model.User.t() | nil
         }
 end

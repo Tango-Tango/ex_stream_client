@@ -2,6 +2,6 @@ defmodule ExStreamClient.Model.UserCustomEventRequest do
   @moduledoc "Schema representing a UserCustomEventRequest"
   use ExStreamClient.Jason
   @enforce_keys [:type]
-  defstruct [:type, :custom]
-  @type t :: %__MODULE__{type: String.t(), custom: map() | nil}
+  defstruct [:custom, :type]
+  @type t :: %__MODULE__{custom: map() | nil, type: String.t()}
 end

@@ -2,10 +2,10 @@ defmodule ExStreamClient.Model.TranscriptionSettings do
   @moduledoc "Schema representing a TranscriptionSettings"
   use ExStreamClient.Jason
   @enforce_keys [:closed_caption_mode, :language, :mode]
-  defstruct [:mode, :language, :closed_caption_mode]
+  defstruct [:closed_caption_mode, :language, :mode]
 
   @type t :: %__MODULE__{
-          mode: :"auto-on" | :disabled | :available,
+          closed_caption_mode: :"auto-on" | :disabled | :available,
           language:
             :sk
             | :sl
@@ -44,6 +44,6 @@ defmodule ExStreamClient.Model.TranscriptionSettings do
             | :fr
             | :en
             | :auto,
-          closed_caption_mode: :"auto-on" | :disabled | :available
+          mode: :"auto-on" | :disabled | :available
         }
 end

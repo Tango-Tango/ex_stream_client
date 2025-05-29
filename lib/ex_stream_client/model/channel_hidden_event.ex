@@ -12,26 +12,26 @@ defmodule ExStreamClient.Model.ChannelHiddenEvent do
     :type
   ]
   defstruct [
-    :type,
-    :user,
     :channel,
-    :created_at,
     :channel_id,
+    :channel_member_count,
     :channel_type,
     :cid,
-    :channel_member_count,
-    :clear_history
+    :clear_history,
+    :created_at,
+    :type,
+    :user
   ]
 
   @type t :: %__MODULE__{
-          type: String.t(),
-          user: ExStreamClient.Model.User.t() | nil,
           channel: ExStreamClient.Model.ChannelResponse.t() | nil,
-          created_at: float(),
           channel_id: String.t(),
+          channel_member_count: integer(),
           channel_type: String.t(),
           cid: String.t(),
-          channel_member_count: integer(),
-          clear_history: boolean()
+          clear_history: boolean(),
+          created_at: float(),
+          type: String.t(),
+          user: ExStreamClient.Model.User.t() | nil
         }
 end

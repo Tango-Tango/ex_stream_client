@@ -3,26 +3,26 @@ defmodule ExStreamClient.Model.PollVote do
   use ExStreamClient.Jason
   @enforce_keys [:created_at, :id, :option_id, :poll_id, :updated_at]
   defstruct [
-    :id,
-    :user,
-    :created_at,
-    :user_id,
-    :updated_at,
-    :poll_id,
-    :option_id,
     :answer_text,
-    :is_answer
+    :created_at,
+    :id,
+    :is_answer,
+    :option_id,
+    :poll_id,
+    :updated_at,
+    :user,
+    :user_id
   ]
 
   @type t :: %__MODULE__{
-          id: String.t(),
-          user: ExStreamClient.Model.User.t() | nil,
-          created_at: float(),
-          user_id: String.t() | nil,
-          updated_at: float(),
-          poll_id: String.t(),
-          option_id: String.t(),
           answer_text: String.t() | nil,
-          is_answer: boolean() | nil
+          created_at: float(),
+          id: String.t(),
+          is_answer: boolean() | nil,
+          option_id: String.t(),
+          poll_id: String.t(),
+          updated_at: float(),
+          user: ExStreamClient.Model.User.t() | nil,
+          user_id: String.t() | nil
         }
 end

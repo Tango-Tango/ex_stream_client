@@ -2,13 +2,13 @@ defmodule ExStreamClient.Model.ImageData do
   @moduledoc "Schema representing a ImageData"
   use ExStreamClient.Jason
   @enforce_keys [:frames, :height, :size, :url, :width]
-  defstruct [:size, :width, :url, :frames, :height]
+  defstruct [:frames, :height, :size, :url, :width]
 
   @type t :: %__MODULE__{
-          size: String.t(),
-          width: String.t(),
-          url: String.t(),
           frames: String.t(),
-          height: String.t()
+          height: String.t(),
+          size: String.t(),
+          url: String.t(),
+          width: String.t()
         }
 end

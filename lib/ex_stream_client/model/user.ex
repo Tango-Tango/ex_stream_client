@@ -3,44 +3,44 @@ defmodule ExStreamClient.Model.User do
   use ExStreamClient.Jason
   @enforce_keys [:banned, :custom, :id, :online, :role, :teams_role]
   defstruct [
-    :id,
-    :role,
-    :language,
-    :custom,
-    :created_at,
-    :updated_at,
+    :ban_expires,
     :banned,
-    :online,
+    :created_at,
+    :custom,
     :deactivated_at,
     :deleted_at,
+    :id,
     :invisible,
+    :language,
     :last_active,
     :last_engaged_at,
+    :online,
     :privacy_settings,
+    :revoke_tokens_issued_before,
+    :role,
     :teams,
     :teams_role,
-    :ban_expires,
-    :revoke_tokens_issued_before
+    :updated_at
   ]
 
   @type t :: %__MODULE__{
-          id: String.t(),
-          role: String.t(),
-          language: String.t() | nil,
-          custom: map(),
-          created_at: float() | nil,
-          updated_at: float() | nil,
+          ban_expires: float() | nil,
           banned: boolean(),
-          online: boolean(),
+          created_at: float() | nil,
+          custom: map(),
           deactivated_at: float() | nil,
           deleted_at: float() | nil,
+          id: String.t(),
           invisible: boolean() | nil,
+          language: String.t() | nil,
           last_active: float() | nil,
           last_engaged_at: float() | nil,
+          online: boolean(),
           privacy_settings: ExStreamClient.Model.PrivacySettings.t() | nil,
+          revoke_tokens_issued_before: float() | nil,
+          role: String.t(),
           teams: [String.t()] | nil,
           teams_role: map(),
-          ban_expires: float() | nil,
-          revoke_tokens_issued_before: float() | nil
+          updated_at: float() | nil
         }
 end

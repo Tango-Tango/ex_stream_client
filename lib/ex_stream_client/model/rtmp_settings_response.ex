@@ -2,11 +2,11 @@ defmodule ExStreamClient.Model.RTMPSettingsResponse do
   @moduledoc "Schema representing a RTMPSettingsResponse"
   use ExStreamClient.Jason
   @enforce_keys [:enabled, :layout, :quality]
-  defstruct [:enabled, :quality, :layout]
+  defstruct [:enabled, :layout, :quality]
 
   @type t :: %__MODULE__{
           enabled: boolean(),
-          quality: String.t(),
-          layout: ExStreamClient.Model.LayoutSettingsResponse.t()
+          layout: ExStreamClient.Model.LayoutSettingsResponse.t(),
+          quality: String.t()
         }
 end

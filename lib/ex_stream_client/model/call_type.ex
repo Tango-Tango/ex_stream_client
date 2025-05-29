@@ -12,26 +12,26 @@ defmodule ExStreamClient.Model.CallType do
     :updated_at
   ]
   defstruct [
-    :name,
-    :created_at,
-    :updated_at,
-    :external_storage,
     :app_pk,
-    :settings,
+    :created_at,
     :enable_live_insights,
+    :external_storage,
+    :name,
+    :notification_settings,
     :pk,
-    :notification_settings
+    :settings,
+    :updated_at
   ]
 
   @type t :: %__MODULE__{
-          name: String.t(),
-          created_at: float(),
-          updated_at: float(),
-          external_storage: String.t(),
           app_pk: integer(),
-          settings: ExStreamClient.Model.CallSettings.t() | nil,
+          created_at: float(),
           enable_live_insights: boolean(),
+          external_storage: String.t(),
+          name: String.t(),
+          notification_settings: ExStreamClient.Model.NotificationSettings.t() | nil,
           pk: integer(),
-          notification_settings: ExStreamClient.Model.NotificationSettings.t() | nil
+          settings: ExStreamClient.Model.CallSettings.t() | nil,
+          updated_at: float()
         }
 end

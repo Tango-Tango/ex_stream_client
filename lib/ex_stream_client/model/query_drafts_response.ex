@@ -2,12 +2,12 @@ defmodule ExStreamClient.Model.QueryDraftsResponse do
   @moduledoc "Schema representing a QueryDraftsResponse"
   use ExStreamClient.Jason
   @enforce_keys [:drafts, :duration]
-  defstruct [:next, :prev, :duration, :drafts]
+  defstruct [:drafts, :duration, :next, :prev]
 
   @type t :: %__MODULE__{
-          next: String.t() | nil,
-          prev: String.t() | nil,
+          drafts: [ExStreamClient.Model.DraftResponse.t()],
           duration: String.t(),
-          drafts: [ExStreamClient.Model.DraftResponse.t()]
+          next: String.t() | nil,
+          prev: String.t() | nil
         }
 end

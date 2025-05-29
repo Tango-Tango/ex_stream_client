@@ -2,16 +2,16 @@ defmodule ExStreamClient.Model.Reaction do
   @moduledoc "Schema representing a Reaction"
   use ExStreamClient.Jason
   @enforce_keys [:created_at, :custom, :message_id, :score, :type, :updated_at]
-  defstruct [:type, :user, :custom, :created_at, :user_id, :updated_at, :message_id, :score]
+  defstruct [:created_at, :custom, :message_id, :score, :type, :updated_at, :user, :user_id]
 
   @type t :: %__MODULE__{
-          type: String.t(),
-          user: ExStreamClient.Model.User.t() | nil,
-          custom: map(),
           created_at: float(),
-          user_id: String.t() | nil,
-          updated_at: float(),
+          custom: map(),
           message_id: String.t(),
-          score: integer()
+          score: integer(),
+          type: String.t(),
+          updated_at: float(),
+          user: ExStreamClient.Model.User.t() | nil,
+          user_id: String.t() | nil
         }
 end

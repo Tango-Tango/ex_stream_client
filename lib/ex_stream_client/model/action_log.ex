@@ -13,30 +13,30 @@ defmodule ExStreamClient.Model.ActionLog do
     :type
   ]
   defstruct [
+    :created_at,
+    :custom,
     :id,
     :reason,
-    :type,
-    :user,
-    :custom,
-    :created_at,
-    :target_user,
     :reporter_type,
+    :review_queue_item,
     :review_queue_item_id,
+    :target_user,
     :target_user_id,
-    :review_queue_item
+    :type,
+    :user
   ]
 
   @type t :: %__MODULE__{
+          created_at: float(),
+          custom: map(),
           id: String.t(),
           reason: String.t(),
-          type: String.t(),
-          user: ExStreamClient.Model.User.t() | nil,
-          custom: map(),
-          created_at: float(),
-          target_user: ExStreamClient.Model.User.t() | nil,
           reporter_type: String.t(),
+          review_queue_item: ExStreamClient.Model.ReviewQueueItem.t() | nil,
           review_queue_item_id: String.t(),
+          target_user: ExStreamClient.Model.User.t() | nil,
           target_user_id: String.t(),
-          review_queue_item: ExStreamClient.Model.ReviewQueueItem.t() | nil
+          type: String.t(),
+          user: ExStreamClient.Model.User.t() | nil
         }
 end

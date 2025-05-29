@@ -3,28 +3,28 @@ defmodule ExStreamClient.Model.QueryThreadsRequest do
   use ExStreamClient.Jason
 
   defstruct [
-    :next,
-    :prev,
-    :user,
-    :sort,
     :filter,
     :limit,
-    :user_id,
     :member_limit,
+    :next,
     :participant_limit,
-    :reply_limit
+    :prev,
+    :reply_limit,
+    :sort,
+    :user,
+    :user_id
   ]
 
   @type t :: %__MODULE__{
-          next: String.t() | nil,
-          prev: String.t() | nil,
-          user: ExStreamClient.Model.UserRequest.t() | nil,
-          sort: [ExStreamClient.Model.SortParamRequest.t()] | nil,
           filter: map() | nil,
           limit: integer() | nil,
-          user_id: String.t() | nil,
           member_limit: integer() | nil,
+          next: String.t() | nil,
           participant_limit: integer() | nil,
-          reply_limit: integer() | nil
+          prev: String.t() | nil,
+          reply_limit: integer() | nil,
+          sort: [ExStreamClient.Model.SortParamRequest.t()] | nil,
+          user: ExStreamClient.Model.UserRequest.t() | nil,
+          user_id: String.t() | nil
         }
 end

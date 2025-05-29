@@ -2,13 +2,13 @@ defmodule ExStreamClient.Model.CampaignStartedEvent do
   @moduledoc "Schema representing a CampaignStartedEvent"
   use ExStreamClient.Jason
   @enforce_keys [:created_at, :custom, :type]
-  defstruct [:type, :custom, :created_at, :received_at, :campaign]
+  defstruct [:campaign, :created_at, :custom, :received_at, :type]
 
   @type t :: %__MODULE__{
-          type: String.t(),
-          custom: map(),
+          campaign: ExStreamClient.Model.CampaignResponse.t() | nil,
           created_at: float(),
+          custom: map(),
           received_at: float() | nil,
-          campaign: ExStreamClient.Model.CampaignResponse.t() | nil
+          type: String.t()
         }
 end

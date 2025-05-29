@@ -2,10 +2,10 @@ defmodule ExStreamClient.Model.QueryMessageFlagsResponse do
   @moduledoc "Schema representing a QueryMessageFlagsResponse"
   use ExStreamClient.Jason
   @enforce_keys [:duration, :flags]
-  defstruct [:flags, :duration]
+  defstruct [:duration, :flags]
 
   @type t :: %__MODULE__{
-          flags: [ExStreamClient.Model.MessageFlagResponse.t()],
-          duration: String.t()
+          duration: String.t(),
+          flags: [ExStreamClient.Model.MessageFlagResponse.t()]
         }
 end

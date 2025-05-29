@@ -2,12 +2,12 @@ defmodule ExStreamClient.Model.QueryCampaignsResponse do
   @moduledoc "Schema representing a QueryCampaignsResponse"
   use ExStreamClient.Jason
   @enforce_keys [:campaigns, :duration]
-  defstruct [:next, :prev, :duration, :campaigns]
+  defstruct [:campaigns, :duration, :next, :prev]
 
   @type t :: %__MODULE__{
-          next: String.t() | nil,
-          prev: String.t() | nil,
+          campaigns: [ExStreamClient.Model.CampaignResponse.t()],
           duration: String.t(),
-          campaigns: [ExStreamClient.Model.CampaignResponse.t()]
+          next: String.t() | nil,
+          prev: String.t() | nil
         }
 end

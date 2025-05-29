@@ -2,13 +2,13 @@ defmodule ExStreamClient.Model.SearchResponse do
   @moduledoc "Schema representing a SearchResponse"
   use ExStreamClient.Jason
   @enforce_keys [:duration, :results]
-  defstruct [:next, :duration, :results, :previous, :results_warning]
+  defstruct [:duration, :next, :previous, :results, :results_warning]
 
   @type t :: %__MODULE__{
-          next: String.t() | nil,
           duration: String.t(),
-          results: [ExStreamClient.Model.SearchResult.t()],
+          next: String.t() | nil,
           previous: String.t() | nil,
+          results: [ExStreamClient.Model.SearchResult.t()],
           results_warning: ExStreamClient.Model.SearchWarning.t() | nil
         }
 end

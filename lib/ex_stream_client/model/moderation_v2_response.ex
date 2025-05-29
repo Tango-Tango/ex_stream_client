@@ -4,9 +4,9 @@ defmodule ExStreamClient.Model.ModerationV2Response do
   @enforce_keys [:action, :original_text]
   defstruct [
     :action,
-    :original_text,
     :blocklist_matched,
     :image_harms,
+    :original_text,
     :platform_circumvented,
     :semantic_filter_matched,
     :text_harms
@@ -14,9 +14,9 @@ defmodule ExStreamClient.Model.ModerationV2Response do
 
   @type t :: %__MODULE__{
           action: String.t(),
-          original_text: String.t(),
           blocklist_matched: String.t() | nil,
           image_harms: [String.t()] | nil,
+          original_text: String.t(),
           platform_circumvented: boolean() | nil,
           semantic_filter_matched: String.t() | nil,
           text_harms: [String.t()] | nil

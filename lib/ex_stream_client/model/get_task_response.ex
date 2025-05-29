@@ -2,15 +2,15 @@ defmodule ExStreamClient.Model.GetTaskResponse do
   @moduledoc "Schema representing a GetTaskResponse"
   use ExStreamClient.Jason
   @enforce_keys [:created_at, :duration, :status, :task_id, :updated_at]
-  defstruct [:error, :status, :result, :duration, :created_at, :updated_at, :task_id]
+  defstruct [:created_at, :duration, :error, :result, :status, :task_id, :updated_at]
 
   @type t :: %__MODULE__{
-          error: ExStreamClient.Model.ErrorResult.t() | nil,
-          status: String.t(),
-          result: map() | nil,
-          duration: String.t(),
           created_at: float(),
-          updated_at: float(),
-          task_id: String.t()
+          duration: String.t(),
+          error: ExStreamClient.Model.ErrorResult.t() | nil,
+          result: map() | nil,
+          status: String.t(),
+          task_id: String.t(),
+          updated_at: float()
         }
 end

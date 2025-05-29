@@ -12,24 +12,24 @@ defmodule ExStreamClient.Model.ModerationCheckCompletedEvent do
     :type
   ]
   defstruct [
-    :type,
-    :custom,
     :created_at,
-    :received_at,
-    :review_queue_item_id,
+    :custom,
     :entity_id,
     :entity_type,
-    :recommended_action
+    :received_at,
+    :recommended_action,
+    :review_queue_item_id,
+    :type
   ]
 
   @type t :: %__MODULE__{
-          type: String.t(),
-          custom: map(),
           created_at: float(),
-          received_at: float() | nil,
-          review_queue_item_id: String.t(),
+          custom: map(),
           entity_id: String.t(),
           entity_type: String.t(),
-          recommended_action: String.t()
+          received_at: float() | nil,
+          recommended_action: String.t(),
+          review_queue_item_id: String.t(),
+          type: String.t()
         }
 end

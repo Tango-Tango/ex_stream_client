@@ -3,24 +3,24 @@ defmodule ExStreamClient.Model.QueryUsersPayload do
   use ExStreamClient.Jason
   @enforce_keys [:filter_conditions]
   defstruct [
-    :offset,
-    :user,
-    :sort,
-    :limit,
-    :user_id,
     :filter_conditions,
     :include_deactivated_users,
-    :presence
+    :limit,
+    :offset,
+    :presence,
+    :sort,
+    :user,
+    :user_id
   ]
 
   @type t :: %__MODULE__{
-          offset: integer() | nil,
-          user: ExStreamClient.Model.UserRequest.t() | nil,
-          sort: [ExStreamClient.Model.SortParamRequest.t()] | nil,
-          limit: integer() | nil,
-          user_id: String.t() | nil,
           filter_conditions: map(),
           include_deactivated_users: boolean() | nil,
-          presence: boolean() | nil
+          limit: integer() | nil,
+          offset: integer() | nil,
+          presence: boolean() | nil,
+          sort: [ExStreamClient.Model.SortParamRequest.t()] | nil,
+          user: ExStreamClient.Model.UserRequest.t() | nil,
+          user_id: String.t() | nil
         }
 end

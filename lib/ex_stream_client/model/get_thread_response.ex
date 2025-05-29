@@ -2,10 +2,10 @@ defmodule ExStreamClient.Model.GetThreadResponse do
   @moduledoc "Schema representing a GetThreadResponse"
   use ExStreamClient.Jason
   @enforce_keys [:duration, :thread]
-  defstruct [:thread, :duration]
+  defstruct [:duration, :thread]
 
   @type t :: %__MODULE__{
-          thread: ExStreamClient.Model.ThreadStateResponse.t(),
-          duration: String.t()
+          duration: String.t(),
+          thread: ExStreamClient.Model.ThreadStateResponse.t()
         }
 end

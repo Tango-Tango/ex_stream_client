@@ -2,12 +2,12 @@ defmodule ExStreamClient.Model.UserUnreadReminderEvent do
   @moduledoc "Schema representing a UserUnreadReminderEvent"
   use ExStreamClient.Jason
   @enforce_keys [:channels, :created_at, :type]
-  defstruct [:type, :user, :created_at, :channels]
+  defstruct [:channels, :created_at, :type, :user]
 
   @type t :: %__MODULE__{
-          type: String.t(),
-          user: ExStreamClient.Model.User.t() | nil,
+          channels: map(),
           created_at: float(),
-          channels: map()
+          type: String.t(),
+          user: ExStreamClient.Model.User.t() | nil
         }
 end

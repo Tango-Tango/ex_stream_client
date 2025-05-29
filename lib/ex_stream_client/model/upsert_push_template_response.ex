@@ -2,10 +2,10 @@ defmodule ExStreamClient.Model.UpsertPushTemplateResponse do
   @moduledoc "Schema representing a UpsertPushTemplateResponse"
   use ExStreamClient.Jason
   @enforce_keys [:duration]
-  defstruct [:template, :duration]
+  defstruct [:duration, :template]
 
   @type t :: %__MODULE__{
-          template: ExStreamClient.Model.PushTemplate.t() | nil,
-          duration: String.t()
+          duration: String.t(),
+          template: ExStreamClient.Model.PushTemplate.t() | nil
         }
 end

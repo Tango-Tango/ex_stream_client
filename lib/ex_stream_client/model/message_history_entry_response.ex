@@ -3,8 +3,8 @@ defmodule ExStreamClient.Model.MessageHistoryEntryResponse do
   use ExStreamClient.Jason
 
   @enforce_keys [
-    :custom,
     :attachments,
+    :custom,
     :is_deleted,
     :message_id,
     :message_updated_at,
@@ -12,22 +12,22 @@ defmodule ExStreamClient.Model.MessageHistoryEntryResponse do
     :text
   ]
   defstruct [
-    :text,
-    :custom,
     :attachments,
-    :message_id,
+    :custom,
     :is_deleted,
+    :message_id,
     :message_updated_at,
-    :message_updated_by_id
+    :message_updated_by_id,
+    :text
   ]
 
   @type t :: %__MODULE__{
-          text: String.t(),
-          custom: map(),
           attachments: [ExStreamClient.Model.Attachment.t()],
-          message_id: String.t(),
+          custom: map(),
           is_deleted: boolean(),
+          message_id: String.t(),
           message_updated_at: float(),
-          message_updated_by_id: String.t()
+          message_updated_by_id: String.t(),
+          text: String.t()
         }
 end

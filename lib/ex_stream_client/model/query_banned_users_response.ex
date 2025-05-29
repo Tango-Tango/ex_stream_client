@@ -2,6 +2,6 @@ defmodule ExStreamClient.Model.QueryBannedUsersResponse do
   @moduledoc "Schema representing a QueryBannedUsersResponse"
   use ExStreamClient.Jason
   @enforce_keys [:bans, :duration]
-  defstruct [:duration, :bans]
-  @type t :: %__MODULE__{duration: String.t(), bans: [ExStreamClient.Model.BanResponse.t()]}
+  defstruct [:bans, :duration]
+  @type t :: %__MODULE__{bans: [ExStreamClient.Model.BanResponse.t()], duration: String.t()}
 end

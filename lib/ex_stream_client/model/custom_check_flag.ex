@@ -2,12 +2,12 @@ defmodule ExStreamClient.Model.CustomCheckFlag do
   @moduledoc "Schema representing a CustomCheckFlag"
   use ExStreamClient.Jason
   @enforce_keys [:type]
-  defstruct [:reason, :type, :labels, :custom]
+  defstruct [:custom, :labels, :reason, :type]
 
   @type t :: %__MODULE__{
-          reason: String.t() | nil,
-          type: String.t(),
+          custom: map() | nil,
           labels: [String.t()] | nil,
-          custom: map() | nil
+          reason: String.t() | nil,
+          type: String.t()
         }
 end

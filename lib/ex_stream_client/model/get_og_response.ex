@@ -4,9 +4,9 @@ defmodule ExStreamClient.Model.GetOGResponse do
   @enforce_keys [:custom, :duration]
   defstruct [
     :type,
-    :title,
     :text,
     :fields,
+    :title,
     :color,
     :fallback,
     :custom,
@@ -33,9 +33,9 @@ defmodule ExStreamClient.Model.GetOGResponse do
 
   @type t :: %__MODULE__{
           type: String.t() | nil,
-          title: String.t() | nil,
           text: String.t() | nil,
           fields: [ExStreamClient.Model.Field.t()] | nil,
+          title: String.t() | nil,
           color: String.t() | nil,
           fallback: String.t() | nil,
           custom: map(),

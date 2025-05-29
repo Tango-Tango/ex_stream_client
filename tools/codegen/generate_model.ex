@@ -128,7 +128,7 @@ defmodule ExStreamClient.Tools.Codegen.GenerateModel do
         name
         |> Module.split()
         |> Enum.map(&Macro.underscore/1)
-        |> then(&(Path.join([@model_dir | &1]) <> ".ex"))
+        |> then(&(Path.join(["lib" | &1]) <> ".ex"))
 
       File.mkdir_p!(Path.dirname(file_path))
       File.write!(file_path, Macro.to_string(mod_ast))

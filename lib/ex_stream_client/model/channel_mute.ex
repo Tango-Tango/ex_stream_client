@@ -2,13 +2,13 @@ defmodule ExStreamClient.Model.ChannelMute do
   @moduledoc "Schema representing a ChannelMute"
   use ExStreamClient.Jason
   @enforce_keys [:created_at, :updated_at]
-  defstruct [:user, :channel, :created_at, :updated_at, :expires]
+  defstruct [:channel, :created_at, :expires, :updated_at, :user]
 
   @type t :: %__MODULE__{
-          user: ExStreamClient.Model.UserResponse.t() | nil,
           channel: ExStreamClient.Model.ChannelResponse.t() | nil,
           created_at: float(),
+          expires: float() | nil,
           updated_at: float(),
-          expires: float() | nil
+          user: ExStreamClient.Model.UserResponse.t() | nil
         }
 end

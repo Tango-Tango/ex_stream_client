@@ -3,31 +3,21 @@ defmodule ExStreamClient.Model.SubmitActionRequest do
   use ExStreamClient.Jason
   @enforce_keys [:action_type, :item_id]
   defstruct [
-    :user,
-    :delete_reaction,
-    :delete_message,
-    :unban,
+    :action_type,
     :ban,
     :custom,
-    :mark_reviewed,
     :delete_activity,
+    :delete_message,
+    :delete_reaction,
     :delete_user,
-    :user_id,
-    :action_type,
-    :item_id
+    :item_id,
+    :mark_reviewed,
+    :unban,
+    :user,
+    :user_id
   ]
 
   @type t :: %__MODULE__{
-          user: ExStreamClient.Model.UserRequest.t() | nil,
-          delete_reaction: ExStreamClient.Model.DeleteReactionRequest.t() | nil,
-          delete_message: ExStreamClient.Model.DeleteMessageRequest.t() | nil,
-          unban: ExStreamClient.Model.UnbanActionRequest.t() | nil,
-          ban: ExStreamClient.Model.BanActionRequest.t() | nil,
-          custom: ExStreamClient.Model.CustomActionRequest.t() | nil,
-          mark_reviewed: ExStreamClient.Model.MarkReviewedRequest.t() | nil,
-          delete_activity: ExStreamClient.Model.DeleteActivityRequest.t() | nil,
-          delete_user: ExStreamClient.Model.DeleteUserRequest.t() | nil,
-          user_id: String.t() | nil,
           action_type:
             :end_call
             | :kick_user
@@ -42,6 +32,16 @@ defmodule ExStreamClient.Model.SubmitActionRequest do
             | :delete_activity
             | :delete_message
             | :mark_reviewed,
-          item_id: String.t()
+          ban: ExStreamClient.Model.BanActionRequest.t() | nil,
+          custom: ExStreamClient.Model.CustomActionRequest.t() | nil,
+          delete_activity: ExStreamClient.Model.DeleteActivityRequest.t() | nil,
+          delete_message: ExStreamClient.Model.DeleteMessageRequest.t() | nil,
+          delete_reaction: ExStreamClient.Model.DeleteReactionRequest.t() | nil,
+          delete_user: ExStreamClient.Model.DeleteUserRequest.t() | nil,
+          item_id: String.t(),
+          mark_reviewed: ExStreamClient.Model.MarkReviewedRequest.t() | nil,
+          unban: ExStreamClient.Model.UnbanActionRequest.t() | nil,
+          user: ExStreamClient.Model.UserRequest.t() | nil,
+          user_id: String.t() | nil
         }
 end

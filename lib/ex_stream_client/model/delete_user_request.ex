@@ -3,16 +3,16 @@ defmodule ExStreamClient.Model.DeleteUserRequest do
   use ExStreamClient.Jason
 
   defstruct [
-    :hard_delete,
     :delete_conversation_channels,
     :delete_feeds_content,
+    :hard_delete,
     :mark_messages_deleted
   ]
 
   @type t :: %__MODULE__{
-          hard_delete: boolean() | nil,
           delete_conversation_channels: boolean() | nil,
           delete_feeds_content: boolean() | nil,
+          hard_delete: boolean() | nil,
           mark_messages_deleted: boolean() | nil
         }
 end

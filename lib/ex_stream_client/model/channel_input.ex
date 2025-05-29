@@ -3,32 +3,32 @@ defmodule ExStreamClient.Model.ChannelInput do
   use ExStreamClient.Jason
 
   defstruct [
-    :disabled,
-    :custom,
-    :team,
-    :created_by,
-    :created_by_id,
-    :members,
     :auto_translation_enabled,
     :auto_translation_language,
     :config_overrides,
+    :created_by,
+    :created_by_id,
+    :custom,
+    :disabled,
     :frozen,
     :invites,
+    :members,
+    :team,
     :truncated_by_id
   ]
 
   @type t :: %__MODULE__{
-          disabled: boolean() | nil,
-          custom: map() | nil,
-          team: String.t() | nil,
-          created_by: ExStreamClient.Model.UserRequest.t() | nil,
-          created_by_id: String.t() | nil,
-          members: [ExStreamClient.Model.ChannelMember.t()] | nil,
           auto_translation_enabled: boolean() | nil,
           auto_translation_language: String.t() | nil,
           config_overrides: ExStreamClient.Model.ChannelConfig.t() | nil,
+          created_by: ExStreamClient.Model.UserRequest.t() | nil,
+          created_by_id: String.t() | nil,
+          custom: map() | nil,
+          disabled: boolean() | nil,
           frozen: boolean() | nil,
           invites: [ExStreamClient.Model.ChannelMember.t()] | nil,
+          members: [ExStreamClient.Model.ChannelMember.t()] | nil,
+          team: String.t() | nil,
           truncated_by_id: String.t() | nil
         }
 end

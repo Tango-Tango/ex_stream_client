@@ -11,22 +11,22 @@ defmodule ExStreamClient.Model.VelocityFilterConfig do
     :rules
   ]
   defstruct [
-    :async,
-    :enabled,
-    :rules,
     :advanced_filters,
+    :async,
     :cascading_actions,
     :cids_per_user,
-    :first_message_only
+    :enabled,
+    :first_message_only,
+    :rules
   ]
 
   @type t :: %__MODULE__{
-          async: boolean() | nil,
-          enabled: boolean(),
-          rules: [ExStreamClient.Model.VelocityFilterConfigRule.t()],
           advanced_filters: boolean(),
+          async: boolean() | nil,
           cascading_actions: boolean(),
           cids_per_user: integer(),
-          first_message_only: boolean()
+          enabled: boolean(),
+          first_message_only: boolean(),
+          rules: [ExStreamClient.Model.VelocityFilterConfigRule.t()]
         }
 end

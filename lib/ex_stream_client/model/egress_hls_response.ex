@@ -2,6 +2,6 @@ defmodule ExStreamClient.Model.EgressHLSResponse do
   @moduledoc "Schema representing a EgressHLSResponse"
   use ExStreamClient.Jason
   @enforce_keys [:playlist_url, :status]
-  defstruct [:status, :playlist_url]
-  @type t :: %__MODULE__{status: String.t(), playlist_url: String.t()}
+  defstruct [:playlist_url, :status]
+  @type t :: %__MODULE__{playlist_url: String.t(), status: String.t()}
 end

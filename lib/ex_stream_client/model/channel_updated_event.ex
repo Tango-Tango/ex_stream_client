@@ -3,28 +3,28 @@ defmodule ExStreamClient.Model.ChannelUpdatedEvent do
   use ExStreamClient.Jason
   @enforce_keys [:channel_id, :channel_member_count, :channel_type, :cid, :created_at, :type]
   defstruct [
-    :message,
-    :type,
-    :user,
     :channel,
-    :team,
-    :created_at,
     :channel_id,
+    :channel_member_count,
     :channel_type,
     :cid,
-    :channel_member_count
+    :created_at,
+    :message,
+    :team,
+    :type,
+    :user
   ]
 
   @type t :: %__MODULE__{
-          message: ExStreamClient.Model.Message.t() | nil,
-          type: String.t(),
-          user: ExStreamClient.Model.User.t() | nil,
           channel: ExStreamClient.Model.ChannelResponse.t() | nil,
-          team: String.t() | nil,
-          created_at: float(),
           channel_id: String.t(),
+          channel_member_count: integer(),
           channel_type: String.t(),
           cid: String.t(),
-          channel_member_count: integer()
+          created_at: float(),
+          message: ExStreamClient.Model.Message.t() | nil,
+          team: String.t() | nil,
+          type: String.t(),
+          user: ExStreamClient.Model.User.t() | nil
         }
 end

@@ -9,13 +9,13 @@ defmodule ExStreamClient.Model.UnreadCountsResponse do
     :total_unread_count,
     :total_unread_threads_count
   ]
-  defstruct [:threads, :channel_type, :total_unread_count, :channels, :total_unread_threads_count]
+  defstruct [:channel_type, :channels, :threads, :total_unread_count, :total_unread_threads_count]
 
   @type t :: %__MODULE__{
-          threads: [ExStreamClient.Model.UnreadCountsThread.t()],
           channel_type: [ExStreamClient.Model.UnreadCountsChannelType.t()],
-          total_unread_count: integer(),
           channels: [ExStreamClient.Model.UnreadCountsChannel.t()],
+          threads: [ExStreamClient.Model.UnreadCountsThread.t()],
+          total_unread_count: integer(),
           total_unread_threads_count: integer()
         }
 end

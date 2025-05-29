@@ -1,13 +1,13 @@
 defmodule ExStreamClient.Model.UpdateMessagePartialRequest do
   @moduledoc "Schema representing a UpdateMessagePartialRequest"
   use ExStreamClient.Jason
-  defstruct [:set, :user, :unset, :user_id, :skip_enrich_url]
+  defstruct [:set, :skip_enrich_url, :unset, :user, :user_id]
 
   @type t :: %__MODULE__{
           set: map() | nil,
-          user: ExStreamClient.Model.UserRequest.t() | nil,
+          skip_enrich_url: boolean() | nil,
           unset: [String.t()] | nil,
-          user_id: String.t() | nil,
-          skip_enrich_url: boolean() | nil
+          user: ExStreamClient.Model.UserRequest.t() | nil,
+          user_id: String.t() | nil
         }
 end

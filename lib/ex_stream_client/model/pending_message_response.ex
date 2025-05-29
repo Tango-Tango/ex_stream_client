@@ -1,12 +1,12 @@
 defmodule ExStreamClient.Model.PendingMessageResponse do
   @moduledoc "Schema representing a PendingMessageResponse"
   use ExStreamClient.Jason
-  defstruct [:message, :user, :metadata, :channel]
+  defstruct [:channel, :message, :metadata, :user]
 
   @type t :: %__MODULE__{
+          channel: ExStreamClient.Model.ChannelResponse.t() | nil,
           message: ExStreamClient.Model.MessageResponse.t() | nil,
-          user: ExStreamClient.Model.UserResponse.t() | nil,
           metadata: map() | nil,
-          channel: ExStreamClient.Model.ChannelResponse.t() | nil
+          user: ExStreamClient.Model.UserResponse.t() | nil
         }
 end

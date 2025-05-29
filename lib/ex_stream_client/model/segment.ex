@@ -13,32 +13,32 @@ defmodule ExStreamClient.Model.Segment do
     :updated_at
   ]
   defstruct [
+    :all_sender_channels,
+    :all_users,
+    :created_at,
+    :deleted_at,
+    :description,
+    :filter,
     :id,
     :name,
     :size,
-    :type,
-    :description,
-    :filter,
-    :created_at,
-    :updated_at,
-    :deleted_at,
     :task_id,
-    :all_sender_channels,
-    :all_users
+    :type,
+    :updated_at
   ]
 
   @type t :: %__MODULE__{
+          all_sender_channels: boolean(),
+          all_users: boolean(),
+          created_at: float(),
+          deleted_at: float() | nil,
+          description: String.t() | nil,
+          filter: map() | nil,
           id: String.t(),
           name: String.t(),
           size: integer(),
-          type: String.t(),
-          description: String.t() | nil,
-          filter: map() | nil,
-          created_at: float(),
-          updated_at: float(),
-          deleted_at: float() | nil,
           task_id: String.t() | nil,
-          all_sender_channels: boolean(),
-          all_users: boolean()
+          type: String.t(),
+          updated_at: float()
         }
 end

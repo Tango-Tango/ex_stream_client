@@ -2,15 +2,15 @@ defmodule ExStreamClient.Model.GetCommandResponse do
   @moduledoc "Schema representing a GetCommandResponse"
   use ExStreamClient.Jason
   @enforce_keys [:args, :description, :duration, :name, :set]
-  defstruct [:args, :name, :set, :description, :duration, :created_at, :updated_at]
+  defstruct [:args, :created_at, :description, :duration, :name, :set, :updated_at]
 
   @type t :: %__MODULE__{
           args: String.t(),
-          name: String.t(),
-          set: String.t(),
+          created_at: float() | nil,
           description: String.t(),
           duration: String.t(),
-          created_at: float() | nil,
+          name: String.t(),
+          set: String.t(),
           updated_at: float() | nil
         }
 end

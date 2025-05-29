@@ -2,14 +2,14 @@ defmodule ExStreamClient.Model.ChannelVisibleEvent do
   @moduledoc "Schema representing a ChannelVisibleEvent"
   use ExStreamClient.Jason
   @enforce_keys [:channel_id, :channel_type, :cid, :created_at, :type]
-  defstruct [:type, :user, :created_at, :channel_id, :channel_type, :cid]
+  defstruct [:channel_id, :channel_type, :cid, :created_at, :type, :user]
 
   @type t :: %__MODULE__{
-          type: String.t(),
-          user: ExStreamClient.Model.User.t() | nil,
-          created_at: float(),
           channel_id: String.t(),
           channel_type: String.t(),
-          cid: String.t()
+          cid: String.t(),
+          created_at: float(),
+          type: String.t(),
+          user: ExStreamClient.Model.User.t() | nil
         }
 end

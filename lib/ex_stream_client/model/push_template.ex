@@ -2,13 +2,13 @@ defmodule ExStreamClient.Model.PushTemplate do
   @moduledoc "Schema representing a PushTemplate"
   use ExStreamClient.Jason
   @enforce_keys [:created_at, :enable_push, :event_type, :updated_at]
-  defstruct [:template, :created_at, :updated_at, :event_type, :enable_push]
+  defstruct [:created_at, :enable_push, :event_type, :template, :updated_at]
 
   @type t :: %__MODULE__{
-          template: String.t() | nil,
           created_at: float(),
-          updated_at: float(),
+          enable_push: boolean(),
           event_type: :"reaction.new" | :"message.updated" | :"message.new",
-          enable_push: boolean()
+          template: String.t() | nil,
+          updated_at: float()
         }
 end

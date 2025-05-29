@@ -26,9 +26,13 @@ defmodule ExStreamClient.Tools.Codegen.GenerateModel do
         component.required_props
         |> Enum.map(&(&1.name |> Macro.underscore() |> String.to_atom()))
         |> Enum.uniq()
+        |> Enum.sort_by(&to_string/1)
 
       struct_fields =
         [{:required, component.required_props}, {:optional, component.optional_props}]
+        |> Enum.sort_by(fn {kind, props} ->
+          {kind, Enum.map(props, & &1.name) |> Enum.sort()}
+        end)
         |> Enum.map(fn {kind, i} ->
           Enum.reduce(i, %{}, fn item, acc ->
             field_name = item.name |> Macro.underscore() |> String.to_atom()
@@ -53,7 +57,7 @@ defmodule ExStreamClient.Tools.Codegen.GenerateModel do
           [
             # only defstruct
             quote do
-              defstruct unquote(Map.keys(struct_fields))
+              defstruct unquote(Map.keys(struct_fields) |> Enum.sort())
             end
           ]
         else
@@ -65,7 +69,7 @@ defmodule ExStreamClient.Tools.Codegen.GenerateModel do
 
             # then the struct with all fields
             quote do
-              defstruct unquote(Map.keys(struct_fields))
+              defstruct unquote(Map.keys(struct_fields) |> Enum.sort())
             end
           ]
         end
@@ -85,7 +89,9 @@ defmodule ExStreamClient.Tools.Codegen.GenerateModel do
             unquote_splicing(
               case component.kind do
                 :component ->
-                  spec_ast = Map.to_list(struct_fields)
+                  spec_ast =
+                    Map.to_list(struct_fields)
+                    |> Enum.sort_by(fn {name, _type} -> to_string(name) end)
 
                   [
                     quote do

@@ -3,28 +3,28 @@ defmodule ExStreamClient.Model.ConfigOverrides do
   use ExStreamClient.Jason
   @enforce_keys [:commands, :grants]
   defstruct [
-    :replies,
-    :commands,
-    :reactions,
-    :max_message_length,
     :blocklist,
     :blocklist_behavior,
+    :commands,
     :grants,
+    :max_message_length,
     :quotes,
+    :reactions,
+    :replies,
     :typing_events,
     :uploads,
     :url_enrichment
   ]
 
   @type t :: %__MODULE__{
-          replies: boolean() | nil,
-          commands: [String.t()],
-          reactions: boolean() | nil,
-          max_message_length: integer() | nil,
           blocklist: String.t() | nil,
           blocklist_behavior: (:block | :flag) | nil,
+          commands: [String.t()],
           grants: map(),
+          max_message_length: integer() | nil,
           quotes: boolean() | nil,
+          reactions: boolean() | nil,
+          replies: boolean() | nil,
           typing_events: boolean() | nil,
           uploads: boolean() | nil,
           url_enrichment: boolean() | nil

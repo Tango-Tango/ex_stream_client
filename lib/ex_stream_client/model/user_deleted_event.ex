@@ -10,20 +10,20 @@ defmodule ExStreamClient.Model.UserDeletedEvent do
     :type
   ]
   defstruct [
-    :type,
-    :user,
     :created_at,
-    :hard_delete,
     :delete_conversation_channels,
-    :mark_messages_deleted
+    :hard_delete,
+    :mark_messages_deleted,
+    :type,
+    :user
   ]
 
   @type t :: %__MODULE__{
-          type: String.t(),
-          user: ExStreamClient.Model.User.t() | nil,
           created_at: float(),
-          hard_delete: boolean(),
           delete_conversation_channels: boolean(),
-          mark_messages_deleted: boolean()
+          hard_delete: boolean(),
+          mark_messages_deleted: boolean(),
+          type: String.t(),
+          user: ExStreamClient.Model.User.t() | nil
         }
 end

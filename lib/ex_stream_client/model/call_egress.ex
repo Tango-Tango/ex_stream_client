@@ -14,30 +14,30 @@ defmodule ExStreamClient.Model.CallEgress do
     :updated_at
   ]
   defstruct [
-    :state,
-    :config,
-    :started_at,
-    :call_type,
-    :updated_at,
     :app_pk,
     :call_id,
+    :call_type,
+    :config,
     :egress_id,
     :egress_type,
     :instance_ip,
-    :stopped_at
+    :started_at,
+    :state,
+    :stopped_at,
+    :updated_at
   ]
 
   @type t :: %__MODULE__{
-          state: String.t(),
-          config: ExStreamClient.Model.EgressTaskConfig.t() | nil,
-          started_at: float(),
-          call_type: String.t(),
-          updated_at: float(),
           app_pk: integer(),
           call_id: String.t(),
+          call_type: String.t(),
+          config: ExStreamClient.Model.EgressTaskConfig.t() | nil,
           egress_id: String.t(),
           egress_type: String.t(),
           instance_ip: String.t(),
-          stopped_at: float() | nil
+          started_at: float(),
+          state: String.t(),
+          stopped_at: float() | nil,
+          updated_at: float()
         }
 end

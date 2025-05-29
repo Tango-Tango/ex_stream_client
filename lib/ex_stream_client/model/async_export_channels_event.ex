@@ -2,16 +2,16 @@ defmodule ExStreamClient.Model.AsyncExportChannelsEvent do
   @moduledoc "Schema representing a AsyncExportChannelsEvent"
   use ExStreamClient.Jason
   @enforce_keys [:created_at, :custom, :finished_at, :started_at, :task_id, :type, :url]
-  defstruct [:type, :started_at, :url, :custom, :created_at, :received_at, :task_id, :finished_at]
+  defstruct [:created_at, :custom, :finished_at, :received_at, :started_at, :task_id, :type, :url]
 
   @type t :: %__MODULE__{
-          type: String.t(),
-          started_at: float(),
-          url: String.t(),
-          custom: map(),
           created_at: float(),
+          custom: map(),
+          finished_at: float(),
           received_at: float() | nil,
+          started_at: float(),
           task_id: String.t(),
-          finished_at: float()
+          type: String.t(),
+          url: String.t()
         }
 end

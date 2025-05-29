@@ -11,20 +11,20 @@ defmodule ExStreamClient.Model.WrappedUnreadCountsResponse do
     :total_unread_threads_count
   ]
   defstruct [
-    :threads,
-    :duration,
     :channel_type,
-    :total_unread_count,
     :channels,
+    :duration,
+    :threads,
+    :total_unread_count,
     :total_unread_threads_count
   ]
 
   @type t :: %__MODULE__{
-          threads: [ExStreamClient.Model.UnreadCountsThread.t()],
-          duration: String.t(),
           channel_type: [ExStreamClient.Model.UnreadCountsChannelType.t()],
-          total_unread_count: integer(),
           channels: [ExStreamClient.Model.UnreadCountsChannel.t()],
+          duration: String.t(),
+          threads: [ExStreamClient.Model.UnreadCountsThread.t()],
+          total_unread_count: integer(),
           total_unread_threads_count: integer()
         }
 end

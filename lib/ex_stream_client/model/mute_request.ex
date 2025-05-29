@@ -2,12 +2,12 @@ defmodule ExStreamClient.Model.MuteRequest do
   @moduledoc "Schema representing a MuteRequest"
   use ExStreamClient.Jason
   @enforce_keys [:target_ids]
-  defstruct [:timeout, :user, :user_id, :target_ids]
+  defstruct [:target_ids, :timeout, :user, :user_id]
 
   @type t :: %__MODULE__{
+          target_ids: [String.t()],
           timeout: integer() | nil,
           user: ExStreamClient.Model.UserRequest.t() | nil,
-          user_id: String.t() | nil,
-          target_ids: [String.t()]
+          user_id: String.t() | nil
         }
 end

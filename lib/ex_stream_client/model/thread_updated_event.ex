@@ -2,15 +2,15 @@ defmodule ExStreamClient.Model.ThreadUpdatedEvent do
   @moduledoc "Schema representing a ThreadUpdatedEvent"
   use ExStreamClient.Jason
   @enforce_keys [:channel_id, :channel_type, :cid, :created_at, :type]
-  defstruct [:type, :user, :thread, :created_at, :channel_id, :channel_type, :cid]
+  defstruct [:channel_id, :channel_type, :cid, :created_at, :thread, :type, :user]
 
   @type t :: %__MODULE__{
-          type: String.t(),
-          user: ExStreamClient.Model.User.t() | nil,
-          thread: ExStreamClient.Model.ThreadResponse.t() | nil,
-          created_at: float(),
           channel_id: String.t(),
           channel_type: String.t(),
-          cid: String.t()
+          cid: String.t(),
+          created_at: float(),
+          thread: ExStreamClient.Model.ThreadResponse.t() | nil,
+          type: String.t(),
+          user: ExStreamClient.Model.User.t() | nil
         }
 end

@@ -3,26 +3,26 @@ defmodule ExStreamClient.Model.QueryChannelsRequest do
   use ExStreamClient.Jason
 
   defstruct [
+    :filter_conditions,
+    :limit,
+    :member_limit,
+    :message_limit,
     :offset,
+    :sort,
     :state,
     :user,
-    :sort,
-    :limit,
-    :user_id,
-    :filter_conditions,
-    :member_limit,
-    :message_limit
+    :user_id
   ]
 
   @type t :: %__MODULE__{
+          filter_conditions: map() | nil,
+          limit: integer() | nil,
+          member_limit: integer() | nil,
+          message_limit: integer() | nil,
           offset: integer() | nil,
+          sort: [ExStreamClient.Model.SortParamRequest.t()] | nil,
           state: boolean() | nil,
           user: ExStreamClient.Model.UserRequest.t() | nil,
-          sort: [ExStreamClient.Model.SortParamRequest.t()] | nil,
-          limit: integer() | nil,
-          user_id: String.t() | nil,
-          filter_conditions: map() | nil,
-          member_limit: integer() | nil,
-          message_limit: integer() | nil
+          user_id: String.t() | nil
         }
 end

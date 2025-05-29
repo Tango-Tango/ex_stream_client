@@ -1,50 +1,50 @@
 defmodule ExStreamClient.Model.CallParticipant do
   @moduledoc "Schema representing a CallParticipant"
   use ExStreamClient.Jason
-  @enforce_keys [:joined_at, :role, :user_session_id, :banned, :custom, :id, :online, :teams_role]
+  @enforce_keys [:banned, :custom, :id, :joined_at, :online, :role, :teams_role, :user_session_id]
   defstruct [
-    :id,
-    :role,
-    :language,
-    :custom,
-    :created_at,
-    :updated_at,
+    :ban_expires,
     :banned,
-    :online,
+    :created_at,
+    :custom,
     :deactivated_at,
     :deleted_at,
+    :id,
     :invisible,
+    :joined_at,
+    :language,
     :last_active,
     :last_engaged_at,
+    :online,
     :privacy_settings,
+    :revoke_tokens_issued_before,
+    :role,
     :teams,
     :teams_role,
-    :joined_at,
-    :user_session_id,
-    :ban_expires,
-    :revoke_tokens_issued_before
+    :updated_at,
+    :user_session_id
   ]
 
   @type t :: %__MODULE__{
-          id: String.t(),
-          role: String.t(),
-          language: String.t() | nil,
-          custom: map(),
-          created_at: float() | nil,
-          updated_at: float() | nil,
+          ban_expires: float() | nil,
           banned: boolean(),
-          online: boolean(),
+          created_at: float() | nil,
+          custom: map(),
           deactivated_at: float() | nil,
           deleted_at: float() | nil,
+          id: String.t(),
           invisible: boolean() | nil,
+          joined_at: float(),
+          language: String.t() | nil,
           last_active: float() | nil,
           last_engaged_at: float() | nil,
+          online: boolean(),
           privacy_settings: ExStreamClient.Model.PrivacySettings.t() | nil,
+          revoke_tokens_issued_before: float() | nil,
+          role: String.t(),
           teams: [String.t()] | nil,
           teams_role: map(),
-          joined_at: float(),
-          user_session_id: String.t(),
-          ban_expires: float() | nil,
-          revoke_tokens_issued_before: float() | nil
+          updated_at: float() | nil,
+          user_session_id: String.t()
         }
 end

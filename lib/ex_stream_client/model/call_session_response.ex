@@ -12,32 +12,32 @@ defmodule ExStreamClient.Model.CallSessionResponse do
     :rejected_by
   ]
   defstruct [
-    :id,
-    :started_at,
     :accepted_by,
     :anonymous_participant_count,
+    :ended_at,
+    :id,
+    :live_ended_at,
+    :live_started_at,
     :missed_by,
     :participants,
     :participants_count_by_role,
     :rejected_by,
-    :ended_at,
-    :live_ended_at,
-    :live_started_at,
+    :started_at,
     :timer_ends_at
   ]
 
   @type t :: %__MODULE__{
-          id: String.t(),
-          started_at: float() | nil,
           accepted_by: map(),
           anonymous_participant_count: integer(),
+          ended_at: float() | nil,
+          id: String.t(),
+          live_ended_at: float() | nil,
+          live_started_at: float() | nil,
           missed_by: map(),
           participants: [ExStreamClient.Model.CallParticipantResponse.t()],
           participants_count_by_role: map(),
           rejected_by: map(),
-          ended_at: float() | nil,
-          live_ended_at: float() | nil,
-          live_started_at: float() | nil,
+          started_at: float() | nil,
           timer_ends_at: float() | nil
         }
 end

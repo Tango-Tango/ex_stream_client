@@ -12,40 +12,40 @@ defmodule ExStreamClient.Model.ThreadResponse do
     :updated_at
   ]
   defstruct [
-    :title,
+    :active_participant_count,
     :channel,
-    :custom,
+    :channel_cid,
     :created_at,
     :created_by,
-    :thread_participants,
-    :updated_at,
-    :deleted_at,
-    :reply_count,
-    :parent_message_id,
-    :channel_cid,
     :created_by_user_id,
-    :active_participant_count,
+    :custom,
+    :deleted_at,
     :last_message_at,
     :parent_message,
-    :participant_count
+    :parent_message_id,
+    :participant_count,
+    :reply_count,
+    :thread_participants,
+    :title,
+    :updated_at
   ]
 
   @type t :: %__MODULE__{
-          title: String.t(),
+          active_participant_count: integer() | nil,
           channel: ExStreamClient.Model.ChannelResponse.t() | nil,
-          custom: map(),
+          channel_cid: String.t(),
           created_at: float(),
           created_by: ExStreamClient.Model.UserResponse.t() | nil,
-          thread_participants: [ExStreamClient.Model.ThreadParticipant.t()] | nil,
-          updated_at: float(),
-          deleted_at: float() | nil,
-          reply_count: integer() | nil,
-          parent_message_id: String.t(),
-          channel_cid: String.t(),
           created_by_user_id: String.t(),
-          active_participant_count: integer() | nil,
+          custom: map(),
+          deleted_at: float() | nil,
           last_message_at: float() | nil,
           parent_message: ExStreamClient.Model.MessageResponse.t() | nil,
-          participant_count: integer() | nil
+          parent_message_id: String.t(),
+          participant_count: integer() | nil,
+          reply_count: integer() | nil,
+          thread_participants: [ExStreamClient.Model.ThreadParticipant.t()] | nil,
+          title: String.t(),
+          updated_at: float()
         }
 end

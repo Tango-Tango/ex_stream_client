@@ -10,18 +10,18 @@ defmodule ExStreamClient.Model.VideoSettingsResponse do
     :target_resolution
   ]
   defstruct [
-    :enabled,
     :access_request_enabled,
-    :target_resolution,
     :camera_default_on,
-    :camera_facing
+    :camera_facing,
+    :enabled,
+    :target_resolution
   ]
 
   @type t :: %__MODULE__{
-          enabled: boolean(),
           access_request_enabled: boolean(),
-          target_resolution: ExStreamClient.Model.TargetResolution.t(),
           camera_default_on: boolean(),
-          camera_facing: :external | :back | :front
+          camera_facing: :external | :back | :front,
+          enabled: boolean(),
+          target_resolution: ExStreamClient.Model.TargetResolution.t()
         }
 end

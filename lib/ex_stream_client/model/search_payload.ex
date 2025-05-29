@@ -3,24 +3,24 @@ defmodule ExStreamClient.Model.SearchPayload do
   use ExStreamClient.Jason
   @enforce_keys [:filter_conditions]
   defstruct [
-    :offset,
-    :next,
-    :sort,
-    :limit,
-    :query,
     :filter_conditions,
+    :limit,
     :message_filter_conditions,
-    :message_options
+    :message_options,
+    :next,
+    :offset,
+    :query,
+    :sort
   ]
 
   @type t :: %__MODULE__{
-          offset: integer() | nil,
-          next: String.t() | nil,
-          sort: [ExStreamClient.Model.SortParamRequest.t()] | nil,
-          limit: integer() | nil,
-          query: String.t() | nil,
           filter_conditions: map(),
+          limit: integer() | nil,
           message_filter_conditions: map() | nil,
-          message_options: ExStreamClient.Model.MessageOptions.t() | nil
+          message_options: ExStreamClient.Model.MessageOptions.t() | nil,
+          next: String.t() | nil,
+          offset: integer() | nil,
+          query: String.t() | nil,
+          sort: [ExStreamClient.Model.SortParamRequest.t()] | nil
         }
 end

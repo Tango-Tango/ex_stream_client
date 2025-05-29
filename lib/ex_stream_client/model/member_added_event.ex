@@ -2,16 +2,16 @@ defmodule ExStreamClient.Model.MemberAddedEvent do
   @moduledoc "Schema representing a MemberAddedEvent"
   use ExStreamClient.Jason
   @enforce_keys [:channel_id, :channel_type, :cid, :created_at, :type]
-  defstruct [:type, :member, :user, :team, :created_at, :channel_id, :channel_type, :cid]
+  defstruct [:channel_id, :channel_type, :cid, :created_at, :member, :team, :type, :user]
 
   @type t :: %__MODULE__{
-          type: String.t(),
-          member: ExStreamClient.Model.ChannelMember.t() | nil,
-          user: ExStreamClient.Model.User.t() | nil,
-          team: String.t() | nil,
-          created_at: float(),
           channel_id: String.t(),
           channel_type: String.t(),
-          cid: String.t()
+          cid: String.t(),
+          created_at: float(),
+          member: ExStreamClient.Model.ChannelMember.t() | nil,
+          team: String.t() | nil,
+          type: String.t(),
+          user: ExStreamClient.Model.User.t() | nil
         }
 end

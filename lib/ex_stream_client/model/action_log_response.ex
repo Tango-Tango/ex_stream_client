@@ -3,28 +3,28 @@ defmodule ExStreamClient.Model.ActionLogResponse do
   use ExStreamClient.Jason
   @enforce_keys [:created_at, :custom, :id, :reason, :target_user_id, :type, :user_id]
   defstruct [
+    :created_at,
+    :custom,
     :id,
     :reason,
-    :type,
-    :user,
-    :custom,
-    :created_at,
-    :user_id,
+    :review_queue_item,
     :target_user,
     :target_user_id,
-    :review_queue_item
+    :type,
+    :user,
+    :user_id
   ]
 
   @type t :: %__MODULE__{
+          created_at: float(),
+          custom: map(),
           id: String.t(),
           reason: String.t(),
-          type: String.t(),
-          user: ExStreamClient.Model.UserResponse.t() | nil,
-          custom: map(),
-          created_at: float(),
-          user_id: String.t(),
+          review_queue_item: ExStreamClient.Model.ReviewQueueItem.t() | nil,
           target_user: ExStreamClient.Model.UserResponse.t() | nil,
           target_user_id: String.t(),
-          review_queue_item: ExStreamClient.Model.ReviewQueueItem.t() | nil
+          type: String.t(),
+          user: ExStreamClient.Model.UserResponse.t() | nil,
+          user_id: String.t()
         }
 end

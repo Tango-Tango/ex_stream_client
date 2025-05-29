@@ -3,27 +3,27 @@ defmodule ExStreamClient.Model.APNConfig do
   use ExStreamClient.Jason
 
   defstruct [
-    :disabled,
     :auth_key,
+    :auth_type,
+    :bundle_id,
+    :development,
+    :disabled,
     :host,
     :key_id,
     :notification_template,
-    :development,
-    :auth_type,
-    :bundle_id,
     :p12_cert,
     :team_id
   ]
 
   @type t :: %__MODULE__{
-          disabled: boolean() | nil,
           auth_key: String.t() | nil,
+          auth_type: (:token | :certificate) | nil,
+          bundle_id: String.t() | nil,
+          development: boolean() | nil,
+          disabled: boolean() | nil,
           host: String.t() | nil,
           key_id: String.t() | nil,
           notification_template: String.t() | nil,
-          development: boolean() | nil,
-          auth_type: (:token | :certificate) | nil,
-          bundle_id: String.t() | nil,
           p12_cert: String.t() | nil,
           team_id: String.t() | nil
         }

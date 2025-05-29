@@ -2,10 +2,10 @@ defmodule ExStreamClient.Model.GetSegmentResponse do
   @moduledoc "Schema representing a GetSegmentResponse"
   use ExStreamClient.Jason
   @enforce_keys [:duration]
-  defstruct [:segment, :duration]
+  defstruct [:duration, :segment]
 
   @type t :: %__MODULE__{
-          segment: ExStreamClient.Model.SegmentResponse.t() | nil,
-          duration: String.t()
+          duration: String.t(),
+          segment: ExStreamClient.Model.SegmentResponse.t() | nil
         }
 end

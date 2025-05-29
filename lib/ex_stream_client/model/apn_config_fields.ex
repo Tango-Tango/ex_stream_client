@@ -3,27 +3,27 @@ defmodule ExStreamClient.Model.APNConfigFields do
   use ExStreamClient.Jason
   @enforce_keys [:development, :enabled]
   defstruct [
-    :enabled,
     :auth_key,
+    :auth_type,
+    :bundle_id,
+    :development,
+    :enabled,
     :host,
     :key_id,
     :notification_template,
-    :development,
-    :auth_type,
-    :bundle_id,
     :p12_cert,
     :team_id
   ]
 
   @type t :: %__MODULE__{
-          enabled: boolean(),
           auth_key: String.t() | nil,
+          auth_type: String.t() | nil,
+          bundle_id: String.t() | nil,
+          development: boolean(),
+          enabled: boolean(),
           host: String.t() | nil,
           key_id: String.t() | nil,
           notification_template: String.t() | nil,
-          development: boolean(),
-          auth_type: String.t() | nil,
-          bundle_id: String.t() | nil,
           p12_cert: String.t() | nil,
           team_id: String.t() | nil
         }

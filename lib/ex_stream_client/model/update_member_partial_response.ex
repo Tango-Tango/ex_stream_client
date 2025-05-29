@@ -2,10 +2,10 @@ defmodule ExStreamClient.Model.UpdateMemberPartialResponse do
   @moduledoc "Schema representing a UpdateMemberPartialResponse"
   use ExStreamClient.Jason
   @enforce_keys [:duration]
-  defstruct [:duration, :channel_member]
+  defstruct [:channel_member, :duration]
 
   @type t :: %__MODULE__{
-          duration: String.t(),
-          channel_member: ExStreamClient.Model.ChannelMemberResponse.t() | nil
+          channel_member: ExStreamClient.Model.ChannelMemberResponse.t() | nil,
+          duration: String.t()
         }
 end

@@ -1,13 +1,13 @@
 defmodule ExStreamClient.Model.QueryPollsRequest do
   @moduledoc "Schema representing a QueryPollsRequest"
   use ExStreamClient.Jason
-  defstruct [:next, :prev, :sort, :filter, :limit]
+  defstruct [:filter, :limit, :next, :prev, :sort]
 
   @type t :: %__MODULE__{
+          filter: map() | nil,
+          limit: integer() | nil,
           next: String.t() | nil,
           prev: String.t() | nil,
-          sort: [ExStreamClient.Model.SortParamRequest.t()] | nil,
-          filter: map() | nil,
-          limit: integer() | nil
+          sort: [ExStreamClient.Model.SortParamRequest.t()] | nil
         }
 end

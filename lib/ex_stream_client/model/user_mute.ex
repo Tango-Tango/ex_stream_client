@@ -2,13 +2,13 @@ defmodule ExStreamClient.Model.UserMute do
   @moduledoc "Schema representing a UserMute"
   use ExStreamClient.Jason
   @enforce_keys [:created_at, :updated_at]
-  defstruct [:user, :target, :created_at, :updated_at, :expires]
+  defstruct [:created_at, :expires, :target, :updated_at, :user]
 
   @type t :: %__MODULE__{
-          user: ExStreamClient.Model.User.t() | nil,
-          target: ExStreamClient.Model.User.t() | nil,
           created_at: float(),
+          expires: float() | nil,
+          target: ExStreamClient.Model.User.t() | nil,
           updated_at: float(),
-          expires: float() | nil
+          user: ExStreamClient.Model.User.t() | nil
         }
 end

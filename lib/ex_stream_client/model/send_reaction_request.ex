@@ -2,11 +2,11 @@ defmodule ExStreamClient.Model.SendReactionRequest do
   @moduledoc "Schema representing a SendReactionRequest"
   use ExStreamClient.Jason
   @enforce_keys [:reaction]
-  defstruct [:skip_push, :reaction, :enforce_unique]
+  defstruct [:enforce_unique, :reaction, :skip_push]
 
   @type t :: %__MODULE__{
-          skip_push: boolean() | nil,
+          enforce_unique: boolean() | nil,
           reaction: ExStreamClient.Model.ReactionRequest.t(),
-          enforce_unique: boolean() | nil
+          skip_push: boolean() | nil
         }
 end

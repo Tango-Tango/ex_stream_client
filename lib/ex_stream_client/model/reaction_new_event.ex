@@ -3,28 +3,28 @@ defmodule ExStreamClient.Model.ReactionNewEvent do
   use ExStreamClient.Jason
   @enforce_keys [:channel_id, :channel_type, :cid, :created_at, :type]
   defstruct [
-    :message,
-    :type,
-    :user,
-    :team,
-    :created_at,
     :channel_id,
     :channel_type,
     :cid,
+    :created_at,
+    :message,
+    :reaction,
+    :team,
     :thread_participants,
-    :reaction
+    :type,
+    :user
   ]
 
   @type t :: %__MODULE__{
-          message: ExStreamClient.Model.Message.t() | nil,
-          type: String.t(),
-          user: ExStreamClient.Model.User.t() | nil,
-          team: String.t() | nil,
-          created_at: float(),
           channel_id: String.t(),
           channel_type: String.t(),
           cid: String.t(),
+          created_at: float(),
+          message: ExStreamClient.Model.Message.t() | nil,
+          reaction: ExStreamClient.Model.Reaction.t() | nil,
+          team: String.t() | nil,
           thread_participants: [ExStreamClient.Model.User.t()] | nil,
-          reaction: ExStreamClient.Model.Reaction.t() | nil
+          type: String.t(),
+          user: ExStreamClient.Model.User.t() | nil
         }
 end

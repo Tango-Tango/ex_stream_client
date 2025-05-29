@@ -3,22 +3,22 @@ defmodule ExStreamClient.Model.CustomCheckRequest do
   use ExStreamClient.Jason
   @enforce_keys [:entity_id, :entity_type, :flags]
   defstruct [
-    :flags,
-    :user,
-    :user_id,
+    :entity_creator_id,
     :entity_id,
     :entity_type,
-    :entity_creator_id,
-    :moderation_payload
+    :flags,
+    :moderation_payload,
+    :user,
+    :user_id
   ]
 
   @type t :: %__MODULE__{
-          flags: [ExStreamClient.Model.CustomCheckFlag.t()],
-          user: ExStreamClient.Model.UserRequest.t() | nil,
-          user_id: String.t() | nil,
+          entity_creator_id: String.t() | nil,
           entity_id: String.t(),
           entity_type: String.t(),
-          entity_creator_id: String.t() | nil,
-          moderation_payload: ExStreamClient.Model.ModerationPayload.t() | nil
+          flags: [ExStreamClient.Model.CustomCheckFlag.t()],
+          moderation_payload: ExStreamClient.Model.ModerationPayload.t() | nil,
+          user: ExStreamClient.Model.UserRequest.t() | nil,
+          user_id: String.t() | nil
         }
 end

@@ -3,22 +3,22 @@ defmodule ExStreamClient.Model.ChannelTruncatedEvent do
   use ExStreamClient.Jason
   @enforce_keys [:channel_id, :channel_member_count, :channel_type, :cid, :created_at, :type]
   defstruct [
-    :type,
     :channel,
-    :created_at,
     :channel_id,
+    :channel_member_count,
     :channel_type,
     :cid,
-    :channel_member_count
+    :created_at,
+    :type
   ]
 
   @type t :: %__MODULE__{
-          type: String.t(),
           channel: ExStreamClient.Model.ChannelResponse.t() | nil,
-          created_at: float(),
           channel_id: String.t(),
+          channel_member_count: integer(),
           channel_type: String.t(),
           cid: String.t(),
-          channel_member_count: integer()
+          created_at: float(),
+          type: String.t()
         }
 end

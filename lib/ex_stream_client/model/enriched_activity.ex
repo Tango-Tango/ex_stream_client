@@ -3,32 +3,32 @@ defmodule ExStreamClient.Model.EnrichedActivity do
   use ExStreamClient.Jason
 
   defstruct [
-    :id,
-    :origin,
-    :target,
-    :to,
-    :object,
-    :reaction_counts,
-    :own_reactions,
-    :latest_reactions,
-    :score,
     :actor,
     :foreign_id,
+    :id,
+    :latest_reactions,
+    :object,
+    :origin,
+    :own_reactions,
+    :reaction_counts,
+    :score,
+    :target,
+    :to,
     :verb
   ]
 
   @type t :: %__MODULE__{
-          id: String.t() | nil,
-          origin: ExStreamClient.Model.Data.t() | nil,
-          target: ExStreamClient.Model.Data.t() | nil,
-          to: [String.t()] | nil,
-          object: ExStreamClient.Model.Data.t() | nil,
-          reaction_counts: map() | nil,
-          own_reactions: map() | nil,
-          latest_reactions: map() | nil,
-          score: float() | nil,
           actor: ExStreamClient.Model.Data.t() | nil,
           foreign_id: String.t() | nil,
+          id: String.t() | nil,
+          latest_reactions: map() | nil,
+          object: ExStreamClient.Model.Data.t() | nil,
+          origin: ExStreamClient.Model.Data.t() | nil,
+          own_reactions: map() | nil,
+          reaction_counts: map() | nil,
+          score: float() | nil,
+          target: ExStreamClient.Model.Data.t() | nil,
+          to: [String.t()] | nil,
           verb: String.t() | nil
         }
 end

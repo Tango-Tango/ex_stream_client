@@ -3,19 +3,19 @@ defmodule ExStreamClient.Model.FirebaseConfigFields do
   use ExStreamClient.Jason
   @enforce_keys [:enabled]
   defstruct [
-    :enabled,
     :apn_template,
     :credentials_json,
     :data_template,
+    :enabled,
     :notification_template,
     :server_key
   ]
 
   @type t :: %__MODULE__{
-          enabled: boolean(),
           apn_template: String.t() | nil,
           credentials_json: String.t() | nil,
           data_template: String.t() | nil,
+          enabled: boolean(),
           notification_template: String.t() | nil,
           server_key: String.t() | nil
         }

@@ -3,8 +3,8 @@ defmodule ExStreamClient.Model.CheckPushResponse do
   use ExStreamClient.Jason
   @enforce_keys [:duration]
   defstruct [
-    :duration,
     :device_errors,
+    :duration,
     :general_errors,
     :rendered_apn_template,
     :rendered_firebase_template,
@@ -13,8 +13,8 @@ defmodule ExStreamClient.Model.CheckPushResponse do
   ]
 
   @type t :: %__MODULE__{
-          duration: String.t(),
           device_errors: map() | nil,
+          duration: String.t(),
           general_errors: [String.t()] | nil,
           rendered_apn_template: String.t() | nil,
           rendered_firebase_template: String.t() | nil,

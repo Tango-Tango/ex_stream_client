@@ -2,13 +2,13 @@ defmodule ExStreamClient.Model.UpsertPushTemplateRequest do
   @moduledoc "Schema representing a UpsertPushTemplateRequest"
   use ExStreamClient.Jason
   @enforce_keys [:event_type, :push_provider_type]
-  defstruct [:template, :push_provider_name, :push_provider_type, :event_type, :enable_push]
+  defstruct [:enable_push, :event_type, :push_provider_name, :push_provider_type, :template]
 
   @type t :: %__MODULE__{
-          template: String.t() | nil,
+          enable_push: boolean() | nil,
+          event_type: :"reaction.new" | :"message.updated" | :"message.new",
           push_provider_name: String.t() | nil,
           push_provider_type: :apn | :firebase,
-          event_type: :"reaction.new" | :"message.updated" | :"message.new",
-          enable_push: boolean() | nil
+          template: String.t() | nil
         }
 end

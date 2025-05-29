@@ -3,34 +3,34 @@ defmodule ExStreamClient.Model.DraftPayloadResponse do
   use ExStreamClient.Jason
   @enforce_keys [:custom, :id, :text]
   defstruct [
-    :id,
-    :silent,
-    :type,
-    :text,
-    :custom,
     :attachments,
+    :custom,
     :html,
-    :mml,
-    :quoted_message_id,
+    :id,
     :mentioned_users,
-    :show_in_channel,
+    :mml,
     :parent_id,
-    :poll_id
+    :poll_id,
+    :quoted_message_id,
+    :show_in_channel,
+    :silent,
+    :text,
+    :type
   ]
 
   @type t :: %__MODULE__{
-          id: String.t(),
-          silent: boolean() | nil,
-          type: String.t() | nil,
-          text: String.t(),
-          custom: map(),
           attachments: [ExStreamClient.Model.Attachment.t()] | nil,
+          custom: map(),
           html: String.t() | nil,
-          mml: String.t() | nil,
-          quoted_message_id: String.t() | nil,
+          id: String.t(),
           mentioned_users: [ExStreamClient.Model.UserResponse.t()] | nil,
-          show_in_channel: boolean() | nil,
+          mml: String.t() | nil,
           parent_id: String.t() | nil,
-          poll_id: String.t() | nil
+          poll_id: String.t() | nil,
+          quoted_message_id: String.t() | nil,
+          show_in_channel: boolean() | nil,
+          silent: boolean() | nil,
+          text: String.t(),
+          type: String.t() | nil
         }
 end

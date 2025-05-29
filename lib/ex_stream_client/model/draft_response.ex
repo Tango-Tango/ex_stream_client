@@ -3,22 +3,22 @@ defmodule ExStreamClient.Model.DraftResponse do
   use ExStreamClient.Jason
   @enforce_keys [:channel_cid, :created_at, :message]
   defstruct [
-    :message,
     :channel,
-    :created_at,
-    :parent_id,
-    :quoted_message,
     :channel_cid,
-    :parent_message
+    :created_at,
+    :message,
+    :parent_id,
+    :parent_message,
+    :quoted_message
   ]
 
   @type t :: %__MODULE__{
-          message: ExStreamClient.Model.DraftPayloadResponse.t(),
           channel: ExStreamClient.Model.ChannelResponse.t() | nil,
-          created_at: float(),
-          parent_id: String.t() | nil,
-          quoted_message: ExStreamClient.Model.MessageResponse.t() | nil,
           channel_cid: String.t(),
-          parent_message: ExStreamClient.Model.MessageResponse.t() | nil
+          created_at: float(),
+          message: ExStreamClient.Model.DraftPayloadResponse.t(),
+          parent_id: String.t() | nil,
+          parent_message: ExStreamClient.Model.MessageResponse.t() | nil,
+          quoted_message: ExStreamClient.Model.MessageResponse.t() | nil
         }
 end

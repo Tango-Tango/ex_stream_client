@@ -3,27 +3,27 @@ defmodule ExStreamClient.Model.UserRequest do
   use ExStreamClient.Jason
   @enforce_keys [:id]
   defstruct [
-    :id,
-    :name,
-    :image,
-    :role,
-    :language,
     :custom,
+    :id,
+    :image,
     :invisible,
+    :language,
+    :name,
     :privacy_settings,
+    :role,
     :teams,
     :teams_role
   ]
 
   @type t :: %__MODULE__{
-          id: String.t(),
-          name: String.t() | nil,
-          image: String.t() | nil,
-          role: String.t() | nil,
-          language: String.t() | nil,
           custom: map() | nil,
+          id: String.t(),
+          image: String.t() | nil,
           invisible: boolean() | nil,
+          language: String.t() | nil,
+          name: String.t() | nil,
           privacy_settings: ExStreamClient.Model.PrivacySettingsResponse.t() | nil,
+          role: String.t() | nil,
           teams: [String.t()] | nil,
           teams_role: map() | nil
         }

@@ -3,10 +3,10 @@ defmodule ExStreamClient.Model.STTEgressConfig do
   use ExStreamClient.Jason
 
   defstruct [
-    :language,
-    :external_storage,
-    :storage_name,
     :closed_captions_enabled,
+    :external_storage,
+    :language,
+    :storage_name,
     :translation_languages,
     :translations_enabled,
     :upload_transcriptions,
@@ -14,10 +14,10 @@ defmodule ExStreamClient.Model.STTEgressConfig do
   ]
 
   @type t :: %__MODULE__{
-          language: String.t() | nil,
-          external_storage: ExStreamClient.Model.ExternalStorage.t() | nil,
-          storage_name: String.t() | nil,
           closed_captions_enabled: boolean() | nil,
+          external_storage: ExStreamClient.Model.ExternalStorage.t() | nil,
+          language: String.t() | nil,
+          storage_name: String.t() | nil,
           translation_languages: [String.t()] | nil,
           translations_enabled: boolean() | nil,
           upload_transcriptions: boolean() | nil,

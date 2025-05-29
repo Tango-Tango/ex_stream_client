@@ -1,13 +1,13 @@
 defmodule ExStreamClient.Model.QueryModerationFlagsRequest do
   @moduledoc "Schema representing a QueryModerationFlagsRequest"
   use ExStreamClient.Jason
-  defstruct [:next, :prev, :sort, :filter, :limit]
+  defstruct [:filter, :limit, :next, :prev, :sort]
 
   @type t :: %__MODULE__{
+          filter: map() | nil,
+          limit: integer() | nil,
           next: String.t() | nil,
           prev: String.t() | nil,
-          sort: [ExStreamClient.Model.SortParam.t()] | nil,
-          filter: map() | nil,
-          limit: integer() | nil
+          sort: [ExStreamClient.Model.SortParam.t()] | nil
         }
 end

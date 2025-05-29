@@ -3,28 +3,28 @@ defmodule ExStreamClient.Model.Permission do
   use ExStreamClient.Jason
   @enforce_keys [:action, :custom, :description, :id, :level, :name, :owner, :same_team, :tags]
   defstruct [
+    :action,
+    :condition,
+    :custom,
+    :description,
     :id,
+    :level,
     :name,
     :owner,
-    :level,
-    :description,
-    :action,
-    :tags,
-    :custom,
     :same_team,
-    :condition
+    :tags
   ]
 
   @type t :: %__MODULE__{
+          action: String.t(),
+          condition: map() | nil,
+          custom: boolean(),
+          description: String.t(),
           id: String.t(),
+          level: :channel | :app,
           name: String.t(),
           owner: boolean(),
-          level: :channel | :app,
-          description: String.t(),
-          action: String.t(),
-          tags: [String.t()],
-          custom: boolean(),
           same_team: boolean(),
-          condition: map() | nil
+          tags: [String.t()]
         }
 end

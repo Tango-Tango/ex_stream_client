@@ -18,11 +18,9 @@ defmodule ExStreamClient.Model.CreatePollRequest do
     :voting_visibility
   ]
 
-  @nested_components %{
-    user: ExStreamClient.Model.UserRequest,
-    options: ExStreamClient.Model.PollOptionInput,
-    voting_visibility: :atom
-  }
+  @nested_components options: ExStreamClient.Model.PollOptionInput,
+                     user: ExStreamClient.Model.UserRequest,
+                     voting_visibility: :atom
   def nested_components do
     @nested_components
   end

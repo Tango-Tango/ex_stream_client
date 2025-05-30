@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.BackstageSettings do
   use ExStreamClient.Jason
   @enforce_keys [:enabled]
   defstruct [:enabled, :join_ahead_time_seconds]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

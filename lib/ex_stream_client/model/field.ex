@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.Field do
   use ExStreamClient.Jason
   @enforce_keys [:short, :title, :value]
   defstruct [:short, :title, :value]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

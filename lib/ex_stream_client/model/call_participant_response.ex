@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.CallParticipantResponse do
   use ExStreamClient.Jason
   @enforce_keys [:joined_at, :role, :user, :user_session_id]
   defstruct [:joined_at, :role, :user, :user_session_id]
-  @nested_components %{user: ExStreamClient.Model.UserResponse}
+  @nested_components user: ExStreamClient.Model.UserResponse
   def nested_components do
     @nested_components
   end

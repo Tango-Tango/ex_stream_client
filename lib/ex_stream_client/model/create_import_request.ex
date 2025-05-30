@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.CreateImportRequest do
   use ExStreamClient.Jason
   @enforce_keys [:mode, :path]
   defstruct [:mode, :path]
-  @nested_components %{mode: :atom}
+  @nested_components mode: :atom
   def nested_components do
     @nested_components
   end

@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.PollOptionRequest do
   use ExStreamClient.Jason
   @enforce_keys [:id]
   defstruct [:custom, :id, :text]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

@@ -21,7 +21,7 @@ defmodule ExStreamClient.Model.MessageHistoryEntryResponse do
     :text
   ]
 
-  @nested_components %{attachments: ExStreamClient.Model.Attachment}
+  @nested_components attachments: ExStreamClient.Model.Attachment
   def nested_components do
     @nested_components
   end

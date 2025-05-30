@@ -2,7 +2,7 @@ defmodule ExStreamClient.Model.UpdateChannelPartialRequest do
   @moduledoc "Schema representing a UpdateChannelPartialRequest"
   use ExStreamClient.Jason
   defstruct [:set, :unset, :user, :user_id]
-  @nested_components %{user: ExStreamClient.Model.UserRequest}
+  @nested_components user: ExStreamClient.Model.UserRequest
   def nested_components do
     @nested_components
   end

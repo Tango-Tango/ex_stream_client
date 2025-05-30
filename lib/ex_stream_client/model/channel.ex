@@ -38,14 +38,12 @@ defmodule ExStreamClient.Model.Channel do
     :updated_at
   ]
 
-  @nested_components %{
-    config: ExStreamClient.Model.ChannelConfig,
-    created_by: ExStreamClient.Model.User,
-    members: ExStreamClient.Model.ChannelMember,
-    config_overrides: ExStreamClient.Model.ConfigOverrides,
-    invites: ExStreamClient.Model.ChannelMember,
-    truncated_by: ExStreamClient.Model.User
-  }
+  @nested_components config: ExStreamClient.Model.ChannelConfig,
+                     config_overrides: ExStreamClient.Model.ConfigOverrides,
+                     created_by: ExStreamClient.Model.User,
+                     invites: ExStreamClient.Model.ChannelMember,
+                     members: ExStreamClient.Model.ChannelMember,
+                     truncated_by: ExStreamClient.Model.User
   def nested_components do
     @nested_components
   end

@@ -52,13 +52,11 @@ defmodule ExStreamClient.Model.OwnUserResponse do
     :updated_at
   ]
 
-  @nested_components %{
-    privacy_settings: ExStreamClient.Model.PrivacySettingsResponse,
-    mutes: ExStreamClient.Model.UserMuteResponse,
-    push_preferences: ExStreamClient.Model.PushPreferences,
-    devices: ExStreamClient.Model.DeviceResponse,
-    channel_mutes: ExStreamClient.Model.ChannelMute
-  }
+  @nested_components channel_mutes: ExStreamClient.Model.ChannelMute,
+                     devices: ExStreamClient.Model.DeviceResponse,
+                     mutes: ExStreamClient.Model.UserMuteResponse,
+                     privacy_settings: ExStreamClient.Model.PrivacySettingsResponse,
+                     push_preferences: ExStreamClient.Model.PushPreferences
   def nested_components do
     @nested_components
   end

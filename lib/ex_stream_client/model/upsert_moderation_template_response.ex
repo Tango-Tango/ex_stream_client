@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.UpsertModerationTemplateResponse do
   use ExStreamClient.Jason
   @enforce_keys [:created_at, :duration, :name, :updated_at]
   defstruct [:config, :created_at, :duration, :name, :updated_at]
-  @nested_components %{config: ExStreamClient.Model.FeedsModerationTemplateConfig}
+  @nested_components config: ExStreamClient.Model.FeedsModerationTemplateConfig
   def nested_components do
     @nested_components
   end

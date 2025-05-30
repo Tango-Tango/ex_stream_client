@@ -68,18 +68,16 @@ defmodule ExStreamClient.Model.Message do
     :user
   ]
 
-  @nested_components %{
-    user: ExStreamClient.Model.User,
-    attachments: ExStreamClient.Model.Attachment,
-    mentioned_users: ExStreamClient.Model.User,
-    quoted_message: ExStreamClient.Model.Message,
-    latest_reactions: ExStreamClient.Model.Reaction,
-    own_reactions: ExStreamClient.Model.Reaction,
-    moderation: ExStreamClient.Model.ModerationV2Response,
-    pinned_by: ExStreamClient.Model.User,
-    poll: ExStreamClient.Model.Poll,
-    thread_participants: ExStreamClient.Model.User
-  }
+  @nested_components attachments: ExStreamClient.Model.Attachment,
+                     latest_reactions: ExStreamClient.Model.Reaction,
+                     mentioned_users: ExStreamClient.Model.User,
+                     moderation: ExStreamClient.Model.ModerationV2Response,
+                     own_reactions: ExStreamClient.Model.Reaction,
+                     pinned_by: ExStreamClient.Model.User,
+                     poll: ExStreamClient.Model.Poll,
+                     quoted_message: ExStreamClient.Model.Message,
+                     thread_participants: ExStreamClient.Model.User,
+                     user: ExStreamClient.Model.User
   def nested_components do
     @nested_components
   end

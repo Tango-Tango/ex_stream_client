@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.RingSettings do
   use ExStreamClient.Jason
   @enforce_keys [:auto_cancel_timeout_ms, :incoming_call_timeout_ms, :missed_call_timeout_ms]
   defstruct [:auto_cancel_timeout_ms, :incoming_call_timeout_ms, :missed_call_timeout_ms]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

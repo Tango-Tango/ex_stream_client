@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.UpsertPushProviderResponse do
   use ExStreamClient.Jason
   @enforce_keys [:duration, :push_provider]
   defstruct [:duration, :push_provider]
-  @nested_components %{push_provider: ExStreamClient.Model.PushProviderResponse}
+  @nested_components push_provider: ExStreamClient.Model.PushProviderResponse
   def nested_components do
     @nested_components
   end

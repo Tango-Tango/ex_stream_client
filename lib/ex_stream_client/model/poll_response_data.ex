@@ -46,12 +46,10 @@ defmodule ExStreamClient.Model.PollResponseData do
     :voting_visibility
   ]
 
-  @nested_components %{
-    options: ExStreamClient.Model.PollOptionResponseData,
-    created_by: ExStreamClient.Model.UserResponse,
-    latest_answers: ExStreamClient.Model.PollVoteResponseData,
-    own_votes: ExStreamClient.Model.PollVoteResponseData
-  }
+  @nested_components created_by: ExStreamClient.Model.UserResponse,
+                     latest_answers: ExStreamClient.Model.PollVoteResponseData,
+                     options: ExStreamClient.Model.PollOptionResponseData,
+                     own_votes: ExStreamClient.Model.PollVoteResponseData
   def nested_components do
     @nested_components
   end

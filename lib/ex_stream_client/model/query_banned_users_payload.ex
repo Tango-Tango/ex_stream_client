@@ -4,10 +4,8 @@ defmodule ExStreamClient.Model.QueryBannedUsersPayload do
   @enforce_keys [:filter_conditions]
   defstruct [:exclude_expired_bans, :filter_conditions, :limit, :offset, :sort, :user, :user_id]
 
-  @nested_components %{
-    user: ExStreamClient.Model.UserRequest,
-    sort: ExStreamClient.Model.SortParamRequest
-  }
+  @nested_components sort: ExStreamClient.Model.SortParamRequest,
+                     user: ExStreamClient.Model.UserRequest
   def nested_components do
     @nested_components
   end

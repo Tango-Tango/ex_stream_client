@@ -4,10 +4,8 @@ defmodule ExStreamClient.Model.BroadcastSettingsResponse do
   @enforce_keys [:enabled, :hls, :rtmp]
   defstruct [:enabled, :hls, :rtmp]
 
-  @nested_components %{
-    hls: ExStreamClient.Model.HLSSettingsResponse,
-    rtmp: ExStreamClient.Model.RTMPSettingsResponse
-  }
+  @nested_components hls: ExStreamClient.Model.HLSSettingsResponse,
+                     rtmp: ExStreamClient.Model.RTMPSettingsResponse
   def nested_components do
     @nested_components
   end

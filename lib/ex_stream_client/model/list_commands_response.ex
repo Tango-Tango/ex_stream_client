@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.ListCommandsResponse do
   use ExStreamClient.Jason
   @enforce_keys [:commands, :duration]
   defstruct [:commands, :duration]
-  @nested_components %{commands: ExStreamClient.Model.Command}
+  @nested_components commands: ExStreamClient.Model.Command
   def nested_components do
     @nested_components
   end

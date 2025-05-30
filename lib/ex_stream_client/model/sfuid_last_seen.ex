@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.SFUIDLastSeen do
   use ExStreamClient.Jason
   @enforce_keys [:id, :last_seen, :process_start_time]
   defstruct [:id, :last_seen, :process_start_time]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

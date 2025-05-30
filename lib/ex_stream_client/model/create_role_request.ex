@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.CreateRoleRequest do
   use ExStreamClient.Jason
   @enforce_keys [:name]
   defstruct [:name]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

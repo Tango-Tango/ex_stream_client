@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.ModerationResponse do
   use ExStreamClient.Jason
   @enforce_keys [:action, :explicit, :spam, :toxic]
   defstruct [:action, :explicit, :spam, :toxic]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

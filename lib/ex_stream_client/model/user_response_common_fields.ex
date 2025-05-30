@@ -34,7 +34,7 @@ defmodule ExStreamClient.Model.UserResponseCommonFields do
     :updated_at
   ]
 
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

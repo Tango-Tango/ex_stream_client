@@ -15,7 +15,7 @@ defmodule ExStreamClient.Model.UserRequest do
     :teams_role
   ]
 
-  @nested_components %{privacy_settings: ExStreamClient.Model.PrivacySettingsResponse}
+  @nested_components privacy_settings: ExStreamClient.Model.PrivacySettingsResponse
   def nested_components do
     @nested_components
   end

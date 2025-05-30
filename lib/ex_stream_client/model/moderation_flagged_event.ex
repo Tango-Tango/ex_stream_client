@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.ModerationFlaggedEvent do
   use ExStreamClient.Jason
   @enforce_keys [:created_at, :type]
   defstruct [:created_at, :item, :object_id, :type, :user]
-  @nested_components %{user: ExStreamClient.Model.User}
+  @nested_components user: ExStreamClient.Model.User
   def nested_components do
     @nested_components
   end

@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.QueryDraftsResponse do
   use ExStreamClient.Jason
   @enforce_keys [:drafts, :duration]
   defstruct [:drafts, :duration, :next, :prev]
-  @nested_components %{drafts: ExStreamClient.Model.DraftResponse}
+  @nested_components drafts: ExStreamClient.Model.DraftResponse
   def nested_components do
     @nested_components
   end

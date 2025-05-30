@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.CustomCheckResponse do
   use ExStreamClient.Jason
   @enforce_keys [:duration, :id, :status]
   defstruct [:duration, :id, :item, :status]
-  @nested_components %{item: ExStreamClient.Model.ReviewQueueItemResponse}
+  @nested_components item: ExStreamClient.Model.ReviewQueueItemResponse
   def nested_components do
     @nested_components
   end

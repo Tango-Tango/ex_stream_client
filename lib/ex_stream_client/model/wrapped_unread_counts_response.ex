@@ -19,11 +19,9 @@ defmodule ExStreamClient.Model.WrappedUnreadCountsResponse do
     :total_unread_threads_count
   ]
 
-  @nested_components %{
-    threads: ExStreamClient.Model.UnreadCountsThread,
-    channel_type: ExStreamClient.Model.UnreadCountsChannelType,
-    channels: ExStreamClient.Model.UnreadCountsChannel
-  }
+  @nested_components channel_type: ExStreamClient.Model.UnreadCountsChannelType,
+                     channels: ExStreamClient.Model.UnreadCountsChannel,
+                     threads: ExStreamClient.Model.UnreadCountsThread
   def nested_components do
     @nested_components
   end

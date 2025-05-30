@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.ReactivateUsersRequest do
   use ExStreamClient.Jason
   @enforce_keys [:user_ids]
   defstruct [:created_by_id, :restore_channels, :restore_messages, :user_ids]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

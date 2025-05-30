@@ -15,7 +15,7 @@ defmodule ExStreamClient.Model.APNConfigFields do
     :team_id
   ]
 
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

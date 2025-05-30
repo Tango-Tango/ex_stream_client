@@ -30,11 +30,9 @@ defmodule ExStreamClient.Model.Attachment do
     :type
   ]
 
-  @nested_components %{
-    fields: ExStreamClient.Model.Field,
-    actions: ExStreamClient.Model.Action,
-    giphy: ExStreamClient.Model.Images
-  }
+  @nested_components actions: ExStreamClient.Model.Action,
+                     fields: ExStreamClient.Model.Field,
+                     giphy: ExStreamClient.Model.Images
   def nested_components do
     @nested_components
   end

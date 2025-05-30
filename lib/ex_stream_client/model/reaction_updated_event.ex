@@ -14,11 +14,9 @@ defmodule ExStreamClient.Model.ReactionUpdatedEvent do
     :user
   ]
 
-  @nested_components %{
-    message: ExStreamClient.Model.Message,
-    user: ExStreamClient.Model.User,
-    reaction: ExStreamClient.Model.Reaction
-  }
+  @nested_components message: ExStreamClient.Model.Message,
+                     reaction: ExStreamClient.Model.Reaction,
+                     user: ExStreamClient.Model.User
   def nested_components do
     @nested_components
   end

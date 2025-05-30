@@ -64,7 +64,8 @@ defmodule ExStreamClient.Tools.Codegen.GenerateModel do
 
           if type != nil, do: Map.put(acc, String.to_atom(name), type), else: acc
         end)
-        |> Map.new()
+        |> Enum.sort_by(fn {name, _type} -> to_string(name) end)
+        |> Keyword.new()
 
       struct_ast =
         if required_field_keys == [] do

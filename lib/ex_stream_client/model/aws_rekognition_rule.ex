@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.AWSRekognitionRule do
   use ExStreamClient.Jason
   @enforce_keys [:action, :label, :min_confidence]
   defstruct [:action, :label, :min_confidence]
-  @nested_components %{action: :atom}
+  @nested_components action: :atom
   def nested_components do
     @nested_components
   end

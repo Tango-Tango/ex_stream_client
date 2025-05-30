@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.DeactivateUserResponse do
   use ExStreamClient.Jason
   @enforce_keys [:duration]
   defstruct [:duration, :user]
-  @nested_components %{user: ExStreamClient.Model.UserResponse}
+  @nested_components user: ExStreamClient.Model.UserResponse
   def nested_components do
     @nested_components
   end

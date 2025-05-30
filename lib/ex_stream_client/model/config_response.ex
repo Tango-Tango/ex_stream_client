@@ -18,17 +18,16 @@ defmodule ExStreamClient.Model.ConfigResponse do
     :velocity_filter_config
   ]
 
-  @nested_components %{
-    ai_image_config: ExStreamClient.Model.AIImageConfig,
-    ai_text_config: ExStreamClient.Model.AITextConfig,
-    ai_video_config: ExStreamClient.Model.AIVideoConfig,
-    automod_platform_circumvention_config:
-      ExStreamClient.Model.AutomodPlatformCircumventionConfig,
-    automod_semantic_filters_config: ExStreamClient.Model.AutomodSemanticFiltersConfig,
-    automod_toxicity_config: ExStreamClient.Model.AutomodToxicityConfig,
-    block_list_config: ExStreamClient.Model.BlockListConfig,
-    velocity_filter_config: ExStreamClient.Model.VelocityFilterConfig
-  }
+  @nested_components ai_image_config: ExStreamClient.Model.AIImageConfig,
+                     ai_text_config: ExStreamClient.Model.AITextConfig,
+                     ai_video_config: ExStreamClient.Model.AIVideoConfig,
+                     automod_platform_circumvention_config:
+                       ExStreamClient.Model.AutomodPlatformCircumventionConfig,
+                     automod_semantic_filters_config:
+                       ExStreamClient.Model.AutomodSemanticFiltersConfig,
+                     automod_toxicity_config: ExStreamClient.Model.AutomodToxicityConfig,
+                     block_list_config: ExStreamClient.Model.BlockListConfig,
+                     velocity_filter_config: ExStreamClient.Model.VelocityFilterConfig
   def nested_components do
     @nested_components
   end

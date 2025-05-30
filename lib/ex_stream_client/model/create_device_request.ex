@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.CreateDeviceRequest do
   use ExStreamClient.Jason
   @enforce_keys [:id, :push_provider]
   defstruct [:id, :push_provider, :push_provider_name, :user, :user_id, :voip_token]
-  @nested_components %{user: ExStreamClient.Model.UserRequest, push_provider: :atom}
+  @nested_components push_provider: :atom, user: ExStreamClient.Model.UserRequest
   def nested_components do
     @nested_components
   end

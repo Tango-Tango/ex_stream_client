@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.RTMPLocation do
   use ExStreamClient.Jason
   @enforce_keys [:name, :stream_key, :stream_url]
   defstruct [:name, :stream_key, :stream_url]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

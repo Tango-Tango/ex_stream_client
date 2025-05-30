@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.ImageData do
   use ExStreamClient.Jason
   @enforce_keys [:frames, :height, :size, :url, :width]
   defstruct [:frames, :height, :size, :url, :width]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

@@ -16,7 +16,7 @@ defmodule ExStreamClient.Model.UserBannedEvent do
     :user
   ]
 
-  @nested_components %{user: ExStreamClient.Model.User, created_by: ExStreamClient.Model.User}
+  @nested_components created_by: ExStreamClient.Model.User, user: ExStreamClient.Model.User
   def nested_components do
     @nested_components
   end

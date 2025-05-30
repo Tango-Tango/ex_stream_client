@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.QuerySegmentsRequest do
   use ExStreamClient.Jason
   @enforce_keys [:filter]
   defstruct [:filter, :limit, :next, :prev, :sort]
-  @nested_components %{sort: ExStreamClient.Model.SortParamRequest}
+  @nested_components sort: ExStreamClient.Model.SortParamRequest
   def nested_components do
     @nested_components
   end

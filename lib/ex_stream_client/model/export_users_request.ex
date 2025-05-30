@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.ExportUsersRequest do
   use ExStreamClient.Jason
   @enforce_keys [:user_ids]
   defstruct [:user_ids]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

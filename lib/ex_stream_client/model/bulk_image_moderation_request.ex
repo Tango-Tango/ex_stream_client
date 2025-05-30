@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.BulkImageModerationRequest do
   use ExStreamClient.Jason
   @enforce_keys [:csv_file]
   defstruct [:csv_file]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.FrameRecordingResponse do
   use ExStreamClient.Jason
   @enforce_keys [:status]
   defstruct [:status]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

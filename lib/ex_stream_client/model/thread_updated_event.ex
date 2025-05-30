@@ -3,11 +3,7 @@ defmodule ExStreamClient.Model.ThreadUpdatedEvent do
   use ExStreamClient.Jason
   @enforce_keys [:channel_id, :channel_type, :cid, :created_at, :type]
   defstruct [:channel_id, :channel_type, :cid, :created_at, :thread, :type, :user]
-
-  @nested_components %{
-    user: ExStreamClient.Model.User,
-    thread: ExStreamClient.Model.ThreadResponse
-  }
+  @nested_components thread: ExStreamClient.Model.ThreadResponse, user: ExStreamClient.Model.User
   def nested_components do
     @nested_components
   end

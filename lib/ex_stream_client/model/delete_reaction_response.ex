@@ -4,10 +4,8 @@ defmodule ExStreamClient.Model.DeleteReactionResponse do
   @enforce_keys [:duration, :message, :reaction]
   defstruct [:duration, :message, :reaction]
 
-  @nested_components %{
-    message: ExStreamClient.Model.MessageResponse,
-    reaction: ExStreamClient.Model.ReactionResponse
-  }
+  @nested_components message: ExStreamClient.Model.MessageResponse,
+                     reaction: ExStreamClient.Model.ReactionResponse
   def nested_components do
     @nested_components
   end

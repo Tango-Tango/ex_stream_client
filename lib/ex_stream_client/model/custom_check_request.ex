@@ -12,11 +12,9 @@ defmodule ExStreamClient.Model.CustomCheckRequest do
     :user_id
   ]
 
-  @nested_components %{
-    flags: ExStreamClient.Model.CustomCheckFlag,
-    user: ExStreamClient.Model.UserRequest,
-    moderation_payload: ExStreamClient.Model.ModerationPayload
-  }
+  @nested_components flags: ExStreamClient.Model.CustomCheckFlag,
+                     moderation_payload: ExStreamClient.Model.ModerationPayload,
+                     user: ExStreamClient.Model.UserRequest
   def nested_components do
     @nested_components
   end

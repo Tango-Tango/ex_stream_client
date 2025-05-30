@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.ListDevicesResponse do
   use ExStreamClient.Jason
   @enforce_keys [:devices, :duration]
   defstruct [:devices, :duration]
-  @nested_components %{devices: ExStreamClient.Model.DeviceResponse}
+  @nested_components devices: ExStreamClient.Model.DeviceResponse
   def nested_components do
     @nested_components
   end

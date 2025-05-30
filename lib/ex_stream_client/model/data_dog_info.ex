@@ -2,7 +2,7 @@ defmodule ExStreamClient.Model.DataDogInfo do
   @moduledoc "Schema representing a DataDogInfo"
   use ExStreamClient.Jason
   defstruct [:api_key, :enabled, :site]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

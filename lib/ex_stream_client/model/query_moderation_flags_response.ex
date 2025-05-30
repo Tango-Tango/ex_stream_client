@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.QueryModerationFlagsResponse do
   use ExStreamClient.Jason
   @enforce_keys [:duration, :flags]
   defstruct [:duration, :flags, :next, :prev]
-  @nested_components %{flags: ExStreamClient.Model.ModerationFlagResponse}
+  @nested_components flags: ExStreamClient.Model.ModerationFlagResponse
   def nested_components do
     @nested_components
   end

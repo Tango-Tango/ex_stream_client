@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.AsyncBulkImageModerationEvent do
   use ExStreamClient.Jason
   @enforce_keys [:created_at, :custom, :finished_at, :started_at, :task_id, :type, :url]
   defstruct [:created_at, :custom, :finished_at, :received_at, :started_at, :task_id, :type, :url]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

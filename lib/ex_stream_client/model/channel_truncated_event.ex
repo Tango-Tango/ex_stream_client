@@ -12,7 +12,7 @@ defmodule ExStreamClient.Model.ChannelTruncatedEvent do
     :type
   ]
 
-  @nested_components %{channel: ExStreamClient.Model.ChannelResponse}
+  @nested_components channel: ExStreamClient.Model.ChannelResponse
   def nested_components do
     @nested_components
   end

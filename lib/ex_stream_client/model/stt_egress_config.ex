@@ -13,7 +13,7 @@ defmodule ExStreamClient.Model.STTEgressConfig do
     :whisper_server_base_url
   ]
 
-  @nested_components %{external_storage: ExStreamClient.Model.ExternalStorage}
+  @nested_components external_storage: ExStreamClient.Model.ExternalStorage
   def nested_components do
     @nested_components
   end

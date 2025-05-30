@@ -4,11 +4,9 @@ defmodule ExStreamClient.Model.UpdateExternalStorageRequest do
   @enforce_keys [:bucket, :storage_type]
   defstruct [:aws_s3, :azure_blob, :bucket, :gcs_credentials, :path, :storage_type]
 
-  @nested_components %{
-    storage_type: :atom,
-    aws_s3: ExStreamClient.Model.S3Request,
-    azure_blob: ExStreamClient.Model.AzureRequest
-  }
+  @nested_components aws_s3: ExStreamClient.Model.S3Request,
+                     azure_blob: ExStreamClient.Model.AzureRequest,
+                     storage_type: :atom
   def nested_components do
     @nested_components
   end

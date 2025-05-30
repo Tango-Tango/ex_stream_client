@@ -20,14 +20,12 @@ defmodule ExStreamClient.Model.UpdateChannelRequest do
     :user_id
   ]
 
-  @nested_components %{
-    data: ExStreamClient.Model.ChannelInput,
-    message: ExStreamClient.Model.MessageRequest,
-    user: ExStreamClient.Model.UserRequest,
-    invites: ExStreamClient.Model.ChannelMember,
-    add_members: ExStreamClient.Model.ChannelMember,
-    assign_roles: ExStreamClient.Model.ChannelMember
-  }
+  @nested_components add_members: ExStreamClient.Model.ChannelMember,
+                     assign_roles: ExStreamClient.Model.ChannelMember,
+                     data: ExStreamClient.Model.ChannelInput,
+                     invites: ExStreamClient.Model.ChannelMember,
+                     message: ExStreamClient.Model.MessageRequest,
+                     user: ExStreamClient.Model.UserRequest
   def nested_components do
     @nested_components
   end

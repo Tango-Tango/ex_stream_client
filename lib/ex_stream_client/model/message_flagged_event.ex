@@ -4,12 +4,10 @@ defmodule ExStreamClient.Model.MessageFlaggedEvent do
   @enforce_keys [:cid, :created_at, :type]
   defstruct [:cid, :created_at, :flag, :message, :thread_participants, :type, :user]
 
-  @nested_components %{
-    message: ExStreamClient.Model.Message,
-    user: ExStreamClient.Model.User,
-    flag: ExStreamClient.Model.Flag,
-    thread_participants: ExStreamClient.Model.User
-  }
+  @nested_components flag: ExStreamClient.Model.Flag,
+                     message: ExStreamClient.Model.Message,
+                     thread_participants: ExStreamClient.Model.User,
+                     user: ExStreamClient.Model.User
   def nested_components do
     @nested_components
   end

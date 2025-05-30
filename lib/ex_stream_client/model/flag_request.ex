@@ -13,10 +13,8 @@ defmodule ExStreamClient.Model.FlagRequest do
     :user_id
   ]
 
-  @nested_components %{
-    user: ExStreamClient.Model.UserRequest,
-    moderation_payload: ExStreamClient.Model.ModerationPayload
-  }
+  @nested_components moderation_payload: ExStreamClient.Model.ModerationPayload,
+                     user: ExStreamClient.Model.UserRequest
   def nested_components do
     @nested_components
   end

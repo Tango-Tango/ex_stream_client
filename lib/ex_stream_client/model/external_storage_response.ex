@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.ExternalStorageResponse do
   use ExStreamClient.Jason
   @enforce_keys [:bucket, :name, :path, :type]
   defstruct [:bucket, :name, :path, :type]
-  @nested_components %{type: :atom}
+  @nested_components type: :atom
   def nested_components do
     @nested_components
   end

@@ -35,7 +35,7 @@ defmodule ExStreamClient.Model.EntityCreator do
     :updated_at
   ]
 
-  @nested_components %{privacy_settings: ExStreamClient.Model.PrivacySettings}
+  @nested_components privacy_settings: ExStreamClient.Model.PrivacySettings
   def nested_components do
     @nested_components
   end

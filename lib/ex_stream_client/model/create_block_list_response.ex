@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.CreateBlockListResponse do
   use ExStreamClient.Jason
   @enforce_keys [:duration]
   defstruct [:blocklist, :duration]
-  @nested_components %{blocklist: ExStreamClient.Model.BlockListResponse}
+  @nested_components blocklist: ExStreamClient.Model.BlockListResponse
   def nested_components do
     @nested_components
   end

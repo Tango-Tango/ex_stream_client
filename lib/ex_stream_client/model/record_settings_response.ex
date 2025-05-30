@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.RecordSettingsResponse do
   use ExStreamClient.Jason
   @enforce_keys [:audio_only, :layout, :mode, :quality]
   defstruct [:audio_only, :layout, :mode, :quality]
-  @nested_components %{layout: ExStreamClient.Model.LayoutSettingsResponse}
+  @nested_components layout: ExStreamClient.Model.LayoutSettingsResponse
   def nested_components do
     @nested_components
   end

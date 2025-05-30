@@ -4,11 +4,9 @@ defmodule ExStreamClient.Model.FlagUpdatedEvent do
   @enforce_keys [:created_at, :custom, :type]
   defstruct [:created_at, :created_by, :custom, :message, :received_at, :type, :user]
 
-  @nested_components %{
-    User: ExStreamClient.Model.UserResponse,
-    CreatedBy: ExStreamClient.Model.UserResponse,
-    Message: ExStreamClient.Model.MessageResponse
-  }
+  @nested_components CreatedBy: ExStreamClient.Model.UserResponse,
+                     Message: ExStreamClient.Model.MessageResponse,
+                     User: ExStreamClient.Model.UserResponse
   def nested_components do
     @nested_components
   end

@@ -2,7 +2,7 @@ defmodule ExStreamClient.Model.PollOptionInput do
   @moduledoc "Schema representing a PollOptionInput"
   use ExStreamClient.Jason
   defstruct [:custom, :text]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

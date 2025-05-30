@@ -3,10 +3,8 @@ defmodule ExStreamClient.Model.AutomodDetails do
   use ExStreamClient.Jason
   defstruct [:action, :image_labels, :message_details, :original_message_type, :result]
 
-  @nested_components %{
-    result: ExStreamClient.Model.MessageModerationResult,
-    message_details: ExStreamClient.Model.FlagMessageDetails
-  }
+  @nested_components message_details: ExStreamClient.Model.FlagMessageDetails,
+                     result: ExStreamClient.Model.MessageModerationResult
   def nested_components do
     @nested_components
   end

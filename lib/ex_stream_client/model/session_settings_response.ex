@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.SessionSettingsResponse do
   use ExStreamClient.Jason
   @enforce_keys [:inactivity_timeout_seconds]
   defstruct [:inactivity_timeout_seconds]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

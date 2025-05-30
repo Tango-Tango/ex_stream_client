@@ -15,11 +15,9 @@ defmodule ExStreamClient.Model.ChannelUpdatedEvent do
     :user
   ]
 
-  @nested_components %{
-    message: ExStreamClient.Model.Message,
-    user: ExStreamClient.Model.User,
-    channel: ExStreamClient.Model.ChannelResponse
-  }
+  @nested_components channel: ExStreamClient.Model.ChannelResponse,
+                     message: ExStreamClient.Model.Message,
+                     user: ExStreamClient.Model.User
   def nested_components do
     @nested_components
   end

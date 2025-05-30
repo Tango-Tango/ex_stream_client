@@ -2,7 +2,7 @@ defmodule ExStreamClient.Model.MarkUnreadRequest do
   @moduledoc "Schema representing a MarkUnreadRequest"
   use ExStreamClient.Jason
   defstruct [:message_id, :thread_id, :user, :user_id]
-  @nested_components %{user: ExStreamClient.Model.UserRequest}
+  @nested_components user: ExStreamClient.Model.UserRequest
   def nested_components do
     @nested_components
   end

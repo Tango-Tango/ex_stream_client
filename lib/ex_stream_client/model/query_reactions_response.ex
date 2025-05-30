@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.QueryReactionsResponse do
   use ExStreamClient.Jason
   @enforce_keys [:duration, :reactions]
   defstruct [:duration, :next, :prev, :reactions]
-  @nested_components %{reactions: ExStreamClient.Model.ReactionResponse}
+  @nested_components reactions: ExStreamClient.Model.ReactionResponse
   def nested_components do
     @nested_components
   end

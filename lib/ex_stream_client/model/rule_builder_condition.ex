@@ -2,7 +2,7 @@ defmodule ExStreamClient.Model.RuleBuilderCondition do
   @moduledoc "Schema representing a RuleBuilderCondition"
   use ExStreamClient.Jason
   defstruct [:labels, :provider, :threshold, :time_window]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

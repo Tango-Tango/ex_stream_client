@@ -4,10 +4,8 @@ defmodule ExStreamClient.Model.BlockedUserResponse do
   @enforce_keys [:blocked_user, :blocked_user_id, :created_at, :user, :user_id]
   defstruct [:blocked_user, :blocked_user_id, :created_at, :user, :user_id]
 
-  @nested_components %{
-    user: ExStreamClient.Model.UserResponse,
-    blocked_user: ExStreamClient.Model.UserResponse
-  }
+  @nested_components blocked_user: ExStreamClient.Model.UserResponse,
+                     user: ExStreamClient.Model.UserResponse
   def nested_components do
     @nested_components
   end

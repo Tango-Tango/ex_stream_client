@@ -4,10 +4,8 @@ defmodule ExStreamClient.Model.UpdateChannelPartialResponse do
   @enforce_keys [:duration, :members]
   defstruct [:channel, :duration, :members]
 
-  @nested_components %{
-    channel: ExStreamClient.Model.ChannelResponse,
-    members: ExStreamClient.Model.ChannelMemberResponse
-  }
+  @nested_components channel: ExStreamClient.Model.ChannelResponse,
+                     members: ExStreamClient.Model.ChannelMemberResponse
   def nested_components do
     @nested_components
   end

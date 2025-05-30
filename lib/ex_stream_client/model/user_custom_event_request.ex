@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.UserCustomEventRequest do
   use ExStreamClient.Jason
   @enforce_keys [:type]
   defstruct [:custom, :type]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

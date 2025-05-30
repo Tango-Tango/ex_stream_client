@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.UpdateUsersPartialRequest do
   use ExStreamClient.Jason
   @enforce_keys [:users]
   defstruct [:users]
-  @nested_components %{users: ExStreamClient.Model.UpdateUserPartialRequest}
+  @nested_components users: ExStreamClient.Model.UpdateUserPartialRequest
   def nested_components do
     @nested_components
   end

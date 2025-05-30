@@ -4,10 +4,8 @@ defmodule ExStreamClient.Model.UserMuteResponse do
   @enforce_keys [:created_at, :updated_at]
   defstruct [:created_at, :expires, :target, :updated_at, :user]
 
-  @nested_components %{
-    user: ExStreamClient.Model.UserResponse,
-    target: ExStreamClient.Model.UserResponse
-  }
+  @nested_components target: ExStreamClient.Model.UserResponse,
+                     user: ExStreamClient.Model.UserResponse
   def nested_components do
     @nested_components
   end

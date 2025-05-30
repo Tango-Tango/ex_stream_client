@@ -2,7 +2,7 @@ defmodule ExStreamClient.Model.StopCampaignRequest do
   @moduledoc "Schema representing a StopCampaignRequest"
   use ExStreamClient.Jason
   defstruct []
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

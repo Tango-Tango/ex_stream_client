@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.UpsertPushTemplateResponse do
   use ExStreamClient.Jason
   @enforce_keys [:duration]
   defstruct [:duration, :template]
-  @nested_components %{template: ExStreamClient.Model.PushTemplate}
+  @nested_components template: ExStreamClient.Model.PushTemplate
   def nested_components do
     @nested_components
   end

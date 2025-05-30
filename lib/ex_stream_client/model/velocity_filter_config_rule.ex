@@ -34,7 +34,7 @@ defmodule ExStreamClient.Model.VelocityFilterConfigRule do
     :url_only
   ]
 
-  @nested_components %{action: :atom, cascading_action: :atom}
+  @nested_components action: :atom, cascading_action: :atom
   def nested_components do
     @nested_components
   end

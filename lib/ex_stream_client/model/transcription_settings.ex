@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.TranscriptionSettings do
   use ExStreamClient.Jason
   @enforce_keys [:closed_caption_mode, :language, :mode]
   defstruct [:closed_caption_mode, :language, :mode]
-  @nested_components %{mode: :atom, language: :atom, closed_caption_mode: :atom}
+  @nested_components closed_caption_mode: :atom, language: :atom, mode: :atom
   def nested_components do
     @nested_components
   end

@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.GetApplicationResponse do
   use ExStreamClient.Jason
   @enforce_keys [:app, :duration]
   defstruct [:app, :duration]
-  @nested_components %{app: ExStreamClient.Model.AppResponseFields}
+  @nested_components app: ExStreamClient.Model.AppResponseFields
   def nested_components do
     @nested_components
   end

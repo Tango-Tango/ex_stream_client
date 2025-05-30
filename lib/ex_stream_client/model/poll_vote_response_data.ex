@@ -14,7 +14,7 @@ defmodule ExStreamClient.Model.PollVoteResponseData do
     :user_id
   ]
 
-  @nested_components %{user: ExStreamClient.Model.UserResponse}
+  @nested_components user: ExStreamClient.Model.UserResponse
   def nested_components do
     @nested_components
   end

@@ -69,20 +69,18 @@ defmodule ExStreamClient.Model.SearchResultMessage do
     :user
   ]
 
-  @nested_components %{
-    user: ExStreamClient.Model.UserResponse,
-    channel: ExStreamClient.Model.ChannelResponse,
-    attachments: ExStreamClient.Model.Attachment,
-    draft: ExStreamClient.Model.DraftResponse,
-    mentioned_users: ExStreamClient.Model.UserResponse,
-    quoted_message: ExStreamClient.Model.MessageResponse,
-    latest_reactions: ExStreamClient.Model.ReactionResponse,
-    own_reactions: ExStreamClient.Model.ReactionResponse,
-    moderation: ExStreamClient.Model.ModerationV2Response,
-    pinned_by: ExStreamClient.Model.UserResponse,
-    poll: ExStreamClient.Model.PollResponseData,
-    thread_participants: ExStreamClient.Model.UserResponse
-  }
+  @nested_components attachments: ExStreamClient.Model.Attachment,
+                     channel: ExStreamClient.Model.ChannelResponse,
+                     draft: ExStreamClient.Model.DraftResponse,
+                     latest_reactions: ExStreamClient.Model.ReactionResponse,
+                     mentioned_users: ExStreamClient.Model.UserResponse,
+                     moderation: ExStreamClient.Model.ModerationV2Response,
+                     own_reactions: ExStreamClient.Model.ReactionResponse,
+                     pinned_by: ExStreamClient.Model.UserResponse,
+                     poll: ExStreamClient.Model.PollResponseData,
+                     quoted_message: ExStreamClient.Model.MessageResponse,
+                     thread_participants: ExStreamClient.Model.UserResponse,
+                     user: ExStreamClient.Model.UserResponse
   def nested_components do
     @nested_components
   end

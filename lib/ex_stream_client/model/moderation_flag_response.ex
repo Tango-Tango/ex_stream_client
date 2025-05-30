@@ -20,11 +20,9 @@ defmodule ExStreamClient.Model.ModerationFlagResponse do
     :user
   ]
 
-  @nested_components %{
-    user: ExStreamClient.Model.UserResponse,
-    review_queue_item: ExStreamClient.Model.ReviewQueueItem,
-    moderation_payload: ExStreamClient.Model.ModerationPayload
-  }
+  @nested_components moderation_payload: ExStreamClient.Model.ModerationPayload,
+                     review_queue_item: ExStreamClient.Model.ReviewQueueItem,
+                     user: ExStreamClient.Model.UserResponse
   def nested_components do
     @nested_components
   end

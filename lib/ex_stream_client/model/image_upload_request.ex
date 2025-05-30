@@ -3,10 +3,8 @@ defmodule ExStreamClient.Model.ImageUploadRequest do
   use ExStreamClient.Jason
   defstruct [:file, :upload_sizes, :user]
 
-  @nested_components %{
-    user: ExStreamClient.Model.OnlyUserID,
-    upload_sizes: ExStreamClient.Model.ImageSize
-  }
+  @nested_components upload_sizes: ExStreamClient.Model.ImageSize,
+                     user: ExStreamClient.Model.OnlyUserID
   def nested_components do
     @nested_components
   end

@@ -11,7 +11,7 @@ defmodule ExStreamClient.Model.FirebaseConfigFields do
     :server_key
   ]
 
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

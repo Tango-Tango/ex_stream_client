@@ -11,7 +11,7 @@ defmodule ExStreamClient.Model.ExportChannelsRequest do
     :version
   ]
 
-  @nested_components %{channels: ExStreamClient.Model.ChannelExport}
+  @nested_components channels: ExStreamClient.Model.ChannelExport
   def nested_components do
     @nested_components
   end

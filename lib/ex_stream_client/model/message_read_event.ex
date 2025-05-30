@@ -15,10 +15,8 @@ defmodule ExStreamClient.Model.MessageReadEvent do
     :user
   ]
 
-  @nested_components %{
-    user: ExStreamClient.Model.UserResponseCommonFields,
-    thread: ExStreamClient.Model.ThreadResponse
-  }
+  @nested_components thread: ExStreamClient.Model.ThreadResponse,
+                     user: ExStreamClient.Model.UserResponseCommonFields
   def nested_components do
     @nested_components
   end

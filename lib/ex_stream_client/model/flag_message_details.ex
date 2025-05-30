@@ -2,7 +2,7 @@ defmodule ExStreamClient.Model.FlagMessageDetails do
   @moduledoc "Schema representing a FlagMessageDetails"
   use ExStreamClient.Jason
   defstruct [:pin_changed, :should_enrich, :skip_push, :updated_by_id]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

@@ -33,21 +33,19 @@ defmodule ExStreamClient.Model.CallSettingsResponse do
     :video
   ]
 
-  @nested_components %{
-    session: ExStreamClient.Model.SessionSettingsResponse,
-    backstage: ExStreamClient.Model.BackstageSettingsResponse,
-    recording: ExStreamClient.Model.RecordSettingsResponse,
-    thumbnails: ExStreamClient.Model.ThumbnailsSettingsResponse,
-    audio: ExStreamClient.Model.AudioSettingsResponse,
-    broadcasting: ExStreamClient.Model.BroadcastSettingsResponse,
-    frame_recording: ExStreamClient.Model.FrameRecordingSettingsResponse,
-    geofencing: ExStreamClient.Model.GeofenceSettingsResponse,
-    limits: ExStreamClient.Model.LimitsSettingsResponse,
-    ring: ExStreamClient.Model.RingSettingsResponse,
-    screensharing: ExStreamClient.Model.ScreensharingSettingsResponse,
-    transcription: ExStreamClient.Model.TranscriptionSettingsResponse,
-    video: ExStreamClient.Model.VideoSettingsResponse
-  }
+  @nested_components audio: ExStreamClient.Model.AudioSettingsResponse,
+                     backstage: ExStreamClient.Model.BackstageSettingsResponse,
+                     broadcasting: ExStreamClient.Model.BroadcastSettingsResponse,
+                     frame_recording: ExStreamClient.Model.FrameRecordingSettingsResponse,
+                     geofencing: ExStreamClient.Model.GeofenceSettingsResponse,
+                     limits: ExStreamClient.Model.LimitsSettingsResponse,
+                     recording: ExStreamClient.Model.RecordSettingsResponse,
+                     ring: ExStreamClient.Model.RingSettingsResponse,
+                     screensharing: ExStreamClient.Model.ScreensharingSettingsResponse,
+                     session: ExStreamClient.Model.SessionSettingsResponse,
+                     thumbnails: ExStreamClient.Model.ThumbnailsSettingsResponse,
+                     transcription: ExStreamClient.Model.TranscriptionSettingsResponse,
+                     video: ExStreamClient.Model.VideoSettingsResponse
   def nested_components do
     @nested_components
   end

@@ -2,7 +2,7 @@ defmodule ExStreamClient.Model.ModerationDashboardPreferences do
   @moduledoc "Schema representing a ModerationDashboardPreferences"
   use ExStreamClient.Jason
   defstruct [:media_queue_blur_enabled]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

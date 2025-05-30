@@ -19,19 +19,17 @@ defmodule ExStreamClient.Model.ChannelStateResponseFields do
     :watchers
   ]
 
-  @nested_components %{
-    messages: ExStreamClient.Model.MessageResponse,
-    threads: ExStreamClient.Model.ThreadStateResponse,
-    read: ExStreamClient.Model.ReadStateResponse,
-    membership: ExStreamClient.Model.ChannelMember,
-    channel: ExStreamClient.Model.ChannelResponse,
-    members: ExStreamClient.Model.ChannelMember,
-    watchers: ExStreamClient.Model.UserResponse,
-    pinned_messages: ExStreamClient.Model.MessageResponse,
-    draft: ExStreamClient.Model.DraftResponse,
-    pending_messages: ExStreamClient.Model.PendingMessageResponse,
-    push_preferences: ExStreamClient.Model.ChannelPushPreferences
-  }
+  @nested_components channel: ExStreamClient.Model.ChannelResponse,
+                     draft: ExStreamClient.Model.DraftResponse,
+                     members: ExStreamClient.Model.ChannelMember,
+                     membership: ExStreamClient.Model.ChannelMember,
+                     messages: ExStreamClient.Model.MessageResponse,
+                     pending_messages: ExStreamClient.Model.PendingMessageResponse,
+                     pinned_messages: ExStreamClient.Model.MessageResponse,
+                     push_preferences: ExStreamClient.Model.ChannelPushPreferences,
+                     read: ExStreamClient.Model.ReadStateResponse,
+                     threads: ExStreamClient.Model.ThreadStateResponse,
+                     watchers: ExStreamClient.Model.UserResponse
   def nested_components do
     @nested_components
   end

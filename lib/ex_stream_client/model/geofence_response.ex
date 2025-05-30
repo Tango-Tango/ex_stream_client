@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.GeofenceResponse do
   use ExStreamClient.Jason
   @enforce_keys [:name]
   defstruct [:country_codes, :description, :name, :type]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

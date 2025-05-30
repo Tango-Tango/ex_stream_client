@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.DeleteCommandResponse do
   use ExStreamClient.Jason
   @enforce_keys [:duration, :name]
   defstruct [:duration, :name]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

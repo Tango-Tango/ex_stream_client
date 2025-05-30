@@ -4,11 +4,9 @@ defmodule ExStreamClient.Model.ExportUserResponse do
   @enforce_keys [:duration]
   defstruct [:duration, :messages, :reactions, :user]
 
-  @nested_components %{
-    messages: ExStreamClient.Model.MessageResponse,
-    user: ExStreamClient.Model.UserResponse,
-    reactions: ExStreamClient.Model.ReactionResponse
-  }
+  @nested_components messages: ExStreamClient.Model.MessageResponse,
+                     reactions: ExStreamClient.Model.ReactionResponse,
+                     user: ExStreamClient.Model.UserResponse
   def nested_components do
     @nested_components
   end

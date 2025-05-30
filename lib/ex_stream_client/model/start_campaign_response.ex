@@ -4,10 +4,8 @@ defmodule ExStreamClient.Model.StartCampaignResponse do
   @enforce_keys [:duration]
   defstruct [:campaign, :duration, :users]
 
-  @nested_components %{
-    campaign: ExStreamClient.Model.CampaignResponse,
-    users: ExStreamClient.Model.PagerResponse
-  }
+  @nested_components campaign: ExStreamClient.Model.CampaignResponse,
+                     users: ExStreamClient.Model.PagerResponse
   def nested_components do
     @nested_components
   end

@@ -14,13 +14,19 @@ defmodule ExStreamClient.Imports do
   @spec get_import(String.t()) ::
           {:ok, ExStreamClient.Model.GetImportResponse.t()} | {:error, any()}
   def get_import(id) do
-    request_opts =
-      [url: "/api/v2/imports/#{id}", method: :get, params: %{}, decode_json: [keys: :atoms]] ++ []
+    request_opts = [url: "/api/v2/imports/#{id}", method: :get, params: []] ++ []
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
+
           response_handlers = %{
             200 => ExStreamClient.Model.GetImportResponse,
             400 => ExStreamClient.Model.APIError,
@@ -30,14 +36,17 @@ defmodule ExStreamClient.Imports do
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -49,14 +58,19 @@ defmodule ExStreamClient.Imports do
   @spec create_import(ExStreamClient.Model.CreateImportRequest.t()) ::
           {:ok, ExStreamClient.Model.CreateImportResponse.t()} | {:error, any()}
   def create_import(payload) do
-    request_opts =
-      [url: "/api/v2/imports", method: :post, params: %{}, decode_json: [keys: :atoms]] ++
-        [json: payload]
+    request_opts = [url: "/api/v2/imports", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
+
           response_handlers = %{
             201 => ExStreamClient.Model.CreateImportResponse,
             400 => ExStreamClient.Model.APIError,
@@ -66,14 +80,17 @@ defmodule ExStreamClient.Imports do
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -84,13 +101,19 @@ defmodule ExStreamClient.Imports do
 	"
   @spec list_imports() :: {:ok, ExStreamClient.Model.ListImportsResponse.t()} | {:error, any()}
   def list_imports() do
-    request_opts =
-      [url: "/api/v2/imports", method: :get, params: %{}, decode_json: [keys: :atoms]] ++ []
+    request_opts = [url: "/api/v2/imports", method: :get, params: []] ++ []
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
+
           response_handlers = %{
             200 => ExStreamClient.Model.ListImportsResponse,
             400 => ExStreamClient.Model.APIError,
@@ -100,13 +123,16 @@ defmodule ExStreamClient.Imports do
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 end

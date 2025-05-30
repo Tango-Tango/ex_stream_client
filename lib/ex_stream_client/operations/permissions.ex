@@ -14,13 +14,19 @@ defmodule ExStreamClient.Permissions do
   @spec list_permissions() ::
           {:ok, ExStreamClient.Model.ListPermissionsResponse.t()} | {:error, any()}
   def list_permissions() do
-    request_opts =
-      [url: "/api/v2/permissions", method: :get, params: %{}, decode_json: [keys: :atoms]] ++ []
+    request_opts = [url: "/api/v2/permissions", method: :get, params: []] ++ []
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
+
           response_handlers = %{
             200 => ExStreamClient.Model.ListPermissionsResponse,
             400 => ExStreamClient.Model.APIError,
@@ -30,14 +36,17 @@ defmodule ExStreamClient.Permissions do
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -49,14 +58,19 @@ defmodule ExStreamClient.Permissions do
   @spec get_permission(String.t()) ::
           {:ok, ExStreamClient.Model.GetCustomPermissionResponse.t()} | {:error, any()}
   def get_permission(id) do
-    request_opts =
-      [url: "/api/v2/permissions/#{id}", method: :get, params: %{}, decode_json: [keys: :atoms]] ++
-        []
+    request_opts = [url: "/api/v2/permissions/#{id}", method: :get, params: []] ++ []
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
+
           response_handlers = %{
             200 => ExStreamClient.Model.GetCustomPermissionResponse,
             400 => ExStreamClient.Model.APIError,
@@ -66,13 +80,16 @@ defmodule ExStreamClient.Permissions do
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 end

@@ -21,10 +21,22 @@ def deps do
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/ex_stream_client>.
+## Configuration
 
+The client requires the following configuration to be set in your `config.exs` file:
+
+```elixir
+config :ex_stream_client,
+  api_key: "your-api-key",
+  api_key_secret: "your-api-key-secret"
+```
+
+You can also configure the endpoint if you are using a custom one:
+
+```elixir
+config :ex_stream_client,
+  endpoint: "https://your-custom-endpoint.com"
+```
 
 ## Acknowledgements
 

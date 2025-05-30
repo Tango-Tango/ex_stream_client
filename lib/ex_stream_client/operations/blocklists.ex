@@ -14,14 +14,19 @@ defmodule ExStreamClient.Blocklists do
   @spec create_block_list(ExStreamClient.Model.CreateBlockListRequest.t()) ::
           {:ok, ExStreamClient.Model.CreateBlockListResponse.t()} | {:error, any()}
   def create_block_list(payload) do
-    request_opts =
-      [url: "/api/v2/blocklists", method: :post, params: %{}, decode_json: [keys: :atoms]] ++
-        [json: payload]
+    request_opts = [url: "/api/v2/blocklists", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
+
           response_handlers = %{
             201 => ExStreamClient.Model.CreateBlockListResponse,
             400 => ExStreamClient.Model.APIError,
@@ -31,14 +36,17 @@ defmodule ExStreamClient.Blocklists do
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -61,14 +69,19 @@ defmodule ExStreamClient.Blocklists do
         params:
           Keyword.merge([], Keyword.take(opts, [:team]))
           |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-          |> Map.new(),
-        decode_json: [keys: :atoms]
       ] ++ []
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
+
           response_handlers = %{
             200 => ExStreamClient.Model.ListBlockListResponse,
             400 => ExStreamClient.Model.APIError,
@@ -78,14 +91,17 @@ defmodule ExStreamClient.Blocklists do
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -99,13 +115,19 @@ defmodule ExStreamClient.Blocklists do
           {:ok, ExStreamClient.Model.UpdateBlockListResponse.t()} | {:error, any()}
   def update_block_list(name, payload) do
     request_opts =
-      [url: "/api/v2/blocklists/#{name}", method: :put, params: %{}, decode_json: [keys: :atoms]] ++
-        [json: payload]
+      [url: "/api/v2/blocklists/#{name}", method: :put, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
+
           response_handlers = %{
             201 => ExStreamClient.Model.UpdateBlockListResponse,
             400 => ExStreamClient.Model.APIError,
@@ -115,14 +137,17 @@ defmodule ExStreamClient.Blocklists do
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -145,14 +170,19 @@ defmodule ExStreamClient.Blocklists do
         params:
           Keyword.merge([], Keyword.take(opts, [:team]))
           |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-          |> Map.new(),
-        decode_json: [keys: :atoms]
       ] ++ []
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
+
           response_handlers = %{
             200 => ExStreamClient.Model.GetBlockListResponse,
             400 => ExStreamClient.Model.APIError,
@@ -162,14 +192,17 @@ defmodule ExStreamClient.Blocklists do
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -192,14 +225,19 @@ defmodule ExStreamClient.Blocklists do
         params:
           Keyword.merge([], Keyword.take(opts, [:team]))
           |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-          |> Map.new(),
-        decode_json: [keys: :atoms]
       ] ++ []
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
+
           response_handlers = %{
             200 => ExStreamClient.Model.Response,
             400 => ExStreamClient.Model.APIError,
@@ -209,13 +247,16 @@ defmodule ExStreamClient.Blocklists do
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 end

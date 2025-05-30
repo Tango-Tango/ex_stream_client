@@ -19,6 +19,9 @@ defmodule ExStreamClient.Jason do
       Build a struct from a map, transforming nested components and atom fields.
       """
       def decode(map) when is_map(map) do
+        Code.ensure_loaded?(__MODULE__)
+        map = for {k, v} <- map, into: %{}, do: {transform(k, :atom), v}
+
         processed =
           Enum.reduce(nested_components(), map, fn {key, type_or_mod}, acc ->
             case Map.fetch(acc, key) do
@@ -28,6 +31,13 @@ defmodule ExStreamClient.Jason do
           end)
 
         struct(__MODULE__, processed)
+      end
+
+      @doc """
+      Components could just be enums that are typed - so we need to decode those as enums as they will just be stings
+      """
+      def decode(map) when is_binary(map) do
+        transform(map, :atom)
       end
 
       defp transform(val, :atom) when is_binary(val), do: String.to_existing_atom(val)

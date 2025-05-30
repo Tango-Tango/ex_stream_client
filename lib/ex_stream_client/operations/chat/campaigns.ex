@@ -16,17 +16,19 @@ defmodule ExStreamClient.Chat.Campaigns do
           {:ok, ExStreamClient.Model.CampaignResponse.t()} | {:error, any()}
   def schedule_campaign(id, payload) do
     request_opts =
-      [
-        url: "/api/v2/chat/campaigns/#{id}/stop",
-        method: :post,
-        params: %{},
-        decode_json: [keys: :atoms]
-      ] ++ [json: payload]
+      [url: "/api/v2/chat/campaigns/#{id}/stop", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
+
           response_handlers = %{
             201 => ExStreamClient.Model.CampaignResponse,
             400 => ExStreamClient.Model.APIError,
@@ -36,14 +38,17 @@ defmodule ExStreamClient.Chat.Campaigns do
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -56,17 +61,19 @@ defmodule ExStreamClient.Chat.Campaigns do
           {:ok, ExStreamClient.Model.QueryCampaignsResponse.t()} | {:error, any()}
   def query_campaigns(payload) do
     request_opts =
-      [
-        url: "/api/v2/chat/campaigns/query",
-        method: :post,
-        params: %{},
-        decode_json: [keys: :atoms]
-      ] ++ [json: payload]
+      [url: "/api/v2/chat/campaigns/query", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
+
           response_handlers = %{
             201 => ExStreamClient.Model.QueryCampaignsResponse,
             400 => ExStreamClient.Model.APIError,
@@ -76,14 +83,17 @@ defmodule ExStreamClient.Chat.Campaigns do
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -108,14 +118,19 @@ defmodule ExStreamClient.Chat.Campaigns do
         params:
           Keyword.merge([], Keyword.take(opts, [:prev, :next, :limit]))
           |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-          |> Map.new(),
-        decode_json: [keys: :atoms]
       ] ++ []
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
+
           response_handlers = %{
             200 => ExStreamClient.Model.GetCampaignResponse,
             400 => ExStreamClient.Model.APIError,
@@ -125,14 +140,17 @@ defmodule ExStreamClient.Chat.Campaigns do
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -146,17 +164,19 @@ defmodule ExStreamClient.Chat.Campaigns do
           {:ok, ExStreamClient.Model.StartCampaignResponse.t()} | {:error, any()}
   def start_campaign(id, payload) do
     request_opts =
-      [
-        url: "/api/v2/chat/campaigns/#{id}/start",
-        method: :post,
-        params: %{},
-        decode_json: [keys: :atoms]
-      ] ++ [json: payload]
+      [url: "/api/v2/chat/campaigns/#{id}/start", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
+
           response_handlers = %{
             201 => ExStreamClient.Model.StartCampaignResponse,
             400 => ExStreamClient.Model.APIError,
@@ -166,13 +186,16 @@ defmodule ExStreamClient.Chat.Campaigns do
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 end

@@ -210,18 +210,16 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
                     Keyword.take(opts, unquote(optional_query_params_ast))
                   )
                   |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-                  |> Map.new()
                 end
 
               has_query? ->
                 quote do
                   [unquote_splicing(required_query_params_ast)]
-                  |> Map.new()
                 end
 
               true ->
                 quote do
-                  %{}
+                  []
                 end
             end
 
@@ -259,14 +257,15 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
                   [
                     url: unquote(url_ast),
                     method: unquote(method),
-                    params: unquote(query_params_ast),
-                    decode_json: [keys: :atoms]
+                    params: unquote(query_params_ast)
                   ] ++ unquote(body_params)
 
                 r =
                   Req.new(request_opts)
                   |> Req.Request.append_response_steps(
                     decode: fn {request, response} ->
+                      response_type = if response.status in 200..299, do: :ok, else: :error
+
                       response_handlers = %{
                         unquote_splicing(response_handlers)
                       }
@@ -274,14 +273,17 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
                       parsed =
                         case Map.get(response_handlers, response.status) do
                           nil -> {:error, response.body}
-                          mod -> {:ok, mod.decode(response.body)}
+                          mod -> {response_type, mod.decode(response.body)}
                         end
 
                       {request, %{response | body: parsed}}
                     end
                   )
 
-                ExStreamClient.Client.request(r)
+                case ExStreamClient.Client.request(r) do
+                  {:ok, response} -> response.body
+                  {:error, error} -> {:error, error}
+                end
               end
             end
 

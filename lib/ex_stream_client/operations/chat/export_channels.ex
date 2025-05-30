@@ -15,20 +15,7 @@ defmodule ExStreamClient.Chat.ExportChannels do
           {:ok, ExStreamClient.Model.ExportChannelsResponse.t()} | {:error, any()}
   def export_channels(payload) do
     request_opts =
-      [
-        url: "/api/v2/chat/export_channels",
-        method: :post,
-        params: [],
-        decode_json: [keys: :atoms]
-      ] ++ [json: payload]
-
-    response_handlers = %{
-      201 => ExStreamClient.Model.ExportChannelsResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+      [url: "/api/v2/chat/export_channels", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -40,6 +27,12 @@ defmodule ExStreamClient.Chat.ExportChannels do
             else
               :error
             end
+
+          response_handlers = %{
+            201 => ExStreamClient.Model.ExportChannelsResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do

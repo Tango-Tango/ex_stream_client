@@ -16,20 +16,7 @@ defmodule ExStreamClient.Chat.Channeltypes do
           {:ok, ExStreamClient.Model.UpdateChannelTypeResponse.t()} | {:error, any()}
   def update_channel_type(name, payload) do
     request_opts =
-      [
-        url: "/api/v2/chat/channeltypes/#{name}",
-        method: :put,
-        params: [],
-        decode_json: [keys: :atoms]
-      ] ++ [json: payload]
-
-    response_handlers = %{
-      201 => ExStreamClient.Model.UpdateChannelTypeResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+      [url: "/api/v2/chat/channeltypes/#{name}", method: :put, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -41,6 +28,12 @@ defmodule ExStreamClient.Chat.Channeltypes do
             else
               :error
             end
+
+          response_handlers = %{
+            201 => ExStreamClient.Model.UpdateChannelTypeResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -67,21 +60,7 @@ defmodule ExStreamClient.Chat.Channeltypes do
   @spec get_channel_type(String.t()) ::
           {:ok, ExStreamClient.Model.GetChannelTypeResponse.t()} | {:error, any()}
   def get_channel_type(name) do
-    request_opts =
-      [
-        url: "/api/v2/chat/channeltypes/#{name}",
-        method: :get,
-        params: [],
-        decode_json: [keys: :atoms]
-      ] ++ []
-
-    response_handlers = %{
-      200 => ExStreamClient.Model.GetChannelTypeResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+    request_opts = [url: "/api/v2/chat/channeltypes/#{name}", method: :get, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -93,6 +72,12 @@ defmodule ExStreamClient.Chat.Channeltypes do
             else
               :error
             end
+
+          response_handlers = %{
+            200 => ExStreamClient.Model.GetChannelTypeResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -119,21 +104,7 @@ defmodule ExStreamClient.Chat.Channeltypes do
   @spec delete_channel_type(String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_channel_type(name) do
-    request_opts =
-      [
-        url: "/api/v2/chat/channeltypes/#{name}",
-        method: :delete,
-        params: [],
-        decode_json: [keys: :atoms]
-      ] ++ []
-
-    response_handlers = %{
-      200 => ExStreamClient.Model.Response,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+    request_opts = [url: "/api/v2/chat/channeltypes/#{name}", method: :delete, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -145,6 +116,12 @@ defmodule ExStreamClient.Chat.Channeltypes do
             else
               :error
             end
+
+          response_handlers = %{
+            200 => ExStreamClient.Model.Response,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -172,16 +149,7 @@ defmodule ExStreamClient.Chat.Channeltypes do
           {:ok, ExStreamClient.Model.CreateChannelTypeResponse.t()} | {:error, any()}
   def create_channel_type(payload) do
     request_opts =
-      [url: "/api/v2/chat/channeltypes", method: :post, params: [], decode_json: [keys: :atoms]] ++
-        [json: payload]
-
-    response_handlers = %{
-      201 => ExStreamClient.Model.CreateChannelTypeResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+      [url: "/api/v2/chat/channeltypes", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -193,6 +161,12 @@ defmodule ExStreamClient.Chat.Channeltypes do
             else
               :error
             end
+
+          response_handlers = %{
+            201 => ExStreamClient.Model.CreateChannelTypeResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -219,17 +193,7 @@ defmodule ExStreamClient.Chat.Channeltypes do
   @spec list_channel_types() ::
           {:ok, ExStreamClient.Model.ListChannelTypesResponse.t()} | {:error, any()}
   def list_channel_types() do
-    request_opts =
-      [url: "/api/v2/chat/channeltypes", method: :get, params: [], decode_json: [keys: :atoms]] ++
-        []
-
-    response_handlers = %{
-      200 => ExStreamClient.Model.ListChannelTypesResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+    request_opts = [url: "/api/v2/chat/channeltypes", method: :get, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -241,6 +205,12 @@ defmodule ExStreamClient.Chat.Channeltypes do
             else
               :error
             end
+
+          response_handlers = %{
+            200 => ExStreamClient.Model.ListChannelTypesResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do

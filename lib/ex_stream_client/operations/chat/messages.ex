@@ -26,17 +26,8 @@ defmodule ExStreamClient.Chat.Messages do
         method: :delete,
         params:
           Keyword.merge([], Keyword.take(opts, [:user_id]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end),
-        decode_json: [keys: :atoms]
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
       ] ++ []
-
-    response_handlers = %{
-      200 => ExStreamClient.Model.PollVoteResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
@@ -48,6 +39,12 @@ defmodule ExStreamClient.Chat.Messages do
             else
               :error
             end
+
+          response_handlers = %{
+            200 => ExStreamClient.Model.PollVoteResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -85,17 +82,8 @@ defmodule ExStreamClient.Chat.Messages do
         method: :delete,
         params:
           Keyword.merge([], Keyword.take(opts, [:user_id]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end),
-        decode_json: [keys: :atoms]
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
       ] ++ []
-
-    response_handlers = %{
-      200 => ExStreamClient.Model.DeleteReactionResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
@@ -107,6 +95,12 @@ defmodule ExStreamClient.Chat.Messages do
             else
               :error
             end
+
+          response_handlers = %{
+            200 => ExStreamClient.Model.DeleteReactionResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -135,20 +129,7 @@ defmodule ExStreamClient.Chat.Messages do
           {:ok, ExStreamClient.Model.SendReactionResponse.t()} | {:error, any()}
   def send_reaction(id, payload) do
     request_opts =
-      [
-        url: "/api/v2/chat/messages/#{id}/reaction",
-        method: :post,
-        params: [],
-        decode_json: [keys: :atoms]
-      ] ++ [json: payload]
-
-    response_handlers = %{
-      201 => ExStreamClient.Model.SendReactionResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+      [url: "/api/v2/chat/messages/#{id}/reaction", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -160,6 +141,12 @@ defmodule ExStreamClient.Chat.Messages do
             else
               :error
             end
+
+          response_handlers = %{
+            201 => ExStreamClient.Model.SendReactionResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -188,20 +175,7 @@ defmodule ExStreamClient.Chat.Messages do
           {:ok, ExStreamClient.Model.MessageResponse.t()} | {:error, any()}
   def run_message_action(id, payload) do
     request_opts =
-      [
-        url: "/api/v2/chat/messages/#{id}/action",
-        method: :post,
-        params: [],
-        decode_json: [keys: :atoms]
-      ] ++ [json: payload]
-
-    response_handlers = %{
-      201 => ExStreamClient.Model.MessageResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+      [url: "/api/v2/chat/messages/#{id}/action", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -213,6 +187,12 @@ defmodule ExStreamClient.Chat.Messages do
             else
               :error
             end
+
+          response_handlers = %{
+            201 => ExStreamClient.Model.MessageResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -240,20 +220,7 @@ defmodule ExStreamClient.Chat.Messages do
           {:ok, ExStreamClient.Model.QueryMessageHistoryResponse.t()} | {:error, any()}
   def query_message_history(payload) do
     request_opts =
-      [
-        url: "/api/v2/chat/messages/history",
-        method: :post,
-        params: [],
-        decode_json: [keys: :atoms]
-      ] ++ [json: payload]
-
-    response_handlers = %{
-      201 => ExStreamClient.Model.QueryMessageHistoryResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+      [url: "/api/v2/chat/messages/history", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -265,6 +232,12 @@ defmodule ExStreamClient.Chat.Messages do
             else
               :error
             end
+
+          response_handlers = %{
+            201 => ExStreamClient.Model.QueryMessageHistoryResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -297,17 +270,8 @@ defmodule ExStreamClient.Chat.Messages do
       [
         url: "/api/v2/chat/messages/#{message_id}/polls/#{poll_id}/vote",
         method: :post,
-        params: [],
-        decode_json: [keys: :atoms]
+        params: []
       ] ++ [json: payload]
-
-    response_handlers = %{
-      201 => ExStreamClient.Model.PollVoteResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
@@ -319,6 +283,12 @@ defmodule ExStreamClient.Chat.Messages do
             else
               :error
             end
+
+          response_handlers = %{
+            201 => ExStreamClient.Model.PollVoteResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -347,20 +317,7 @@ defmodule ExStreamClient.Chat.Messages do
           {:ok, ExStreamClient.Model.QueryReactionsResponse.t()} | {:error, any()}
   def query_reactions(id, payload) do
     request_opts =
-      [
-        url: "/api/v2/chat/messages/#{id}/reactions",
-        method: :post,
-        params: [],
-        decode_json: [keys: :atoms]
-      ] ++ [json: payload]
-
-    response_handlers = %{
-      201 => ExStreamClient.Model.QueryReactionsResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+      [url: "/api/v2/chat/messages/#{id}/reactions", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -372,6 +329,12 @@ defmodule ExStreamClient.Chat.Messages do
             else
               :error
             end
+
+          response_handlers = %{
+            201 => ExStreamClient.Model.QueryReactionsResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -409,17 +372,8 @@ defmodule ExStreamClient.Chat.Messages do
         method: :get,
         params:
           Keyword.merge([], Keyword.take(opts, [:limit, :offset]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end),
-        decode_json: [keys: :atoms]
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
       ] ++ []
-
-    response_handlers = %{
-      200 => ExStreamClient.Model.GetReactionsResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
@@ -431,6 +385,12 @@ defmodule ExStreamClient.Chat.Messages do
             else
               :error
             end
+
+          response_handlers = %{
+            200 => ExStreamClient.Model.GetReactionsResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -509,17 +469,8 @@ defmodule ExStreamClient.Chat.Messages do
               :created_at_around
             ])
           )
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end),
-        decode_json: [keys: :atoms]
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
       ] ++ []
-
-    response_handlers = %{
-      200 => ExStreamClient.Model.GetRepliesResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
@@ -531,6 +482,12 @@ defmodule ExStreamClient.Chat.Messages do
             else
               :error
             end
+
+          response_handlers = %{
+            200 => ExStreamClient.Model.GetRepliesResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -559,20 +516,7 @@ defmodule ExStreamClient.Chat.Messages do
           {:ok, ExStreamClient.Model.UpdateMessageResponse.t()} | {:error, any()}
   def undelete_message(id, payload) do
     request_opts =
-      [
-        url: "/api/v2/chat/messages/#{id}/undelete",
-        method: :post,
-        params: [],
-        decode_json: [keys: :atoms]
-      ] ++ [json: payload]
-
-    response_handlers = %{
-      201 => ExStreamClient.Model.UpdateMessageResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+      [url: "/api/v2/chat/messages/#{id}/undelete", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -584,6 +528,12 @@ defmodule ExStreamClient.Chat.Messages do
             else
               :error
             end
+
+          response_handlers = %{
+            201 => ExStreamClient.Model.UpdateMessageResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -612,20 +562,7 @@ defmodule ExStreamClient.Chat.Messages do
           {:ok, ExStreamClient.Model.MessageResponse.t()} | {:error, any()}
   def translate_message(id, payload) do
     request_opts =
-      [
-        url: "/api/v2/chat/messages/#{id}/translate",
-        method: :post,
-        params: [],
-        decode_json: [keys: :atoms]
-      ] ++ [json: payload]
-
-    response_handlers = %{
-      201 => ExStreamClient.Model.MessageResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+      [url: "/api/v2/chat/messages/#{id}/translate", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -637,6 +574,12 @@ defmodule ExStreamClient.Chat.Messages do
             else
               :error
             end
+
+          response_handlers = %{
+            201 => ExStreamClient.Model.MessageResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -665,20 +608,7 @@ defmodule ExStreamClient.Chat.Messages do
           {:ok, ExStreamClient.Model.MessageResponse.t()} | {:error, any()}
   def commit_message(id, payload) do
     request_opts =
-      [
-        url: "/api/v2/chat/messages/#{id}/commit",
-        method: :post,
-        params: [],
-        decode_json: [keys: :atoms]
-      ] ++ [json: payload]
-
-    response_handlers = %{
-      201 => ExStreamClient.Model.MessageResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+      [url: "/api/v2/chat/messages/#{id}/commit", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -690,6 +620,12 @@ defmodule ExStreamClient.Chat.Messages do
             else
               :error
             end
+
+          response_handlers = %{
+            201 => ExStreamClient.Model.MessageResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -718,16 +654,7 @@ defmodule ExStreamClient.Chat.Messages do
           {:ok, ExStreamClient.Model.UpdateMessagePartialResponse.t()} | {:error, any()}
   def update_message_partial(id, payload) do
     request_opts =
-      [url: "/api/v2/chat/messages/#{id}", method: :put, params: [], decode_json: [keys: :atoms]] ++
-        [json: payload]
-
-    response_handlers = %{
-      201 => ExStreamClient.Model.UpdateMessagePartialResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+      [url: "/api/v2/chat/messages/#{id}", method: :put, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -739,6 +666,12 @@ defmodule ExStreamClient.Chat.Messages do
             else
               :error
             end
+
+          response_handlers = %{
+            201 => ExStreamClient.Model.UpdateMessagePartialResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -767,16 +700,7 @@ defmodule ExStreamClient.Chat.Messages do
           {:ok, ExStreamClient.Model.UpdateMessageResponse.t()} | {:error, any()}
   def update_message(id, payload) do
     request_opts =
-      [url: "/api/v2/chat/messages/#{id}", method: :post, params: [], decode_json: [keys: :atoms]] ++
-        [json: payload]
-
-    response_handlers = %{
-      201 => ExStreamClient.Model.UpdateMessageResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+      [url: "/api/v2/chat/messages/#{id}", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -788,6 +712,12 @@ defmodule ExStreamClient.Chat.Messages do
             else
               :error
             end
+
+          response_handlers = %{
+            201 => ExStreamClient.Model.UpdateMessageResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -824,17 +754,8 @@ defmodule ExStreamClient.Chat.Messages do
         method: :get,
         params:
           Keyword.merge([], Keyword.take(opts, [:show_deleted_message]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end),
-        decode_json: [keys: :atoms]
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
       ] ++ []
-
-    response_handlers = %{
-      200 => ExStreamClient.Model.GetMessageResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
@@ -846,6 +767,12 @@ defmodule ExStreamClient.Chat.Messages do
             else
               :error
             end
+
+          response_handlers = %{
+            200 => ExStreamClient.Model.GetMessageResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -883,17 +810,8 @@ defmodule ExStreamClient.Chat.Messages do
         method: :delete,
         params:
           Keyword.merge([], Keyword.take(opts, [:hard, :deleted_by]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end),
-        decode_json: [keys: :atoms]
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
       ] ++ []
-
-    response_handlers = %{
-      200 => ExStreamClient.Model.DeleteMessageResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
@@ -905,6 +823,12 @@ defmodule ExStreamClient.Chat.Messages do
             else
               :error
             end
+
+          response_handlers = %{
+            200 => ExStreamClient.Model.DeleteMessageResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do

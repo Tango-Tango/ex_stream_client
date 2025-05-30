@@ -14,17 +14,7 @@ defmodule ExStreamClient.Devices do
   @spec create_device(ExStreamClient.Model.CreateDeviceRequest.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def create_device(payload) do
-    request_opts =
-      [url: "/api/v2/devices", method: :post, params: [], decode_json: [keys: :atoms]] ++
-        [json: payload]
-
-    response_handlers = %{
-      201 => ExStreamClient.Model.Response,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+    request_opts = [url: "/api/v2/devices", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -36,6 +26,12 @@ defmodule ExStreamClient.Devices do
             else
               :error
             end
+
+          response_handlers = %{
+            201 => ExStreamClient.Model.Response,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -71,17 +67,8 @@ defmodule ExStreamClient.Devices do
         method: :get,
         params:
           Keyword.merge([], Keyword.take(opts, [:user_id]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end),
-        decode_json: [keys: :atoms]
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
       ] ++ []
-
-    response_handlers = %{
-      200 => ExStreamClient.Model.ListDevicesResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
@@ -93,6 +80,12 @@ defmodule ExStreamClient.Devices do
             else
               :error
             end
+
+          response_handlers = %{
+            200 => ExStreamClient.Model.ListDevicesResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -128,17 +121,8 @@ defmodule ExStreamClient.Devices do
         method: :delete,
         params:
           Keyword.merge([id: id], Keyword.take(opts, [:user_id]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end),
-        decode_json: [keys: :atoms]
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
       ] ++ []
-
-    response_handlers = %{
-      200 => ExStreamClient.Model.Response,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
@@ -150,6 +134,12 @@ defmodule ExStreamClient.Devices do
             else
               :error
             end
+
+          response_handlers = %{
+            200 => ExStreamClient.Model.Response,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do

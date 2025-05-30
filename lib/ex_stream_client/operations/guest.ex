@@ -14,17 +14,7 @@ defmodule ExStreamClient.Guest do
   @spec create_guest(ExStreamClient.Model.CreateGuestRequest.t()) ::
           {:ok, ExStreamClient.Model.CreateGuestResponse.t()} | {:error, any()}
   def create_guest(payload) do
-    request_opts =
-      [url: "/api/v2/guest", method: :post, params: [], decode_json: [keys: :atoms]] ++
-        [json: payload]
-
-    response_handlers = %{
-      201 => ExStreamClient.Model.CreateGuestResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+    request_opts = [url: "/api/v2/guest", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -36,6 +26,12 @@ defmodule ExStreamClient.Guest do
             else
               :error
             end
+
+          response_handlers = %{
+            201 => ExStreamClient.Model.CreateGuestResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do

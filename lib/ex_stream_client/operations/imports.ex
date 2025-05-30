@@ -14,16 +14,7 @@ defmodule ExStreamClient.Imports do
   @spec get_import(String.t()) ::
           {:ok, ExStreamClient.Model.GetImportResponse.t()} | {:error, any()}
   def get_import(id) do
-    request_opts =
-      [url: "/api/v2/imports/#{id}", method: :get, params: [], decode_json: [keys: :atoms]] ++ []
-
-    response_handlers = %{
-      200 => ExStreamClient.Model.GetImportResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+    request_opts = [url: "/api/v2/imports/#{id}", method: :get, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -35,6 +26,12 @@ defmodule ExStreamClient.Imports do
             else
               :error
             end
+
+          response_handlers = %{
+            200 => ExStreamClient.Model.GetImportResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -61,17 +58,7 @@ defmodule ExStreamClient.Imports do
   @spec create_import(ExStreamClient.Model.CreateImportRequest.t()) ::
           {:ok, ExStreamClient.Model.CreateImportResponse.t()} | {:error, any()}
   def create_import(payload) do
-    request_opts =
-      [url: "/api/v2/imports", method: :post, params: [], decode_json: [keys: :atoms]] ++
-        [json: payload]
-
-    response_handlers = %{
-      201 => ExStreamClient.Model.CreateImportResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+    request_opts = [url: "/api/v2/imports", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -83,6 +70,12 @@ defmodule ExStreamClient.Imports do
             else
               :error
             end
+
+          response_handlers = %{
+            201 => ExStreamClient.Model.CreateImportResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -108,16 +101,7 @@ defmodule ExStreamClient.Imports do
 	"
   @spec list_imports() :: {:ok, ExStreamClient.Model.ListImportsResponse.t()} | {:error, any()}
   def list_imports() do
-    request_opts =
-      [url: "/api/v2/imports", method: :get, params: [], decode_json: [keys: :atoms]] ++ []
-
-    response_handlers = %{
-      200 => ExStreamClient.Model.ListImportsResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+    request_opts = [url: "/api/v2/imports", method: :get, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -129,6 +113,12 @@ defmodule ExStreamClient.Imports do
             else
               :error
             end
+
+          response_handlers = %{
+            200 => ExStreamClient.Model.ListImportsResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do

@@ -14,17 +14,7 @@ defmodule ExStreamClient.ImportUrls do
   @spec create_import_url(ExStreamClient.Model.CreateImportURLRequest.t()) ::
           {:ok, ExStreamClient.Model.CreateImportURLResponse.t()} | {:error, any()}
   def create_import_url(payload) do
-    request_opts =
-      [url: "/api/v2/import_urls", method: :post, params: [], decode_json: [keys: :atoms]] ++
-        [json: payload]
-
-    response_handlers = %{
-      201 => ExStreamClient.Model.CreateImportURLResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+    request_opts = [url: "/api/v2/import_urls", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -36,6 +26,12 @@ defmodule ExStreamClient.ImportUrls do
             else
               :error
             end
+
+          response_handlers = %{
+            201 => ExStreamClient.Model.CreateImportURLResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do

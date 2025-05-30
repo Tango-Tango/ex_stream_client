@@ -257,24 +257,18 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
                   [
                     url: unquote(url_ast),
                     method: unquote(method),
-                    params: unquote(query_params_ast),
-                    decode_json: [keys: :atoms]
+                    params: unquote(query_params_ast)
                   ] ++ unquote(body_params)
-
-                response_handlers = %{
-                  unquote_splicing(response_handlers)
-                }
-
-                # Ensure all the response modules are loaded so that they are available
-                # when we try to decode the response
-                # Ensure all response handler modules are loaded before making request
-                response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
                 r =
                   Req.new(request_opts)
                   |> Req.Request.append_response_steps(
                     decode: fn {request, response} ->
                       response_type = if response.status in 200..299, do: :ok, else: :error
+
+                      response_handlers = %{
+                        unquote_splicing(response_handlers)
+                      }
 
                       parsed =
                         case Map.get(response_handlers, response.status) do

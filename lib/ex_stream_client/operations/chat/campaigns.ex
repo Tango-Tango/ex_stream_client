@@ -16,20 +16,7 @@ defmodule ExStreamClient.Chat.Campaigns do
           {:ok, ExStreamClient.Model.CampaignResponse.t()} | {:error, any()}
   def schedule_campaign(id, payload) do
     request_opts =
-      [
-        url: "/api/v2/chat/campaigns/#{id}/stop",
-        method: :post,
-        params: [],
-        decode_json: [keys: :atoms]
-      ] ++ [json: payload]
-
-    response_handlers = %{
-      201 => ExStreamClient.Model.CampaignResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+      [url: "/api/v2/chat/campaigns/#{id}/stop", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -41,6 +28,12 @@ defmodule ExStreamClient.Chat.Campaigns do
             else
               :error
             end
+
+          response_handlers = %{
+            201 => ExStreamClient.Model.CampaignResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -68,20 +61,7 @@ defmodule ExStreamClient.Chat.Campaigns do
           {:ok, ExStreamClient.Model.QueryCampaignsResponse.t()} | {:error, any()}
   def query_campaigns(payload) do
     request_opts =
-      [
-        url: "/api/v2/chat/campaigns/query",
-        method: :post,
-        params: [],
-        decode_json: [keys: :atoms]
-      ] ++ [json: payload]
-
-    response_handlers = %{
-      201 => ExStreamClient.Model.QueryCampaignsResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+      [url: "/api/v2/chat/campaigns/query", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -93,6 +73,12 @@ defmodule ExStreamClient.Chat.Campaigns do
             else
               :error
             end
+
+          response_handlers = %{
+            201 => ExStreamClient.Model.QueryCampaignsResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -131,17 +117,8 @@ defmodule ExStreamClient.Chat.Campaigns do
         method: :get,
         params:
           Keyword.merge([], Keyword.take(opts, [:prev, :next, :limit]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end),
-        decode_json: [keys: :atoms]
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
       ] ++ []
-
-    response_handlers = %{
-      200 => ExStreamClient.Model.GetCampaignResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
@@ -153,6 +130,12 @@ defmodule ExStreamClient.Chat.Campaigns do
             else
               :error
             end
+
+          response_handlers = %{
+            200 => ExStreamClient.Model.GetCampaignResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -181,20 +164,7 @@ defmodule ExStreamClient.Chat.Campaigns do
           {:ok, ExStreamClient.Model.StartCampaignResponse.t()} | {:error, any()}
   def start_campaign(id, payload) do
     request_opts =
-      [
-        url: "/api/v2/chat/campaigns/#{id}/start",
-        method: :post,
-        params: [],
-        decode_json: [keys: :atoms]
-      ] ++ [json: payload]
-
-    response_handlers = %{
-      201 => ExStreamClient.Model.StartCampaignResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+      [url: "/api/v2/chat/campaigns/#{id}/start", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -206,6 +176,12 @@ defmodule ExStreamClient.Chat.Campaigns do
             else
               :error
             end
+
+          response_handlers = %{
+            201 => ExStreamClient.Model.StartCampaignResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do

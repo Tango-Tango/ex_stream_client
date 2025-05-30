@@ -24,17 +24,8 @@ defmodule ExStreamClient.Chat.Moderation do
         method: :get,
         params:
           Keyword.merge([], Keyword.take(opts, [:payload]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end),
-        decode_json: [keys: :atoms]
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
       ] ++ []
-
-    response_handlers = %{
-      200 => ExStreamClient.Model.QueryMessageFlagsResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
@@ -46,6 +37,12 @@ defmodule ExStreamClient.Chat.Moderation do
             else
               :error
             end
+
+          response_handlers = %{
+            200 => ExStreamClient.Model.QueryMessageFlagsResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -73,20 +70,8 @@ defmodule ExStreamClient.Chat.Moderation do
           {:ok, ExStreamClient.Model.UnmuteResponse.t()} | {:error, any()}
   def unmute_channel(payload) do
     request_opts =
-      [
-        url: "/api/v2/chat/moderation/unmute/channel",
-        method: :post,
-        params: [],
-        decode_json: [keys: :atoms]
-      ] ++ [json: payload]
-
-    response_handlers = %{
-      201 => ExStreamClient.Model.UnmuteResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+      [url: "/api/v2/chat/moderation/unmute/channel", method: :post, params: []] ++
+        [json: payload]
 
     r =
       Req.new(request_opts)
@@ -98,6 +83,12 @@ defmodule ExStreamClient.Chat.Moderation do
             else
               :error
             end
+
+          response_handlers = %{
+            201 => ExStreamClient.Model.UnmuteResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -125,20 +116,7 @@ defmodule ExStreamClient.Chat.Moderation do
           {:ok, ExStreamClient.Model.MuteChannelResponse.t()} | {:error, any()}
   def mute_channel(payload) do
     request_opts =
-      [
-        url: "/api/v2/chat/moderation/mute/channel",
-        method: :post,
-        params: [],
-        decode_json: [keys: :atoms]
-      ] ++ [json: payload]
-
-    response_handlers = %{
-      201 => ExStreamClient.Model.MuteChannelResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+      [url: "/api/v2/chat/moderation/mute/channel", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -150,6 +128,12 @@ defmodule ExStreamClient.Chat.Moderation do
             else
               :error
             end
+
+          response_handlers = %{
+            201 => ExStreamClient.Model.MuteChannelResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do

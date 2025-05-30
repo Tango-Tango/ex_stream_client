@@ -16,20 +16,7 @@ defmodule ExStreamClient.Chat.Threads do
           {:ok, ExStreamClient.Model.UpdateThreadPartialResponse.t()} | {:error, any()}
   def update_thread_partial(message_id, payload) do
     request_opts =
-      [
-        url: "/api/v2/chat/threads/#{message_id}",
-        method: :patch,
-        params: [],
-        decode_json: [keys: :atoms]
-      ] ++ [json: payload]
-
-    response_handlers = %{
-      200 => ExStreamClient.Model.UpdateThreadPartialResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+      [url: "/api/v2/chat/threads/#{message_id}", method: :patch, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -41,6 +28,12 @@ defmodule ExStreamClient.Chat.Threads do
             else
               :error
             end
+
+          response_handlers = %{
+            200 => ExStreamClient.Model.UpdateThreadPartialResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -80,17 +73,8 @@ defmodule ExStreamClient.Chat.Threads do
         method: :get,
         params:
           Keyword.merge([], Keyword.take(opts, [:reply_limit, :participant_limit, :member_limit]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end),
-        decode_json: [keys: :atoms]
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
       ] ++ []
-
-    response_handlers = %{
-      200 => ExStreamClient.Model.GetThreadResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
@@ -102,6 +86,12 @@ defmodule ExStreamClient.Chat.Threads do
             else
               :error
             end
+
+          response_handlers = %{
+            200 => ExStreamClient.Model.GetThreadResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -128,17 +118,7 @@ defmodule ExStreamClient.Chat.Threads do
   @spec query_threads(ExStreamClient.Model.QueryThreadsRequest.t()) ::
           {:ok, ExStreamClient.Model.QueryThreadsResponse.t()} | {:error, any()}
   def query_threads(payload) do
-    request_opts =
-      [url: "/api/v2/chat/threads", method: :post, params: [], decode_json: [keys: :atoms]] ++
-        [json: payload]
-
-    response_handlers = %{
-      201 => ExStreamClient.Model.QueryThreadsResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+    request_opts = [url: "/api/v2/chat/threads", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -150,6 +130,12 @@ defmodule ExStreamClient.Chat.Threads do
             else
               :error
             end
+
+          response_handlers = %{
+            201 => ExStreamClient.Model.QueryThreadsResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do

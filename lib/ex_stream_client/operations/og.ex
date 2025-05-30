@@ -13,16 +13,7 @@ defmodule ExStreamClient.Og do
 	"
   @spec get_og(String.t()) :: {:ok, ExStreamClient.Model.GetOGResponse.t()} | {:error, any()}
   def get_og(url) do
-    request_opts =
-      [url: "/api/v2/og", method: :get, params: [url: url], decode_json: [keys: :atoms]] ++ []
-
-    response_handlers = %{
-      200 => ExStreamClient.Model.GetOGResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+    request_opts = [url: "/api/v2/og", method: :get, params: [url: url]] ++ []
 
     r =
       Req.new(request_opts)
@@ -34,6 +25,12 @@ defmodule ExStreamClient.Og do
             else
               :error
             end
+
+          response_handlers = %{
+            200 => ExStreamClient.Model.GetOGResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do

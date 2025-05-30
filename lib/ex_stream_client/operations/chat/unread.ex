@@ -14,16 +14,7 @@ defmodule ExStreamClient.Chat.Unread do
   @spec unread_counts() ::
           {:ok, ExStreamClient.Model.WrappedUnreadCountsResponse.t()} | {:error, any()}
   def unread_counts() do
-    request_opts =
-      [url: "/api/v2/chat/unread", method: :get, params: [], decode_json: [keys: :atoms]] ++ []
-
-    response_handlers = %{
-      200 => ExStreamClient.Model.WrappedUnreadCountsResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+    request_opts = [url: "/api/v2/chat/unread", method: :get, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -35,6 +26,12 @@ defmodule ExStreamClient.Chat.Unread do
             else
               :error
             end
+
+          response_handlers = %{
+            200 => ExStreamClient.Model.WrappedUnreadCountsResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do

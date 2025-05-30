@@ -14,17 +14,7 @@ defmodule ExStreamClient.CheckSqs do
   @spec check_sqs(ExStreamClient.Model.CheckSQSRequest.t()) ::
           {:ok, ExStreamClient.Model.CheckSQSResponse.t()} | {:error, any()}
   def check_sqs(payload) do
-    request_opts =
-      [url: "/api/v2/check_sqs", method: :post, params: [], decode_json: [keys: :atoms]] ++
-        [json: payload]
-
-    response_handlers = %{
-      201 => ExStreamClient.Model.CheckSQSResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+    request_opts = [url: "/api/v2/check_sqs", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -36,6 +26,12 @@ defmodule ExStreamClient.CheckSqs do
             else
               :error
             end
+
+          response_handlers = %{
+            201 => ExStreamClient.Model.CheckSQSResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do

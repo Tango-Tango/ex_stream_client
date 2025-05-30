@@ -14,17 +14,7 @@ defmodule ExStreamClient.Export do
   @spec export_users(ExStreamClient.Model.ExportUsersRequest.t()) ::
           {:ok, ExStreamClient.Model.ExportUsersResponse.t()} | {:error, any()}
   def export_users(payload) do
-    request_opts =
-      [url: "/api/v2/export/users", method: :post, params: [], decode_json: [keys: :atoms]] ++
-        [json: payload]
-
-    response_handlers = %{
-      201 => ExStreamClient.Model.ExportUsersResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+    request_opts = [url: "/api/v2/export/users", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -36,6 +26,12 @@ defmodule ExStreamClient.Export do
             else
               :error
             end
+
+          response_handlers = %{
+            201 => ExStreamClient.Model.ExportUsersResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do

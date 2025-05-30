@@ -14,16 +14,7 @@ defmodule ExStreamClient.Permissions do
   @spec list_permissions() ::
           {:ok, ExStreamClient.Model.ListPermissionsResponse.t()} | {:error, any()}
   def list_permissions() do
-    request_opts =
-      [url: "/api/v2/permissions", method: :get, params: [], decode_json: [keys: :atoms]] ++ []
-
-    response_handlers = %{
-      200 => ExStreamClient.Model.ListPermissionsResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+    request_opts = [url: "/api/v2/permissions", method: :get, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -35,6 +26,12 @@ defmodule ExStreamClient.Permissions do
             else
               :error
             end
+
+          response_handlers = %{
+            200 => ExStreamClient.Model.ListPermissionsResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -61,17 +58,7 @@ defmodule ExStreamClient.Permissions do
   @spec get_permission(String.t()) ::
           {:ok, ExStreamClient.Model.GetCustomPermissionResponse.t()} | {:error, any()}
   def get_permission(id) do
-    request_opts =
-      [url: "/api/v2/permissions/#{id}", method: :get, params: [], decode_json: [keys: :atoms]] ++
-        []
-
-    response_handlers = %{
-      200 => ExStreamClient.Model.GetCustomPermissionResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+    request_opts = [url: "/api/v2/permissions/#{id}", method: :get, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -83,6 +70,12 @@ defmodule ExStreamClient.Permissions do
             else
               :error
             end
+
+          response_handlers = %{
+            200 => ExStreamClient.Model.GetCustomPermissionResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do

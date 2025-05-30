@@ -13,16 +13,7 @@ defmodule ExStreamClient.Tasks do
 	"
   @spec get_task(String.t()) :: {:ok, ExStreamClient.Model.GetTaskResponse.t()} | {:error, any()}
   def get_task(id) do
-    request_opts =
-      [url: "/api/v2/tasks/#{id}", method: :get, params: [], decode_json: [keys: :atoms]] ++ []
-
-    response_handlers = %{
-      200 => ExStreamClient.Model.GetTaskResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+    request_opts = [url: "/api/v2/tasks/#{id}", method: :get, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -34,6 +25,12 @@ defmodule ExStreamClient.Tasks do
             else
               :error
             end
+
+          response_handlers = %{
+            200 => ExStreamClient.Model.GetTaskResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do

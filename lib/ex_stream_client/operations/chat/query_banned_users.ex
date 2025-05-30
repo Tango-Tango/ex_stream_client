@@ -24,17 +24,8 @@ defmodule ExStreamClient.Chat.QueryBannedUsers do
         method: :get,
         params:
           Keyword.merge([], Keyword.take(opts, [:payload]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end),
-        decode_json: [keys: :atoms]
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
       ] ++ []
-
-    response_handlers = %{
-      200 => ExStreamClient.Model.QueryBannedUsersResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
@@ -46,6 +37,12 @@ defmodule ExStreamClient.Chat.QueryBannedUsers do
             else
               :error
             end
+
+          response_handlers = %{
+            200 => ExStreamClient.Model.QueryBannedUsersResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do

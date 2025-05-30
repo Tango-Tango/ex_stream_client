@@ -16,20 +16,7 @@ defmodule ExStreamClient.Chat.Users do
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def send_user_custom_event(user_id, payload) do
     request_opts =
-      [
-        url: "/api/v2/chat/users/#{user_id}/event",
-        method: :post,
-        params: [],
-        decode_json: [keys: :atoms]
-      ] ++ [json: payload]
-
-    response_handlers = %{
-      201 => ExStreamClient.Model.Response,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+      [url: "/api/v2/chat/users/#{user_id}/event", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -41,6 +28,12 @@ defmodule ExStreamClient.Chat.Users do
             else
               :error
             end
+
+          response_handlers = %{
+            201 => ExStreamClient.Model.Response,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do

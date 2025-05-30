@@ -14,17 +14,7 @@ defmodule ExStreamClient.Chat.Commands do
   @spec create_command(ExStreamClient.Model.CreateCommandRequest.t()) ::
           {:ok, ExStreamClient.Model.CreateCommandResponse.t()} | {:error, any()}
   def create_command(payload) do
-    request_opts =
-      [url: "/api/v2/chat/commands", method: :post, params: [], decode_json: [keys: :atoms]] ++
-        [json: payload]
-
-    response_handlers = %{
-      201 => ExStreamClient.Model.CreateCommandResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+    request_opts = [url: "/api/v2/chat/commands", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -36,6 +26,12 @@ defmodule ExStreamClient.Chat.Commands do
             else
               :error
             end
+
+          response_handlers = %{
+            201 => ExStreamClient.Model.CreateCommandResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -61,16 +57,7 @@ defmodule ExStreamClient.Chat.Commands do
 	"
   @spec list_commands() :: {:ok, ExStreamClient.Model.ListCommandsResponse.t()} | {:error, any()}
   def list_commands() do
-    request_opts =
-      [url: "/api/v2/chat/commands", method: :get, params: [], decode_json: [keys: :atoms]] ++ []
-
-    response_handlers = %{
-      200 => ExStreamClient.Model.ListCommandsResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+    request_opts = [url: "/api/v2/chat/commands", method: :get, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -82,6 +69,12 @@ defmodule ExStreamClient.Chat.Commands do
             else
               :error
             end
+
+          response_handlers = %{
+            200 => ExStreamClient.Model.ListCommandsResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -110,20 +103,7 @@ defmodule ExStreamClient.Chat.Commands do
           {:ok, ExStreamClient.Model.UpdateCommandResponse.t()} | {:error, any()}
   def update_command(name, payload) do
     request_opts =
-      [
-        url: "/api/v2/chat/commands/#{name}",
-        method: :put,
-        params: [],
-        decode_json: [keys: :atoms]
-      ] ++ [json: payload]
-
-    response_handlers = %{
-      201 => ExStreamClient.Model.UpdateCommandResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+      [url: "/api/v2/chat/commands/#{name}", method: :put, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -135,6 +115,12 @@ defmodule ExStreamClient.Chat.Commands do
             else
               :error
             end
+
+          response_handlers = %{
+            201 => ExStreamClient.Model.UpdateCommandResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -161,21 +147,7 @@ defmodule ExStreamClient.Chat.Commands do
   @spec get_command(String.t()) ::
           {:ok, ExStreamClient.Model.GetCommandResponse.t()} | {:error, any()}
   def get_command(name) do
-    request_opts =
-      [
-        url: "/api/v2/chat/commands/#{name}",
-        method: :get,
-        params: [],
-        decode_json: [keys: :atoms]
-      ] ++ []
-
-    response_handlers = %{
-      200 => ExStreamClient.Model.GetCommandResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+    request_opts = [url: "/api/v2/chat/commands/#{name}", method: :get, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -187,6 +159,12 @@ defmodule ExStreamClient.Chat.Commands do
             else
               :error
             end
+
+          response_handlers = %{
+            200 => ExStreamClient.Model.GetCommandResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do
@@ -213,21 +191,7 @@ defmodule ExStreamClient.Chat.Commands do
   @spec delete_command(String.t()) ::
           {:ok, ExStreamClient.Model.DeleteCommandResponse.t()} | {:error, any()}
   def delete_command(name) do
-    request_opts =
-      [
-        url: "/api/v2/chat/commands/#{name}",
-        method: :delete,
-        params: [],
-        decode_json: [keys: :atoms]
-      ] ++ []
-
-    response_handlers = %{
-      200 => ExStreamClient.Model.DeleteCommandResponse,
-      400 => ExStreamClient.Model.APIError,
-      429 => ExStreamClient.Model.APIError
-    }
-
-    response_handlers |> Map.values() |> Code.ensure_all_loaded()
+    request_opts = [url: "/api/v2/chat/commands/#{name}", method: :delete, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -239,6 +203,12 @@ defmodule ExStreamClient.Chat.Commands do
             else
               :error
             end
+
+          response_handlers = %{
+            200 => ExStreamClient.Model.DeleteCommandResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
           parsed =
             case Map.get(response_handlers, response.status) do

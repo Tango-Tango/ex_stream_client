@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.SearchWarning do
   use ExStreamClient.Jason
   @enforce_keys [:warning_code, :warning_description]
   defstruct [:channel_search_cids, :channel_search_count, :warning_code, :warning_description]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

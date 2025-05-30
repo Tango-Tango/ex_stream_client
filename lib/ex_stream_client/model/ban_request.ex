@@ -14,7 +14,7 @@ defmodule ExStreamClient.Model.BanRequest do
     :timeout
   ]
 
-  @nested_components %{delete_messages: :atom, banned_by: ExStreamClient.Model.UserRequest}
+  @nested_components banned_by: ExStreamClient.Model.UserRequest, delete_messages: :atom
   def nested_components do
     @nested_components
   end

@@ -4,11 +4,9 @@ defmodule ExStreamClient.Model.MessageUnblockedEvent do
   @enforce_keys [:cid, :created_at, :type]
   defstruct [:cid, :created_at, :message, :thread_participants, :type, :user]
 
-  @nested_components %{
-    message: ExStreamClient.Model.Message,
-    user: ExStreamClient.Model.User,
-    thread_participants: ExStreamClient.Model.User
-  }
+  @nested_components message: ExStreamClient.Model.Message,
+                     thread_participants: ExStreamClient.Model.User,
+                     user: ExStreamClient.Model.User
   def nested_components do
     @nested_components
   end

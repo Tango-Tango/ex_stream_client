@@ -2,7 +2,7 @@ defmodule ExStreamClient.Model.ReactivateUserRequest do
   @moduledoc "Schema representing a ReactivateUserRequest"
   use ExStreamClient.Jason
   defstruct [:created_by_id, :name, :restore_messages]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

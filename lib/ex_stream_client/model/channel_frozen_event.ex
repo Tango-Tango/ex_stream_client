@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.ChannelFrozenEvent do
   use ExStreamClient.Jason
   @enforce_keys [:channel_id, :channel_type, :cid, :created_at, :type]
   defstruct [:channel_id, :channel_type, :cid, :created_at, :type]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

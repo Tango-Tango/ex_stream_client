@@ -46,14 +46,12 @@ defmodule ExStreamClient.Model.CampaignResponse do
     :users
   ]
 
-  @nested_components %{
-    stats: ExStreamClient.Model.CampaignStatsResponse,
-    segments: ExStreamClient.Model.Segment,
-    users: ExStreamClient.Model.UserResponse,
-    channel_template: ExStreamClient.Model.CampaignChannelTemplate,
-    message_template: ExStreamClient.Model.CampaignMessageTemplate,
-    sender: ExStreamClient.Model.UserResponse
-  }
+  @nested_components channel_template: ExStreamClient.Model.CampaignChannelTemplate,
+                     message_template: ExStreamClient.Model.CampaignMessageTemplate,
+                     segments: ExStreamClient.Model.Segment,
+                     sender: ExStreamClient.Model.UserResponse,
+                     stats: ExStreamClient.Model.CampaignStatsResponse,
+                     users: ExStreamClient.Model.UserResponse
   def nested_components do
     @nested_components
   end

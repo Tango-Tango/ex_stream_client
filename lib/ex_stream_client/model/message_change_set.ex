@@ -25,7 +25,7 @@ defmodule ExStreamClient.Model.MessageChangeSet do
     :text
   ]
 
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

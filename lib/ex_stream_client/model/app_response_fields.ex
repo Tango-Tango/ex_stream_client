@@ -86,14 +86,13 @@ defmodule ExStreamClient.Model.AppResponseFields do
     :webhook_url
   ]
 
-  @nested_components %{
-    file_upload_config: ExStreamClient.Model.FileUploadConfig,
-    image_upload_config: ExStreamClient.Model.FileUploadConfig,
-    push_notifications: ExStreamClient.Model.PushNotificationFields,
-    datadog_info: ExStreamClient.Model.DataDogInfo,
-    geofences: ExStreamClient.Model.GeofenceResponse,
-    moderation_dashboard_preferences: ExStreamClient.Model.ModerationDashboardPreferences
-  }
+  @nested_components datadog_info: ExStreamClient.Model.DataDogInfo,
+                     file_upload_config: ExStreamClient.Model.FileUploadConfig,
+                     geofences: ExStreamClient.Model.GeofenceResponse,
+                     image_upload_config: ExStreamClient.Model.FileUploadConfig,
+                     moderation_dashboard_preferences:
+                       ExStreamClient.Model.ModerationDashboardPreferences,
+                     push_notifications: ExStreamClient.Model.PushNotificationFields
   def nested_components do
     @nested_components
   end

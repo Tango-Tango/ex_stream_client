@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.UserUpdatedEvent do
   use ExStreamClient.Jason
   @enforce_keys [:created_at, :custom, :type, :user]
   defstruct [:created_at, :custom, :received_at, :type, :user]
-  @nested_components %{user: ExStreamClient.Model.UserResponsePrivacyFields}
+  @nested_components user: ExStreamClient.Model.UserResponsePrivacyFields
   def nested_components do
     @nested_components
   end

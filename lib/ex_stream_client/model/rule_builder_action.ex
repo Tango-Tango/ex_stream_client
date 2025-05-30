@@ -2,7 +2,7 @@ defmodule ExStreamClient.Model.RuleBuilderAction do
   @moduledoc "Schema representing a RuleBuilderAction"
   use ExStreamClient.Jason
   defstruct [:duration, :ip_ban, :reason, :shadow_ban, :type]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

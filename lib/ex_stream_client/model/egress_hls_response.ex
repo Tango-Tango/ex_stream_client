@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.EgressHLSResponse do
   use ExStreamClient.Jason
   @enforce_keys [:playlist_url, :status]
   defstruct [:playlist_url, :status]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

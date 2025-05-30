@@ -18,11 +18,9 @@ defmodule ExStreamClient.Model.EnrichedReaction do
     :user_id
   ]
 
-  @nested_components %{
-    user: ExStreamClient.Model.Data,
-    created_at: ExStreamClient.Model.Time,
-    updated_at: ExStreamClient.Model.Time
-  }
+  @nested_components created_at: ExStreamClient.Model.Time,
+                     updated_at: ExStreamClient.Model.Time,
+                     user: ExStreamClient.Model.Data
   def nested_components do
     @nested_components
   end

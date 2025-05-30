@@ -3,11 +3,7 @@ defmodule ExStreamClient.Model.MuteResponse do
   use ExStreamClient.Jason
   @enforce_keys [:duration]
   defstruct [:duration, :mutes, :non_existing_users, :own_user]
-
-  @nested_components %{
-    mutes: ExStreamClient.Model.UserMute,
-    own_user: ExStreamClient.Model.OwnUser
-  }
+  @nested_components mutes: ExStreamClient.Model.UserMute, own_user: ExStreamClient.Model.OwnUser
   def nested_components do
     @nested_components
   end

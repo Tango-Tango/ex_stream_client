@@ -10,7 +10,7 @@ defmodule ExStreamClient.Model.FileUploadConfig do
     :size_limit
   ]
 
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

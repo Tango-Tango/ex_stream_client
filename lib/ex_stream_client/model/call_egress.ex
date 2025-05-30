@@ -27,7 +27,7 @@ defmodule ExStreamClient.Model.CallEgress do
     :updated_at
   ]
 
-  @nested_components %{config: ExStreamClient.Model.EgressTaskConfig}
+  @nested_components config: ExStreamClient.Model.EgressTaskConfig
   def nested_components do
     @nested_components
   end

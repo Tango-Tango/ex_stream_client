@@ -17,12 +17,10 @@ defmodule ExStreamClient.Model.EnrichedActivity do
     :verb
   ]
 
-  @nested_components %{
-    origin: ExStreamClient.Model.Data,
-    target: ExStreamClient.Model.Data,
-    actor: ExStreamClient.Model.Data,
-    object: ExStreamClient.Model.Data
-  }
+  @nested_components actor: ExStreamClient.Model.Data,
+                     object: ExStreamClient.Model.Data,
+                     origin: ExStreamClient.Model.Data,
+                     target: ExStreamClient.Model.Data
   def nested_components do
     @nested_components
   end

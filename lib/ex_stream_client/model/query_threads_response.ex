@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.QueryThreadsResponse do
   use ExStreamClient.Jason
   @enforce_keys [:duration, :threads]
   defstruct [:duration, :next, :prev, :threads]
-  @nested_components %{threads: ExStreamClient.Model.ThreadStateResponse}
+  @nested_components threads: ExStreamClient.Model.ThreadStateResponse
   def nested_components do
     @nested_components
   end

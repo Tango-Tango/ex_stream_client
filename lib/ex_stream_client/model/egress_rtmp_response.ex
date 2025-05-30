@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.EgressRTMPResponse do
   use ExStreamClient.Jason
   @enforce_keys [:name, :started_at]
   defstruct [:name, :started_at, :stream_key, :stream_url]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.GetSegmentResponse do
   use ExStreamClient.Jason
   @enforce_keys [:duration]
   defstruct [:duration, :segment]
-  @nested_components %{segment: ExStreamClient.Model.SegmentResponse}
+  @nested_components segment: ExStreamClient.Model.SegmentResponse
   def nested_components do
     @nested_components
   end

@@ -18,21 +18,19 @@ defmodule ExStreamClient.Model.CallSettings do
     :video
   ]
 
-  @nested_components %{
-    session: ExStreamClient.Model.SessionSettings,
-    backstage: ExStreamClient.Model.BackstageSettings,
-    recording: ExStreamClient.Model.RecordSettings,
-    thumbnails: ExStreamClient.Model.ThumbnailsSettings,
-    audio: ExStreamClient.Model.AudioSettings,
-    broadcasting: ExStreamClient.Model.BroadcastSettings,
-    frame_recording: ExStreamClient.Model.FrameRecordSettings,
-    geofencing: ExStreamClient.Model.GeofenceSettings,
-    limits: ExStreamClient.Model.LimitsSettings,
-    ring: ExStreamClient.Model.RingSettings,
-    screensharing: ExStreamClient.Model.ScreensharingSettings,
-    transcription: ExStreamClient.Model.TranscriptionSettings,
-    video: ExStreamClient.Model.VideoSettings
-  }
+  @nested_components audio: ExStreamClient.Model.AudioSettings,
+                     backstage: ExStreamClient.Model.BackstageSettings,
+                     broadcasting: ExStreamClient.Model.BroadcastSettings,
+                     frame_recording: ExStreamClient.Model.FrameRecordSettings,
+                     geofencing: ExStreamClient.Model.GeofenceSettings,
+                     limits: ExStreamClient.Model.LimitsSettings,
+                     recording: ExStreamClient.Model.RecordSettings,
+                     ring: ExStreamClient.Model.RingSettings,
+                     screensharing: ExStreamClient.Model.ScreensharingSettings,
+                     session: ExStreamClient.Model.SessionSettings,
+                     thumbnails: ExStreamClient.Model.ThumbnailsSettings,
+                     transcription: ExStreamClient.Model.TranscriptionSettings,
+                     video: ExStreamClient.Model.VideoSettings
   def nested_components do
     @nested_components
   end

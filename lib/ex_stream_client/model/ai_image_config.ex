@@ -4,10 +4,8 @@ defmodule ExStreamClient.Model.AIImageConfig do
   @enforce_keys [:enabled, :ocr_rules, :rules]
   defstruct [:async, :enabled, :ocr_rules, :rules]
 
-  @nested_components %{
-    ocr_rules: ExStreamClient.Model.OCRRule,
-    rules: ExStreamClient.Model.AWSRekognitionRule
-  }
+  @nested_components ocr_rules: ExStreamClient.Model.OCRRule,
+                     rules: ExStreamClient.Model.AWSRekognitionRule
   def nested_components do
     @nested_components
   end

@@ -2,7 +2,7 @@ defmodule ExStreamClient.Model.UpsertPushProviderRequest do
   @moduledoc "Schema representing a UpsertPushProviderRequest"
   use ExStreamClient.Jason
   defstruct [:push_provider]
-  @nested_components %{push_provider: ExStreamClient.Model.PushProvider}
+  @nested_components push_provider: ExStreamClient.Model.PushProvider
   def nested_components do
     @nested_components
   end

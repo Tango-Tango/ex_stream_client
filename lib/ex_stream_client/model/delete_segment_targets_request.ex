@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.DeleteSegmentTargetsRequest do
   use ExStreamClient.Jason
   @enforce_keys [:target_ids]
   defstruct [:target_ids]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

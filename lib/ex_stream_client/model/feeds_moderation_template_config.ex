@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.FeedsModerationTemplateConfig do
   use ExStreamClient.Jason
   @enforce_keys [:config_key, :data_types]
   defstruct [:config_key, :data_types]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

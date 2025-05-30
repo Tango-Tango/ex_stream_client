@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.MessageActionRequest do
   use ExStreamClient.Jason
   @enforce_keys [:form_data]
   defstruct [:form_data, :user, :user_id]
-  @nested_components %{user: ExStreamClient.Model.UserRequest}
+  @nested_components user: ExStreamClient.Model.UserRequest
   def nested_components do
     @nested_components
   end

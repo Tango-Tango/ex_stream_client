@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.ListExternalStorageResponse do
   use ExStreamClient.Jason
   @enforce_keys [:duration, :external_storages]
   defstruct [:duration, :external_storages]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

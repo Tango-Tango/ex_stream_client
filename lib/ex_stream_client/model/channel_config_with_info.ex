@@ -61,14 +61,12 @@ defmodule ExStreamClient.Model.ChannelConfigWithInfo do
     :url_enrichment
   ]
 
-  @nested_components %{
-    commands: ExStreamClient.Model.Command,
-    automod: :atom,
-    automod_behavior: :atom,
-    automod_thresholds: ExStreamClient.Model.Thresholds,
-    blocklist_behavior: :atom,
-    blocklists: ExStreamClient.Model.BlockListOptions
-  }
+  @nested_components automod: :atom,
+                     automod_behavior: :atom,
+                     automod_thresholds: ExStreamClient.Model.Thresholds,
+                     blocklist_behavior: :atom,
+                     blocklists: ExStreamClient.Model.BlockListOptions,
+                     commands: ExStreamClient.Model.Command
   def nested_components do
     @nested_components
   end

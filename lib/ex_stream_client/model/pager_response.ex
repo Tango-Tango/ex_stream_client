@@ -2,7 +2,7 @@ defmodule ExStreamClient.Model.PagerResponse do
   @moduledoc "Schema representing a PagerResponse"
   use ExStreamClient.Jason
   defstruct [:next, :prev]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

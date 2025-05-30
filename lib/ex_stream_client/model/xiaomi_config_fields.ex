@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.XiaomiConfigFields do
   use ExStreamClient.Jason
   @enforce_keys [:enabled]
   defstruct [:enabled, :package_name, :secret]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

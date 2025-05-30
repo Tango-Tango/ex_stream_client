@@ -4,11 +4,9 @@ defmodule ExStreamClient.Model.ModerationMarkReviewedEvent do
   @enforce_keys [:created_at, :type]
   defstruct [:created_at, :item, :message, :type, :user]
 
-  @nested_components %{
-    message: ExStreamClient.Model.Message,
-    user: ExStreamClient.Model.User,
-    item: ExStreamClient.Model.ReviewQueueItem
-  }
+  @nested_components item: ExStreamClient.Model.ReviewQueueItem,
+                     message: ExStreamClient.Model.Message,
+                     user: ExStreamClient.Model.User
   def nested_components do
     @nested_components
   end

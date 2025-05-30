@@ -2,7 +2,7 @@ defmodule ExStreamClient.Model.FCM do
   @moduledoc "Schema representing a FCM"
   use ExStreamClient.Jason
   defstruct [:data]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

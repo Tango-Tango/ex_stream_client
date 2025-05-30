@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.ChannelUnmutedEvent do
   use ExStreamClient.Jason
   @enforce_keys [:created_at, :type]
   defstruct [:created_at, :type]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

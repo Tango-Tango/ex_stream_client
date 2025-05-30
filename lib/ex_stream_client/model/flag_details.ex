@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.FlagDetails do
   use ExStreamClient.Jason
   @enforce_keys [:extra, :original_text]
   defstruct [:automod, :extra, :original_text]
-  @nested_components %{automod: ExStreamClient.Model.AutomodDetails}
+  @nested_components automod: ExStreamClient.Model.AutomodDetails
   def nested_components do
     @nested_components
   end

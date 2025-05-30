@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.S3Request do
   use ExStreamClient.Jason
   @enforce_keys [:s3_region]
   defstruct [:s3_api_key, :s3_custom_endpoint_url, :s3_region, :s3_secret]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

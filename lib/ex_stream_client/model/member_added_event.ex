@@ -3,11 +3,7 @@ defmodule ExStreamClient.Model.MemberAddedEvent do
   use ExStreamClient.Jason
   @enforce_keys [:channel_id, :channel_type, :cid, :created_at, :type]
   defstruct [:channel_id, :channel_type, :cid, :created_at, :member, :team, :type, :user]
-
-  @nested_components %{
-    member: ExStreamClient.Model.ChannelMember,
-    user: ExStreamClient.Model.User
-  }
+  @nested_components member: ExStreamClient.Model.ChannelMember, user: ExStreamClient.Model.User
   def nested_components do
     @nested_components
   end

@@ -2,7 +2,7 @@ defmodule ExStreamClient.Model.QuerySegmentTargetsRequest do
   @moduledoc "Schema representing a QuerySegmentTargetsRequest"
   use ExStreamClient.Jason
   defstruct [:filter, :limit, :next, :prev, :sort]
-  @nested_components %{Sort: ExStreamClient.Model.SortParamRequest}
+  @nested_components Sort: ExStreamClient.Model.SortParamRequest
   def nested_components do
     @nested_components
   end

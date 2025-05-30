@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.DeleteChannelsRequest do
   use ExStreamClient.Jason
   @enforce_keys [:cids]
   defstruct [:cids, :hard_delete]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

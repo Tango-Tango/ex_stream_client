@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.RTMPSettingsResponse do
   use ExStreamClient.Jason
   @enforce_keys [:enabled, :layout, :quality]
   defstruct [:enabled, :layout, :quality]
-  @nested_components %{layout: ExStreamClient.Model.LayoutSettingsResponse}
+  @nested_components layout: ExStreamClient.Model.LayoutSettingsResponse
   def nested_components do
     @nested_components
   end

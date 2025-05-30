@@ -12,12 +12,10 @@ defmodule ExStreamClient.Model.DraftResponse do
     :quoted_message
   ]
 
-  @nested_components %{
-    message: ExStreamClient.Model.DraftPayloadResponse,
-    channel: ExStreamClient.Model.ChannelResponse,
-    parent_message: ExStreamClient.Model.MessageResponse,
-    quoted_message: ExStreamClient.Model.MessageResponse
-  }
+  @nested_components channel: ExStreamClient.Model.ChannelResponse,
+                     message: ExStreamClient.Model.DraftPayloadResponse,
+                     parent_message: ExStreamClient.Model.MessageResponse,
+                     quoted_message: ExStreamClient.Model.MessageResponse
   def nested_components do
     @nested_components
   end

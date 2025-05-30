@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.BlockListRule do
   use ExStreamClient.Jason
   @enforce_keys [:action, :name, :team]
   defstruct [:action, :name, :team]
-  @nested_components %{action: :atom}
+  @nested_components action: :atom
   def nested_components do
     @nested_components
   end

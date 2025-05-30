@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.ListChannelTypesResponse do
   use ExStreamClient.Jason
   @enforce_keys [:channel_types, :duration]
   defstruct [:channel_types, :duration]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

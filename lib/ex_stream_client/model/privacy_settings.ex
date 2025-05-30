@@ -3,10 +3,8 @@ defmodule ExStreamClient.Model.PrivacySettings do
   use ExStreamClient.Jason
   defstruct [:read_receipts, :typing_indicators]
 
-  @nested_components %{
-    read_receipts: ExStreamClient.Model.ReadReceipts,
-    typing_indicators: ExStreamClient.Model.TypingIndicators
-  }
+  @nested_components read_receipts: ExStreamClient.Model.ReadReceipts,
+                     typing_indicators: ExStreamClient.Model.TypingIndicators
   def nested_components do
     @nested_components
   end

@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.UnreadCountsBatchResponse do
   use ExStreamClient.Jason
   @enforce_keys [:counts_by_user, :duration]
   defstruct [:counts_by_user, :duration]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

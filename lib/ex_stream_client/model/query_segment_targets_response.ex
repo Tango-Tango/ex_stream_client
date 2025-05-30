@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.QuerySegmentTargetsResponse do
   use ExStreamClient.Jason
   @enforce_keys [:duration, :targets]
   defstruct [:duration, :next, :prev, :targets]
-  @nested_components %{targets: ExStreamClient.Model.SegmentTargetResponse}
+  @nested_components targets: ExStreamClient.Model.SegmentTargetResponse
   def nested_components do
     @nested_components
   end

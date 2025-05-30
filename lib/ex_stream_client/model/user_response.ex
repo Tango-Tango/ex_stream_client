@@ -42,11 +42,9 @@ defmodule ExStreamClient.Model.UserResponse do
     :updated_at
   ]
 
-  @nested_components %{
-    push_notifications: ExStreamClient.Model.PushNotificationSettingsResponse,
-    privacy_settings: ExStreamClient.Model.PrivacySettingsResponse,
-    devices: ExStreamClient.Model.DeviceResponse
-  }
+  @nested_components devices: ExStreamClient.Model.DeviceResponse,
+                     privacy_settings: ExStreamClient.Model.PrivacySettingsResponse,
+                     push_notifications: ExStreamClient.Model.PushNotificationSettingsResponse
   def nested_components do
     @nested_components
   end

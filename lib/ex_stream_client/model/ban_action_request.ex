@@ -2,7 +2,7 @@ defmodule ExStreamClient.Model.BanActionRequest do
   @moduledoc "Schema representing a BanActionRequest"
   use ExStreamClient.Jason
   defstruct [:channel_ban_only, :delete_messages, :ip_ban, :reason, :shadow, :timeout]
-  @nested_components %{delete_messages: :atom}
+  @nested_components delete_messages: :atom
   def nested_components do
     @nested_components
   end

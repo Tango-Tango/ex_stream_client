@@ -13,10 +13,8 @@ defmodule ExStreamClient.Model.QueryUsersPayload do
     :user_id
   ]
 
-  @nested_components %{
-    user: ExStreamClient.Model.UserRequest,
-    sort: ExStreamClient.Model.SortParamRequest
-  }
+  @nested_components sort: ExStreamClient.Model.SortParamRequest,
+                     user: ExStreamClient.Model.UserRequest
   def nested_components do
     @nested_components
   end

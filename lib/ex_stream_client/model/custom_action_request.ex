@@ -2,7 +2,7 @@ defmodule ExStreamClient.Model.CustomActionRequest do
   @moduledoc "Schema representing a CustomActionRequest"
   use ExStreamClient.Jason
   defstruct [:id, :options]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

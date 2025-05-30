@@ -4,11 +4,9 @@ defmodule ExStreamClient.Model.QueryMembersPayload do
   @enforce_keys [:filter_conditions, :type]
   defstruct [:filter_conditions, :id, :limit, :members, :offset, :sort, :type, :user, :user_id]
 
-  @nested_components %{
-    user: ExStreamClient.Model.UserRequest,
-    sort: ExStreamClient.Model.SortParamRequest,
-    members: ExStreamClient.Model.ChannelMember
-  }
+  @nested_components members: ExStreamClient.Model.ChannelMember,
+                     sort: ExStreamClient.Model.SortParamRequest,
+                     user: ExStreamClient.Model.UserRequest
   def nested_components do
     @nested_components
   end

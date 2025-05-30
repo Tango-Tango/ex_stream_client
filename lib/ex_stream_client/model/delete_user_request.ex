@@ -9,7 +9,7 @@ defmodule ExStreamClient.Model.DeleteUserRequest do
     :mark_messages_deleted
   ]
 
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

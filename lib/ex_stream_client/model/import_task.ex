@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.ImportTask do
   use ExStreamClient.Jason
   @enforce_keys [:created_at, :history, :id, :mode, :path, :state, :updated_at]
   defstruct [:created_at, :history, :id, :mode, :path, :size, :state, :updated_at]
-  @nested_components %{history: ExStreamClient.Model.ImportTaskHistory}
+  @nested_components history: ExStreamClient.Model.ImportTaskHistory
   def nested_components do
     @nested_components
   end

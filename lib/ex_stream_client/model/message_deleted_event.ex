@@ -15,11 +15,9 @@ defmodule ExStreamClient.Model.MessageDeletedEvent do
     :user
   ]
 
-  @nested_components %{
-    message: ExStreamClient.Model.Message,
-    user: ExStreamClient.Model.User,
-    thread_participants: ExStreamClient.Model.User
-  }
+  @nested_components message: ExStreamClient.Model.Message,
+                     thread_participants: ExStreamClient.Model.User,
+                     user: ExStreamClient.Model.User
   def nested_components do
     @nested_components
   end

@@ -33,7 +33,7 @@ defmodule ExStreamClient.Model.PushProviderResponse do
     :xiaomi_package_name
   ]
 
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

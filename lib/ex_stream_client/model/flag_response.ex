@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.FlagResponse do
   use ExStreamClient.Jason
   @enforce_keys [:duration, :item_id]
   defstruct [:duration, :item_id]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

@@ -3,10 +3,8 @@ defmodule ExStreamClient.Model.QueryMessageFlagsPayload do
   use ExStreamClient.Jason
   defstruct [:filter_conditions, :limit, :offset, :show_deleted_messages, :sort, :user, :user_id]
 
-  @nested_components %{
-    user: ExStreamClient.Model.UserRequest,
-    sort: ExStreamClient.Model.SortParamRequest
-  }
+  @nested_components sort: ExStreamClient.Model.SortParamRequest,
+                     user: ExStreamClient.Model.UserRequest
   def nested_components do
     @nested_components
   end

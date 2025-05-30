@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.UpdateUsersResponse do
   use ExStreamClient.Jason
   @enforce_keys [:duration, :membership_deletion_task_id, :users]
   defstruct [:duration, :membership_deletion_task_id, :users]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

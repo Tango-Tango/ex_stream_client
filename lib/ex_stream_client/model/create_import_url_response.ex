@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.CreateImportURLResponse do
   use ExStreamClient.Jason
   @enforce_keys [:duration, :path, :upload_url]
   defstruct [:duration, :path, :upload_url]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

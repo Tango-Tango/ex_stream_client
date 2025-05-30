@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.BlockUsersResponse do
   use ExStreamClient.Jason
   @enforce_keys [:blocked_by_user_id, :blocked_user_id, :created_at, :duration]
   defstruct [:blocked_by_user_id, :blocked_user_id, :created_at, :duration]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

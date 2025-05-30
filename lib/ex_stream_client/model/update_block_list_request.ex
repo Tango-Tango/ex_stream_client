@@ -2,7 +2,7 @@ defmodule ExStreamClient.Model.UpdateBlockListRequest do
   @moduledoc "Schema representing a UpdateBlockListRequest"
   use ExStreamClient.Jason
   defstruct [:team, :words]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

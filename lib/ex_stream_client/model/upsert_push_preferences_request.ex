@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.UpsertPushPreferencesRequest do
   use ExStreamClient.Jason
   @enforce_keys [:preferences]
   defstruct [:preferences]
-  @nested_components %{preferences: ExStreamClient.Model.PushPreferenceInput}
+  @nested_components preferences: ExStreamClient.Model.PushPreferenceInput
   def nested_components do
     @nested_components
   end

@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.ListImportsResponse do
   use ExStreamClient.Jason
   @enforce_keys [:duration, :import_tasks]
   defstruct [:duration, :import_tasks]
-  @nested_components %{import_tasks: ExStreamClient.Model.ImportTask}
+  @nested_components import_tasks: ExStreamClient.Model.ImportTask
   def nested_components do
     @nested_components
   end

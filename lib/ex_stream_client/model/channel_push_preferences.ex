@@ -2,7 +2,7 @@ defmodule ExStreamClient.Model.ChannelPushPreferences do
   @moduledoc "Schema representing a ChannelPushPreferences"
   use ExStreamClient.Jason
   defstruct [:chat_level, :disabled_until]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

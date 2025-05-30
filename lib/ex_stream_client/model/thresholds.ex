@@ -3,11 +3,9 @@ defmodule ExStreamClient.Model.Thresholds do
   use ExStreamClient.Jason
   defstruct [:explicit, :spam, :toxic]
 
-  @nested_components %{
-    explicit: ExStreamClient.Model.LabelThresholds,
-    spam: ExStreamClient.Model.LabelThresholds,
-    toxic: ExStreamClient.Model.LabelThresholds
-  }
+  @nested_components explicit: ExStreamClient.Model.LabelThresholds,
+                     spam: ExStreamClient.Model.LabelThresholds,
+                     toxic: ExStreamClient.Model.LabelThresholds
   def nested_components do
     @nested_components
   end

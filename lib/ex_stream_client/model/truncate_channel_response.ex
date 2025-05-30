@@ -4,10 +4,8 @@ defmodule ExStreamClient.Model.TruncateChannelResponse do
   @enforce_keys [:duration]
   defstruct [:channel, :duration, :message]
 
-  @nested_components %{
-    message: ExStreamClient.Model.MessageResponse,
-    channel: ExStreamClient.Model.ChannelResponse
-  }
+  @nested_components channel: ExStreamClient.Model.ChannelResponse,
+                     message: ExStreamClient.Model.MessageResponse
   def nested_components do
     @nested_components
   end

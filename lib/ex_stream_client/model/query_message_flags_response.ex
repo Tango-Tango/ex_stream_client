@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.QueryMessageFlagsResponse do
   use ExStreamClient.Jason
   @enforce_keys [:duration, :flags]
   defstruct [:duration, :flags]
-  @nested_components %{flags: ExStreamClient.Model.MessageFlagResponse}
+  @nested_components flags: ExStreamClient.Model.MessageFlagResponse
   def nested_components do
     @nested_components
   end

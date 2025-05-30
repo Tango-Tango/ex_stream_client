@@ -15,11 +15,9 @@ defmodule ExStreamClient.Model.ActionLogResponse do
     :user_id
   ]
 
-  @nested_components %{
-    user: ExStreamClient.Model.UserResponse,
-    review_queue_item: ExStreamClient.Model.ReviewQueueItem,
-    target_user: ExStreamClient.Model.UserResponse
-  }
+  @nested_components review_queue_item: ExStreamClient.Model.ReviewQueueItem,
+                     target_user: ExStreamClient.Model.UserResponse,
+                     user: ExStreamClient.Model.UserResponse
   def nested_components do
     @nested_components
   end

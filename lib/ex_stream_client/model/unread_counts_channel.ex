@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.UnreadCountsChannel do
   use ExStreamClient.Jason
   @enforce_keys [:channel_id, :last_read, :unread_count]
   defstruct [:channel_id, :last_read, :unread_count]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

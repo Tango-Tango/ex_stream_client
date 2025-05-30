@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.RTMPIngress do
   use ExStreamClient.Jason
   @enforce_keys [:address]
   defstruct [:address]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

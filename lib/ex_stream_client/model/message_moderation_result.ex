@@ -16,10 +16,8 @@ defmodule ExStreamClient.Model.MessageModerationResult do
     :user_karma
   ]
 
-  @nested_components %{
-    ai_moderation_response: ExStreamClient.Model.ModerationResponse,
-    moderation_thresholds: ExStreamClient.Model.Thresholds
-  }
+  @nested_components ai_moderation_response: ExStreamClient.Model.ModerationResponse,
+                     moderation_thresholds: ExStreamClient.Model.Thresholds
   def nested_components do
     @nested_components
   end

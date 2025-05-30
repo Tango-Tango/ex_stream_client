@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.APNS do
   use ExStreamClient.Jason
   @enforce_keys [:body, :title]
   defstruct [:body, :"content-available", :data, :"mutable-content", :sound, :title]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

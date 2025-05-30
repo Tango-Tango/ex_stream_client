@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.AutomodSemanticFiltersConfig do
   use ExStreamClient.Jason
   @enforce_keys [:enabled, :rules]
   defstruct [:async, :enabled, :rules]
-  @nested_components %{rules: ExStreamClient.Model.AutomodSemanticFiltersRule}
+  @nested_components rules: ExStreamClient.Model.AutomodSemanticFiltersRule
   def nested_components do
     @nested_components
   end

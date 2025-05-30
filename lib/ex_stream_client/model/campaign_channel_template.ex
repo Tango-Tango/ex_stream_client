@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.CampaignChannelTemplate do
   use ExStreamClient.Jason
   @enforce_keys [:custom, :type]
   defstruct [:custom, :id, :members, :team, :type]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

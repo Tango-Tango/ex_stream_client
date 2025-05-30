@@ -20,7 +20,7 @@ defmodule ExStreamClient.Model.VelocityFilterConfig do
     :rules
   ]
 
-  @nested_components %{rules: ExStreamClient.Model.VelocityFilterConfigRule}
+  @nested_components rules: ExStreamClient.Model.VelocityFilterConfigRule
   def nested_components do
     @nested_components
   end

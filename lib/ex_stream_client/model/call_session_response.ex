@@ -26,7 +26,7 @@ defmodule ExStreamClient.Model.CallSessionResponse do
     :timer_ends_at
   ]
 
-  @nested_components %{participants: ExStreamClient.Model.CallParticipantResponse}
+  @nested_components participants: ExStreamClient.Model.CallParticipantResponse
   def nested_components do
     @nested_components
   end

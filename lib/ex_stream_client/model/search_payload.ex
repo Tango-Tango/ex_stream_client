@@ -13,10 +13,8 @@ defmodule ExStreamClient.Model.SearchPayload do
     :sort
   ]
 
-  @nested_components %{
-    sort: ExStreamClient.Model.SortParamRequest,
-    message_options: ExStreamClient.Model.MessageOptions
-  }
+  @nested_components message_options: ExStreamClient.Model.MessageOptions,
+                     sort: ExStreamClient.Model.SortParamRequest
   def nested_components do
     @nested_components
   end

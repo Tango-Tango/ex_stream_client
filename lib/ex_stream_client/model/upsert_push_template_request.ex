@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.UpsertPushTemplateRequest do
   use ExStreamClient.Jason
   @enforce_keys [:event_type, :push_provider_type]
   defstruct [:enable_push, :event_type, :push_provider_name, :push_provider_type, :template]
-  @nested_components %{push_provider_type: :atom, event_type: :atom}
+  @nested_components event_type: :atom, push_provider_type: :atom
   def nested_components do
     @nested_components
   end

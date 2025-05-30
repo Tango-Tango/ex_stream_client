@@ -4,11 +4,9 @@ defmodule ExStreamClient.Model.MuteChannelResponse do
   @enforce_keys [:duration]
   defstruct [:channel_mute, :channel_mutes, :duration, :own_user]
 
-  @nested_components %{
-    channel_mutes: ExStreamClient.Model.ChannelMute,
-    channel_mute: ExStreamClient.Model.ChannelMute,
-    own_user: ExStreamClient.Model.OwnUser
-  }
+  @nested_components channel_mute: ExStreamClient.Model.ChannelMute,
+                     channel_mutes: ExStreamClient.Model.ChannelMute,
+                     own_user: ExStreamClient.Model.OwnUser
   def nested_components do
     @nested_components
   end

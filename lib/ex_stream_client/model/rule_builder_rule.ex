@@ -3,10 +3,8 @@ defmodule ExStreamClient.Model.RuleBuilderRule do
   use ExStreamClient.Jason
   defstruct [:action, :conditions, :enabled, :id, :name]
 
-  @nested_components %{
-    action: ExStreamClient.Model.RuleBuilderAction,
-    conditions: ExStreamClient.Model.RuleBuilderCondition
-  }
+  @nested_components action: ExStreamClient.Model.RuleBuilderAction,
+                     conditions: ExStreamClient.Model.RuleBuilderCondition
   def nested_components do
     @nested_components
   end

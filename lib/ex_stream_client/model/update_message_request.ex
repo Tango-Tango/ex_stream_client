@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.UpdateMessageRequest do
   use ExStreamClient.Jason
   @enforce_keys [:message]
   defstruct [:message, :skip_enrich_url, :skip_push]
-  @nested_components %{message: ExStreamClient.Model.MessageRequest}
+  @nested_components message: ExStreamClient.Model.MessageRequest
   def nested_components do
     @nested_components
   end

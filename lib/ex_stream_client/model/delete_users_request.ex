@@ -12,7 +12,7 @@ defmodule ExStreamClient.Model.DeleteUsersRequest do
     :user_ids
   ]
 
-  @nested_components %{messages: :atom, user: :atom, calls: :atom, conversations: :atom}
+  @nested_components calls: :atom, conversations: :atom, messages: :atom, user: :atom
   def nested_components do
     @nested_components
   end

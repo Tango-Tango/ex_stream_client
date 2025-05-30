@@ -31,13 +31,11 @@ defmodule ExStreamClient.Model.ChannelResponse do
     :updated_at
   ]
 
-  @nested_components %{
-    config: ExStreamClient.Model.ChannelConfigWithInfo,
-    created_by: ExStreamClient.Model.UserResponse,
-    members: ExStreamClient.Model.ChannelMember,
-    truncated_by: ExStreamClient.Model.UserResponse,
-    own_capabilities: ExStreamClient.Model.ChannelOwnCapability
-  }
+  @nested_components config: ExStreamClient.Model.ChannelConfigWithInfo,
+                     created_by: ExStreamClient.Model.UserResponse,
+                     members: ExStreamClient.Model.ChannelMember,
+                     own_capabilities: ExStreamClient.Model.ChannelOwnCapability,
+                     truncated_by: ExStreamClient.Model.UserResponse
   def nested_components do
     @nested_components
   end

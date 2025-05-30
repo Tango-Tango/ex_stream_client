@@ -30,12 +30,10 @@ defmodule ExStreamClient.Model.ThreadResponse do
     :updated_at
   ]
 
-  @nested_components %{
-    channel: ExStreamClient.Model.ChannelResponse,
-    created_by: ExStreamClient.Model.UserResponse,
-    parent_message: ExStreamClient.Model.MessageResponse,
-    thread_participants: ExStreamClient.Model.ThreadParticipant
-  }
+  @nested_components channel: ExStreamClient.Model.ChannelResponse,
+                     created_by: ExStreamClient.Model.UserResponse,
+                     parent_message: ExStreamClient.Model.MessageResponse,
+                     thread_participants: ExStreamClient.Model.ThreadParticipant
   def nested_components do
     @nested_components
   end

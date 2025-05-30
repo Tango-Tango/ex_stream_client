@@ -21,7 +21,7 @@ defmodule ExStreamClient.Model.CampaignStatsResponse do
     :stats_users_sent
   ]
 
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

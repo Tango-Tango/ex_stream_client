@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.Label do
   use ExStreamClient.Jason
   @enforce_keys [:name]
   defstruct [:harm_labels, :name, :phrase_list_ids]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

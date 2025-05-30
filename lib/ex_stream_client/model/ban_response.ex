@@ -4,11 +4,9 @@ defmodule ExStreamClient.Model.BanResponse do
   @enforce_keys [:created_at]
   defstruct [:banned_by, :channel, :created_at, :expires, :reason, :shadow, :user]
 
-  @nested_components %{
-    user: ExStreamClient.Model.UserResponse,
-    channel: ExStreamClient.Model.ChannelResponse,
-    banned_by: ExStreamClient.Model.UserResponse
-  }
+  @nested_components banned_by: ExStreamClient.Model.UserResponse,
+                     channel: ExStreamClient.Model.ChannelResponse,
+                     user: ExStreamClient.Model.UserResponse
   def nested_components do
     @nested_components
   end

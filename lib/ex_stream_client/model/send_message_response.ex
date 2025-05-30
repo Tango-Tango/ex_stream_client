@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.SendMessageResponse do
   use ExStreamClient.Jason
   @enforce_keys [:duration, :message]
   defstruct [:duration, :message, :pending_message_metadata]
-  @nested_components %{message: ExStreamClient.Model.MessageResponse}
+  @nested_components message: ExStreamClient.Model.MessageResponse
   def nested_components do
     @nested_components
   end

@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.QueryFeedModerationTemplatesResponse do
   use ExStreamClient.Jason
   @enforce_keys [:duration, :templates]
   defstruct [:duration, :templates]
-  @nested_components %{templates: ExStreamClient.Model.QueryFeedModerationTemplate}
+  @nested_components templates: ExStreamClient.Model.QueryFeedModerationTemplate
   def nested_components do
     @nested_components
   end

@@ -2,7 +2,7 @@ defmodule ExStreamClient.Model.AsyncModerationCallbackConfig do
   @moduledoc "Schema representing a AsyncModerationCallbackConfig"
   use ExStreamClient.Jason
   defstruct [:mode, :server_url]
-  @nested_components %{mode: :atom}
+  @nested_components mode: :atom
   def nested_components do
     @nested_components
   end

@@ -2,7 +2,7 @@ defmodule ExStreamClient.Model.LimitsSettingsResponse do
   @moduledoc "Schema representing a LimitsSettingsResponse"
   use ExStreamClient.Jason
   defstruct [:max_duration_seconds, :max_participants]
-  @nested_components %{}
+  @nested_components []
   def nested_components do
     @nested_components
   end

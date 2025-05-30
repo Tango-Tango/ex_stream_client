@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.FlagFeedback do
   use ExStreamClient.Jason
   @enforce_keys [:created_at, :labels, :message_id]
   defstruct [:created_at, :labels, :message_id]
-  @nested_components %{labels: ExStreamClient.Model.Label}
+  @nested_components labels: ExStreamClient.Model.Label
   def nested_components do
     @nested_components
   end

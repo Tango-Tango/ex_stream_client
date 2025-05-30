@@ -4,6 +4,15 @@ defmodule ExStreamClient.Model.EgressResponse do
   @enforce_keys [:broadcasting, :rtmps]
   defstruct [:broadcasting, :frame_recording, :hls, :rtmps]
 
+  @nested_components %{
+    hls: ExStreamClient.Model.EgressHLSResponse,
+    frame_recording: ExStreamClient.Model.FrameRecordingResponse,
+    rtmps: ExStreamClient.Model.EgressRTMPResponse
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           broadcasting: boolean(),
           frame_recording: ExStreamClient.Model.FrameRecordingResponse.t() | nil,

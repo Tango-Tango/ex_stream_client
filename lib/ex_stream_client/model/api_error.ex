@@ -13,6 +13,11 @@ defmodule ExStreamClient.Model.APIError do
     :unrecoverable
   ]
 
+  @nested_components %{}
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           code: integer(),
           details: [integer()],

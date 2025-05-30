@@ -14,22 +14,27 @@ defmodule ExStreamClient.CheckPush do
   @spec check_push(ExStreamClient.Model.CheckPushRequest.t()) ::
           {:ok, ExStreamClient.Model.CheckPushResponse.t()} | {:error, any()}
   def check_push(payload) do
-    request_opts = [url: "/api/v2/check_push", method: :post, params: %{}] ++ [json: payload]
+    request_opts =
+      [url: "/api/v2/check_push", method: :post, params: %{}, decode_json: [keys: :atoms]] ++
+        [json: payload]
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response({:ok, response.body}, {:component, "CheckPushResponse"})
+          response_handlers = %{
+            201 => ExStreamClient.Model.CheckPushResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 

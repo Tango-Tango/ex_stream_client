@@ -15,6 +15,11 @@ defmodule ExStreamClient.Model.Permission do
     :tags
   ]
 
+  @nested_components %{level: :atom}
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           action: String.t(),
           condition: map() | nil,

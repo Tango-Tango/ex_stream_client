@@ -4,6 +4,14 @@ defmodule ExStreamClient.Model.ChannelMute do
   @enforce_keys [:created_at, :updated_at]
   defstruct [:channel, :created_at, :expires, :updated_at, :user]
 
+  @nested_components %{
+    user: ExStreamClient.Model.UserResponse,
+    channel: ExStreamClient.Model.ChannelResponse
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           channel: ExStreamClient.Model.ChannelResponse.t() | nil,
           created_at: float(),

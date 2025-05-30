@@ -3,6 +3,10 @@ defmodule ExStreamClient.Model.CreatePollOptionRequest do
   use ExStreamClient.Jason
   @enforce_keys [:text]
   defstruct [:custom, :position, :text, :user, :user_id]
+  @nested_components %{user: ExStreamClient.Model.UserRequest}
+  def nested_components do
+    @nested_components
+  end
 
   @type t :: %__MODULE__{
           custom: map() | nil,

@@ -26,6 +26,15 @@ defmodule ExStreamClient.Model.ActionLog do
     :user
   ]
 
+  @nested_components %{
+    user: ExStreamClient.Model.User,
+    review_queue_item: ExStreamClient.Model.ReviewQueueItem,
+    target_user: ExStreamClient.Model.User
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           created_at: float(),
           custom: map(),

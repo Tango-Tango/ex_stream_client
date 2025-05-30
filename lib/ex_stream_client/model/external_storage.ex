@@ -18,6 +18,11 @@ defmodule ExStreamClient.Model.ExternalStorage do
     :storage_type
   ]
 
+  @nested_components %{}
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           abs_account_name: String.t() | nil,
           abs_client_id: String.t() | nil,

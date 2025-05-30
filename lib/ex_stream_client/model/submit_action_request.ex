@@ -17,6 +17,22 @@ defmodule ExStreamClient.Model.SubmitActionRequest do
     :user_id
   ]
 
+  @nested_components %{
+    user: ExStreamClient.Model.UserRequest,
+    delete_reaction: ExStreamClient.Model.DeleteReactionRequest,
+    delete_message: ExStreamClient.Model.DeleteMessageRequest,
+    unban: ExStreamClient.Model.UnbanActionRequest,
+    ban: ExStreamClient.Model.BanActionRequest,
+    custom: ExStreamClient.Model.CustomActionRequest,
+    action_type: :atom,
+    delete_activity: ExStreamClient.Model.DeleteActivityRequest,
+    delete_user: ExStreamClient.Model.DeleteUserRequest,
+    mark_reviewed: ExStreamClient.Model.MarkReviewedRequest
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           action_type:
             :end_call

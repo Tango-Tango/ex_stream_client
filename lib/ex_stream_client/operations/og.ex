@@ -13,22 +13,31 @@ defmodule ExStreamClient.Og do
 	"
   @spec get_og(String.t()) :: {:ok, ExStreamClient.Model.GetOGResponse.t()} | {:error, any()}
   def get_og(url) do
-    request_opts = [url: "/api/v2/og", method: :get, params: [url: url] |> Map.new()] ++ []
+    request_opts =
+      [
+        url: "/api/v2/og",
+        method: :get,
+        params: [url: url] |> Map.new(),
+        decode_json: [keys: :atoms]
+      ] ++ []
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response({:ok, response.body}, {:component, "GetOGResponse"})
+          response_handlers = %{
+            200 => ExStreamClient.Model.GetOGResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 

@@ -3,6 +3,10 @@ defmodule ExStreamClient.Model.SubmitActionResponse do
   use ExStreamClient.Jason
   @enforce_keys [:duration]
   defstruct [:duration, :item]
+  @nested_components %{item: ExStreamClient.Model.ReviewQueueItem}
+  def nested_components do
+    @nested_components
+  end
 
   @type t :: %__MODULE__{
           duration: String.t(),

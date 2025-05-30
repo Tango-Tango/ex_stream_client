@@ -3,6 +3,10 @@ defmodule ExStreamClient.Model.GeofenceResponse do
   use ExStreamClient.Jason
   @enforce_keys [:name]
   defstruct [:country_codes, :description, :name, :type]
+  @nested_components %{}
+  def nested_components do
+    @nested_components
+  end
 
   @type t :: %__MODULE__{
           country_codes: [String.t()] | nil,

@@ -36,6 +36,11 @@ defmodule ExStreamClient.Model.UserResponsePrivacyFields do
     :updated_at
   ]
 
+  @nested_components %{privacy_settings: ExStreamClient.Model.PrivacySettingsResponse}
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           banned: boolean(),
           blocked_user_ids: [String.t()],

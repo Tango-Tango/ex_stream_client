@@ -46,6 +46,18 @@ defmodule ExStreamClient.Model.CallResponse do
     :updated_at
   ]
 
+  @nested_components %{
+    session: ExStreamClient.Model.CallSessionResponse,
+    created_by: ExStreamClient.Model.UserResponse,
+    settings: ExStreamClient.Model.CallSettingsResponse,
+    egress: ExStreamClient.Model.EgressResponse,
+    ingress: ExStreamClient.Model.CallIngressResponse,
+    thumbnails: ExStreamClient.Model.ThumbnailResponse
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           backstage: boolean(),
           blocked_user_ids: [String.t()],

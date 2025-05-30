@@ -4,6 +4,14 @@ defmodule ExStreamClient.Model.ThreadUpdatedEvent do
   @enforce_keys [:channel_id, :channel_type, :cid, :created_at, :type]
   defstruct [:channel_id, :channel_type, :cid, :created_at, :thread, :type, :user]
 
+  @nested_components %{
+    user: ExStreamClient.Model.User,
+    thread: ExStreamClient.Model.ThreadResponse
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           channel_id: String.t(),
           channel_type: String.t(),

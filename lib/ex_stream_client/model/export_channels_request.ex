@@ -11,6 +11,11 @@ defmodule ExStreamClient.Model.ExportChannelsRequest do
     :version
   ]
 
+  @nested_components %{channels: ExStreamClient.Model.ChannelExport}
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           channels: [ExStreamClient.Model.ChannelExport.t()],
           clear_deleted_message_text: boolean() | nil,

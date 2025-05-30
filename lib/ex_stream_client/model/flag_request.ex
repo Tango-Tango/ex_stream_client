@@ -13,6 +13,14 @@ defmodule ExStreamClient.Model.FlagRequest do
     :user_id
   ]
 
+  @nested_components %{
+    user: ExStreamClient.Model.UserRequest,
+    moderation_payload: ExStreamClient.Model.ModerationPayload
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           custom: map() | nil,
           entity_creator_id: String.t() | nil,

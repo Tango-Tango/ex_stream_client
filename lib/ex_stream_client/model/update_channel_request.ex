@@ -20,6 +20,18 @@ defmodule ExStreamClient.Model.UpdateChannelRequest do
     :user_id
   ]
 
+  @nested_components %{
+    data: ExStreamClient.Model.ChannelInput,
+    message: ExStreamClient.Model.MessageRequest,
+    user: ExStreamClient.Model.UserRequest,
+    invites: ExStreamClient.Model.ChannelMember,
+    add_members: ExStreamClient.Model.ChannelMember,
+    assign_roles: ExStreamClient.Model.ChannelMember
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           accept_invite: boolean() | nil,
           add_members: [ExStreamClient.Model.ChannelMember.t()] | nil,

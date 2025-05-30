@@ -42,6 +42,14 @@ defmodule ExStreamClient.Model.CallSession do
     :user_permission_overrides
   ]
 
+  @nested_components %{
+    ActiveSFUs: ExStreamClient.Model.SFUIDLastSeen,
+    Participants: ExStreamClient.Model.CallParticipant
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           accepted_by: map(),
           active_sf_us: [ExStreamClient.Model.SFUIDLastSeen.t()],

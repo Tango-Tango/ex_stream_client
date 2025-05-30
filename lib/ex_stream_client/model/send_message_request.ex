@@ -12,6 +12,11 @@ defmodule ExStreamClient.Model.SendMessageRequest do
     :skip_push
   ]
 
+  @nested_components %{message: ExStreamClient.Model.MessageRequest}
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           force_moderation: boolean() | nil,
           keep_channel_hidden: boolean() | nil,

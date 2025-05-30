@@ -23,6 +23,14 @@ defmodule ExStreamClient.Model.CallType do
     :updated_at
   ]
 
+  @nested_components %{
+    Settings: ExStreamClient.Model.CallSettings,
+    NotificationSettings: ExStreamClient.Model.NotificationSettings
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           app_pk: integer(),
           created_at: float(),

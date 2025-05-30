@@ -68,6 +68,24 @@ defmodule ExStreamClient.Model.MessageResponse do
     :user
   ]
 
+  @nested_components %{
+    type: :atom,
+    user: ExStreamClient.Model.UserResponse,
+    attachments: ExStreamClient.Model.Attachment,
+    draft: ExStreamClient.Model.DraftResponse,
+    mentioned_users: ExStreamClient.Model.UserResponse,
+    quoted_message: ExStreamClient.Model.MessageResponse,
+    latest_reactions: ExStreamClient.Model.ReactionResponse,
+    own_reactions: ExStreamClient.Model.ReactionResponse,
+    moderation: ExStreamClient.Model.ModerationV2Response,
+    pinned_by: ExStreamClient.Model.UserResponse,
+    poll: ExStreamClient.Model.PollResponseData,
+    thread_participants: ExStreamClient.Model.UserResponse
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           attachments: [ExStreamClient.Model.Attachment.t()],
           cid: String.t(),

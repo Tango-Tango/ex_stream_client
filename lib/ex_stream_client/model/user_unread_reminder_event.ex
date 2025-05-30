@@ -3,6 +3,10 @@ defmodule ExStreamClient.Model.UserUnreadReminderEvent do
   use ExStreamClient.Jason
   @enforce_keys [:channels, :created_at, :type]
   defstruct [:channels, :created_at, :type, :user]
+  @nested_components %{user: ExStreamClient.Model.User}
+  def nested_components do
+    @nested_components
+  end
 
   @type t :: %__MODULE__{
           channels: map(),

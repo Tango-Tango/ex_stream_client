@@ -51,6 +51,24 @@ defmodule ExStreamClient.Model.ReviewQueueItemResponse do
     :updated_at
   ]
 
+  @nested_components %{
+    call: ExStreamClient.Model.CallResponse,
+    flags: ExStreamClient.Model.FlagResponse,
+    message: ExStreamClient.Model.MessageResponse,
+    actions: ExStreamClient.Model.ActionLogResponse,
+    moderation_payload: ExStreamClient.Model.ModerationPayload,
+    reaction: ExStreamClient.Model.Reaction,
+    bans: ExStreamClient.Model.Ban,
+    activity: ExStreamClient.Model.EnrichedActivity,
+    assigned_to: ExStreamClient.Model.UserResponse,
+    entity_creator: ExStreamClient.Model.EntityCreatorResponse,
+    feeds_v2_activity: ExStreamClient.Model.EnrichedActivity,
+    feeds_v2_reaction: ExStreamClient.Model.Reaction
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           actions: [ExStreamClient.Model.ActionLogResponse.t()],
           activity: ExStreamClient.Model.EnrichedActivity.t() | nil,

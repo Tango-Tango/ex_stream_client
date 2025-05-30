@@ -23,6 +23,14 @@ defmodule ExStreamClient.Model.ChannelHiddenEvent do
     :user
   ]
 
+  @nested_components %{
+    user: ExStreamClient.Model.User,
+    channel: ExStreamClient.Model.ChannelResponse
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           channel: ExStreamClient.Model.ChannelResponse.t() | nil,
           channel_id: String.t(),

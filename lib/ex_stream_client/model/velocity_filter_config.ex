@@ -20,6 +20,11 @@ defmodule ExStreamClient.Model.VelocityFilterConfig do
     :rules
   ]
 
+  @nested_components %{rules: ExStreamClient.Model.VelocityFilterConfigRule}
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           advanced_filters: boolean(),
           async: boolean() | nil,

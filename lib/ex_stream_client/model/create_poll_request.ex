@@ -18,6 +18,15 @@ defmodule ExStreamClient.Model.CreatePollRequest do
     :voting_visibility
   ]
 
+  @nested_components %{
+    user: ExStreamClient.Model.UserRequest,
+    options: ExStreamClient.Model.PollOptionInput,
+    voting_visibility: :atom
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           allow_answers: boolean() | nil,
           allow_user_suggested_options: boolean() | nil,

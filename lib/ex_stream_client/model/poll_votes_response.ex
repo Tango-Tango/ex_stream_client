@@ -3,6 +3,10 @@ defmodule ExStreamClient.Model.PollVotesResponse do
   use ExStreamClient.Jason
   @enforce_keys [:duration, :votes]
   defstruct [:duration, :next, :prev, :votes]
+  @nested_components %{votes: ExStreamClient.Model.PollVoteResponseData}
+  def nested_components do
+    @nested_components
+  end
 
   @type t :: %__MODULE__{
           duration: String.t(),

@@ -3,6 +3,10 @@ defmodule ExStreamClient.Model.ChannelVisibleEvent do
   use ExStreamClient.Jason
   @enforce_keys [:channel_id, :channel_type, :cid, :created_at, :type]
   defstruct [:channel_id, :channel_type, :cid, :created_at, :type, :user]
+  @nested_components %{user: ExStreamClient.Model.User}
+  def nested_components do
+    @nested_components
+  end
 
   @type t :: %__MODULE__{
           channel_id: String.t(),

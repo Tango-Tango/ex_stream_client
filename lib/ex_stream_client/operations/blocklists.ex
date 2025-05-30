@@ -14,25 +14,27 @@ defmodule ExStreamClient.Blocklists do
   @spec create_block_list(ExStreamClient.Model.CreateBlockListRequest.t()) ::
           {:ok, ExStreamClient.Model.CreateBlockListResponse.t()} | {:error, any()}
   def create_block_list(payload) do
-    request_opts = [url: "/api/v2/blocklists", method: :post, params: %{}] ++ [json: payload]
+    request_opts =
+      [url: "/api/v2/blocklists", method: :post, params: %{}, decode_json: [keys: :atoms]] ++
+        [json: payload]
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response(
-                  {:ok, response.body},
-                  {:component, "CreateBlockListResponse"}
-                )
+          response_handlers = %{
+            201 => ExStreamClient.Model.CreateBlockListResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 
@@ -59,26 +61,27 @@ defmodule ExStreamClient.Blocklists do
         params:
           Keyword.merge([], Keyword.take(opts, [:team]))
           |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-          |> Map.new()
+          |> Map.new(),
+        decode_json: [keys: :atoms]
       ] ++ []
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response(
-                  {:ok, response.body},
-                  {:component, "ListBlockListResponse"}
-                )
+          response_handlers = %{
+            200 => ExStreamClient.Model.ListBlockListResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 
@@ -96,25 +99,26 @@ defmodule ExStreamClient.Blocklists do
           {:ok, ExStreamClient.Model.UpdateBlockListResponse.t()} | {:error, any()}
   def update_block_list(name, payload) do
     request_opts =
-      [url: "/api/v2/blocklists/#{name}", method: :put, params: %{}] ++ [json: payload]
+      [url: "/api/v2/blocklists/#{name}", method: :put, params: %{}, decode_json: [keys: :atoms]] ++
+        [json: payload]
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response(
-                  {:ok, response.body},
-                  {:component, "UpdateBlockListResponse"}
-                )
+          response_handlers = %{
+            201 => ExStreamClient.Model.UpdateBlockListResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 
@@ -141,26 +145,27 @@ defmodule ExStreamClient.Blocklists do
         params:
           Keyword.merge([], Keyword.take(opts, [:team]))
           |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-          |> Map.new()
+          |> Map.new(),
+        decode_json: [keys: :atoms]
       ] ++ []
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response(
-                  {:ok, response.body},
-                  {:component, "GetBlockListResponse"}
-                )
+          response_handlers = %{
+            200 => ExStreamClient.Model.GetBlockListResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 
@@ -187,21 +192,27 @@ defmodule ExStreamClient.Blocklists do
         params:
           Keyword.merge([], Keyword.take(opts, [:team]))
           |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-          |> Map.new()
+          |> Map.new(),
+        decode_json: [keys: :atoms]
       ] ++ []
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed = Codegen.convert_response({:ok, response.body}, {:component, "Response"})
-              {request, %{response | body: {:ok, parsed}}}
+          response_handlers = %{
+            200 => ExStreamClient.Model.Response,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-            _ ->
-              {request, response}
-          end
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
+
+          {request, %{response | body: parsed}}
         end
       )
 

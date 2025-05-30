@@ -3,6 +3,10 @@ defmodule ExStreamClient.Model.CreateCommandRequest do
   use ExStreamClient.Jason
   @enforce_keys [:description, :name]
   defstruct [:args, :description, :name, :set]
+  @nested_components %{}
+  def nested_components do
+    @nested_components
+  end
 
   @type t :: %__MODULE__{
           args: String.t() | nil,

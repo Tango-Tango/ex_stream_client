@@ -3,6 +3,10 @@ defmodule ExStreamClient.Model.GetRateLimitsResponse do
   use ExStreamClient.Jason
   @enforce_keys [:duration]
   defstruct [:android, :duration, :ios, :server_side, :web]
+  @nested_components %{}
+  def nested_components do
+    @nested_components
+  end
 
   @type t :: %__MODULE__{
           android: map() | nil,

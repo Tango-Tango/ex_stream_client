@@ -14,22 +14,26 @@ defmodule ExStreamClient.Imports do
   @spec get_import(String.t()) ::
           {:ok, ExStreamClient.Model.GetImportResponse.t()} | {:error, any()}
   def get_import(id) do
-    request_opts = [url: "/api/v2/imports/#{id}", method: :get, params: %{}] ++ []
+    request_opts =
+      [url: "/api/v2/imports/#{id}", method: :get, params: %{}, decode_json: [keys: :atoms]] ++ []
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response({:ok, response.body}, {:component, "GetImportResponse"})
+          response_handlers = %{
+            200 => ExStreamClient.Model.GetImportResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 
@@ -45,25 +49,27 @@ defmodule ExStreamClient.Imports do
   @spec create_import(ExStreamClient.Model.CreateImportRequest.t()) ::
           {:ok, ExStreamClient.Model.CreateImportResponse.t()} | {:error, any()}
   def create_import(payload) do
-    request_opts = [url: "/api/v2/imports", method: :post, params: %{}] ++ [json: payload]
+    request_opts =
+      [url: "/api/v2/imports", method: :post, params: %{}, decode_json: [keys: :atoms]] ++
+        [json: payload]
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response(
-                  {:ok, response.body},
-                  {:component, "CreateImportResponse"}
-                )
+          response_handlers = %{
+            201 => ExStreamClient.Model.CreateImportResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 
@@ -78,25 +84,26 @@ defmodule ExStreamClient.Imports do
 	"
   @spec list_imports() :: {:ok, ExStreamClient.Model.ListImportsResponse.t()} | {:error, any()}
   def list_imports() do
-    request_opts = [url: "/api/v2/imports", method: :get, params: %{}] ++ []
+    request_opts =
+      [url: "/api/v2/imports", method: :get, params: %{}, decode_json: [keys: :atoms]] ++ []
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response(
-                  {:ok, response.body},
-                  {:component, "ListImportsResponse"}
-                )
+          response_handlers = %{
+            200 => ExStreamClient.Model.ListImportsResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 

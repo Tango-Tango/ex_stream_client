@@ -13,22 +13,26 @@ defmodule ExStreamClient.Tasks do
 	"
   @spec get_task(String.t()) :: {:ok, ExStreamClient.Model.GetTaskResponse.t()} | {:error, any()}
   def get_task(id) do
-    request_opts = [url: "/api/v2/tasks/#{id}", method: :get, params: %{}] ++ []
+    request_opts =
+      [url: "/api/v2/tasks/#{id}", method: :get, params: %{}, decode_json: [keys: :atoms]] ++ []
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response({:ok, response.body}, {:component, "GetTaskResponse"})
+          response_handlers = %{
+            200 => ExStreamClient.Model.GetTaskResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 

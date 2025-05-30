@@ -13,6 +13,11 @@ defmodule ExStreamClient.Model.STTEgressConfig do
     :whisper_server_base_url
   ]
 
+  @nested_components %{external_storage: ExStreamClient.Model.ExternalStorage}
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           closed_captions_enabled: boolean() | nil,
           external_storage: ExStreamClient.Model.ExternalStorage.t() | nil,

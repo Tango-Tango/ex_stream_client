@@ -9,6 +9,11 @@ defmodule ExStreamClient.Model.DeleteUserRequest do
     :mark_messages_deleted
   ]
 
+  @nested_components %{}
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           delete_conversation_channels: boolean() | nil,
           delete_feeds_content: boolean() | nil,

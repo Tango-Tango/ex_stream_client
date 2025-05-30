@@ -3,6 +3,15 @@ defmodule ExStreamClient.Model.PendingMessageResponse do
   use ExStreamClient.Jason
   defstruct [:channel, :message, :metadata, :user]
 
+  @nested_components %{
+    message: ExStreamClient.Model.MessageResponse,
+    user: ExStreamClient.Model.UserResponse,
+    channel: ExStreamClient.Model.ChannelResponse
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           channel: ExStreamClient.Model.ChannelResponse.t() | nil,
           message: ExStreamClient.Model.MessageResponse.t() | nil,

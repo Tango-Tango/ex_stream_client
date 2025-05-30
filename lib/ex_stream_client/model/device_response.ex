@@ -13,6 +13,11 @@ defmodule ExStreamClient.Model.DeviceResponse do
     :voip
   ]
 
+  @nested_components %{}
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           created_at: float(),
           disabled: boolean() | nil,

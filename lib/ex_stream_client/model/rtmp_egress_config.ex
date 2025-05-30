@@ -3,6 +3,14 @@ defmodule ExStreamClient.Model.RTMPEgressConfig do
   use ExStreamClient.Jason
   defstruct [:composite_app_settings, :quality, :rtmp_location]
 
+  @nested_components %{
+    quality: ExStreamClient.Model.Quality,
+    composite_app_settings: ExStreamClient.Model.CompositeAppSettings
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           composite_app_settings: ExStreamClient.Model.CompositeAppSettings.t() | nil,
           quality: ExStreamClient.Model.Quality.t() | nil,

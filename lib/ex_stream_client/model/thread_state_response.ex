@@ -34,6 +34,19 @@ defmodule ExStreamClient.Model.ThreadStateResponse do
     :updated_at
   ]
 
+  @nested_components %{
+    read: ExStreamClient.Model.ReadStateResponse,
+    channel: ExStreamClient.Model.ChannelResponse,
+    created_by: ExStreamClient.Model.UserResponse,
+    draft: ExStreamClient.Model.DraftResponse,
+    parent_message: ExStreamClient.Model.MessageResponse,
+    thread_participants: ExStreamClient.Model.ThreadParticipant,
+    latest_replies: ExStreamClient.Model.MessageResponse
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           active_participant_count: integer() | nil,
           channel: ExStreamClient.Model.ChannelResponse.t() | nil,

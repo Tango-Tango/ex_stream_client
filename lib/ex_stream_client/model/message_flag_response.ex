@@ -19,6 +19,18 @@ defmodule ExStreamClient.Model.MessageFlagResponse do
     :user
   ]
 
+  @nested_components %{
+    message: ExStreamClient.Model.Message,
+    user: ExStreamClient.Model.UserResponse,
+    details: ExStreamClient.Model.FlagDetails,
+    moderation_feedback: ExStreamClient.Model.FlagFeedback,
+    moderation_result: ExStreamClient.Model.MessageModerationResult,
+    reviewed_by: ExStreamClient.Model.UserResponse
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           approved_at: float() | nil,
           created_at: float(),

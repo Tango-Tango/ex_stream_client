@@ -23,6 +23,11 @@ defmodule ExStreamClient.Model.User do
     :updated_at
   ]
 
+  @nested_components %{privacy_settings: ExStreamClient.Model.PrivacySettings}
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           ban_expires: float() | nil,
           banned: boolean(),

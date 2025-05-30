@@ -11,6 +11,18 @@ defmodule ExStreamClient.Model.EgressTaskConfig do
     :stt_egress_config
   ]
 
+  @nested_components %{
+    egress_user: ExStreamClient.Model.EgressUser,
+    frame_recording_egress_config: ExStreamClient.Model.FrameRecordingEgressConfig,
+    hls_egress_config: ExStreamClient.Model.HLSEgressConfig,
+    recording_egress_config: ExStreamClient.Model.RecordingEgressConfig,
+    rtmp_egress_config: ExStreamClient.Model.RTMPEgressConfig,
+    stt_egress_config: ExStreamClient.Model.STTEgressConfig
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           egress_user: ExStreamClient.Model.EgressUser.t() | nil,
           frame_recording_egress_config:

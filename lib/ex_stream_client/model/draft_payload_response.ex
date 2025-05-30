@@ -18,6 +18,14 @@ defmodule ExStreamClient.Model.DraftPayloadResponse do
     :type
   ]
 
+  @nested_components %{
+    attachments: ExStreamClient.Model.Attachment,
+    mentioned_users: ExStreamClient.Model.UserResponse
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           attachments: [ExStreamClient.Model.Attachment.t()] | nil,
           custom: map(),

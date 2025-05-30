@@ -17,6 +17,16 @@ defmodule ExStreamClient.Model.ChannelInput do
     :truncated_by_id
   ]
 
+  @nested_components %{
+    created_by: ExStreamClient.Model.UserRequest,
+    members: ExStreamClient.Model.ChannelMember,
+    config_overrides: ExStreamClient.Model.ChannelConfig,
+    invites: ExStreamClient.Model.ChannelMember
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           auto_translation_enabled: boolean() | nil,
           auto_translation_language: String.t() | nil,

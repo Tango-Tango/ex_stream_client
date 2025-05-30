@@ -15,6 +15,15 @@ defmodule ExStreamClient.Model.MessageDeletedEvent do
     :user
   ]
 
+  @nested_components %{
+    message: ExStreamClient.Model.Message,
+    user: ExStreamClient.Model.User,
+    thread_participants: ExStreamClient.Model.User
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           channel_id: String.t(),
           channel_type: String.t(),

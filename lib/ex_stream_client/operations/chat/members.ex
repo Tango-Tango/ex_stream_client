@@ -24,23 +24,27 @@ defmodule ExStreamClient.Chat.Members do
         params:
           Keyword.merge([], Keyword.take(opts, [:payload]))
           |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-          |> Map.new()
+          |> Map.new(),
+        decode_json: [keys: :atoms]
       ] ++ []
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response({:ok, response.body}, {:component, "MembersResponse"})
+          response_handlers = %{
+            200 => ExStreamClient.Model.MembersResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 

@@ -15,6 +15,11 @@ defmodule ExStreamClient.Model.ThreadParticipant do
     :user_id
   ]
 
+  @nested_components %{user: ExStreamClient.Model.UserResponse}
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           app_pk: integer(),
           channel_cid: String.t(),

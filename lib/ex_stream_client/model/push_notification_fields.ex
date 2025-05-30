@@ -4,6 +4,17 @@ defmodule ExStreamClient.Model.PushNotificationFields do
   @enforce_keys [:apn, :firebase, :huawei, :offline_only, :version, :xiaomi]
   defstruct [:apn, :firebase, :huawei, :offline_only, :providers, :version, :xiaomi]
 
+  @nested_components %{
+    providers: ExStreamClient.Model.PushProvider,
+    xiaomi: ExStreamClient.Model.XiaomiConfigFields,
+    huawei: ExStreamClient.Model.HuaweiConfigFields,
+    apn: ExStreamClient.Model.APNConfigFields,
+    firebase: ExStreamClient.Model.FirebaseConfigFields
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           apn: ExStreamClient.Model.APNConfigFields.t(),
           firebase: ExStreamClient.Model.FirebaseConfigFields.t(),

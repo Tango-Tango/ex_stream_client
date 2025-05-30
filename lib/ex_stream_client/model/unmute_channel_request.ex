@@ -2,6 +2,10 @@ defmodule ExStreamClient.Model.UnmuteChannelRequest do
   @moduledoc "Schema representing a UnmuteChannelRequest"
   use ExStreamClient.Jason
   defstruct [:channel_cids, :expiration, :user, :user_id]
+  @nested_components %{user: ExStreamClient.Model.UserRequest}
+  def nested_components do
+    @nested_components
+  end
 
   @type t :: %__MODULE__{
           channel_cids: [String.t()] | nil,

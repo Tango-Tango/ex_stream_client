@@ -3,6 +3,10 @@ defmodule ExStreamClient.Model.DeviceErrorInfo do
   use ExStreamClient.Jason
   @enforce_keys [:error_message, :provider, :provider_name]
   defstruct [:error_message, :provider, :provider_name]
+  @nested_components %{}
+  def nested_components do
+    @nested_components
+  end
 
   @type t :: %__MODULE__{
           error_message: String.t(),

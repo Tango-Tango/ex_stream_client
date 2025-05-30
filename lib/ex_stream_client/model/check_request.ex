@@ -15,6 +15,14 @@ defmodule ExStreamClient.Model.CheckRequest do
     :user_id
   ]
 
+  @nested_components %{
+    user: ExStreamClient.Model.UserRequest,
+    moderation_payload: ExStreamClient.Model.ModerationPayload
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           config_key: String.t(),
           config_team: String.t() | nil,

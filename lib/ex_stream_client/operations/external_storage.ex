@@ -15,25 +15,30 @@ defmodule ExStreamClient.ExternalStorage do
           {:ok, ExStreamClient.Model.CheckExternalStorageResponse.t()} | {:error, any()}
   def check_external_storage(name) do
     request_opts =
-      [url: "/api/v2/external_storage/#{name}/check", method: :get, params: %{}] ++ []
+      [
+        url: "/api/v2/external_storage/#{name}/check",
+        method: :get,
+        params: %{},
+        decode_json: [keys: :atoms]
+      ] ++ []
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response(
-                  {:ok, response.body},
-                  {:component, "CheckExternalStorageResponse"}
-                )
+          response_handlers = %{
+            200 => ExStreamClient.Model.CheckExternalStorageResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 
@@ -50,25 +55,26 @@ defmodule ExStreamClient.ExternalStorage do
           {:ok, ExStreamClient.Model.CreateExternalStorageResponse.t()} | {:error, any()}
   def create_external_storage(payload) do
     request_opts =
-      [url: "/api/v2/external_storage", method: :post, params: %{}] ++ [json: payload]
+      [url: "/api/v2/external_storage", method: :post, params: %{}, decode_json: [keys: :atoms]] ++
+        [json: payload]
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response(
-                  {:ok, response.body},
-                  {:component, "CreateExternalStorageResponse"}
-                )
+          response_handlers = %{
+            201 => ExStreamClient.Model.CreateExternalStorageResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 
@@ -84,25 +90,27 @@ defmodule ExStreamClient.ExternalStorage do
   @spec list_external_storage() ::
           {:ok, ExStreamClient.Model.ListExternalStorageResponse.t()} | {:error, any()}
   def list_external_storage() do
-    request_opts = [url: "/api/v2/external_storage", method: :get, params: %{}] ++ []
+    request_opts =
+      [url: "/api/v2/external_storage", method: :get, params: %{}, decode_json: [keys: :atoms]] ++
+        []
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response(
-                  {:ok, response.body},
-                  {:component, "ListExternalStorageResponse"}
-                )
+          response_handlers = %{
+            200 => ExStreamClient.Model.ListExternalStorageResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 
@@ -120,25 +128,30 @@ defmodule ExStreamClient.ExternalStorage do
           {:ok, ExStreamClient.Model.UpdateExternalStorageResponse.t()} | {:error, any()}
   def update_external_storage(name, payload) do
     request_opts =
-      [url: "/api/v2/external_storage/#{name}", method: :put, params: %{}] ++ [json: payload]
+      [
+        url: "/api/v2/external_storage/#{name}",
+        method: :put,
+        params: %{},
+        decode_json: [keys: :atoms]
+      ] ++ [json: payload]
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response(
-                  {:ok, response.body},
-                  {:component, "UpdateExternalStorageResponse"}
-                )
+          response_handlers = %{
+            201 => ExStreamClient.Model.UpdateExternalStorageResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 
@@ -154,25 +167,31 @@ defmodule ExStreamClient.ExternalStorage do
   @spec delete_external_storage(String.t()) ::
           {:ok, ExStreamClient.Model.DeleteExternalStorageResponse.t()} | {:error, any()}
   def delete_external_storage(name) do
-    request_opts = [url: "/api/v2/external_storage/#{name}", method: :delete, params: %{}] ++ []
+    request_opts =
+      [
+        url: "/api/v2/external_storage/#{name}",
+        method: :delete,
+        params: %{},
+        decode_json: [keys: :atoms]
+      ] ++ []
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response(
-                  {:ok, response.body},
-                  {:component, "DeleteExternalStorageResponse"}
-                )
+          response_handlers = %{
+            200 => ExStreamClient.Model.DeleteExternalStorageResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 

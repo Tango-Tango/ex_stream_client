@@ -68,6 +68,22 @@ defmodule ExStreamClient.Model.Message do
     :user
   ]
 
+  @nested_components %{
+    user: ExStreamClient.Model.User,
+    attachments: ExStreamClient.Model.Attachment,
+    mentioned_users: ExStreamClient.Model.User,
+    quoted_message: ExStreamClient.Model.Message,
+    latest_reactions: ExStreamClient.Model.Reaction,
+    own_reactions: ExStreamClient.Model.Reaction,
+    moderation: ExStreamClient.Model.ModerationV2Response,
+    pinned_by: ExStreamClient.Model.User,
+    poll: ExStreamClient.Model.Poll,
+    thread_participants: ExStreamClient.Model.User
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           attachments: [ExStreamClient.Model.Attachment.t()],
           before_message_send_failed: boolean() | nil,

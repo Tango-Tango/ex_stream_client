@@ -12,6 +12,11 @@ defmodule ExStreamClient.Model.CheckPushResponse do
     :skip_devices
   ]
 
+  @nested_components %{}
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           device_errors: map() | nil,
           duration: String.t(),

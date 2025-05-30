@@ -12,6 +12,15 @@ defmodule ExStreamClient.Model.CustomCheckRequest do
     :user_id
   ]
 
+  @nested_components %{
+    flags: ExStreamClient.Model.CustomCheckFlag,
+    user: ExStreamClient.Model.UserRequest,
+    moderation_payload: ExStreamClient.Model.ModerationPayload
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           entity_creator_id: String.t() | nil,
           entity_id: String.t(),

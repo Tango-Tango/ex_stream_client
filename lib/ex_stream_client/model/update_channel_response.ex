@@ -4,6 +4,15 @@ defmodule ExStreamClient.Model.UpdateChannelResponse do
   @enforce_keys [:duration, :members]
   defstruct [:channel, :duration, :members, :message]
 
+  @nested_components %{
+    message: ExStreamClient.Model.MessageResponse,
+    channel: ExStreamClient.Model.ChannelResponse,
+    members: ExStreamClient.Model.ChannelMember
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           channel: ExStreamClient.Model.ChannelResponse.t() | nil,
           duration: String.t(),

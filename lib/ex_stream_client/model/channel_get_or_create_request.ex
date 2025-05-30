@@ -12,6 +12,16 @@ defmodule ExStreamClient.Model.ChannelGetOrCreateRequest do
     :watchers
   ]
 
+  @nested_components %{
+    data: ExStreamClient.Model.ChannelInput,
+    messages: ExStreamClient.Model.MessagePaginationParams,
+    members: ExStreamClient.Model.PaginationParams,
+    watchers: ExStreamClient.Model.PaginationParams
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           data: ExStreamClient.Model.ChannelInput.t() | nil,
           hide_for_creator: boolean() | nil,

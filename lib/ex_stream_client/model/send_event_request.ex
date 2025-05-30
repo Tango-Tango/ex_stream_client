@@ -3,5 +3,10 @@ defmodule ExStreamClient.Model.SendEventRequest do
   use ExStreamClient.Jason
   @enforce_keys [:event]
   defstruct [:event]
+  @nested_components %{event: ExStreamClient.Model.EventRequest}
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{event: ExStreamClient.Model.EventRequest.t()}
 end

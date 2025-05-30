@@ -15,6 +15,14 @@ defmodule ExStreamClient.Model.QueryThreadsRequest do
     :user_id
   ]
 
+  @nested_components %{
+    user: ExStreamClient.Model.UserRequest,
+    sort: ExStreamClient.Model.SortParamRequest
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           filter: map() | nil,
           limit: integer() | nil,

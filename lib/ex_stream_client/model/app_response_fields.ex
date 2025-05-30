@@ -86,6 +86,18 @@ defmodule ExStreamClient.Model.AppResponseFields do
     :webhook_url
   ]
 
+  @nested_components %{
+    file_upload_config: ExStreamClient.Model.FileUploadConfig,
+    image_upload_config: ExStreamClient.Model.FileUploadConfig,
+    push_notifications: ExStreamClient.Model.PushNotificationFields,
+    datadog_info: ExStreamClient.Model.DataDogInfo,
+    geofences: ExStreamClient.Model.GeofenceResponse,
+    moderation_dashboard_preferences: ExStreamClient.Model.ModerationDashboardPreferences
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           allowed_flag_reasons: [String.t()] | nil,
           async_url_enrich_enabled: boolean(),

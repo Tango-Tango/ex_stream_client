@@ -19,6 +19,17 @@ defmodule ExStreamClient.Model.NotificationSettings do
     :session_started
   ]
 
+  @nested_components %{
+    call_live_started: ExStreamClient.Model.EventNotificationSettings,
+    call_missed: ExStreamClient.Model.EventNotificationSettings,
+    call_notification: ExStreamClient.Model.EventNotificationSettings,
+    call_ring: ExStreamClient.Model.EventNotificationSettings,
+    session_started: ExStreamClient.Model.EventNotificationSettings
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           call_live_started: ExStreamClient.Model.EventNotificationSettings.t(),
           call_missed: ExStreamClient.Model.EventNotificationSettings.t(),

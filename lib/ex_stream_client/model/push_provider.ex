@@ -32,6 +32,11 @@ defmodule ExStreamClient.Model.PushProvider do
     :xiaomi_package_name
   ]
 
+  @nested_components %{push_templates: ExStreamClient.Model.PushTemplate}
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           apn_auth_key: String.t() | nil,
           apn_auth_type: String.t() | nil,

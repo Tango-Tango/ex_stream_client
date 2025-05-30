@@ -3,6 +3,10 @@ defmodule ExStreamClient.Model.QueryMessageHistoryResponse do
   use ExStreamClient.Jason
   @enforce_keys [:duration, :message_history]
   defstruct [:duration, :message_history, :next, :prev]
+  @nested_components %{message_history: ExStreamClient.Model.MessageHistoryEntryResponse}
+  def nested_components do
+    @nested_components
+  end
 
   @type t :: %__MODULE__{
           duration: String.t(),

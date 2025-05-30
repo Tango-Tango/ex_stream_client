@@ -3,6 +3,10 @@ defmodule ExStreamClient.Model.RecordSettings do
   use ExStreamClient.Jason
   @enforce_keys [:mode]
   defstruct [:audio_only, :layout, :mode, :quality]
+  @nested_components %{layout: ExStreamClient.Model.LayoutSettings}
+  def nested_components do
+    @nested_components
+  end
 
   @type t :: %__MODULE__{
           audio_only: boolean() | nil,

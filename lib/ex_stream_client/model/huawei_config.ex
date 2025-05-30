@@ -2,6 +2,10 @@ defmodule ExStreamClient.Model.HuaweiConfig do
   @moduledoc "Schema representing a HuaweiConfig"
   use ExStreamClient.Jason
   defstruct [:disabled, :id, :secret]
+  @nested_components %{}
+  def nested_components do
+    @nested_components
+  end
 
   @type t :: %__MODULE__{
           disabled: boolean() | nil,

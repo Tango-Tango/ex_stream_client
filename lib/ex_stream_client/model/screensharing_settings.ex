@@ -3,6 +3,10 @@ defmodule ExStreamClient.Model.ScreensharingSettings do
   use ExStreamClient.Jason
   @enforce_keys [:access_request_enabled, :enabled]
   defstruct [:access_request_enabled, :enabled, :target_resolution]
+  @nested_components %{target_resolution: ExStreamClient.Model.TargetResolution}
+  def nested_components do
+    @nested_components
+  end
 
   @type t :: %__MODULE__{
           access_request_enabled: boolean(),

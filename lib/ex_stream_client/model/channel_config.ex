@@ -60,6 +60,17 @@ defmodule ExStreamClient.Model.ChannelConfig do
     :url_enrichment
   ]
 
+  @nested_components %{
+    automod: :atom,
+    automod_behavior: :atom,
+    automod_thresholds: ExStreamClient.Model.Thresholds,
+    blocklist_behavior: :atom,
+    blocklists: ExStreamClient.Model.BlockListOptions
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           allowed_flag_reasons: [String.t()] | nil,
           automod: :AI | :simple | :disabled,

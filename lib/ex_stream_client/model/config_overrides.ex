@@ -16,6 +16,11 @@ defmodule ExStreamClient.Model.ConfigOverrides do
     :url_enrichment
   ]
 
+  @nested_components %{blocklist_behavior: :atom}
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           blocklist: String.t() | nil,
           blocklist_behavior: (:block | :flag) | nil,

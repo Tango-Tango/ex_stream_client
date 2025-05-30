@@ -21,6 +21,11 @@ defmodule ExStreamClient.Model.MessageHistoryEntryResponse do
     :text
   ]
 
+  @nested_components %{attachments: ExStreamClient.Model.Attachment}
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           attachments: [ExStreamClient.Model.Attachment.t()],
           custom: map(),

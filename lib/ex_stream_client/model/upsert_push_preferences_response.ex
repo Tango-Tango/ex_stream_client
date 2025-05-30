@@ -3,6 +3,10 @@ defmodule ExStreamClient.Model.UpsertPushPreferencesResponse do
   use ExStreamClient.Jason
   @enforce_keys [:duration, :user_channel_preferences, :user_preferences]
   defstruct [:duration, :user_channel_preferences, :user_preferences]
+  @nested_components %{}
+  def nested_components do
+    @nested_components
+  end
 
   @type t :: %__MODULE__{
           duration: String.t(),

@@ -56,6 +56,21 @@ defmodule ExStreamClient.Model.Call do
     :updated_at
   ]
 
+  @nested_components %{
+    Members: ExStreamClient.Model.CallMember,
+    CreatedBy: ExStreamClient.Model.User,
+    MemberLookup: ExStreamClient.Model.MemberLookup,
+    CallType: ExStreamClient.Model.CallType,
+    BlockedUsers: ExStreamClient.Model.User,
+    Egresses: ExStreamClient.Model.CallEgress,
+    Session: ExStreamClient.Model.CallSession,
+    Settings: ExStreamClient.Model.CallSettings,
+    SettingsOverrides: ExStreamClient.Model.CallSettings
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           app_pk: integer(),
           backstage: boolean(),

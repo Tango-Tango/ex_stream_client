@@ -14,6 +14,11 @@ defmodule ExStreamClient.Model.CheckPushRequest do
     :user_id
   ]
 
+  @nested_components %{user: ExStreamClient.Model.UserRequest, push_provider_type: :atom}
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           apn_template: String.t() | nil,
           firebase_data_template: String.t() | nil,

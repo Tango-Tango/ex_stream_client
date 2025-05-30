@@ -15,6 +15,11 @@ defmodule ExStreamClient.Model.APNConfig do
     :team_id
   ]
 
+  @nested_components %{auth_type: :atom}
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           auth_key: String.t() | nil,
           auth_type: (:token | :certificate) | nil,

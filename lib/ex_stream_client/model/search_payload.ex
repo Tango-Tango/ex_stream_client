@@ -13,6 +13,14 @@ defmodule ExStreamClient.Model.SearchPayload do
     :sort
   ]
 
+  @nested_components %{
+    sort: ExStreamClient.Model.SortParamRequest,
+    message_options: ExStreamClient.Model.MessageOptions
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           filter_conditions: map(),
           limit: integer() | nil,

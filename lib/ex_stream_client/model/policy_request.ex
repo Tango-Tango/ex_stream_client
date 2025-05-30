@@ -3,6 +3,10 @@ defmodule ExStreamClient.Model.PolicyRequest do
   use ExStreamClient.Jason
   @enforce_keys [:action, :name, :owner, :priority, :resources, :roles]
   defstruct [:action, :name, :owner, :priority, :resources, :roles]
+  @nested_components %{action: :atom}
+  def nested_components do
+    @nested_components
+  end
 
   @type t :: %__MODULE__{
           action: :Allow | :Deny,

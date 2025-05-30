@@ -49,6 +49,24 @@ defmodule ExStreamClient.Model.UpdateAppRequest do
     :xiaomi_config
   ]
 
+  @nested_components %{
+    push_config: ExStreamClient.Model.PushConfig,
+    enforce_unique_usernames: :atom,
+    file_upload_config: ExStreamClient.Model.FileUploadConfig,
+    image_upload_config: ExStreamClient.Model.FileUploadConfig,
+    permission_version: :atom,
+    datadog_info: ExStreamClient.Model.DataDogInfo,
+    moderation_dashboard_preferences: ExStreamClient.Model.ModerationDashboardPreferences,
+    apn_config: ExStreamClient.Model.APNConfig,
+    async_moderation_config: ExStreamClient.Model.AsyncModerationConfiguration,
+    firebase_config: ExStreamClient.Model.FirebaseConfig,
+    huawei_config: ExStreamClient.Model.HuaweiConfig,
+    xiaomi_config: ExStreamClient.Model.XiaomiConfig
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           allowed_flag_reasons: [String.t()] | nil,
           apn_config: ExStreamClient.Model.APNConfig.t() | nil,

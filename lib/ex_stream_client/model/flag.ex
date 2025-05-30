@@ -21,6 +21,15 @@ defmodule ExStreamClient.Model.Flag do
     :user
   ]
 
+  @nested_components %{
+    user: ExStreamClient.Model.User,
+    review_queue_item: ExStreamClient.Model.ReviewQueueItem,
+    moderation_payload: ExStreamClient.Model.ModerationPayload
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           created_at: float(),
           custom: map() | nil,

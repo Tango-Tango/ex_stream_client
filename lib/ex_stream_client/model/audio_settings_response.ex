@@ -20,6 +20,14 @@ defmodule ExStreamClient.Model.AudioSettingsResponse do
     :speaker_default_on
   ]
 
+  @nested_components %{
+    default_device: :atom,
+    noise_cancellation: ExStreamClient.Model.NoiseCancellationSettings
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           access_request_enabled: boolean(),
           default_device: :earpiece | :speaker,

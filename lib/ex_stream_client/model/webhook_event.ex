@@ -2,6 +2,10 @@ defmodule ExStreamClient.Model.WebhookEvent do
   @moduledoc "Schema representing a WebhookEvent"
   use ExStreamClient.Jason
   defstruct []
+  @nested_components %{}
+  def nested_components do
+    @nested_components
+  end
 
   @type t ::
           ExStreamClient.Model.UserUpdatedEvent.t()

@@ -16,25 +16,30 @@ defmodule ExStreamClient.Chat.Threads do
           {:ok, ExStreamClient.Model.UpdateThreadPartialResponse.t()} | {:error, any()}
   def update_thread_partial(message_id, payload) do
     request_opts =
-      [url: "/api/v2/chat/threads/#{message_id}", method: :patch, params: %{}] ++ [json: payload]
+      [
+        url: "/api/v2/chat/threads/#{message_id}",
+        method: :patch,
+        params: %{},
+        decode_json: [keys: :atoms]
+      ] ++ [json: payload]
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response(
-                  {:ok, response.body},
-                  {:component, "UpdateThreadPartialResponse"}
-                )
+          response_handlers = %{
+            200 => ExStreamClient.Model.UpdateThreadPartialResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 
@@ -64,23 +69,27 @@ defmodule ExStreamClient.Chat.Threads do
         params:
           Keyword.merge([], Keyword.take(opts, [:reply_limit, :participant_limit, :member_limit]))
           |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-          |> Map.new()
+          |> Map.new(),
+        decode_json: [keys: :atoms]
       ] ++ []
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response({:ok, response.body}, {:component, "GetThreadResponse"})
+          response_handlers = %{
+            200 => ExStreamClient.Model.GetThreadResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 
@@ -96,25 +105,27 @@ defmodule ExStreamClient.Chat.Threads do
   @spec query_threads(ExStreamClient.Model.QueryThreadsRequest.t()) ::
           {:ok, ExStreamClient.Model.QueryThreadsResponse.t()} | {:error, any()}
   def query_threads(payload) do
-    request_opts = [url: "/api/v2/chat/threads", method: :post, params: %{}] ++ [json: payload]
+    request_opts =
+      [url: "/api/v2/chat/threads", method: :post, params: %{}, decode_json: [keys: :atoms]] ++
+        [json: payload]
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response(
-                  {:ok, response.body},
-                  {:component, "QueryThreadsResponse"}
-                )
+          response_handlers = %{
+            201 => ExStreamClient.Model.QueryThreadsResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 

@@ -3,6 +3,10 @@ defmodule ExStreamClient.Model.LayoutSettings do
   use ExStreamClient.Jason
   @enforce_keys [:external_app_url, :external_css_url, :name]
   defstruct [:detect_orientation, :external_app_url, :external_css_url, :name, :options]
+  @nested_components %{name: :atom}
+  def nested_components do
+    @nested_components
+  end
 
   @type t :: %__MODULE__{
           detect_orientation: boolean() | nil,

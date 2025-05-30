@@ -14,6 +14,11 @@ defmodule ExStreamClient.Model.PollVote do
     :user_id
   ]
 
+  @nested_components %{user: ExStreamClient.Model.User}
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           answer_text: String.t() | nil,
           created_at: float(),

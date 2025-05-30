@@ -30,6 +30,15 @@ defmodule ExStreamClient.Model.Attachment do
     :type
   ]
 
+  @nested_components %{
+    fields: ExStreamClient.Model.Field,
+    actions: ExStreamClient.Model.Action,
+    giphy: ExStreamClient.Model.Images
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           actions: [ExStreamClient.Model.Action.t()] | nil,
           asset_url: String.t() | nil,

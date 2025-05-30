@@ -32,6 +32,24 @@ defmodule ExStreamClient.Model.WSEvent do
     :watcher_count
   ]
 
+  @nested_components %{
+    message: ExStreamClient.Model.MessageResponse,
+    member: ExStreamClient.Model.ChannelMember,
+    user: ExStreamClient.Model.UserResponse,
+    thread: ExStreamClient.Model.ThreadResponse,
+    me: ExStreamClient.Model.OwnUserResponse,
+    channel: ExStreamClient.Model.ChannelResponse,
+    created_by: ExStreamClient.Model.UserResponse,
+    reaction: ExStreamClient.Model.ReactionResponse,
+    poll: ExStreamClient.Model.PollResponseData,
+    automoderation_scores: ExStreamClient.Model.ModerationResponse,
+    message_update: ExStreamClient.Model.MessageUpdate,
+    poll_vote: ExStreamClient.Model.PollVoteResponseData
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           automoderation: boolean() | nil,
           automoderation_scores: ExStreamClient.Model.ModerationResponse.t() | nil,

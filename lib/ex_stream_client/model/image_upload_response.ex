@@ -3,6 +3,10 @@ defmodule ExStreamClient.Model.ImageUploadResponse do
   use ExStreamClient.Jason
   @enforce_keys [:duration]
   defstruct [:duration, :file, :thumb_url, :upload_sizes]
+  @nested_components %{upload_sizes: ExStreamClient.Model.ImageSize}
+  def nested_components do
+    @nested_components
+  end
 
   @type t :: %__MODULE__{
           duration: String.t(),

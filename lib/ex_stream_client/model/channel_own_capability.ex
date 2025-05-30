@@ -2,6 +2,10 @@ defmodule ExStreamClient.Model.ChannelOwnCapability do
   @moduledoc "Schema representing a ChannelOwnCapability"
   use ExStreamClient.Jason
   defstruct []
+  @nested_components %{}
+  def nested_components do
+    @nested_components
+  end
 
   @type t ::
           :"upload-file"

@@ -4,6 +4,15 @@ defmodule ExStreamClient.Model.ModerationCustomActionEvent do
   @enforce_keys [:created_at, :type]
   defstruct [:created_at, :item, :message, :type, :user]
 
+  @nested_components %{
+    message: ExStreamClient.Model.Message,
+    user: ExStreamClient.Model.User,
+    item: ExStreamClient.Model.ReviewQueueItem
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           created_at: float(),
           item: ExStreamClient.Model.ReviewQueueItem.t() | nil,

@@ -3,5 +3,10 @@ defmodule ExStreamClient.Model.CreateImportRequest do
   use ExStreamClient.Jason
   @enforce_keys [:mode, :path]
   defstruct [:mode, :path]
+  @nested_components %{mode: :atom}
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{mode: :upsert | :insert, path: String.t()}
 end

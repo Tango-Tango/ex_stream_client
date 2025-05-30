@@ -3,6 +3,10 @@ defmodule ExStreamClient.Model.UserDeactivatedEvent do
   use ExStreamClient.Jason
   @enforce_keys [:created_at, :created_by, :type]
   defstruct [:created_at, :created_by, :type, :user]
+  @nested_components %{user: ExStreamClient.Model.User, created_by: ExStreamClient.Model.User}
+  def nested_components do
+    @nested_components
+  end
 
   @type t :: %__MODULE__{
           created_at: float(),

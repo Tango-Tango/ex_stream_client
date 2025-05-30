@@ -3,6 +3,14 @@ defmodule ExStreamClient.Model.HLSEgressConfig do
   use ExStreamClient.Jason
   defstruct [:composite_app_settings, :playlist_url, :qualities, :start_unix_nano]
 
+  @nested_components %{
+    composite_app_settings: ExStreamClient.Model.CompositeAppSettings,
+    qualities: ExStreamClient.Model.Quality
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           composite_app_settings: ExStreamClient.Model.CompositeAppSettings.t() | nil,
           playlist_url: String.t() | nil,

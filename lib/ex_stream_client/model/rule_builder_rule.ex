@@ -3,6 +3,14 @@ defmodule ExStreamClient.Model.RuleBuilderRule do
   use ExStreamClient.Jason
   defstruct [:action, :conditions, :enabled, :id, :name]
 
+  @nested_components %{
+    action: ExStreamClient.Model.RuleBuilderAction,
+    conditions: ExStreamClient.Model.RuleBuilderCondition
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           action: ExStreamClient.Model.RuleBuilderAction.t() | nil,
           conditions: [ExStreamClient.Model.RuleBuilderCondition.t()] | nil,

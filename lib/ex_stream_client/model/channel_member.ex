@@ -33,6 +33,11 @@ defmodule ExStreamClient.Model.ChannelMember do
     :user_id
   ]
 
+  @nested_components %{user: ExStreamClient.Model.UserResponse, role: :atom}
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           archived_at: float() | nil,
           ban_expires: float() | nil,

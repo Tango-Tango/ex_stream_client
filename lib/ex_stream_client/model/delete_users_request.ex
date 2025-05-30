@@ -12,6 +12,11 @@ defmodule ExStreamClient.Model.DeleteUsersRequest do
     :user_ids
   ]
 
+  @nested_components %{messages: :atom, user: :atom, calls: :atom, conversations: :atom}
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           calls: (:hard | :soft) | nil,
           conversations: (:hard | :soft) | nil,

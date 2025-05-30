@@ -34,6 +34,11 @@ defmodule ExStreamClient.Model.UserResponseCommonFields do
     :updated_at
   ]
 
+  @nested_components %{}
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           banned: boolean(),
           blocked_user_ids: [String.t()],

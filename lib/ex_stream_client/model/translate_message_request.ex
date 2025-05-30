@@ -3,6 +3,10 @@ defmodule ExStreamClient.Model.TranslateMessageRequest do
   use ExStreamClient.Jason
   @enforce_keys [:language]
   defstruct [:language]
+  @nested_components %{language: :atom}
+  def nested_components do
+    @nested_components
+  end
 
   @type t :: %__MODULE__{
           language:

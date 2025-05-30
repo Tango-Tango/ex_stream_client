@@ -3,6 +3,10 @@ defmodule ExStreamClient.Model.CustomCheckFlag do
   use ExStreamClient.Jason
   @enforce_keys [:type]
   defstruct [:custom, :labels, :reason, :type]
+  @nested_components %{}
+  def nested_components do
+    @nested_components
+  end
 
   @type t :: %__MODULE__{
           custom: map() | nil,

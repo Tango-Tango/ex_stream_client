@@ -18,6 +18,15 @@ defmodule ExStreamClient.Model.EnrichedReaction do
     :user_id
   ]
 
+  @nested_components %{
+    user: ExStreamClient.Model.Data,
+    created_at: ExStreamClient.Model.Time,
+    updated_at: ExStreamClient.Model.Time
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           activity_id: String.t(),
           children_counts: map() | nil,

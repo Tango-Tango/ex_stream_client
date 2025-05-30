@@ -27,6 +27,11 @@ defmodule ExStreamClient.Model.CallEgress do
     :updated_at
   ]
 
+  @nested_components %{config: ExStreamClient.Model.EgressTaskConfig}
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           app_pk: integer(),
           call_id: String.t(),

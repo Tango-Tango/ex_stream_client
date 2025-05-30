@@ -21,6 +21,19 @@ defmodule ExStreamClient.Model.Images do
     :original
   ]
 
+  @nested_components %{
+    original: ExStreamClient.Model.ImageData,
+    fixed_height: ExStreamClient.Model.ImageData,
+    fixed_height_downsampled: ExStreamClient.Model.ImageData,
+    fixed_height_still: ExStreamClient.Model.ImageData,
+    fixed_width: ExStreamClient.Model.ImageData,
+    fixed_width_downsampled: ExStreamClient.Model.ImageData,
+    fixed_width_still: ExStreamClient.Model.ImageData
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           fixed_height: ExStreamClient.Model.ImageData.t(),
           fixed_height_downsampled: ExStreamClient.Model.ImageData.t(),

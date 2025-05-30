@@ -38,6 +38,18 @@ defmodule ExStreamClient.Model.Channel do
     :updated_at
   ]
 
+  @nested_components %{
+    config: ExStreamClient.Model.ChannelConfig,
+    created_by: ExStreamClient.Model.User,
+    members: ExStreamClient.Model.ChannelMember,
+    config_overrides: ExStreamClient.Model.ConfigOverrides,
+    invites: ExStreamClient.Model.ChannelMember,
+    truncated_by: ExStreamClient.Model.User
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           auto_translation_enabled: boolean() | nil,
           auto_translation_language: String.t(),

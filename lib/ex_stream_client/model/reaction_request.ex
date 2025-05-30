@@ -3,6 +3,10 @@ defmodule ExStreamClient.Model.ReactionRequest do
   use ExStreamClient.Jason
   @enforce_keys [:type]
   defstruct [:created_at, :custom, :score, :type, :updated_at, :user, :user_id]
+  @nested_components %{user: ExStreamClient.Model.UserRequest}
+  def nested_components do
+    @nested_components
+  end
 
   @type t :: %__MODULE__{
           created_at: float() | nil,

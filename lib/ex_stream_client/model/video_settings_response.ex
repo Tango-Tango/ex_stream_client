@@ -17,6 +17,14 @@ defmodule ExStreamClient.Model.VideoSettingsResponse do
     :target_resolution
   ]
 
+  @nested_components %{
+    target_resolution: ExStreamClient.Model.TargetResolution,
+    camera_facing: :atom
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           access_request_enabled: boolean(),
           camera_default_on: boolean(),

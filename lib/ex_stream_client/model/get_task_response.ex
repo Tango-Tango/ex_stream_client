@@ -3,6 +3,10 @@ defmodule ExStreamClient.Model.GetTaskResponse do
   use ExStreamClient.Jason
   @enforce_keys [:created_at, :duration, :status, :task_id, :updated_at]
   defstruct [:created_at, :duration, :error, :result, :status, :task_id, :updated_at]
+  @nested_components %{error: ExStreamClient.Model.ErrorResult}
+  def nested_components do
+    @nested_components
+  end
 
   @type t :: %__MODULE__{
           created_at: float(),

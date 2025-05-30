@@ -17,6 +17,16 @@ defmodule ExStreamClient.Model.EnrichedActivity do
     :verb
   ]
 
+  @nested_components %{
+    origin: ExStreamClient.Model.Data,
+    target: ExStreamClient.Model.Data,
+    actor: ExStreamClient.Model.Data,
+    object: ExStreamClient.Model.Data
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           actor: ExStreamClient.Model.Data.t() | nil,
           foreign_id: String.t() | nil,

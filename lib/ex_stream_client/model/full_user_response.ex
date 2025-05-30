@@ -55,6 +55,16 @@ defmodule ExStreamClient.Model.FullUserResponse do
     :updated_at
   ]
 
+  @nested_components %{
+    privacy_settings: ExStreamClient.Model.PrivacySettingsResponse,
+    mutes: ExStreamClient.Model.UserMuteResponse,
+    devices: ExStreamClient.Model.DeviceResponse,
+    channel_mutes: ExStreamClient.Model.ChannelMute
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           ban_expires: float() | nil,
           banned: boolean(),

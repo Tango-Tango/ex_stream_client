@@ -4,6 +4,14 @@ defmodule ExStreamClient.Model.SearchResponse do
   @enforce_keys [:duration, :results]
   defstruct [:duration, :next, :previous, :results, :results_warning]
 
+  @nested_components %{
+    results: ExStreamClient.Model.SearchResult,
+    results_warning: ExStreamClient.Model.SearchWarning
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           duration: String.t(),
           next: String.t() | nil,

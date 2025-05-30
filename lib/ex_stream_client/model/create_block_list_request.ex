@@ -3,6 +3,10 @@ defmodule ExStreamClient.Model.CreateBlockListRequest do
   use ExStreamClient.Jason
   @enforce_keys [:name, :words]
   defstruct [:name, :team, :type, :words]
+  @nested_components %{type: :atom}
+  def nested_components do
+    @nested_components
+  end
 
   @type t :: %__MODULE__{
           name: String.t(),

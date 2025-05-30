@@ -3,6 +3,10 @@ defmodule ExStreamClient.Model.QuerySegmentsResponse do
   use ExStreamClient.Jason
   @enforce_keys [:duration, :segments]
   defstruct [:duration, :next, :prev, :segments]
+  @nested_components %{segments: ExStreamClient.Model.SegmentResponse}
+  def nested_components do
+    @nested_components
+  end
 
   @type t :: %__MODULE__{
           duration: String.t(),

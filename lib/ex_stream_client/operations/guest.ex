@@ -14,25 +14,27 @@ defmodule ExStreamClient.Guest do
   @spec create_guest(ExStreamClient.Model.CreateGuestRequest.t()) ::
           {:ok, ExStreamClient.Model.CreateGuestResponse.t()} | {:error, any()}
   def create_guest(payload) do
-    request_opts = [url: "/api/v2/guest", method: :post, params: %{}] ++ [json: payload]
+    request_opts =
+      [url: "/api/v2/guest", method: :post, params: %{}, decode_json: [keys: :atoms]] ++
+        [json: payload]
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response(
-                  {:ok, response.body},
-                  {:component, "CreateGuestResponse"}
-                )
+          response_handlers = %{
+            201 => ExStreamClient.Model.CreateGuestResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 

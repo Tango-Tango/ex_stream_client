@@ -16,20 +16,30 @@ defmodule ExStreamClient.PushProviders do
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_push_provider(type, name) do
     request_opts =
-      [url: "/api/v2/push_providers/#{type}/#{name}", method: :delete, params: %{}] ++ []
+      [
+        url: "/api/v2/push_providers/#{type}/#{name}",
+        method: :delete,
+        params: %{},
+        decode_json: [keys: :atoms]
+      ] ++ []
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed = Codegen.convert_response({:ok, response.body}, {:component, "Response"})
-              {request, %{response | body: {:ok, parsed}}}
+          response_handlers = %{
+            200 => ExStreamClient.Model.Response,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-            _ ->
-              {request, response}
-          end
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
+
+          {request, %{response | body: parsed}}
         end
       )
 
@@ -45,25 +55,27 @@ defmodule ExStreamClient.PushProviders do
   @spec upsert_push_provider(ExStreamClient.Model.UpsertPushProviderRequest.t()) ::
           {:ok, ExStreamClient.Model.UpsertPushProviderResponse.t()} | {:error, any()}
   def upsert_push_provider(payload) do
-    request_opts = [url: "/api/v2/push_providers", method: :post, params: %{}] ++ [json: payload]
+    request_opts =
+      [url: "/api/v2/push_providers", method: :post, params: %{}, decode_json: [keys: :atoms]] ++
+        [json: payload]
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response(
-                  {:ok, response.body},
-                  {:component, "UpsertPushProviderResponse"}
-                )
+          response_handlers = %{
+            201 => ExStreamClient.Model.UpsertPushProviderResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 
@@ -79,25 +91,27 @@ defmodule ExStreamClient.PushProviders do
   @spec list_push_providers() ::
           {:ok, ExStreamClient.Model.ListPushProvidersResponse.t()} | {:error, any()}
   def list_push_providers() do
-    request_opts = [url: "/api/v2/push_providers", method: :get, params: %{}] ++ []
+    request_opts =
+      [url: "/api/v2/push_providers", method: :get, params: %{}, decode_json: [keys: :atoms]] ++
+        []
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response(
-                  {:ok, response.body},
-                  {:component, "ListPushProvidersResponse"}
-                )
+          response_handlers = %{
+            200 => ExStreamClient.Model.ListPushProvidersResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 

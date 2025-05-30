@@ -25,26 +25,27 @@ defmodule ExStreamClient.Chat.Moderation do
         params:
           Keyword.merge([], Keyword.take(opts, [:payload]))
           |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-          |> Map.new()
+          |> Map.new(),
+        decode_json: [keys: :atoms]
       ] ++ []
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response(
-                  {:ok, response.body},
-                  {:component, "QueryMessageFlagsResponse"}
-                )
+          response_handlers = %{
+            200 => ExStreamClient.Model.QueryMessageFlagsResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 
@@ -61,23 +62,30 @@ defmodule ExStreamClient.Chat.Moderation do
           {:ok, ExStreamClient.Model.UnmuteResponse.t()} | {:error, any()}
   def unmute_channel(payload) do
     request_opts =
-      [url: "/api/v2/chat/moderation/unmute/channel", method: :post, params: %{}] ++
-        [json: payload]
+      [
+        url: "/api/v2/chat/moderation/unmute/channel",
+        method: :post,
+        params: %{},
+        decode_json: [keys: :atoms]
+      ] ++ [json: payload]
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response({:ok, response.body}, {:component, "UnmuteResponse"})
+          response_handlers = %{
+            201 => ExStreamClient.Model.UnmuteResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 
@@ -94,25 +102,30 @@ defmodule ExStreamClient.Chat.Moderation do
           {:ok, ExStreamClient.Model.MuteChannelResponse.t()} | {:error, any()}
   def mute_channel(payload) do
     request_opts =
-      [url: "/api/v2/chat/moderation/mute/channel", method: :post, params: %{}] ++ [json: payload]
+      [
+        url: "/api/v2/chat/moderation/mute/channel",
+        method: :post,
+        params: %{},
+        decode_json: [keys: :atoms]
+      ] ++ [json: payload]
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response(
-                  {:ok, response.body},
-                  {:component, "MuteChannelResponse"}
-                )
+          response_handlers = %{
+            201 => ExStreamClient.Model.MuteChannelResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 

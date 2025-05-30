@@ -15,25 +15,30 @@ defmodule ExStreamClient.Chat.PushTemplates do
           {:ok, ExStreamClient.Model.UpsertPushTemplateResponse.t()} | {:error, any()}
   def upsert_push_template(payload) do
     request_opts =
-      [url: "/api/v2/chat/push_templates", method: :post, params: %{}] ++ [json: payload]
+      [
+        url: "/api/v2/chat/push_templates",
+        method: :post,
+        params: %{},
+        decode_json: [keys: :atoms]
+      ] ++ [json: payload]
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response(
-                  {:ok, response.body},
-                  {:component, "UpsertPushTemplateResponse"}
-                )
+          response_handlers = %{
+            201 => ExStreamClient.Model.UpsertPushTemplateResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 
@@ -63,26 +68,27 @@ defmodule ExStreamClient.Chat.PushTemplates do
             Keyword.take(opts, [:push_provider_name])
           )
           |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-          |> Map.new()
+          |> Map.new(),
+        decode_json: [keys: :atoms]
       ] ++ []
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response(
-                  {:ok, response.body},
-                  {:component, "GetPushTemplatesResponse"}
-                )
+          response_handlers = %{
+            200 => ExStreamClient.Model.GetPushTemplatesResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 

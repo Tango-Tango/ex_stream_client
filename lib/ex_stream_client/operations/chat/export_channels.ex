@@ -15,25 +15,30 @@ defmodule ExStreamClient.Chat.ExportChannels do
           {:ok, ExStreamClient.Model.ExportChannelsResponse.t()} | {:error, any()}
   def export_channels(payload) do
     request_opts =
-      [url: "/api/v2/chat/export_channels", method: :post, params: %{}] ++ [json: payload]
+      [
+        url: "/api/v2/chat/export_channels",
+        method: :post,
+        params: %{},
+        decode_json: [keys: :atoms]
+      ] ++ [json: payload]
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response(
-                  {:ok, response.body},
-                  {:component, "ExportChannelsResponse"}
-                )
+          response_handlers = %{
+            201 => ExStreamClient.Model.ExportChannelsResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 

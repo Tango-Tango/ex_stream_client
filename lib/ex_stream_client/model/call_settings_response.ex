@@ -33,6 +33,25 @@ defmodule ExStreamClient.Model.CallSettingsResponse do
     :video
   ]
 
+  @nested_components %{
+    session: ExStreamClient.Model.SessionSettingsResponse,
+    backstage: ExStreamClient.Model.BackstageSettingsResponse,
+    recording: ExStreamClient.Model.RecordSettingsResponse,
+    thumbnails: ExStreamClient.Model.ThumbnailsSettingsResponse,
+    audio: ExStreamClient.Model.AudioSettingsResponse,
+    broadcasting: ExStreamClient.Model.BroadcastSettingsResponse,
+    frame_recording: ExStreamClient.Model.FrameRecordingSettingsResponse,
+    geofencing: ExStreamClient.Model.GeofenceSettingsResponse,
+    limits: ExStreamClient.Model.LimitsSettingsResponse,
+    ring: ExStreamClient.Model.RingSettingsResponse,
+    screensharing: ExStreamClient.Model.ScreensharingSettingsResponse,
+    transcription: ExStreamClient.Model.TranscriptionSettingsResponse,
+    video: ExStreamClient.Model.VideoSettingsResponse
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           audio: ExStreamClient.Model.AudioSettingsResponse.t(),
           backstage: ExStreamClient.Model.BackstageSettingsResponse.t(),

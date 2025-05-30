@@ -12,6 +12,11 @@ defmodule ExStreamClient.Model.ModerationV2Response do
     :text_harms
   ]
 
+  @nested_components %{}
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           action: String.t(),
           blocklist_matched: String.t() | nil,

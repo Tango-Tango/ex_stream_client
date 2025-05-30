@@ -24,6 +24,15 @@ defmodule ExStreamClient.Model.MessageRequest do
     :user_id
   ]
 
+  @nested_components %{
+    type: :atom,
+    user: ExStreamClient.Model.UserRequest,
+    attachments: ExStreamClient.Model.Attachment
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           attachments: [ExStreamClient.Model.Attachment.t()] | nil,
           custom: map() | nil,

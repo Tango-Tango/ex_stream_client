@@ -3,6 +3,10 @@ defmodule ExStreamClient.Model.QueryCampaignsResponse do
   use ExStreamClient.Jason
   @enforce_keys [:campaigns, :duration]
   defstruct [:campaigns, :duration, :next, :prev]
+  @nested_components %{campaigns: ExStreamClient.Model.CampaignResponse}
+  def nested_components do
+    @nested_components
+  end
 
   @type t :: %__MODULE__{
           campaigns: [ExStreamClient.Model.CampaignResponse.t()],

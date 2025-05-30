@@ -3,6 +3,10 @@ defmodule ExStreamClient.Model.UnreadCountsThread do
   use ExStreamClient.Jason
   @enforce_keys [:last_read, :last_read_message_id, :parent_message_id, :unread_count]
   defstruct [:last_read, :last_read_message_id, :parent_message_id, :unread_count]
+  @nested_components %{}
+  def nested_components do
+    @nested_components
+  end
 
   @type t :: %__MODULE__{
           last_read: float(),

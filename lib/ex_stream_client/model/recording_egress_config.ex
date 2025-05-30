@@ -11,6 +11,16 @@ defmodule ExStreamClient.Model.RecordingEgressConfig do
     :video_orientation_hint
   ]
 
+  @nested_components %{
+    external_storage: ExStreamClient.Model.ExternalStorage,
+    quality: ExStreamClient.Model.Quality,
+    composite_app_settings: ExStreamClient.Model.CompositeAppSettings,
+    video_orientation_hint: ExStreamClient.Model.VideoOrientation
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           audio_only: boolean() | nil,
           composite_app_settings: ExStreamClient.Model.CompositeAppSettings.t() | nil,

@@ -11,6 +11,15 @@ defmodule ExStreamClient.Model.UnreadCountsResponse do
   ]
   defstruct [:channel_type, :channels, :threads, :total_unread_count, :total_unread_threads_count]
 
+  @nested_components %{
+    threads: ExStreamClient.Model.UnreadCountsThread,
+    channel_type: ExStreamClient.Model.UnreadCountsChannelType,
+    channels: ExStreamClient.Model.UnreadCountsChannel
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           channel_type: [ExStreamClient.Model.UnreadCountsChannelType.t()],
           channels: [ExStreamClient.Model.UnreadCountsChannel.t()],

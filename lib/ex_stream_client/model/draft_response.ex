@@ -12,6 +12,16 @@ defmodule ExStreamClient.Model.DraftResponse do
     :quoted_message
   ]
 
+  @nested_components %{
+    message: ExStreamClient.Model.DraftPayloadResponse,
+    channel: ExStreamClient.Model.ChannelResponse,
+    parent_message: ExStreamClient.Model.MessageResponse,
+    quoted_message: ExStreamClient.Model.MessageResponse
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           channel: ExStreamClient.Model.ChannelResponse.t() | nil,
           channel_cid: String.t(),

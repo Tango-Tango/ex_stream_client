@@ -4,6 +4,14 @@ defmodule ExStreamClient.Model.RTMPSettings do
   @enforce_keys [:enabled]
   defstruct [:enabled, :layout, :location, :quality_name]
 
+  @nested_components %{
+    location: ExStreamClient.Model.RTMPLocation,
+    layout: ExStreamClient.Model.LayoutSettings
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           enabled: boolean(),
           layout: ExStreamClient.Model.LayoutSettings.t() | nil,

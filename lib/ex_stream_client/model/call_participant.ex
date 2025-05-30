@@ -25,6 +25,11 @@ defmodule ExStreamClient.Model.CallParticipant do
     :user_session_id
   ]
 
+  @nested_components %{privacy_settings: ExStreamClient.Model.PrivacySettings}
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           ban_expires: float() | nil,
           banned: boolean(),

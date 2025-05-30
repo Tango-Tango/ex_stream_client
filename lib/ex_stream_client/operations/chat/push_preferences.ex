@@ -16,25 +16,30 @@ defmodule ExStreamClient.Chat.PushPreferences do
         ) :: {:ok, ExStreamClient.Model.UpsertPushPreferencesResponse.t()} | {:error, any()}
   def update_push_notification_preferences(payload) do
     request_opts =
-      [url: "/api/v2/chat/push_preferences", method: :post, params: %{}] ++ [json: payload]
+      [
+        url: "/api/v2/chat/push_preferences",
+        method: :post,
+        params: %{},
+        decode_json: [keys: :atoms]
+      ] ++ [json: payload]
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          case response.status do
-            code when code in 200..299 ->
-              parsed =
-                Codegen.convert_response(
-                  {:ok, response.body},
-                  {:component, "UpsertPushPreferencesResponse"}
-                )
+          response_handlers = %{
+            201 => ExStreamClient.Model.UpsertPushPreferencesResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
 
-              {request, %{response | body: {:ok, parsed}}}
+          parsed =
+            case Map.get(response_handlers, response.status) do
+              nil -> {:error, response.body}
+              mod -> {:ok, mod.decode(response.body)}
+            end
 
-            _ ->
-              {request, response}
-          end
+          {request, %{response | body: parsed}}
         end
       )
 

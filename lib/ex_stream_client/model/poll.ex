@@ -45,6 +45,16 @@ defmodule ExStreamClient.Model.Poll do
     :voting_visibility
   ]
 
+  @nested_components %{
+    options: ExStreamClient.Model.PollOption,
+    created_by: ExStreamClient.Model.User,
+    latest_answers: ExStreamClient.Model.PollVote,
+    own_votes: ExStreamClient.Model.PollVote
+  }
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           allow_answers: boolean(),
           allow_user_suggested_options: boolean(),

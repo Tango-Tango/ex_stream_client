@@ -29,6 +29,11 @@ defmodule ExStreamClient.Model.SegmentResponse do
     :updated_at
   ]
 
+  @nested_components %{}
+  def nested_components do
+    @nested_components
+  end
+
   @type t :: %__MODULE__{
           all_sender_channels: boolean(),
           all_users: boolean(),

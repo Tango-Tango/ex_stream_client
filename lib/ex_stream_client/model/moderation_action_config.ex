@@ -3,6 +3,10 @@ defmodule ExStreamClient.Model.ModerationActionConfig do
   use ExStreamClient.Jason
   @enforce_keys [:action, :custom, :description, :entity_type, :icon, :order]
   defstruct [:action, :custom, :description, :entity_type, :icon, :order]
+  @nested_components %{}
+  def nested_components do
+    @nested_components
+  end
 
   @type t :: %__MODULE__{
           action: String.t(),

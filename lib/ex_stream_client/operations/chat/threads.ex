@@ -19,31 +19,43 @@ defmodule ExStreamClient.Chat.Threads do
       [
         url: "/api/v2/chat/threads/#{message_id}",
         method: :patch,
-        params: %{},
+        params: [],
         decode_json: [keys: :atoms]
       ] ++ [json: payload]
+
+    response_handlers = %{
+      200 => ExStreamClient.Model.UpdateThreadPartialResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            200 => ExStreamClient.Model.UpdateThreadPartialResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -68,32 +80,43 @@ defmodule ExStreamClient.Chat.Threads do
         method: :get,
         params:
           Keyword.merge([], Keyword.take(opts, [:reply_limit, :participant_limit, :member_limit]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-          |> Map.new(),
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end),
         decode_json: [keys: :atoms]
       ] ++ []
+
+    response_handlers = %{
+      200 => ExStreamClient.Model.GetThreadResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            200 => ExStreamClient.Model.GetThreadResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -106,29 +129,41 @@ defmodule ExStreamClient.Chat.Threads do
           {:ok, ExStreamClient.Model.QueryThreadsResponse.t()} | {:error, any()}
   def query_threads(payload) do
     request_opts =
-      [url: "/api/v2/chat/threads", method: :post, params: %{}, decode_json: [keys: :atoms]] ++
+      [url: "/api/v2/chat/threads", method: :post, params: [], decode_json: [keys: :atoms]] ++
         [json: payload]
+
+    response_handlers = %{
+      201 => ExStreamClient.Model.QueryThreadsResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.QueryThreadsResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 end

@@ -26,32 +26,43 @@ defmodule ExStreamClient.Chat.Polls do
         method: :post,
         params:
           Keyword.merge([], Keyword.take(opts, [:user_id]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-          |> Map.new(),
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end),
         decode_json: [keys: :atoms]
       ] ++ [json: payload]
+
+    response_handlers = %{
+      201 => ExStreamClient.Model.PollVotesResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.PollVotesResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -64,30 +75,42 @@ defmodule ExStreamClient.Chat.Polls do
           {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
   def update_poll(payload) do
     request_opts =
-      [url: "/api/v2/chat/polls", method: :put, params: %{}, decode_json: [keys: :atoms]] ++
+      [url: "/api/v2/chat/polls", method: :put, params: [], decode_json: [keys: :atoms]] ++
         [json: payload]
+
+    response_handlers = %{
+      201 => ExStreamClient.Model.PollResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.PollResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -100,30 +123,42 @@ defmodule ExStreamClient.Chat.Polls do
           {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
   def create_poll(payload) do
     request_opts =
-      [url: "/api/v2/chat/polls", method: :post, params: %{}, decode_json: [keys: :atoms]] ++
+      [url: "/api/v2/chat/polls", method: :post, params: [], decode_json: [keys: :atoms]] ++
         [json: payload]
+
+    response_handlers = %{
+      201 => ExStreamClient.Model.PollResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.PollResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -140,31 +175,43 @@ defmodule ExStreamClient.Chat.Polls do
       [
         url: "/api/v2/chat/polls/#{poll_id}/options",
         method: :put,
-        params: %{},
+        params: [],
         decode_json: [keys: :atoms]
       ] ++ [json: payload]
+
+    response_handlers = %{
+      201 => ExStreamClient.Model.PollOptionResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.PollOptionResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -181,31 +228,43 @@ defmodule ExStreamClient.Chat.Polls do
       [
         url: "/api/v2/chat/polls/#{poll_id}/options",
         method: :post,
-        params: %{},
+        params: [],
         decode_json: [keys: :atoms]
       ] ++ [json: payload]
+
+    response_handlers = %{
+      201 => ExStreamClient.Model.PollOptionResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.PollOptionResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -222,31 +281,43 @@ defmodule ExStreamClient.Chat.Polls do
       [
         url: "/api/v2/chat/polls/#{poll_id}",
         method: :patch,
-        params: %{},
+        params: [],
         decode_json: [keys: :atoms]
       ] ++ [json: payload]
+
+    response_handlers = %{
+      200 => ExStreamClient.Model.PollResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            200 => ExStreamClient.Model.PollResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -267,32 +338,43 @@ defmodule ExStreamClient.Chat.Polls do
         method: :get,
         params:
           Keyword.merge([], Keyword.take(opts, [:user_id]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-          |> Map.new(),
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end),
         decode_json: [keys: :atoms]
       ] ++ []
+
+    response_handlers = %{
+      200 => ExStreamClient.Model.PollResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            200 => ExStreamClient.Model.PollResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -313,32 +395,43 @@ defmodule ExStreamClient.Chat.Polls do
         method: :delete,
         params:
           Keyword.merge([], Keyword.take(opts, [:user_id]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-          |> Map.new(),
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end),
         decode_json: [keys: :atoms]
       ] ++ []
+
+    response_handlers = %{
+      200 => ExStreamClient.Model.Response,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            200 => ExStreamClient.Model.Response,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -360,32 +453,43 @@ defmodule ExStreamClient.Chat.Polls do
         method: :post,
         params:
           Keyword.merge([], Keyword.take(opts, [:user_id]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-          |> Map.new(),
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end),
         decode_json: [keys: :atoms]
       ] ++ [json: payload]
+
+    response_handlers = %{
+      201 => ExStreamClient.Model.QueryPollsResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.QueryPollsResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -408,32 +512,43 @@ defmodule ExStreamClient.Chat.Polls do
         method: :get,
         params:
           Keyword.merge([], Keyword.take(opts, [:user_id]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-          |> Map.new(),
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end),
         decode_json: [keys: :atoms]
       ] ++ []
+
+    response_handlers = %{
+      200 => ExStreamClient.Model.PollOptionResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            200 => ExStreamClient.Model.PollOptionResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -456,31 +571,42 @@ defmodule ExStreamClient.Chat.Polls do
         method: :delete,
         params:
           Keyword.merge([], Keyword.take(opts, [:user_id]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-          |> Map.new(),
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end),
         decode_json: [keys: :atoms]
       ] ++ []
+
+    response_handlers = %{
+      200 => ExStreamClient.Model.Response,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            200 => ExStreamClient.Model.Response,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 end

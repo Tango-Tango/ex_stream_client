@@ -19,31 +19,43 @@ defmodule ExStreamClient.Users do
       [
         url: "/api/v2/users/#{user_id}/reactivate",
         method: :post,
-        params: %{},
+        params: [],
         decode_json: [keys: :atoms]
       ] ++ [json: payload]
+
+    response_handlers = %{
+      201 => ExStreamClient.Model.ReactivateUserResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.ReactivateUserResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -56,30 +68,42 @@ defmodule ExStreamClient.Users do
           {:ok, ExStreamClient.Model.UpdateUsersResponse.t()} | {:error, any()}
   def update_users(payload) do
     request_opts =
-      [url: "/api/v2/users", method: :post, params: %{}, decode_json: [keys: :atoms]] ++
+      [url: "/api/v2/users", method: :post, params: [], decode_json: [keys: :atoms]] ++
         [json: payload]
+
+    response_handlers = %{
+      201 => ExStreamClient.Model.UpdateUsersResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.UpdateUsersResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -92,30 +116,42 @@ defmodule ExStreamClient.Users do
           {:ok, ExStreamClient.Model.UpdateUsersResponse.t()} | {:error, any()}
   def update_users_partial(payload) do
     request_opts =
-      [url: "/api/v2/users", method: :patch, params: %{}, decode_json: [keys: :atoms]] ++
+      [url: "/api/v2/users", method: :patch, params: [], decode_json: [keys: :atoms]] ++
         [json: payload]
+
+    response_handlers = %{
+      200 => ExStreamClient.Model.UpdateUsersResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            200 => ExStreamClient.Model.UpdateUsersResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -136,32 +172,43 @@ defmodule ExStreamClient.Users do
         method: :get,
         params:
           Keyword.merge([], Keyword.take(opts, [:payload]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-          |> Map.new(),
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end),
         decode_json: [keys: :atoms]
       ] ++ []
+
+    response_handlers = %{
+      200 => ExStreamClient.Model.QueryUsersResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            200 => ExStreamClient.Model.QueryUsersResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -174,30 +221,42 @@ defmodule ExStreamClient.Users do
           {:ok, ExStreamClient.Model.DeleteUsersResponse.t()} | {:error, any()}
   def delete_users(payload) do
     request_opts =
-      [url: "/api/v2/users/delete", method: :post, params: %{}, decode_json: [keys: :atoms]] ++
+      [url: "/api/v2/users/delete", method: :post, params: [], decode_json: [keys: :atoms]] ++
         [json: payload]
+
+    response_handlers = %{
+      201 => ExStreamClient.Model.DeleteUsersResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.DeleteUsersResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -210,30 +269,42 @@ defmodule ExStreamClient.Users do
           {:ok, ExStreamClient.Model.ReactivateUsersResponse.t()} | {:error, any()}
   def reactivate_users(payload) do
     request_opts =
-      [url: "/api/v2/users/reactivate", method: :post, params: %{}, decode_json: [keys: :atoms]] ++
+      [url: "/api/v2/users/reactivate", method: :post, params: [], decode_json: [keys: :atoms]] ++
         [json: payload]
+
+    response_handlers = %{
+      201 => ExStreamClient.Model.ReactivateUsersResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.ReactivateUsersResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -249,31 +320,43 @@ defmodule ExStreamClient.Users do
       [
         url: "/api/v2/users/#{user_id}/export",
         method: :get,
-        params: %{},
+        params: [],
         decode_json: [keys: :atoms]
       ] ++ []
+
+    response_handlers = %{
+      200 => ExStreamClient.Model.ExportUserResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            200 => ExStreamClient.Model.ExportUserResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -286,30 +369,42 @@ defmodule ExStreamClient.Users do
           {:ok, ExStreamClient.Model.DeactivateUsersResponse.t()} | {:error, any()}
   def deactivate_users(payload) do
     request_opts =
-      [url: "/api/v2/users/deactivate", method: :post, params: %{}, decode_json: [keys: :atoms]] ++
+      [url: "/api/v2/users/deactivate", method: :post, params: [], decode_json: [keys: :atoms]] ++
         [json: payload]
+
+    response_handlers = %{
+      201 => ExStreamClient.Model.DeactivateUsersResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.DeactivateUsersResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -322,30 +417,42 @@ defmodule ExStreamClient.Users do
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def restore_users(payload) do
     request_opts =
-      [url: "/api/v2/users/restore", method: :post, params: %{}, decode_json: [keys: :atoms]] ++
+      [url: "/api/v2/users/restore", method: :post, params: [], decode_json: [keys: :atoms]] ++
         [json: payload]
+
+    response_handlers = %{
+      201 => ExStreamClient.Model.Response,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.Response,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -358,30 +465,42 @@ defmodule ExStreamClient.Users do
           {:ok, ExStreamClient.Model.UnblockUsersResponse.t()} | {:error, any()}
   def unblock_users(payload) do
     request_opts =
-      [url: "/api/v2/users/unblock", method: :post, params: %{}, decode_json: [keys: :atoms]] ++
+      [url: "/api/v2/users/unblock", method: :post, params: [], decode_json: [keys: :atoms]] ++
         [json: payload]
+
+    response_handlers = %{
+      201 => ExStreamClient.Model.UnblockUsersResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.UnblockUsersResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -394,30 +513,42 @@ defmodule ExStreamClient.Users do
           {:ok, ExStreamClient.Model.BlockUsersResponse.t()} | {:error, any()}
   def block_users(payload) do
     request_opts =
-      [url: "/api/v2/users/block", method: :post, params: %{}, decode_json: [keys: :atoms]] ++
+      [url: "/api/v2/users/block", method: :post, params: [], decode_json: [keys: :atoms]] ++
         [json: payload]
+
+    response_handlers = %{
+      201 => ExStreamClient.Model.BlockUsersResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.BlockUsersResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -439,32 +570,43 @@ defmodule ExStreamClient.Users do
         method: :get,
         params:
           Keyword.merge([], Keyword.take(opts, [:user_id]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-          |> Map.new(),
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end),
         decode_json: [keys: :atoms]
       ] ++ []
+
+    response_handlers = %{
+      200 => ExStreamClient.Model.GetBlockedUsersResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            200 => ExStreamClient.Model.GetBlockedUsersResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -481,30 +623,42 @@ defmodule ExStreamClient.Users do
       [
         url: "/api/v2/users/#{user_id}/deactivate",
         method: :post,
-        params: %{},
+        params: [],
         decode_json: [keys: :atoms]
       ] ++ [json: payload]
+
+    response_handlers = %{
+      201 => ExStreamClient.Model.DeactivateUserResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.DeactivateUserResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 end

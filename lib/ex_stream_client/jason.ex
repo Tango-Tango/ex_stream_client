@@ -30,6 +30,13 @@ defmodule ExStreamClient.Jason do
         struct(__MODULE__, processed)
       end
 
+      @doc """
+      Components could just be enums that are typed - so we need to decode those as enums as they will just be stings
+      """
+      def decode(map) when is_binary(map) do
+        transform(map, :atom)
+      end
+
       defp transform(val, :atom) when is_binary(val), do: String.to_existing_atom(val)
       defp transform(val, :atom) when is_list(val), do: Enum.map(val, &String.to_existing_atom/1)
 

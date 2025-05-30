@@ -40,6 +40,7 @@ defmodule ExStreamClient.MixProject do
     [
       {:req, "~> 0.4"},
       {:jason, "~> 1.4"},
+      {:joken, "~> 2.6"},
       {:yaml_elixir, "~> 2.9", only: :dev},
       {:sourceror, "~> 1.10", only: :dev}
     ]

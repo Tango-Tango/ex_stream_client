@@ -121,14 +121,32 @@ defmodule ExStreamClient.Tools.Codegen.GenerateModel do
                 :oneOf ->
                   quoted_type = Codegen.type_to_spec({:oneOf, component.components})
 
-                  [
-                    quote do
-                      @type t :: unquote(quoted_type)
-                    end
-                  ]
+                  if is_enum(component.components) do
+                    {:enum, values} = component.components
+
+                    [
+                      quote do
+                        @type t :: unquote(quoted_type)
+                      end,
+                      quote do
+                        @values unquote(values)
+                      end,
+                      quote do
+                        # intern values to avoid String.to_existing_atom/1 errors.
+                        for value <- @values, do: _ = value
+                      end
+                    ]
+                  else
+                    [
+                      quote do
+                        @type t :: unquote(quoted_type)
+                      end
+                    ]
+                  end
 
                 :enum ->
                   quoted_type = Codegen.type_to_spec({:enum, component.enum})
+                  IO.inspect(quoted_type)
 
                   [
                     quote do
@@ -159,4 +177,7 @@ defmodule ExStreamClient.Tools.Codegen.GenerateModel do
       File.write!(file_path, Macro.to_string(mod_ast))
     end)
   end
+
+  defp is_enum({:enum, _}), do: true
+  defp is_enum(_), do: false
 end

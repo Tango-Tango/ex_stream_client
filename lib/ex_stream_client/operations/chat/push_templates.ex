@@ -15,34 +15,42 @@ defmodule ExStreamClient.Chat.PushTemplates do
           {:ok, ExStreamClient.Model.UpsertPushTemplateResponse.t()} | {:error, any()}
   def upsert_push_template(payload) do
     request_opts =
-      [
-        url: "/api/v2/chat/push_templates",
-        method: :post,
-        params: %{},
-        decode_json: [keys: :atoms]
-      ] ++ [json: payload]
+      [url: "/api/v2/chat/push_templates", method: :post, params: [], decode_json: [keys: :atoms]] ++
+        [json: payload]
+
+    response_handlers = %{
+      201 => ExStreamClient.Model.UpsertPushTemplateResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.UpsertPushTemplateResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc ~S"
@@ -67,31 +75,42 @@ defmodule ExStreamClient.Chat.PushTemplates do
             [push_provider_type: push_provider_type],
             Keyword.take(opts, [:push_provider_name])
           )
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-          |> Map.new(),
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end),
         decode_json: [keys: :atoms]
       ] ++ []
+
+    response_handlers = %{
+      200 => ExStreamClient.Model.GetPushTemplatesResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    response_handlers |> Map.values() |> Code.ensure_all_loaded()
 
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_handlers = %{
-            200 => ExStreamClient.Model.GetPushTemplatesResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+          response_type =
+            if response.status in 200..299 do
+              :ok
+            else
+              :error
+            end
 
           parsed =
             case Map.get(response_handlers, response.status) do
               nil -> {:error, response.body}
-              mod -> {:ok, mod.decode(response.body)}
+              mod -> {response_type, mod.decode(response.body)}
             end
 
           {request, %{response | body: parsed}}
         end
       )
 
-    ExStreamClient.Client.request(r)
+    case ExStreamClient.Client.request(r) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
   end
 end

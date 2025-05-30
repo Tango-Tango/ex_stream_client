@@ -3,14 +3,13 @@ defmodule ExStreamClient.Tools.Codegen.GenerateModel do
   Generates the model module based on the parsed OpenAPI spec
   """
 
+  require Logger
   alias Sourceror
   alias ExStreamClient.Tools.Codegen
 
-  @model_dir "lib/ex_stream_client/model"
-
   @doc "Generates model for the given specification"
   def run(%{components: components, functions: _functions}) do
-    IO.puts("Generating model for specification")
+    Logger.info("Generating model for specification")
 
     components =
       components
@@ -52,6 +51,21 @@ defmodule ExStreamClient.Tools.Codegen.GenerateModel do
         end)
         |> Enum.reduce(&Map.merge/2)
 
+      nested_components =
+        (component.required_props ++ component.optional_props)
+        |> Enum.reduce(%{}, fn %{name: name} = prop, acc ->
+          {_, type} =
+            case Map.get(prop, :type, nil) do
+              {:array, {:component, comp}} -> {name, Codegen.string_to_component(comp)}
+              {:component, comp} -> {name, Codegen.string_to_component(comp)}
+              {:enum, _} -> {name, :atom}
+              _ -> {nil, nil}
+            end
+
+          if type != nil, do: Map.put(acc, String.to_atom(name), type), else: acc
+        end)
+        |> Map.new()
+
       struct_ast =
         if required_field_keys == [] do
           [
@@ -85,6 +99,10 @@ defmodule ExStreamClient.Tools.Codegen.GenerateModel do
             use ExStreamClient.Jason
 
             unquote_splicing(struct_ast)
+
+            @nested_components unquote(nested_components)
+
+            def nested_components, do: @nested_components
 
             unquote_splicing(
               case component.kind do

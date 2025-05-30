@@ -2,6 +2,7 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
   @moduledoc """
   Generates the operations module based on the parsed OpenAPI spec
   """
+  require Logger
   alias Sourceror
   alias ExStreamClient.Tools.Codegen
 
@@ -9,7 +10,7 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
 
   @doc "Generates operations for the given specification"
   def run(%{components: _components, functions: functions}) do
-    IO.puts("Generating operations for specification")
+    Logger.info("Generating operations for specification")
 
     functions
     |> Enum.reduce(%{}, fn fx, acc ->
@@ -47,7 +48,8 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
             deprecated?: _deprecated,
             method: method,
             response_type: response_type,
-            group: _group
+            group: _group,
+            responses: responses
           } = fx
 
           name = String.to_atom(function_name)
@@ -223,6 +225,33 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
                 end
             end
 
+          # Create a map of response code to struct creation code
+          response_handlers =
+            Enum.map(responses, fn {code, response_type} ->
+              # Generate the appropriate struct creation code based on the response type
+              struct_creation_code =
+                case response_type do
+                  {:component, comp} ->
+                    # Get the full module name for the component
+                    struct_module = Codegen.string_to_component(comp)
+
+                    # Generate code to create the struct
+                    quote do
+                      unquote(struct_module)
+                    end
+
+                  _ ->
+                    # For any other type, just return the body
+                    quote do
+                      response.body
+                    end
+                end
+
+              # Create a map entry with the status code and the struct creation code
+              {code, struct_creation_code}
+            end)
+
+          # Add the decode step to the request
           method_impl_ast =
             quote do
               def unquote(name)(unquote_splicing(arg_names), unquote_splicing(opts_param_ast)) do
@@ -230,26 +259,25 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
                   [
                     url: unquote(url_ast),
                     method: unquote(method),
-                    params: unquote(query_params_ast)
+                    params: unquote(query_params_ast),
+                    decode_json: [keys: :atoms]
                   ] ++ unquote(body_params)
 
                 r =
                   Req.new(request_opts)
                   |> Req.Request.append_response_steps(
                     decode: fn {request, response} ->
-                      case response.status do
-                        code when code in 200..299 ->
-                          parsed =
-                            Codegen.convert_response(
-                              {:ok, response.body},
-                              unquote(response_type)
-                            )
+                      response_handlers = %{
+                        unquote_splicing(response_handlers)
+                      }
 
-                          {request, %{response | body: {:ok, parsed}}}
+                      parsed =
+                        case Map.get(response_handlers, response.status) do
+                          nil -> {:error, response.body}
+                          mod -> {:ok, mod.decode(response.body)}
+                        end
 
-                        _ ->
-                          {request, response}
-                      end
+                      {request, %{response | body: parsed}}
                     end
                   )
 

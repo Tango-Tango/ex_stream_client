@@ -514,6 +514,14 @@ defmodule ExStreamClient.Tools.Codegen do
   @type one_of_type :: {:oneOf, list({:component, String.t()})}
   @type response_type :: atom() | component_ref | one_of_type | nil
 
+  @spec extract_responses(%{required(String.t()) => map()}) :: %{integer() => response_type}
+  defp extract_responses(responses) do
+    Enum.map(responses, fn {code, %{"content" => content}} ->
+      {String.to_integer(code), extract_response_type_impl(content)}
+    end)
+    |> Map.new()
+  end
+
   @spec extract_response_type(%{required(String.t()) => map()}) :: response_type
   defp extract_response_type(%{"200" => %{"content" => content}}),
     do: extract_response_type_impl(content)
@@ -541,8 +549,6 @@ defmodule ExStreamClient.Tools.Codegen do
       # 	schema:
       # 		$ref: "#/components/schemas/ResponseStreamEvent"
       |> Enum.map(fn {_content_type, %{} = content} ->
-        # IO.inspect(content, label: "Content")
-        # IO.inspect(content_type, label: "Content type")
         content
         |> Map.get("schema")
         |> case do
@@ -664,7 +670,8 @@ defmodule ExStreamClient.Tools.Codegen do
       method: :post,
       request_body: parse_request_body(body, component_mapping),
       group: extract_group_from_url(path),
-      response_type: extract_response_type(responses)
+      response_type: extract_response_type(responses),
+      responses: extract_responses(responses)
     }
   end
 
@@ -690,7 +697,8 @@ defmodule ExStreamClient.Tools.Codegen do
       method: :put,
       request_body: parse_request_body(body, component_mapping),
       group: extract_group_from_url(path),
-      response_type: extract_response_type(responses)
+      response_type: extract_response_type(responses),
+      responses: extract_responses(responses)
     }
   end
 
@@ -716,7 +724,8 @@ defmodule ExStreamClient.Tools.Codegen do
       method: :patch,
       request_body: parse_request_body(body, component_mapping),
       group: extract_group_from_url(path),
-      response_type: extract_response_type(responses)
+      response_type: extract_response_type(responses),
+      responses: extract_responses(responses)
     }
   end
 
@@ -763,7 +772,8 @@ defmodule ExStreamClient.Tools.Codegen do
       arguments: Map.get(args, "parameters", []) |> Enum.map(&parse_get_arguments(&1)),
       method: :get,
       group: extract_group_from_url(path),
-      response_type: extract_response_type(responses)
+      response_type: extract_response_type(responses),
+      responses: extract_responses(responses)
     }
   end
 
@@ -1056,10 +1066,6 @@ defmodule ExStreamClient.Tools.Codegen do
       {:ok, res} ->
         case response_type do
           {:component, comp} ->
-            # calling unpack_ast here so that all atoms of the given struct are
-            # getting allocated. otherwise later usage of keys_to_atom will fail
-            # ExStreamClient.Tools.Codegen.string_to_component(comp).unpack_ast()
-
             keys =
               ExStreamClient.Tools.Codegen.string_to_component(comp).__struct__()
               |> Map.keys()

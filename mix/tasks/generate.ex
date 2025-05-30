@@ -13,5 +13,8 @@ defmodule Mix.Tasks.Gen.Client do
 
     Codegen.GenerateModel.run(docs)
     Codegen.GenerateOperations.run(docs)
+
+    Mix.Task.reenable("format")
+    Mix.Task.run("format", ["lib/**/*.ex"])
   end
 end

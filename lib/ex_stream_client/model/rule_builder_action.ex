@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.RuleBuilderAction do
   @moduledoc "Schema representing a RuleBuilderAction"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:duration, :ip_ban, :reason, :shadow_ban, :type]
   @nested_components []
   def nested_components do

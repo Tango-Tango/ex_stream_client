@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.BlockListOptions do
   @moduledoc "Schema representing a BlockListOptions"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:behavior, :blocklist]
   defstruct [:behavior, :blocklist]
   @nested_components behavior: :atom

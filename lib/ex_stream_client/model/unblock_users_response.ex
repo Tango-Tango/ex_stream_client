@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UnblockUsersResponse do
   @moduledoc "Schema representing a UnblockUsersResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration]
   defstruct [:duration]
   @nested_components []

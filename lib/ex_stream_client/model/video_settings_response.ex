@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.VideoSettingsResponse do
   @moduledoc "Schema representing a VideoSettingsResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :access_request_enabled,

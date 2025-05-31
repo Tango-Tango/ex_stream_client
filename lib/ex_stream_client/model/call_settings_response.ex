@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CallSettingsResponse do
   @moduledoc "Schema representing a CallSettingsResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :audio,

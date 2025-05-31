@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ConfigOverrides do
   @moduledoc "Schema representing a ConfigOverrides"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:commands, :grants]
   defstruct [
     :blocklist,

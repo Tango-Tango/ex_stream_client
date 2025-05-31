@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ThreadResponse do
   @moduledoc "Schema representing a ThreadResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :channel_cid,

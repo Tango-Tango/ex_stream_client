@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ChannelMemberResponse do
   @moduledoc "Schema representing a ChannelMemberResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :banned,

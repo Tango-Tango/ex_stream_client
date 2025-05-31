@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.QueryMessageHistoryRequest do
   @moduledoc "Schema representing a QueryMessageHistoryRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:filter]
   defstruct [:filter, :limit, :next, :prev, :sort]
   @nested_components sort: ExStreamClient.Model.SortParamRequest

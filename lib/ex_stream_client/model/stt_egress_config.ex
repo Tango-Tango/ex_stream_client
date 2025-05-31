@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.STTEgressConfig do
   @moduledoc "Schema representing a STTEgressConfig"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   defstruct [
     :closed_captions_enabled,

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.FrameRecordingResponse do
   @moduledoc "Schema representing a FrameRecordingResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:status]
   defstruct [:status]
   @nested_components []

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.QueryMembersPayload do
   @moduledoc "Schema representing a QueryMembersPayload"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:filter_conditions, :type]
   defstruct [:filter_conditions, :id, :limit, :members, :offset, :sort, :type, :user, :user_id]
 

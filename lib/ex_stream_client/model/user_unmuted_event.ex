@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UserUnmutedEvent do
   @moduledoc "Schema representing a UserUnmutedEvent"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:created_at, :type]
   defstruct [:created_at, :target_user, :target_users, :type, :user]
   @nested_components user: ExStreamClient.Model.User

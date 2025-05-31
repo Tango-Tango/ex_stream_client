@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CheckRequest do
   @moduledoc "Schema representing a CheckRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:config_key, :entity_creator_id, :entity_id, :entity_type]
   defstruct [
     :config_key,

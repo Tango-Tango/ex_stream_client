@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CastPollVoteRequest do
   @moduledoc "Schema representing a CastPollVoteRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:user, :user_id, :vote]
   @nested_components user: ExStreamClient.Model.UserRequest, vote: ExStreamClient.Model.VoteData
   def nested_components do

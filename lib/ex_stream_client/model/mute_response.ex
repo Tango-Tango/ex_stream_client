@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.MuteResponse do
   @moduledoc "Schema representing a MuteResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration]
   defstruct [:duration, :mutes, :non_existing_users, :own_user]
   @nested_components mutes: ExStreamClient.Model.UserMute, own_user: ExStreamClient.Model.OwnUser

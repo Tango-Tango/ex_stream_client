@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.BanRequest do
   @moduledoc "Schema representing a BanRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:target_user_id]
   defstruct [
     :banned_by,

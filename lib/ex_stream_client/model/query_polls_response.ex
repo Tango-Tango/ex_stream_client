@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.QueryPollsResponse do
   @moduledoc "Schema representing a QueryPollsResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :polls]
   defstruct [:duration, :next, :polls, :prev]
   @nested_components polls: ExStreamClient.Model.PollResponseData

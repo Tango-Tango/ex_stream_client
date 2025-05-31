@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.WSEvent do
   @moduledoc "Schema representing a WSEvent"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:created_at, :custom, :type]
   defstruct [
     :automoderation,

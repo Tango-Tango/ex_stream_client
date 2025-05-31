@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ConfigResponse do
   @moduledoc "Schema representing a ConfigResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:async, :created_at, :key, :team, :updated_at]
   defstruct [
     :ai_image_config,

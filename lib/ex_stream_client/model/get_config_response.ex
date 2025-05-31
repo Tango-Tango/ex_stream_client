@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.GetConfigResponse do
   @moduledoc "Schema representing a GetConfigResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration]
   defstruct [:config, :duration]
   @nested_components config: ExStreamClient.Model.ConfigResponse

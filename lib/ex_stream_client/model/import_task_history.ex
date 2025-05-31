@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ImportTaskHistory do
   @moduledoc "Schema representing a ImportTaskHistory"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:created_at, :next_state, :prev_state]
   defstruct [:created_at, :next_state, :prev_state]
   @nested_components []

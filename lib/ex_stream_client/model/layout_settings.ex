@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.LayoutSettings do
   @moduledoc "Schema representing a LayoutSettings"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:external_app_url, :external_css_url, :name]
   defstruct [:detect_orientation, :external_app_url, :external_css_url, :name, :options]
   @nested_components name: :atom

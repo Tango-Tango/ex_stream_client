@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.VideoEndCallRequest do
   @moduledoc "Schema representing a VideoEndCallRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct []
   @nested_components []
   def nested_components do

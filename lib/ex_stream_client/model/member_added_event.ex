@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.MemberAddedEvent do
   @moduledoc "Schema representing a MemberAddedEvent"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:channel_id, :channel_type, :cid, :created_at, :type]
   defstruct [:channel_id, :channel_type, :cid, :created_at, :member, :team, :type, :user]
   @nested_components member: ExStreamClient.Model.ChannelMember, user: ExStreamClient.Model.User

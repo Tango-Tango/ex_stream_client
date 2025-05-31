@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.VelocityFilterConfig do
   @moduledoc "Schema representing a VelocityFilterConfig"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :advanced_filters,

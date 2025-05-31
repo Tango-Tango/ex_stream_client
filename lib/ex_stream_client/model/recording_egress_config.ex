@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.RecordingEgressConfig do
   @moduledoc "Schema representing a RecordingEgressConfig"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   defstruct [
     :audio_only,

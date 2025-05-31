@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.RecordSettingsResponse do
   @moduledoc "Schema representing a RecordSettingsResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:audio_only, :layout, :mode, :quality]
   defstruct [:audio_only, :layout, :mode, :quality]
   @nested_components layout: ExStreamClient.Model.LayoutSettingsResponse

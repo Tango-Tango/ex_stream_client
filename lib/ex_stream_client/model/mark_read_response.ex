@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.MarkReadResponse do
   @moduledoc "Schema representing a MarkReadResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration]
   defstruct [:duration, :event]
   @nested_components event: ExStreamClient.Model.MessageReadEvent

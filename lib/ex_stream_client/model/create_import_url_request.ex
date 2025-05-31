@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CreateImportURLRequest do
   @moduledoc "Schema representing a CreateImportURLRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:filename]
   @nested_components []
   def nested_components do

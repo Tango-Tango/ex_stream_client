@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ModerationV2Response do
   @moduledoc "Schema representing a ModerationV2Response"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:action, :original_text]
   defstruct [
     :action,

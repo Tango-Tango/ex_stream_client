@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UpdateChannelTypeRequest do
   @moduledoc "Schema representing a UpdateChannelTypeRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:automod, :automod_behavior, :max_message_length]
   defstruct [
     :allowed_flag_reasons,

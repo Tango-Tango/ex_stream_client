@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.FileUploadRequest do
   @moduledoc "Schema representing a FileUploadRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:file, :user]
   @nested_components user: ExStreamClient.Model.OnlyUserID
   def nested_components do

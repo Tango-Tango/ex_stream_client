@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UnreadCountsResponse do
   @moduledoc "Schema representing a UnreadCountsResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :channel_type,

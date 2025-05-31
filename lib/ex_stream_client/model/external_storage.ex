@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ExternalStorage do
   @moduledoc "Schema representing a ExternalStorage"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   defstruct [
     :abs_account_name,

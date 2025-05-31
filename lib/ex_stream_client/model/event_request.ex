@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.EventRequest do
   @moduledoc "Schema representing a EventRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:type]
   defstruct [:custom, :parent_id, :type, :user, :user_id]
   @nested_components user: ExStreamClient.Model.UserRequest

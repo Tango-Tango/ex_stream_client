@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.QueryPollsRequest do
   @moduledoc "Schema representing a QueryPollsRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:filter, :limit, :next, :prev, :sort]
   @nested_components sort: ExStreamClient.Model.SortParamRequest
   def nested_components do

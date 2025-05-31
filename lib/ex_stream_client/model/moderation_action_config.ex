@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ModerationActionConfig do
   @moduledoc "Schema representing a ModerationActionConfig"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:action, :custom, :description, :entity_type, :icon, :order]
   defstruct [:action, :custom, :description, :entity_type, :icon, :order]
   @nested_components []

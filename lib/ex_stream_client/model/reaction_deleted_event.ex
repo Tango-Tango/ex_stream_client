@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ReactionDeletedEvent do
   @moduledoc "Schema representing a ReactionDeletedEvent"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:channel_id, :channel_type, :cid, :created_at, :type]
   defstruct [
     :channel_id,

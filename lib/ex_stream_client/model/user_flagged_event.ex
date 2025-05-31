@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UserFlaggedEvent do
   @moduledoc "Schema representing a UserFlaggedEvent"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:created_at, :type]
   defstruct [:created_at, :target_user, :target_users, :type, :user]
   @nested_components user: ExStreamClient.Model.User

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ChannelGetOrCreateRequest do
   @moduledoc "Schema representing a ChannelGetOrCreateRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   defstruct [
     :data,

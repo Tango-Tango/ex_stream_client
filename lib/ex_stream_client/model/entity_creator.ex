@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.EntityCreator do
   @moduledoc "Schema representing a EntityCreator"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :ban_count,

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.GetDraftResponse do
   @moduledoc "Schema representing a GetDraftResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:draft, :duration]
   defstruct [:draft, :duration]
   @nested_components draft: ExStreamClient.Model.DraftResponse

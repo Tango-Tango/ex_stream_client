@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ImageUploadResponse do
   @moduledoc "Schema representing a ImageUploadResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration]
   defstruct [:duration, :file, :thumb_url, :upload_sizes]
   @nested_components upload_sizes: ExStreamClient.Model.ImageSize

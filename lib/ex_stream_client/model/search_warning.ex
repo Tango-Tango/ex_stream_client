@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.SearchWarning do
   @moduledoc "Schema representing a SearchWarning"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:warning_code, :warning_description]
   defstruct [:channel_search_cids, :channel_search_count, :warning_code, :warning_description]
   @nested_components []

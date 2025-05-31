@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.QueryMessageHistoryResponse do
   @moduledoc "Schema representing a QueryMessageHistoryResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :message_history]
   defstruct [:duration, :message_history, :next, :prev]
   @nested_components message_history: ExStreamClient.Model.MessageHistoryEntryResponse

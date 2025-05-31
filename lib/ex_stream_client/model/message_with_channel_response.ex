@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.MessageWithChannelResponse do
   @moduledoc "Schema representing a MessageWithChannelResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :attachments,

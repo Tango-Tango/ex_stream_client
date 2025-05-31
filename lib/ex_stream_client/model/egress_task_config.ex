@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.EgressTaskConfig do
   @moduledoc "Schema representing a EgressTaskConfig"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   defstruct [
     :egress_user,

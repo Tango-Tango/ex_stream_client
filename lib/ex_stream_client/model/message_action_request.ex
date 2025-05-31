@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.MessageActionRequest do
   @moduledoc "Schema representing a MessageActionRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:form_data]
   defstruct [:form_data, :user, :user_id]
   @nested_components user: ExStreamClient.Model.UserRequest

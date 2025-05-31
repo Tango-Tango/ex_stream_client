@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.User do
   @moduledoc "Schema representing a User"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:banned, :custom, :id, :online, :role, :teams_role]
   defstruct [
     :ban_expires,

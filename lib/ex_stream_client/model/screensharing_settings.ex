@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ScreensharingSettings do
   @moduledoc "Schema representing a ScreensharingSettings"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:access_request_enabled, :enabled]
   defstruct [:access_request_enabled, :enabled, :target_resolution]
   @nested_components target_resolution: ExStreamClient.Model.TargetResolution

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.DeleteExternalStorageResponse do
   @moduledoc "Schema representing a DeleteExternalStorageResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration]
   defstruct [:duration]
   @nested_components []

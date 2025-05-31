@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.AsyncModerationConfiguration do
   @moduledoc "Schema representing a AsyncModerationConfiguration"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:callback, :timeout_ms]
   @nested_components callback: ExStreamClient.Model.AsyncModerationCallbackConfig
   def nested_components do

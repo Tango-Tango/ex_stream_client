@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.MessageChangeSet do
   @moduledoc "Schema representing a MessageChangeSet"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :attachments,

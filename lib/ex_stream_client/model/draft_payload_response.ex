@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.DraftPayloadResponse do
   @moduledoc "Schema representing a DraftPayloadResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:custom, :id, :text]
   defstruct [
     :attachments,

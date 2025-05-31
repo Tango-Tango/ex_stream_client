@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.PushNotificationFields do
   @moduledoc "Schema representing a PushNotificationFields"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:apn, :firebase, :huawei, :offline_only, :version, :xiaomi]
   defstruct [:apn, :firebase, :huawei, :offline_only, :providers, :version, :xiaomi]
 

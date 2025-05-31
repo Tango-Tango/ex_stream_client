@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.PagerResponse do
   @moduledoc "Schema representing a PagerResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:next, :prev]
   @nested_components []
   def nested_components do

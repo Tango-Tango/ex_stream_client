@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.Attachment do
   @moduledoc "Schema representing a Attachment"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:custom]
   defstruct [
     :actions,

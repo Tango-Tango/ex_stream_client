@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UserUnreadReminderEvent do
   @moduledoc "Schema representing a UserUnreadReminderEvent"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:channels, :created_at, :type]
   defstruct [:channels, :created_at, :type, :user]
   @nested_components user: ExStreamClient.Model.User

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ThumbnailResponse do
   @moduledoc "Schema representing a ThumbnailResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:image_url]
   defstruct [:image_url]
   @nested_components []

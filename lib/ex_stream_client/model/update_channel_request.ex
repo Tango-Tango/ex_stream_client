@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UpdateChannelRequest do
   @moduledoc "Schema representing a UpdateChannelRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   defstruct [
     :accept_invite,

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.TypingIndicators do
   @moduledoc "Schema representing a TypingIndicators"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:enabled]
   defstruct [:enabled]
   @nested_components []

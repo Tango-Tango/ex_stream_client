@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.QueryReviewQueueRequest do
   @moduledoc "Schema representing a QueryReviewQueueRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   defstruct [
     :filter,

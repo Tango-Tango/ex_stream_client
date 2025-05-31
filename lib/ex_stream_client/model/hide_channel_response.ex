@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.HideChannelResponse do
   @moduledoc "Schema representing a HideChannelResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration]
   defstruct [:duration]
   @nested_components []

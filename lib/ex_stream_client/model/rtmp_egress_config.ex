@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.RTMPEgressConfig do
   @moduledoc "Schema representing a RTMPEgressConfig"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:composite_app_settings, :quality, :rtmp_location]
 
   @nested_components composite_app_settings: ExStreamClient.Model.CompositeAppSettings,

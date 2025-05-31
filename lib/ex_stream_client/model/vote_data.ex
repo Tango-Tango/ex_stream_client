@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.VoteData do
   @moduledoc "Schema representing a VoteData"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:answer_text, :option, :option_id]
   @nested_components Option: ExStreamClient.Model.PollOptionResponseData
   def nested_components do

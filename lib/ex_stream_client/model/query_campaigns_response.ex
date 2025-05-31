@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.QueryCampaignsResponse do
   @moduledoc "Schema representing a QueryCampaignsResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:campaigns, :duration]
   defstruct [:campaigns, :duration, :next, :prev]
   @nested_components campaigns: ExStreamClient.Model.CampaignResponse

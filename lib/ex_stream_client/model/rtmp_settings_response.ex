@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.RTMPSettingsResponse do
   @moduledoc "Schema representing a RTMPSettingsResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:enabled, :layout, :quality]
   defstruct [:enabled, :layout, :quality]
   @nested_components layout: ExStreamClient.Model.LayoutSettingsResponse

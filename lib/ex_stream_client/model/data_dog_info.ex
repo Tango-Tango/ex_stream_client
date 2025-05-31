@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.DataDogInfo do
   @moduledoc "Schema representing a DataDogInfo"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:api_key, :enabled, :site]
   @nested_components []
   def nested_components do

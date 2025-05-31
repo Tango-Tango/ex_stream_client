@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UserResponseCommonFields do
   @moduledoc "Schema representing a UserResponseCommonFields"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :banned,

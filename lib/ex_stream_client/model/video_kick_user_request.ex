@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.VideoKickUserRequest do
   @moduledoc "Schema representing a VideoKickUserRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct []
   @nested_components []
   def nested_components do

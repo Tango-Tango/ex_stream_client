@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.EnrichedReaction do
   @moduledoc "Schema representing a EnrichedReaction"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:activity_id, :kind, :user_id]
   defstruct [
     :activity_id,

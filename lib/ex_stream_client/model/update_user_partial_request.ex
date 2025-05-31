@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UpdateUserPartialRequest do
   @moduledoc "Schema representing a UpdateUserPartialRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:id]
   defstruct [:id, :set, :unset]
   @nested_components []

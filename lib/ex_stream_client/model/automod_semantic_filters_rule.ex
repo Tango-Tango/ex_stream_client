@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.AutomodSemanticFiltersRule do
   @moduledoc "Schema representing a AutomodSemanticFiltersRule"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:action, :name, :threshold]
   defstruct [:action, :name, :threshold]
   @nested_components action: :atom

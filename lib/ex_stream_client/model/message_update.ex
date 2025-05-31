@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.MessageUpdate do
   @moduledoc "Schema representing a MessageUpdate"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:change_set, :old_text]
   @nested_components change_set: ExStreamClient.Model.MessageChangeSet
   def nested_components do

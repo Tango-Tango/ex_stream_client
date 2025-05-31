@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.EgressUser do
   @moduledoc "Schema representing a EgressUser"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:token]
   @nested_components []
   def nested_components do

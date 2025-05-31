@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.StartCampaignResponse do
   @moduledoc "Schema representing a StartCampaignResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration]
   defstruct [:campaign, :duration, :users]
 

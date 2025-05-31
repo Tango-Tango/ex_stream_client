@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.QueryModerationLogsResponse do
   @moduledoc "Schema representing a QueryModerationLogsResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :logs]
   defstruct [:duration, :logs, :next, :prev]
   @nested_components logs: ExStreamClient.Model.ActionLogResponse

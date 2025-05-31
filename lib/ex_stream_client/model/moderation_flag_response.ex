@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ModerationFlagResponse do
   @moduledoc "Schema representing a ModerationFlagResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:created_at, :entity_id, :entity_type, :id, :type, :updated_at]
   defstruct [
     :created_at,

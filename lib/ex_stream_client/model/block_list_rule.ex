@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.BlockListRule do
   @moduledoc "Schema representing a BlockListRule"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:action, :name, :team]
   defstruct [:action, :name, :team]
   @nested_components action: :atom

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.Permission do
   @moduledoc "Schema representing a Permission"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:action, :custom, :description, :id, :level, :name, :owner, :same_team, :tags]
   defstruct [
     :action,

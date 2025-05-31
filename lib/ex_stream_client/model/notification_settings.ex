@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.NotificationSettings do
   @moduledoc "Schema representing a NotificationSettings"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :call_live_started,

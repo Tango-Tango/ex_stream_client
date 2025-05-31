@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.GeofenceResponse do
   @moduledoc "Schema representing a GeofenceResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:name]
   defstruct [:country_codes, :description, :name, :type]
   @nested_components []

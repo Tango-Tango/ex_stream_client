@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.Quality do
   @moduledoc "Schema representing a Quality"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:bitdepth, :framerate, :height, :name, :video_bitrate, :width]
   @nested_components []
   def nested_components do

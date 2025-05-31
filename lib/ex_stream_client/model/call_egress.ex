@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CallEgress do
   @moduledoc "Schema representing a CallEgress"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :app_pk,

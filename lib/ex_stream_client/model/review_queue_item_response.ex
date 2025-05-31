@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ReviewQueueItemResponse do
   @moduledoc "Schema representing a ReviewQueueItemResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :actions,

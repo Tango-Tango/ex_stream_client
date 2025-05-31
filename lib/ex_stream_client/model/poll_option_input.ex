@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.PollOptionInput do
   @moduledoc "Schema representing a PollOptionInput"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:custom, :text]
   @nested_components []
   def nested_components do

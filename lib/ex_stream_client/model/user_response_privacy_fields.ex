@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UserResponsePrivacyFields do
   @moduledoc "Schema representing a UserResponsePrivacyFields"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :banned,

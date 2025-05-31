@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.EgressHLSResponse do
   @moduledoc "Schema representing a EgressHLSResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:playlist_url, :status]
   defstruct [:playlist_url, :status]
   @nested_components []

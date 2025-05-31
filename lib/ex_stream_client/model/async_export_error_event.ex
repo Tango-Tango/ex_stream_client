@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.AsyncExportErrorEvent do
   @moduledoc "Schema representing a AsyncExportErrorEvent"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:created_at, :custom, :error, :finished_at, :started_at, :task_id, :type]
   defstruct [
     :created_at,

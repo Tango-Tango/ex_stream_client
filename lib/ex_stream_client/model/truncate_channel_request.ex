@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.TruncateChannelRequest do
   @moduledoc "Schema representing a TruncateChannelRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:hard_delete, :member_ids, :message, :skip_push, :truncated_at, :user, :user_id]
 
   @nested_components message: ExStreamClient.Model.MessageRequest,

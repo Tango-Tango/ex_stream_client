@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ChannelConfigWithInfo do
   @moduledoc "Schema representing a ChannelConfigWithInfo"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :automod,
@@ -11,6 +12,7 @@ defmodule ExStreamClient.Model.ChannelConfigWithInfo do
     :custom_events,
     :mark_messages_pending,
     :max_message_length,
+    :message_retention,
     :mutes,
     :name,
     :polls,
@@ -42,6 +44,7 @@ defmodule ExStreamClient.Model.ChannelConfigWithInfo do
     :grants,
     :mark_messages_pending,
     :max_message_length,
+    :message_retention,
     :mutes,
     :name,
     :partition_size,
@@ -86,6 +89,7 @@ defmodule ExStreamClient.Model.ChannelConfigWithInfo do
           grants: map() | nil,
           mark_messages_pending: boolean(),
           max_message_length: integer(),
+          message_retention: any(),
           mutes: boolean(),
           name: String.t(),
           partition_size: integer() | nil,

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.DeleteSegmentTargetsRequest do
   @moduledoc "Schema representing a DeleteSegmentTargetsRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:target_ids]
   defstruct [:target_ids]
   @nested_components []

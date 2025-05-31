@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.QueryBannedUsersPayload do
   @moduledoc "Schema representing a QueryBannedUsersPayload"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:filter_conditions]
   defstruct [:exclude_expired_bans, :filter_conditions, :limit, :offset, :sort, :user, :user_id]
 

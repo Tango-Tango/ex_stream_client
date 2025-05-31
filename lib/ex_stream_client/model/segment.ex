@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.Segment do
   @moduledoc "Schema representing a Segment"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :all_sender_channels,

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UpsertPushPreferencesRequest do
   @moduledoc "Schema representing a UpsertPushPreferencesRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:preferences]
   defstruct [:preferences]
   @nested_components preferences: ExStreamClient.Model.PushPreferenceInput

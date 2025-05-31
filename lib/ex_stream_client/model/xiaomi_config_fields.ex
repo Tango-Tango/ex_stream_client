@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.XiaomiConfigFields do
   @moduledoc "Schema representing a XiaomiConfigFields"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:enabled]
   defstruct [:enabled, :package_name, :secret]
   @nested_components []

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.FileUploadConfig do
   @moduledoc "Schema representing a FileUploadConfig"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:size_limit]
   defstruct [
     :allowed_file_extensions,

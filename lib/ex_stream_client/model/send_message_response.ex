@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.SendMessageResponse do
   @moduledoc "Schema representing a SendMessageResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :message]
   defstruct [:duration, :message, :pending_message_metadata]
   @nested_components message: ExStreamClient.Model.MessageResponse

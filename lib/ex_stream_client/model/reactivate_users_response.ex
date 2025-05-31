@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ReactivateUsersResponse do
   @moduledoc "Schema representing a ReactivateUsersResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :task_id]
   defstruct [:duration, :task_id]
   @nested_components []

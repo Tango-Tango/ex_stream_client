@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.VideoOrientation do
   @moduledoc "Schema representing a VideoOrientation"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:orientation]
   @nested_components []
   def nested_components do

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CheckSQSResponse do
   @moduledoc "Schema representing a CheckSQSResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :status]
   defstruct [:data, :duration, :error, :status]
   @nested_components status: :atom

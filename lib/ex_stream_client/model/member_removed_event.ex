@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.MemberRemovedEvent do
   @moduledoc "Schema representing a MemberRemovedEvent"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:channel_id, :channel_type, :cid, :created_at, :type]
   defstruct [:channel_id, :channel_type, :cid, :created_at, :member, :type, :user]
   @nested_components member: ExStreamClient.Model.ChannelMember, user: ExStreamClient.Model.User

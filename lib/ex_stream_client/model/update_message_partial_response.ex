@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UpdateMessagePartialResponse do
   @moduledoc "Schema representing a UpdateMessagePartialResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration]
   defstruct [:duration, :message, :pending_message_metadata]
   @nested_components message: ExStreamClient.Model.MessageResponse

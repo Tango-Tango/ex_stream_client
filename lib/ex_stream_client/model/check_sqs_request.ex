@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CheckSQSRequest do
   @moduledoc "Schema representing a CheckSQSRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:sqs_key, :sqs_secret, :sqs_url]
   @nested_components []
   def nested_components do

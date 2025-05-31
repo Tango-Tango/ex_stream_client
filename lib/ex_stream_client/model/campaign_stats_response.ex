@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CampaignStatsResponse do
   @moduledoc "Schema representing a CampaignStatsResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :progress,

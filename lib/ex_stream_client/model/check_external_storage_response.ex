@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CheckExternalStorageResponse do
   @moduledoc "Schema representing a CheckExternalStorageResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :file_url]
   defstruct [:duration, :file_url]
   @nested_components []

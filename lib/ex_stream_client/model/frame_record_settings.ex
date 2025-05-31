@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.FrameRecordSettings do
   @moduledoc "Schema representing a FrameRecordSettings"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:capture_interval_in_seconds, :mode]
   defstruct [:capture_interval_in_seconds, :mode, :quality]
   @nested_components mode: :atom

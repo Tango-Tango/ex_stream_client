@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.QueryDraftsResponse do
   @moduledoc "Schema representing a QueryDraftsResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:drafts, :duration]
   defstruct [:drafts, :duration, :next, :prev]
   @nested_components drafts: ExStreamClient.Model.DraftResponse

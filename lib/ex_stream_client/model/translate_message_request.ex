@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.TranslateMessageRequest do
   @moduledoc "Schema representing a TranslateMessageRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:language]
   defstruct [:language]
   @nested_components language: :atom

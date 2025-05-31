@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CreateCommandResponse do
   @moduledoc "Schema representing a CreateCommandResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration]
   defstruct [:command, :duration]
   @nested_components command: ExStreamClient.Model.Command

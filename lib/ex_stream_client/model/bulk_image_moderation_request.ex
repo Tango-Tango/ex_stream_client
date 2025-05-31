@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.BulkImageModerationRequest do
   @moduledoc "Schema representing a BulkImageModerationRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:csv_file]
   defstruct [:csv_file]
   @nested_components []

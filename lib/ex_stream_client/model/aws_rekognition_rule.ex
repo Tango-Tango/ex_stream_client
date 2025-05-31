@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.AWSRekognitionRule do
   @moduledoc "Schema representing a AWSRekognitionRule"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:action, :label, :min_confidence]
   defstruct [:action, :label, :min_confidence]
   @nested_components action: :atom

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.EventNotificationSettings do
   @moduledoc "Schema representing a EventNotificationSettings"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:apns, :enabled, :fcm]
   defstruct [:apns, :enabled, :fcm]
   @nested_components apns: ExStreamClient.Model.APNS, fcm: ExStreamClient.Model.FCM

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.RuleBuilderCondition do
   @moduledoc "Schema representing a RuleBuilderCondition"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:labels, :provider, :threshold, :time_window]
   @nested_components []
   def nested_components do

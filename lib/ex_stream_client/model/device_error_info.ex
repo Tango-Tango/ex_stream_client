@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.DeviceErrorInfo do
   @moduledoc "Schema representing a DeviceErrorInfo"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:error_message, :provider, :provider_name]
   defstruct [:error_message, :provider, :provider_name]
   @nested_components []

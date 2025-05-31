@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ReadStateResponse do
   @moduledoc "Schema representing a ReadStateResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:last_read, :unread_messages, :user]
   defstruct [:last_read, :last_read_message_id, :unread_messages, :user]
   @nested_components user: ExStreamClient.Model.UserResponse

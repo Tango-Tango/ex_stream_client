@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.SFUIDLastSeen do
   @moduledoc "Schema representing a SFUIDLastSeen"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:id, :last_seen, :process_start_time]
   defstruct [:id, :last_seen, :process_start_time]
   @nested_components []

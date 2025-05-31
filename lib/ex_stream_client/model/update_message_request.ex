@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UpdateMessageRequest do
   @moduledoc "Schema representing a UpdateMessageRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:message]
   defstruct [:message, :skip_enrich_url, :skip_push]
   @nested_components message: ExStreamClient.Model.MessageRequest

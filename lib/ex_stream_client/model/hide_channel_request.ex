@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.HideChannelRequest do
   @moduledoc "Schema representing a HideChannelRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:clear_history, :user, :user_id]
   @nested_components user: ExStreamClient.Model.UserRequest
   def nested_components do

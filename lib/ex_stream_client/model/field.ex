@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.Field do
   @moduledoc "Schema representing a Field"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:short, :title, :value]
   defstruct [:short, :title, :value]
   @nested_components []

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.QueryChannelsResponse do
   @moduledoc "Schema representing a QueryChannelsResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:channels, :duration]
   defstruct [:channels, :duration]
   @nested_components channels: ExStreamClient.Model.ChannelStateResponseFields

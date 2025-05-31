@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.MessageHistoryEntryResponse do
   @moduledoc "Schema representing a MessageHistoryEntryResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :attachments,

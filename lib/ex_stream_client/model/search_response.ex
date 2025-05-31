@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.SearchResponse do
   @moduledoc "Schema representing a SearchResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :results]
   defstruct [:duration, :next, :previous, :results, :results_warning]
 

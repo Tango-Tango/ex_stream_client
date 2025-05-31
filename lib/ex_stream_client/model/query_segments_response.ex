@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.QuerySegmentsResponse do
   @moduledoc "Schema representing a QuerySegmentsResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :segments]
   defstruct [:duration, :next, :prev, :segments]
   @nested_components segments: ExStreamClient.Model.SegmentResponse

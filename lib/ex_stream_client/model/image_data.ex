@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ImageData do
   @moduledoc "Schema representing a ImageData"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:frames, :height, :size, :url, :width]
   defstruct [:frames, :height, :size, :url, :width]
   @nested_components []

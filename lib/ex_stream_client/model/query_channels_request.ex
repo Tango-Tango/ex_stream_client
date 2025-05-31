@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.QueryChannelsRequest do
   @moduledoc "Schema representing a QueryChannelsRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   defstruct [
     :filter_conditions,

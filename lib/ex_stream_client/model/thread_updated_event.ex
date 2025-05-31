@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ThreadUpdatedEvent do
   @moduledoc "Schema representing a ThreadUpdatedEvent"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:channel_id, :channel_type, :cid, :created_at, :type]
   defstruct [:channel_id, :channel_type, :cid, :created_at, :thread, :type, :user]
   @nested_components thread: ExStreamClient.Model.ThreadResponse, user: ExStreamClient.Model.User

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.WrappedUnreadCountsResponse do
   @moduledoc "Schema representing a WrappedUnreadCountsResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :channel_type,

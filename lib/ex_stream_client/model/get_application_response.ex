@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.GetApplicationResponse do
   @moduledoc "Schema representing a GetApplicationResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:app, :duration]
   defstruct [:app, :duration]
   @nested_components app: ExStreamClient.Model.AppResponseFields

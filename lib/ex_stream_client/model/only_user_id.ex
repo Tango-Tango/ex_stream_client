@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.OnlyUserID do
   @moduledoc "Schema representing a OnlyUserID"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:id]
   defstruct [:id]
   @nested_components []

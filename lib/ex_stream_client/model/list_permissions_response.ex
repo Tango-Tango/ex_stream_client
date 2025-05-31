@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ListPermissionsResponse do
   @moduledoc "Schema representing a ListPermissionsResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :permissions]
   defstruct [:duration, :permissions]
   @nested_components permissions: ExStreamClient.Model.Permission

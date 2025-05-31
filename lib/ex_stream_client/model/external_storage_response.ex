@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ExternalStorageResponse do
   @moduledoc "Schema representing a ExternalStorageResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:bucket, :name, :path, :type]
   defstruct [:bucket, :name, :path, :type]
   @nested_components type: :atom

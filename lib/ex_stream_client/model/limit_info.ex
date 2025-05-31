@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.LimitInfo do
   @moduledoc "Schema representing a LimitInfo"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:limit, :remaining, :reset]
   defstruct [:limit, :remaining, :reset]
   @nested_components []

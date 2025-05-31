@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.RTMPLocation do
   @moduledoc "Schema representing a RTMPLocation"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:name, :stream_key, :stream_url]
   defstruct [:name, :stream_key, :stream_url]
   @nested_components []

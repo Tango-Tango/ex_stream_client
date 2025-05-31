@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ChannelExport do
   @moduledoc "Schema representing a ChannelExport"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:cid, :id, :messages_since, :messages_until, :type]
   @nested_components []
   def nested_components do

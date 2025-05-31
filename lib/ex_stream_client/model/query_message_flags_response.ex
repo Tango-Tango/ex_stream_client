@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.QueryMessageFlagsResponse do
   @moduledoc "Schema representing a QueryMessageFlagsResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :flags]
   defstruct [:duration, :flags]
   @nested_components flags: ExStreamClient.Model.MessageFlagResponse

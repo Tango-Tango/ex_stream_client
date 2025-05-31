@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.Label do
   @moduledoc "Schema representing a Label"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:name]
   defstruct [:harm_labels, :name, :phrase_list_ids]
   @nested_components []

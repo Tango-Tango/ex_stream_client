@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.DeleteChannelResponse do
   @moduledoc "Schema representing a DeleteChannelResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration]
   defstruct [:channel, :duration]
   @nested_components channel: ExStreamClient.Model.ChannelResponse

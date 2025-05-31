@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.PendingMessageResponse do
   @moduledoc "Schema representing a PendingMessageResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:channel, :message, :metadata, :user]
 
   @nested_components channel: ExStreamClient.Model.ChannelResponse,

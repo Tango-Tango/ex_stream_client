@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CreateExternalStorageRequest do
   @moduledoc "Schema representing a CreateExternalStorageRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:bucket, :name, :storage_type]
   defstruct [:aws_s3, :azure_blob, :bucket, :gcs_credentials, :name, :path, :storage_type]
 

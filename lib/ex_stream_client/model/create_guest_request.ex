@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CreateGuestRequest do
   @moduledoc "Schema representing a CreateGuestRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:user]
   defstruct [:user]
   @nested_components user: ExStreamClient.Model.UserRequest

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CallSession do
   @moduledoc "Schema representing a CallSession"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :accepted_by,

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.DeleteUsersResponse do
   @moduledoc "Schema representing a DeleteUsersResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :task_id]
   defstruct [:duration, :task_id]
   @nested_components []

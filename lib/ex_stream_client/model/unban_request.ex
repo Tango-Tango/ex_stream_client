@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UnbanRequest do
   @moduledoc "Schema representing a UnbanRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:unbanned_by, :unbanned_by_id]
   @nested_components unbanned_by: ExStreamClient.Model.UserRequest
   def nested_components do

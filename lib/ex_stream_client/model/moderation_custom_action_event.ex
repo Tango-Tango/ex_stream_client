@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ModerationCustomActionEvent do
   @moduledoc "Schema representing a ModerationCustomActionEvent"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:created_at, :type]
   defstruct [:created_at, :item, :message, :type, :user]
 

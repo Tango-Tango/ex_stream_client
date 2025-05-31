@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ListDevicesResponse do
   @moduledoc "Schema representing a ListDevicesResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:devices, :duration]
   defstruct [:devices, :duration]
   @nested_components devices: ExStreamClient.Model.DeviceResponse

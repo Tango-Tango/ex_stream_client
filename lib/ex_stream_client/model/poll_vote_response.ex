@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.PollVoteResponse do
   @moduledoc "Schema representing a PollVoteResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration]
   defstruct [:duration, :vote]
   @nested_components vote: ExStreamClient.Model.PollVoteResponseData

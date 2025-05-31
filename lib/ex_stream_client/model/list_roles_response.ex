@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ListRolesResponse do
   @moduledoc "Schema representing a ListRolesResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :roles]
   defstruct [:duration, :roles]
   @nested_components roles: ExStreamClient.Model.Role

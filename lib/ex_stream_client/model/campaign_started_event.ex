@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CampaignStartedEvent do
   @moduledoc "Schema representing a CampaignStartedEvent"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:created_at, :custom, :type]
   defstruct [:campaign, :created_at, :custom, :received_at, :type]
   @nested_components campaign: ExStreamClient.Model.CampaignResponse

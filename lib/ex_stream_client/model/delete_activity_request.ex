@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.DeleteActivityRequest do
   @moduledoc "Schema representing a DeleteActivityRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:hard_delete]
   @nested_components []
   def nested_components do

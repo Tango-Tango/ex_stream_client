@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ActionLog do
   @moduledoc "Schema representing a ActionLog"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :created_at,

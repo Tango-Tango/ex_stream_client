@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.Message do
   @moduledoc "Schema representing a Message"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :attachments,

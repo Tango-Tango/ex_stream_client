@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.LimitsSettings do
   @moduledoc "Schema representing a LimitsSettings"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:max_duration_seconds, :max_participants]
   @nested_components []
   def nested_components do

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.MessageFlagResponse do
   @moduledoc "Schema representing a MessageFlagResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:created_at, :created_by_automod, :updated_at]
   defstruct [
     :approved_at,

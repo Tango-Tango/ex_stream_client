@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UpsertModerationTemplateRequest do
   @moduledoc "Schema representing a UpsertModerationTemplateRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:config, :name]
   defstruct [:config, :name]
   @nested_components config: ExStreamClient.Model.FeedsModerationTemplateConfig

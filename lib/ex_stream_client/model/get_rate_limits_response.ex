@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.GetRateLimitsResponse do
   @moduledoc "Schema representing a GetRateLimitsResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration]
   defstruct [:android, :duration, :ios, :server_side, :web]
   @nested_components []

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.SendReactionRequest do
   @moduledoc "Schema representing a SendReactionRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:reaction]
   defstruct [:enforce_unique, :reaction, :skip_push]
   @nested_components reaction: ExStreamClient.Model.ReactionRequest

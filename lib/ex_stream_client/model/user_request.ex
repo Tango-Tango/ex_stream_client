@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UserRequest do
   @moduledoc "Schema representing a UserRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:id]
   defstruct [
     :custom,

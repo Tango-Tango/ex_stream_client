@@ -1,4 +1,4 @@
-defmodule ExStreamClient.Jason do
+defmodule ExStreamClient.JSON do
   @moduledoc """
   Provides JSON encoding for OpenAPI-generated structs,
   converting snake_case fields to camelCase JSON keys.
@@ -6,6 +6,8 @@ defmodule ExStreamClient.Jason do
 
   defmacro __using__(_opts) do
     quote do
+      require Logger
+
       defimpl Jason.Encoder, for: __MODULE__ do
         def encode(struct, opts) do
           struct
@@ -19,7 +21,7 @@ defmodule ExStreamClient.Jason do
       Build a struct from a map, transforming nested components and atom fields.
       """
       def decode(map) when is_map(map) do
-        Code.ensure_loaded?(__MODULE__)
+        # Now that the module is loaded, convert to atom keys
         map = for {k, v} <- map, into: %{}, do: {transform(k, :atom), v}
 
         processed =
@@ -40,8 +42,18 @@ defmodule ExStreamClient.Jason do
         transform(map, :atom)
       end
 
-      defp transform(val, :atom) when is_binary(val), do: String.to_existing_atom(val)
-      defp transform(val, :atom) when is_list(val), do: Enum.map(val, &String.to_existing_atom/1)
+      defp transform(val, :atom) when is_binary(val) do
+        String.to_existing_atom(val)
+      rescue
+        ArgumentError ->
+          Logger.warning(
+            "Failed to convert #{val} to existing atom, as it wasn't found in the atoms table."
+          )
+
+          val
+      end
+
+      defp transform(val, :atom) when is_list(val), do: Enum.map(val, &transform(&1, :atom))
 
       defp transform(val, mod) when is_list(val) and is_atom(mod) do
         if Code.ensure_loaded?(mod) and function_exported?(mod, :decode, 1) do

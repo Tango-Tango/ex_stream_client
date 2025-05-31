@@ -43,44 +43,4 @@ defmodule ExStreamClient.Model.ChannelOwnCapability do
           | :"connect-events"
           | :"cast-poll-vote"
           | :"ban-channel-members"
-  @values [
-    :"ban-channel-members",
-    :"cast-poll-vote",
-    :"connect-events",
-    :"create-attachment",
-    :"delete-any-message",
-    :"delete-channel",
-    :"delete-own-message",
-    :"flag-message",
-    :"freeze-channel",
-    :"join-channel",
-    :"leave-channel",
-    :"mute-channel",
-    :"pin-message",
-    :"query-poll-votes",
-    :"quote-message",
-    :"read-events",
-    :"search-messages",
-    :"send-custom-events",
-    :"send-links",
-    :"send-message",
-    :"send-poll",
-    :"send-reaction",
-    :"send-reply",
-    :"send-restricted-visibility-message",
-    :"send-typing-events",
-    :"set-channel-cooldown",
-    :"skip-slow-mode",
-    :"slow-mode",
-    :"typing-events",
-    :"update-any-message",
-    :"update-channel",
-    :"update-channel-members",
-    :"update-own-message",
-    :"update-thread",
-    :"upload-file"
-  ]
-  for value <- @values do
-    _ = value
-  end
 end

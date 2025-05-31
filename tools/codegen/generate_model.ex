@@ -97,7 +97,8 @@ defmodule ExStreamClient.Tools.Codegen.GenerateModel do
           defmodule unquote(name) do
             @moduledoc unquote(docstring_head)
 
-            use ExStreamClient.Jason
+            use ExStreamClient.JSON
+            use ExStreamClient.TypeInterner
 
             unquote_splicing(struct_ast)
 
@@ -122,18 +123,9 @@ defmodule ExStreamClient.Tools.Codegen.GenerateModel do
                   quoted_type = Codegen.type_to_spec({:oneOf, component.components})
 
                   if is_enum(component.components) do
-                    {:enum, values} = component.components
-
                     [
                       quote do
                         @type t :: unquote(quoted_type)
-                      end,
-                      quote do
-                        @values unquote(values)
-                      end,
-                      quote do
-                        # intern values to avoid String.to_existing_atom/1 errors.
-                        for value <- @values, do: _ = value
                       end
                     ]
                   else

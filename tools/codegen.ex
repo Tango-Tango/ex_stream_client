@@ -333,7 +333,14 @@ defmodule ExStreamClient.Tools.Codegen do
         end
       end)
 
-    required_props = merged_props |> Enum.filter(&(Map.get(&1, "required") == true))
+    # Check to see if the spec denotes a required field that is not actually defined in properties
+    missing_required_props =
+      (required -- Map.keys(props))
+      |> Enum.map(fn key -> %{"name" => key, "required" => true, "type" => "any"} end)
+
+    required_props =
+      (merged_props ++ missing_required_props) |> Enum.filter(&(Map.get(&1, "required") == true))
+
     optional_props = merged_props |> Enum.filter(&(Map.get(&1, "required") == false))
 
     %{
@@ -836,6 +843,7 @@ defmodule ExStreamClient.Tools.Codegen do
   def type_to_spec("oneOf"), do: quote(do: any())
   def type_to_spec("allOf"), do: quote(do: any())
   def type_to_spec("anyOf"), do: quote(do: any())
+  def type_to_spec("any"), do: quote(do: any())
 
   def type_to_spec({:oneOf, {:enum, keys}}) do
     keys

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.NotificationMarkUnreadEvent do
   @moduledoc "Schema representing a NotificationMarkUnreadEvent"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :channel_id,

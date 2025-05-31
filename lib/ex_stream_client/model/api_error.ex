@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.APIError do
   @moduledoc "Schema representing a APIError"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:code, :details, :duration, :message, :more_info, :status_code]
   defstruct [
     :code,

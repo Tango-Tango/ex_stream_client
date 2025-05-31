@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UpdatePollRequest do
   @moduledoc "Schema representing a UpdatePollRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:id, :name]
   defstruct [
     :allow_answers,

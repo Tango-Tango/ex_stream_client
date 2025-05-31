@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.GetManyMessagesResponse do
   @moduledoc "Schema representing a GetManyMessagesResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :messages]
   defstruct [:duration, :messages]
   @nested_components messages: ExStreamClient.Model.MessageResponse

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CreateChannelTypeRequest do
   @moduledoc "Schema representing a CreateChannelTypeRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:automod, :automod_behavior, :max_message_length, :name]
   defstruct [
     :automod,

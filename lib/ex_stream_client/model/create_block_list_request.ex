@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CreateBlockListRequest do
   @moduledoc "Schema representing a CreateBlockListRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:name, :words]
   defstruct [:name, :team, :type, :words]
   @nested_components type: :atom

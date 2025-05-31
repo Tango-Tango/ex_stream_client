@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ThreadParticipant do
   @moduledoc "Schema representing a ThreadParticipant"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:app_pk, :channel_cid, :created_at, :custom, :last_read_at]
   defstruct [
     :app_pk,

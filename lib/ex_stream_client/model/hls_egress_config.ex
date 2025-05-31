@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.HLSEgressConfig do
   @moduledoc "Schema representing a HLSEgressConfig"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:composite_app_settings, :playlist_url, :qualities, :start_unix_nano]
 
   @nested_components composite_app_settings: ExStreamClient.Model.CompositeAppSettings,

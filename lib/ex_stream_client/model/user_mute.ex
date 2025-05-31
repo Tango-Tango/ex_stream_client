@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UserMute do
   @moduledoc "Schema representing a UserMute"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:created_at, :updated_at]
   defstruct [:created_at, :expires, :target, :updated_at, :user]
   @nested_components target: ExStreamClient.Model.User, user: ExStreamClient.Model.User

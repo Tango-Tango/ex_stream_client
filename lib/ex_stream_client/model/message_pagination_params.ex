@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.MessagePaginationParams do
   @moduledoc "Schema representing a MessagePaginationParams"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct []
   @nested_components []
   def nested_components do

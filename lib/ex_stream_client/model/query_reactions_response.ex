@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.QueryReactionsResponse do
   @moduledoc "Schema representing a QueryReactionsResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :reactions]
   defstruct [:duration, :next, :prev, :reactions]
   @nested_components reactions: ExStreamClient.Model.ReactionResponse

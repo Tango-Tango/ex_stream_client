@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.QueryModerationLogsRequest do
   @moduledoc "Schema representing a QueryModerationLogsRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:filter, :limit, :next, :prev, :sort, :user, :user_id]
 
   @nested_components sort: ExStreamClient.Model.SortParamRequest,

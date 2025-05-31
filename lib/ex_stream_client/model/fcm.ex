@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.FCM do
   @moduledoc "Schema representing a FCM"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:data]
   @nested_components []
   def nested_components do

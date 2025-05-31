@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.FrameRecordingEgressConfig do
   @moduledoc "Schema representing a FrameRecordingEgressConfig"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:capture_interval_in_seconds, :external_storage, :quality, :storage_name]
 
   @nested_components external_storage: ExStreamClient.Model.ExternalStorage,

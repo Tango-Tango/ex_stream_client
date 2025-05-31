@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ReactionGroupResponse do
   @moduledoc "Schema representing a ReactionGroupResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:count, :first_reaction_at, :last_reaction_at, :sum_scores]
   defstruct [:count, :first_reaction_at, :last_reaction_at, :sum_scores]
   @nested_components []

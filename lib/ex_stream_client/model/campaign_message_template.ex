@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CampaignMessageTemplate do
   @moduledoc "Schema representing a CampaignMessageTemplate"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:attachments, :custom, :poll_id, :text]
   defstruct [:attachments, :custom, :poll_id, :text]
   @nested_components attachments: ExStreamClient.Model.Attachment

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.FlagFeedback do
   @moduledoc "Schema representing a FlagFeedback"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:created_at, :labels, :message_id]
   defstruct [:created_at, :labels, :message_id]
   @nested_components labels: ExStreamClient.Model.Label

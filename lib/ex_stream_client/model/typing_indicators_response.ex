@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.TypingIndicatorsResponse do
   @moduledoc "Schema representing a TypingIndicatorsResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:enabled]
   @nested_components []
   def nested_components do

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UpdateThreadPartialResponse do
   @moduledoc "Schema representing a UpdateThreadPartialResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :thread]
   defstruct [:duration, :thread]
   @nested_components thread: ExStreamClient.Model.ThreadResponse

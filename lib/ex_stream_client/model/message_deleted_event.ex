@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.MessageDeletedEvent do
   @moduledoc "Schema representing a MessageDeletedEvent"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:channel_id, :channel_type, :cid, :created_at, :hard_delete, :type]
   defstruct [
     :channel_id,

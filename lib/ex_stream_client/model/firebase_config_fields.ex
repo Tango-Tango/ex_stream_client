@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.FirebaseConfigFields do
   @moduledoc "Schema representing a FirebaseConfigFields"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:enabled]
   defstruct [
     :apn_template,

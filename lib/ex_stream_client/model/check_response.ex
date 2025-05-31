@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CheckResponse do
   @moduledoc "Schema representing a CheckResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :recommended_action, :status]
   defstruct [:duration, :item, :recommended_action, :status, :task_id]
   @nested_components item: ExStreamClient.Model.ReviewQueueItem

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.AppResponseFields do
   @moduledoc "Schema representing a AppResponseFields"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :async_url_enrich_enabled,
@@ -37,6 +38,7 @@ defmodule ExStreamClient.Model.AppResponseFields do
     :suspended,
     :suspended_explanation,
     :user_search_disallowed_roles,
+    :video_provider,
     :webhook_events,
     :webhook_url
   ]
@@ -82,6 +84,7 @@ defmodule ExStreamClient.Model.AppResponseFields do
     :suspended,
     :suspended_explanation,
     :user_search_disallowed_roles,
+    :video_provider,
     :webhook_events,
     :webhook_url
   ]
@@ -140,6 +143,7 @@ defmodule ExStreamClient.Model.AppResponseFields do
           suspended: boolean(),
           suspended_explanation: String.t(),
           user_search_disallowed_roles: [String.t()],
+          video_provider: any(),
           webhook_events: [String.t()],
           webhook_url: String.t()
         }

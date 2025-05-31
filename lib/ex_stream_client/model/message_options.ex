@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.MessageOptions do
   @moduledoc "Schema representing a MessageOptions"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:include_thread_participants]
   @nested_components []
   def nested_components do

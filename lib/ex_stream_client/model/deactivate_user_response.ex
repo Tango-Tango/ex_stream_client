@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.DeactivateUserResponse do
   @moduledoc "Schema representing a DeactivateUserResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration]
   defstruct [:duration, :user]
   @nested_components user: ExStreamClient.Model.UserResponse

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.MessageUnblockedEvent do
   @moduledoc "Schema representing a MessageUnblockedEvent"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:cid, :created_at, :type]
   defstruct [:cid, :created_at, :message, :thread_participants, :type, :user]
 

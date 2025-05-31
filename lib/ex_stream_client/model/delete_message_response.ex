@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.DeleteMessageResponse do
   @moduledoc "Schema representing a DeleteMessageResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :message]
   defstruct [:duration, :message]
   @nested_components message: ExStreamClient.Model.MessageResponse

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.FlagDetails do
   @moduledoc "Schema representing a FlagDetails"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:extra, :original_text]
   defstruct [:automod, :extra, :original_text]
   @nested_components automod: ExStreamClient.Model.AutomodDetails

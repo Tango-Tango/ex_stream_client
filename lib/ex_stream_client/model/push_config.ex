@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.PushConfig do
   @moduledoc "Schema representing a PushConfig"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:version]
   defstruct [:offline_only, :version]
   @nested_components version: :atom

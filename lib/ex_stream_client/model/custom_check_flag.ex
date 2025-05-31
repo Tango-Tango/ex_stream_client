@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CustomCheckFlag do
   @moduledoc "Schema representing a CustomCheckFlag"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:type]
   defstruct [:custom, :labels, :reason, :type]
   @nested_components []

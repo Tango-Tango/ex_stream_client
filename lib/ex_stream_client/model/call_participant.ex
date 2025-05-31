@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CallParticipant do
   @moduledoc "Schema representing a CallParticipant"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:banned, :custom, :id, :joined_at, :online, :role, :teams_role, :user_session_id]
   defstruct [
     :ban_expires,

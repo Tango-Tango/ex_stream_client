@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.DeactivateUserRequest do
   @moduledoc "Schema representing a DeactivateUserRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:created_by_id, :mark_messages_deleted]
   @nested_components []
   def nested_components do

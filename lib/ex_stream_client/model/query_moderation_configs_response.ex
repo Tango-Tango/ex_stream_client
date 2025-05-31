@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.QueryModerationConfigsResponse do
   @moduledoc "Schema representing a QueryModerationConfigsResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:configs, :duration]
   defstruct [:configs, :duration, :next, :prev]
   @nested_components configs: ExStreamClient.Model.ConfigResponse

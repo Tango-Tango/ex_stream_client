@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.PushPreferenceInput do
   @moduledoc "Schema representing a PushPreferenceInput"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:channel_cid, :chat_level, :disabled_until, :remove_disable, :user_id]
   @nested_components chat_level: :atom
   def nested_components do

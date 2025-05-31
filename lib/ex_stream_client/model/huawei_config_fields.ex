@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.HuaweiConfigFields do
   @moduledoc "Schema representing a HuaweiConfigFields"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:enabled]
   defstruct [:enabled, :id, :secret]
   @nested_components []

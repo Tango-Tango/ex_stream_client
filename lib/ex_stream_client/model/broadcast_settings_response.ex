@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.BroadcastSettingsResponse do
   @moduledoc "Schema representing a BroadcastSettingsResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:enabled, :hls, :rtmp]
   defstruct [:enabled, :hls, :rtmp]
 

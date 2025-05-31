@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ChannelDeletedEvent do
   @moduledoc "Schema representing a ChannelDeletedEvent"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:channel_id, :channel_member_count, :channel_type, :cid, :created_at, :type]
   defstruct [
     :channel,

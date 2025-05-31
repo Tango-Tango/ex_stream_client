@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UpsertPushTemplateResponse do
   @moduledoc "Schema representing a UpsertPushTemplateResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration]
   defstruct [:duration, :template]
   @nested_components template: ExStreamClient.Model.PushTemplate

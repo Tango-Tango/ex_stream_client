@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.StartCampaignRequest do
   @moduledoc "Schema representing a StartCampaignRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:scheduled_for, :stop_at]
   @nested_components []
   def nested_components do

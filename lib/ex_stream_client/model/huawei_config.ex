@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.HuaweiConfig do
   @moduledoc "Schema representing a HuaweiConfig"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:disabled, :id, :secret]
   @nested_components []
   def nested_components do

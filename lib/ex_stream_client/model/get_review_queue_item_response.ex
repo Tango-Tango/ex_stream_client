@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.GetReviewQueueItemResponse do
   @moduledoc "Schema representing a GetReviewQueueItemResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration]
   defstruct [:duration, :item]
   @nested_components item: ExStreamClient.Model.ReviewQueueItemResponse

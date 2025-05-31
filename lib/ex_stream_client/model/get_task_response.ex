@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.GetTaskResponse do
   @moduledoc "Schema representing a GetTaskResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:created_at, :duration, :status, :task_id, :updated_at]
   defstruct [:created_at, :duration, :error, :result, :status, :task_id, :updated_at]
   @nested_components error: ExStreamClient.Model.ErrorResult

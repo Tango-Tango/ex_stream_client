@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ExportChannelsRequest do
   @moduledoc "Schema representing a ExportChannelsRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:channels]
   defstruct [
     :channels,

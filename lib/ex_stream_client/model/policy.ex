@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.Policy do
   @moduledoc "Schema representing a Policy"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:action, :created_at, :name, :owner, :priority, :resources, :roles, :updated_at]
   defstruct [:action, :created_at, :name, :owner, :priority, :resources, :roles, :updated_at]
   @nested_components []

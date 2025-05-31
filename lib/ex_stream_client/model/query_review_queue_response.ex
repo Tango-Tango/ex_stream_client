@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.QueryReviewQueueResponse do
   @moduledoc "Schema representing a QueryReviewQueueResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:action_config, :duration, :items, :stats]
   defstruct [:action_config, :duration, :items, :next, :prev, :stats]
   @nested_components items: ExStreamClient.Model.ReviewQueueItemResponse

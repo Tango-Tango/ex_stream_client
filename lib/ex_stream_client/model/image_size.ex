@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ImageSize do
   @moduledoc "Schema representing a ImageSize"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:crop, :height, :resize, :width]
   @nested_components crop: :atom, resize: :atom
   def nested_components do

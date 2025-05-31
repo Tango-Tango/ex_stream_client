@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.HLSSettings do
   @moduledoc "Schema representing a HLSSettings"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:auto_on, :enabled, :quality_tracks]
   defstruct [:auto_on, :enabled, :layout, :quality_tracks]
   @nested_components layout: ExStreamClient.Model.LayoutSettings

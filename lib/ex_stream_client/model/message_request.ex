@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.MessageRequest do
   @moduledoc "Schema representing a MessageRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   defstruct [
     :attachments,

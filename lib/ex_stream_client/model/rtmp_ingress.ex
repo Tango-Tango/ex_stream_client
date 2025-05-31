@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.RTMPIngress do
   @moduledoc "Schema representing a RTMPIngress"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:address]
   defstruct [:address]
   @nested_components []

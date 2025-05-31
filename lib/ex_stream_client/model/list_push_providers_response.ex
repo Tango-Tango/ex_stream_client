@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ListPushProvidersResponse do
   @moduledoc "Schema representing a ListPushProvidersResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :push_providers]
   defstruct [:duration, :push_providers]
   @nested_components push_providers: ExStreamClient.Model.PushProviderResponse

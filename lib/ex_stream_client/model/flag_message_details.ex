@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.FlagMessageDetails do
   @moduledoc "Schema representing a FlagMessageDetails"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:pin_changed, :should_enrich, :skip_push, :updated_by_id]
   @nested_components []
   def nested_components do

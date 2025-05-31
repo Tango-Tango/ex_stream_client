@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.OwnUserResponse do
   @moduledoc "Schema representing a OwnUserResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :banned,

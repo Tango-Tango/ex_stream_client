@@ -1,12 +1,14 @@
 defmodule ExStreamClient.Model.ReviewQueueItem do
   @moduledoc "Schema representing a ReviewQueueItem"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :actions,
     :ai_text_severity,
     :bans,
     :bounce_count,
+    :completed_at,
     :config_key,
     :content_changed,
     :created_at,
@@ -36,6 +38,7 @@ defmodule ExStreamClient.Model.ReviewQueueItem do
     :bans,
     :bounce_count,
     :call,
+    :completed_at,
     :config_key,
     :content_changed,
     :created_at,
@@ -89,6 +92,7 @@ defmodule ExStreamClient.Model.ReviewQueueItem do
           bans: [ExStreamClient.Model.Ban.t()],
           bounce_count: integer(),
           call: ExStreamClient.Model.Call.t() | nil,
+          completed_at: any(),
           config_key: String.t(),
           content_changed: boolean(),
           created_at: float(),

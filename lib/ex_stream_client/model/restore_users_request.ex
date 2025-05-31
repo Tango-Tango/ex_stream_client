@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.RestoreUsersRequest do
   @moduledoc "Schema representing a RestoreUsersRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:user_ids]
   defstruct [:user_ids]
   @nested_components []

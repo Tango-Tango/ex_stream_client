@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CreateImportURLResponse do
   @moduledoc "Schema representing a CreateImportURLResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :path, :upload_url]
   defstruct [:duration, :path, :upload_url]
   @nested_components []

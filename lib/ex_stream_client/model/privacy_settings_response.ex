@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.PrivacySettingsResponse do
   @moduledoc "Schema representing a PrivacySettingsResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:read_receipts, :typing_indicators]
 
   @nested_components read_receipts: ExStreamClient.Model.ReadReceiptsResponse,

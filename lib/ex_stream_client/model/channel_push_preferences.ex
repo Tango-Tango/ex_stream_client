@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ChannelPushPreferences do
   @moduledoc "Schema representing a ChannelPushPreferences"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:chat_level, :disabled_until]
   @nested_components []
   def nested_components do

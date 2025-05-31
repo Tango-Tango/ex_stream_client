@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.PaginationParams do
   @moduledoc "Schema representing a PaginationParams"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:limit, :offset]
   @nested_components []
   def nested_components do

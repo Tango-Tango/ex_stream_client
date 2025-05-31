@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CreateGuestResponse do
   @moduledoc "Schema representing a CreateGuestResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:access_token, :duration, :user]
   defstruct [:access_token, :duration, :user]
   @nested_components user: ExStreamClient.Model.UserResponse

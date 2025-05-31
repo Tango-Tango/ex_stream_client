@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.GoogleVisionConfig do
   @moduledoc "Schema representing a GoogleVisionConfig"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:enabled]
   @nested_components []
   def nested_components do

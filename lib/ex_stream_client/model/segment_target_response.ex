@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.SegmentTargetResponse do
   @moduledoc "Schema representing a SegmentTargetResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:app_pk, :created_at, :segment_id, :target_id]
   defstruct [:app_pk, :created_at, :segment_id, :target_id]
   @nested_components []

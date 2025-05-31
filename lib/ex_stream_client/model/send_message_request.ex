@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.SendMessageRequest do
   @moduledoc "Schema representing a SendMessageRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:message]
   defstruct [
     :force_moderation,

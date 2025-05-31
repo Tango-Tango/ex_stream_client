@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.MessageModerationResult do
   @moduledoc "Schema representing a MessageModerationResult"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:action, :created_at, :message_id, :updated_at, :user_bad_karma, :user_karma]
   defstruct [
     :action,

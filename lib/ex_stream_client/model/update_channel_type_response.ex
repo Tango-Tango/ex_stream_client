@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UpdateChannelTypeResponse do
   @moduledoc "Schema representing a UpdateChannelTypeResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :automod,
@@ -13,6 +14,7 @@ defmodule ExStreamClient.Model.UpdateChannelTypeResponse do
     :grants,
     :mark_messages_pending,
     :max_message_length,
+    :message_retention,
     :mutes,
     :name,
     :permissions,
@@ -46,6 +48,7 @@ defmodule ExStreamClient.Model.UpdateChannelTypeResponse do
     :grants,
     :mark_messages_pending,
     :max_message_length,
+    :message_retention,
     :mutes,
     :name,
     :partition_size,
@@ -92,6 +95,7 @@ defmodule ExStreamClient.Model.UpdateChannelTypeResponse do
           grants: map(),
           mark_messages_pending: boolean(),
           max_message_length: integer(),
+          message_retention: any(),
           mutes: boolean(),
           name: String.t(),
           partition_size: integer() | nil,

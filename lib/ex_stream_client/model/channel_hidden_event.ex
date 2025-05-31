@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ChannelHiddenEvent do
   @moduledoc "Schema representing a ChannelHiddenEvent"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :channel_id,

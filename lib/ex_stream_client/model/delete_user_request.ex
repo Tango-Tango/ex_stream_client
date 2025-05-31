@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.DeleteUserRequest do
   @moduledoc "Schema representing a DeleteUserRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   defstruct [
     :delete_conversation_channels,

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CallMember do
   @moduledoc "Schema representing a CallMember"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:created_at, :custom, :role, :updated_at, :user_id]
   defstruct [:created_at, :custom, :deleted_at, :role, :updated_at, :user, :user_id]
   @nested_components user: ExStreamClient.Model.User

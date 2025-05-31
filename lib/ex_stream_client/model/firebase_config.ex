@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.FirebaseConfig do
   @moduledoc "Schema representing a FirebaseConfig"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   defstruct [
     :apn_template,

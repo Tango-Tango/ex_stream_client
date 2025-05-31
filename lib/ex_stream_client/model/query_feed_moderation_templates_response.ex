@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.QueryFeedModerationTemplatesResponse do
   @moduledoc "Schema representing a QueryFeedModerationTemplatesResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :templates]
   defstruct [:duration, :templates]
   @nested_components templates: ExStreamClient.Model.QueryFeedModerationTemplate

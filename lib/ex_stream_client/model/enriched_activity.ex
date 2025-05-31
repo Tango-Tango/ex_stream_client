@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.EnrichedActivity do
   @moduledoc "Schema representing a EnrichedActivity"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   defstruct [
     :actor,

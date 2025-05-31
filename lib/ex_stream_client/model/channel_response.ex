@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ChannelResponse do
   @moduledoc "Schema representing a ChannelResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:cid, :created_at, :custom, :disabled, :frozen, :id, :type, :updated_at]
   defstruct [
     :auto_translation_enabled,

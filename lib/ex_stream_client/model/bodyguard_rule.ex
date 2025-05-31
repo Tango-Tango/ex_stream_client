@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.BodyguardRule do
   @moduledoc "Schema representing a BodyguardRule"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:action, :label, :severity_rules]
   defstruct [:action, :label, :severity_rules]
   @nested_components action: :atom, severity_rules: ExStreamClient.Model.BodyguardSeverityRule

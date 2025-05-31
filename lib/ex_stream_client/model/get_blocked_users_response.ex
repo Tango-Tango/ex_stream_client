@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.GetBlockedUsersResponse do
   @moduledoc "Schema representing a GetBlockedUsersResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:blocks, :duration]
   defstruct [:blocks, :duration]
   @nested_components blocks: ExStreamClient.Model.BlockedUserResponse

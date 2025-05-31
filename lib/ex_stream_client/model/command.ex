@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.Command do
   @moduledoc "Schema representing a Command"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:args, :description, :name, :set]
   defstruct [:args, :created_at, :description, :name, :set, :updated_at]
   @nested_components []

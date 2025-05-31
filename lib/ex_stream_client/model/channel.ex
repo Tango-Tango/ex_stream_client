@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.Channel do
   @moduledoc "Schema representing a Channel"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :auto_translation_language,

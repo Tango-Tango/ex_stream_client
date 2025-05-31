@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CallResponse do
   @moduledoc "Schema representing a CallResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :backstage,

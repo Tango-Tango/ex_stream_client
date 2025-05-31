@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ReactivateUserRequest do
   @moduledoc "Schema representing a ReactivateUserRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:created_by_id, :name, :restore_messages]
   @nested_components []
   def nested_components do

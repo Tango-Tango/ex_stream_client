@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CheckPushRequest do
   @moduledoc "Schema representing a CheckPushRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   defstruct [
     :apn_template,

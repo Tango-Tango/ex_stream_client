@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ListCommandsResponse do
   @moduledoc "Schema representing a ListCommandsResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:commands, :duration]
   defstruct [:commands, :duration]
   @nested_components commands: ExStreamClient.Model.Command

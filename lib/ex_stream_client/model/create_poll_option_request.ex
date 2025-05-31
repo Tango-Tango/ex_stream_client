@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CreatePollOptionRequest do
   @moduledoc "Schema representing a CreatePollOptionRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:text]
   defstruct [:custom, :position, :text, :user, :user_id]
   @nested_components user: ExStreamClient.Model.UserRequest

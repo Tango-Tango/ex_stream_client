@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UpdateMemberPartialResponse do
   @moduledoc "Schema representing a UpdateMemberPartialResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration]
   defstruct [:channel_member, :duration]
   @nested_components channel_member: ExStreamClient.Model.ChannelMemberResponse

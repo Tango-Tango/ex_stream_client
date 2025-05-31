@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.SortParam do
   @moduledoc "Schema representing a SortParam"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:direction, :field]
   @nested_components []
   def nested_components do

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ChannelStateResponseFields do
   @moduledoc "Schema representing a ChannelStateResponseFields"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:members, :messages, :pinned_messages, :threads]
   defstruct [
     :channel,

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.QueryMessageFlagsPayload do
   @moduledoc "Schema representing a QueryMessageFlagsPayload"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:filter_conditions, :limit, :offset, :show_deleted_messages, :sort, :user, :user_id]
 
   @nested_components sort: ExStreamClient.Model.SortParamRequest,

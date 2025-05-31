@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CallParticipantResponse do
   @moduledoc "Schema representing a CallParticipantResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:joined_at, :role, :user, :user_session_id]
   defstruct [:joined_at, :role, :user, :user_session_id]
   @nested_components user: ExStreamClient.Model.UserResponse

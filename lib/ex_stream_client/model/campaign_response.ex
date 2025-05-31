@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CampaignResponse do
   @moduledoc "Schema representing a CampaignResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :create_channels,

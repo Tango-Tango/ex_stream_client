@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.PollResponseData do
   @moduledoc "Schema representing a PollResponseData"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :allow_answers,

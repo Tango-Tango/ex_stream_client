@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CallSettings do
   @moduledoc "Schema representing a CallSettings"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   defstruct [
     :audio,

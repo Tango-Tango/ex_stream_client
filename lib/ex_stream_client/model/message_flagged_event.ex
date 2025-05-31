@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.MessageFlaggedEvent do
   @moduledoc "Schema representing a MessageFlaggedEvent"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:cid, :created_at, :type]
   defstruct [:cid, :created_at, :flag, :message, :thread_participants, :type, :user]
 

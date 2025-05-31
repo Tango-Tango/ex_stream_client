@@ -1,8 +1,9 @@
 defmodule ExStreamClient.Model.TranscriptionSettings do
   @moduledoc "Schema representing a TranscriptionSettings"
-  use ExStreamClient.Jason
-  @enforce_keys [:closed_caption_mode, :language, :mode]
-  defstruct [:closed_caption_mode, :language, :mode]
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
+  @enforce_keys [:closed_caption_mode, :language, :languages, :mode]
+  defstruct [:closed_caption_mode, :language, :languages, :mode]
   @nested_components closed_caption_mode: :atom, language: :atom, mode: :atom
   def nested_components do
     @nested_components
@@ -48,6 +49,7 @@ defmodule ExStreamClient.Model.TranscriptionSettings do
             | :fr
             | :en
             | :auto,
+          languages: any(),
           mode: :"auto-on" | :disabled | :available
         }
 end

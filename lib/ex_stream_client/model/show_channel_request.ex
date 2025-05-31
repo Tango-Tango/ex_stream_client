@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ShowChannelRequest do
   @moduledoc "Schema representing a ShowChannelRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:user, :user_id]
   @nested_components user: ExStreamClient.Model.UserRequest
   def nested_components do

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.Images do
   @moduledoc "Schema representing a Images"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :fixed_height,

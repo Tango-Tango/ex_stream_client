@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.SubmitActionRequest do
   @moduledoc "Schema representing a SubmitActionRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:action_type, :item_id]
   defstruct [
     :action_type,

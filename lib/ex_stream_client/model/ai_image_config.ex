@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.AIImageConfig do
   @moduledoc "Schema representing a AIImageConfig"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:enabled, :ocr_rules, :rules]
   defstruct [:async, :enabled, :ocr_rules, :rules]
 

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.MuteChannelResponse do
   @moduledoc "Schema representing a MuteChannelResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration]
   defstruct [:channel_mute, :channel_mutes, :duration, :own_user]
 

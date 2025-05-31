@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.AutomodDetails do
   @moduledoc "Schema representing a AutomodDetails"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:action, :image_labels, :message_details, :original_message_type, :result]
 
   @nested_components message_details: ExStreamClient.Model.FlagMessageDetails,

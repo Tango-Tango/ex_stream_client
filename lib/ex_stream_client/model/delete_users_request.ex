@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.DeleteUsersRequest do
   @moduledoc "Schema representing a DeleteUsersRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:user_ids]
   defstruct [
     :calls,

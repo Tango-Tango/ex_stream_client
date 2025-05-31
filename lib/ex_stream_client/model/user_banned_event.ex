@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UserBannedEvent do
   @moduledoc "Schema representing a UserBannedEvent"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:channel_id, :channel_type, :cid, :created_at, :created_by, :shadow, :type]
   defstruct [
     :channel_id,

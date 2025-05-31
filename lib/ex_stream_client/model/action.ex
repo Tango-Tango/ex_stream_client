@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.Action do
   @moduledoc "Schema representing a Action"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:name, :text, :type]
   defstruct [:name, :style, :text, :type, :value]
   @nested_components []

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.DeleteChannelsRequest do
   @moduledoc "Schema representing a DeleteChannelsRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:cids]
   defstruct [:cids, :hard_delete]
   @nested_components []

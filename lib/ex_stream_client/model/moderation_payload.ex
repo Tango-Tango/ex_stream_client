@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ModerationPayload do
   @moduledoc "Schema representing a ModerationPayload"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:custom, :images, :texts, :videos]
   @nested_components []
   def nested_components do

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CompositeAppSettings do
   @moduledoc "Schema representing a CompositeAppSettings"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:json_encoded_settings, :url]
   @nested_components []
   def nested_components do

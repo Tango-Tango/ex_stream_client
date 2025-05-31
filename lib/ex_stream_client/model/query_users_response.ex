@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.QueryUsersResponse do
   @moduledoc "Schema representing a QueryUsersResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :users]
   defstruct [:duration, :users]
   @nested_components users: ExStreamClient.Model.FullUserResponse

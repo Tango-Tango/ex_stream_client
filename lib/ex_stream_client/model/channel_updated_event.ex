@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ChannelUpdatedEvent do
   @moduledoc "Schema representing a ChannelUpdatedEvent"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:channel_id, :channel_member_count, :channel_type, :cid, :created_at, :type]
   defstruct [
     :channel,

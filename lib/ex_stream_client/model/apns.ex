@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.APNS do
   @moduledoc "Schema representing a APNS"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:body, :title]
   defstruct [:body, :"content-available", :data, :"mutable-content", :sound, :title]
   @nested_components []

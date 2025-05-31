@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.MemberLookup do
   @moduledoc "Schema representing a MemberLookup"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:limit]
   defstruct [:limit]
   @nested_components []

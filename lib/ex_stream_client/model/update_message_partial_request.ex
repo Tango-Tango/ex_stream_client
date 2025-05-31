@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UpdateMessagePartialRequest do
   @moduledoc "Schema representing a UpdateMessagePartialRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:set, :skip_enrich_url, :unset, :user, :user_id]
   @nested_components user: ExStreamClient.Model.UserRequest
   def nested_components do

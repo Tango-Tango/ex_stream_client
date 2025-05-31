@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.BackstageSettings do
   @moduledoc "Schema representing a BackstageSettings"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:enabled]
   defstruct [:enabled, :join_ahead_time_seconds]
   @nested_components []

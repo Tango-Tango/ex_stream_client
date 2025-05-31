@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.SearchPayload do
   @moduledoc "Schema representing a SearchPayload"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:filter_conditions]
   defstruct [
     :filter_conditions,

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ModerationCheckCompletedEvent do
   @moduledoc "Schema representing a ModerationCheckCompletedEvent"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :created_at,

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.S3Request do
   @moduledoc "Schema representing a S3Request"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:s3_region]
   defstruct [:s3_api_key, :s3_custom_endpoint_url, :s3_region, :s3_secret]
   @nested_components []

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.EgressResponse do
   @moduledoc "Schema representing a EgressResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:broadcasting, :rtmps]
   defstruct [:broadcasting, :frame_recording, :hls, :rtmps]
 

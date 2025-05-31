@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ListBlockListResponse do
   @moduledoc "Schema representing a ListBlockListResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:blocklists, :duration]
   defstruct [:blocklists, :duration]
   @nested_components blocklists: ExStreamClient.Model.BlockListResponse

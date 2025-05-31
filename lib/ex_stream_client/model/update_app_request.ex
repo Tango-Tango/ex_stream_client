@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UpdateAppRequest do
   @moduledoc "Schema representing a UpdateAppRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   defstruct [
     :allowed_flag_reasons,

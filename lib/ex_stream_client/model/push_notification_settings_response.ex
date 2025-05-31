@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.PushNotificationSettingsResponse do
   @moduledoc "Schema representing a PushNotificationSettingsResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:disabled, :disabled_until]
   @nested_components []
   def nested_components do

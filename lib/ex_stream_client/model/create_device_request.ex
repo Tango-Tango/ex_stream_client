@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CreateDeviceRequest do
   @moduledoc "Schema representing a CreateDeviceRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:id, :push_provider]
   defstruct [:id, :push_provider, :push_provider_name, :user, :user_id, :voip_token]
   @nested_components push_provider: :atom, user: ExStreamClient.Model.UserRequest

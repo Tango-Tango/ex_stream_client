@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.AITextConfig do
   @moduledoc "Schema representing a AITextConfig"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:enabled, :profile, :rules, :severity_rules]
   defstruct [:async, :enabled, :profile, :rules, :severity_rules]
 

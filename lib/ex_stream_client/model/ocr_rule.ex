@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.OCRRule do
   @moduledoc "Schema representing a OCRRule"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:action, :label]
   defstruct [:action, :label]
   @nested_components action: :atom

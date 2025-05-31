@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UpdateChannelResponse do
   @moduledoc "Schema representing a UpdateChannelResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :members]
   defstruct [:channel, :duration, :members, :message]
 

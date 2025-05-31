@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.Thresholds do
   @moduledoc "Schema representing a Thresholds"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:explicit, :spam, :toxic]
 
   @nested_components explicit: ExStreamClient.Model.LabelThresholds,

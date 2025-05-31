@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.DeleteReactionResponse do
   @moduledoc "Schema representing a DeleteReactionResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :message, :reaction]
   defstruct [:duration, :message, :reaction]
 

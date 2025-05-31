@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ExportChannelsResponse do
   @moduledoc "Schema representing a ExportChannelsResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :task_id]
   defstruct [:duration, :task_id]
   @nested_components []

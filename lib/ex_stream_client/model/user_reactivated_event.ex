@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UserReactivatedEvent do
   @moduledoc "Schema representing a UserReactivatedEvent"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:created_at, :type]
   defstruct [:created_at, :type, :user]
   @nested_components user: ExStreamClient.Model.User

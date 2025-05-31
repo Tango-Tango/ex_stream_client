@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.GetCustomPermissionResponse do
   @moduledoc "Schema representing a GetCustomPermissionResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :permission]
   defstruct [:duration, :permission]
   @nested_components permission: ExStreamClient.Model.Permission

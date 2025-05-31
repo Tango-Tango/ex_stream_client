@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CampaignChannelTemplate do
   @moduledoc "Schema representing a CampaignChannelTemplate"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:custom, :type]
   defstruct [:custom, :id, :members, :team, :type]
   @nested_components []

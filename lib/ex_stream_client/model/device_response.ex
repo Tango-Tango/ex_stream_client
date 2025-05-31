@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.DeviceResponse do
   @moduledoc "Schema representing a DeviceResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:created_at, :id, :push_provider, :user_id]
   defstruct [
     :created_at,

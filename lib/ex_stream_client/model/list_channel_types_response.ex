@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ListChannelTypesResponse do
   @moduledoc "Schema representing a ListChannelTypesResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:channel_types, :duration]
   defstruct [:channel_types, :duration]
   @nested_components []

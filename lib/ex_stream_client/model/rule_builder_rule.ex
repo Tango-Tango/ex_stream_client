@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.RuleBuilderRule do
   @moduledoc "Schema representing a RuleBuilderRule"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:action, :conditions, :enabled, :id, :name]
 
   @nested_components action: ExStreamClient.Model.RuleBuilderAction,

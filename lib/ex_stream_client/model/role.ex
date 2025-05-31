@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.Role do
   @moduledoc "Schema representing a Role"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:created_at, :custom, :name, :scopes, :updated_at]
   defstruct [:created_at, :custom, :name, :scopes, :updated_at]
   @nested_components []

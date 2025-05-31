@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UpdateCommandRequest do
   @moduledoc "Schema representing a UpdateCommandRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:description]
   defstruct [:args, :description, :set]
   @nested_components []

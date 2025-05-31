@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.AsyncExportChannelsEvent do
   @moduledoc "Schema representing a AsyncExportChannelsEvent"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:created_at, :custom, :finished_at, :started_at, :task_id, :type, :url]
   defstruct [:created_at, :custom, :finished_at, :received_at, :started_at, :task_id, :type, :url]
   @nested_components []

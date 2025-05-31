@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.GetThreadResponse do
   @moduledoc "Schema representing a GetThreadResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :thread]
   defstruct [:duration, :thread]
   @nested_components thread: ExStreamClient.Model.ThreadStateResponse

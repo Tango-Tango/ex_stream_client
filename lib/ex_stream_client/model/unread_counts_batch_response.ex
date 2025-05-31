@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UnreadCountsBatchResponse do
   @moduledoc "Schema representing a UnreadCountsBatchResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:counts_by_user, :duration]
   defstruct [:counts_by_user, :duration]
   @nested_components []

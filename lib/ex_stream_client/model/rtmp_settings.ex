@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.RTMPSettings do
   @moduledoc "Schema representing a RTMPSettings"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:enabled]
   defstruct [:enabled, :layout, :location, :quality_name]
 

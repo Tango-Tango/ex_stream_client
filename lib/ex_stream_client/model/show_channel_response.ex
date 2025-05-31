@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ShowChannelResponse do
   @moduledoc "Schema representing a ShowChannelResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration]
   defstruct [:duration]
   @nested_components []

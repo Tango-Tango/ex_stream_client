@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.OwnUser do
   @moduledoc "Schema representing a OwnUser"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :banned,

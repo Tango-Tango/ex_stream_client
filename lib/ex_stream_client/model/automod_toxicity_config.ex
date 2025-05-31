@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.AutomodToxicityConfig do
   @moduledoc "Schema representing a AutomodToxicityConfig"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:enabled, :rules]
   defstruct [:async, :enabled, :rules]
   @nested_components rules: ExStreamClient.Model.AutomodRule

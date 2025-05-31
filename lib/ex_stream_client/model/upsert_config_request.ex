@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UpsertConfigRequest do
   @moduledoc "Schema representing a UpsertConfigRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:key]
   defstruct [
     :ai_image_config,

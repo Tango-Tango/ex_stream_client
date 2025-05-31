@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UserUpdatedEvent do
   @moduledoc "Schema representing a UserUpdatedEvent"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:created_at, :custom, :type, :user]
   defstruct [:created_at, :custom, :received_at, :type, :user]
   @nested_components user: ExStreamClient.Model.UserResponsePrivacyFields

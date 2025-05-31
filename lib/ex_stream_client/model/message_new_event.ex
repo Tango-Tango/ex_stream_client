@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.MessageNewEvent do
   @moduledoc "Schema representing a MessageNewEvent"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:channel_id, :channel_type, :cid, :created_at, :type, :watcher_count]
   defstruct [
     :channel_id,

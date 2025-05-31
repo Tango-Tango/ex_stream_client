@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UpsertPushPreferencesResponse do
   @moduledoc "Schema representing a UpsertPushPreferencesResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :user_channel_preferences, :user_preferences]
   defstruct [:duration, :user_channel_preferences, :user_preferences]
   @nested_components []

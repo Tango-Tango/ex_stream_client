@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UpsertPushTemplateRequest do
   @moduledoc "Schema representing a UpsertPushTemplateRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:event_type, :push_provider_type]
   defstruct [:enable_push, :event_type, :push_provider_name, :push_provider_type, :template]
   @nested_components event_type: :atom, push_provider_type: :atom

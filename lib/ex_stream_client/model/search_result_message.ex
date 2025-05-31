@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.SearchResultMessage do
   @moduledoc "Schema representing a SearchResultMessage"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :attachments,

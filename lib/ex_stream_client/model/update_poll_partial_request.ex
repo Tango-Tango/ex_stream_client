@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UpdatePollPartialRequest do
   @moduledoc "Schema representing a UpdatePollPartialRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:set, :unset, :user, :user_id]
   @nested_components user: ExStreamClient.Model.UserRequest
   def nested_components do

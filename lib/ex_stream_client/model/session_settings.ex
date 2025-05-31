@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.SessionSettings do
   @moduledoc "Schema representing a SessionSettings"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:inactivity_timeout_seconds]
   defstruct [:inactivity_timeout_seconds]
   @nested_components []

@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.DraftResponse do
   @moduledoc "Schema representing a DraftResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:channel_cid, :created_at, :message]
   defstruct [
     :channel,

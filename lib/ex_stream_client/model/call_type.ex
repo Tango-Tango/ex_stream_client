@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CallType do
   @moduledoc "Schema representing a CallType"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
 
   @enforce_keys [
     :app_pk,

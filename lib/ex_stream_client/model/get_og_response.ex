@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.GetOGResponse do
   @moduledoc "Schema representing a GetOGResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:custom, :duration]
   defstruct [
     :actions,

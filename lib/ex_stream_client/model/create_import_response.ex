@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CreateImportResponse do
   @moduledoc "Schema representing a CreateImportResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration]
   defstruct [:duration, :import_task]
   @nested_components import_task: ExStreamClient.Model.ImportTask

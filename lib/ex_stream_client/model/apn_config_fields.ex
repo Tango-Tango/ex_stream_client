@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.APNConfigFields do
   @moduledoc "Schema representing a APNConfigFields"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:development, :enabled]
   defstruct [
     :auth_key,

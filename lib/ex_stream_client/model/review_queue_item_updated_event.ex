@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ReviewQueueItemUpdatedEvent do
   @moduledoc "Schema representing a ReviewQueueItemUpdatedEvent"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:created_at, :custom, :type]
   defstruct [:action, :created_at, :custom, :flags, :received_at, :review_queue_item, :type]
 

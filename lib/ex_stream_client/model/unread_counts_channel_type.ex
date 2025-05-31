@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.UnreadCountsChannelType do
   @moduledoc "Schema representing a UnreadCountsChannelType"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:channel_count, :channel_type, :unread_count]
   defstruct [:channel_count, :channel_type, :unread_count]
   @nested_components []

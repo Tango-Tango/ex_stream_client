@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.AutomodRule do
   @moduledoc "Schema representing a AutomodRule"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:action, :label, :threshold]
   defstruct [:action, :label, :threshold]
   @nested_components action: :atom

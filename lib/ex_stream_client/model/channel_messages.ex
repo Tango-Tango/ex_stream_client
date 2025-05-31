@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ChannelMessages do
   @moduledoc "Schema representing a ChannelMessages"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:messages]
   defstruct [:channel, :messages]
 

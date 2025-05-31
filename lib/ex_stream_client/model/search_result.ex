@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.SearchResult do
   @moduledoc "Schema representing a SearchResult"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   defstruct [:message]
   @nested_components message: ExStreamClient.Model.SearchResultMessage
   def nested_components do

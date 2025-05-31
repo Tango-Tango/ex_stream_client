@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ListImportsResponse do
   @moduledoc "Schema representing a ListImportsResponse"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :import_tasks]
   defstruct [:duration, :import_tasks]
   @nested_components import_tasks: ExStreamClient.Model.ImportTask

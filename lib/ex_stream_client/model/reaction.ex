@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.Reaction do
   @moduledoc "Schema representing a Reaction"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:created_at, :custom, :message_id, :score, :type, :updated_at]
   defstruct [:created_at, :custom, :message_id, :score, :type, :updated_at, :user, :user_id]
   @nested_components user: ExStreamClient.Model.User

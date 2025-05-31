@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.ChannelMutedEvent do
   @moduledoc "Schema representing a ChannelMutedEvent"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:created_at, :type]
   defstruct [:created_at, :type]
   @nested_components []

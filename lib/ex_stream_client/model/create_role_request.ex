@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.CreateRoleRequest do
   @moduledoc "Schema representing a CreateRoleRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:name]
   defstruct [:name]
   @nested_components []

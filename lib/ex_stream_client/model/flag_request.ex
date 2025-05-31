@@ -1,6 +1,7 @@
 defmodule ExStreamClient.Model.FlagRequest do
   @moduledoc "Schema representing a FlagRequest"
-  use ExStreamClient.Jason
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
   @enforce_keys [:entity_id, :entity_type]
   defstruct [
     :custom,

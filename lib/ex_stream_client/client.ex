@@ -1,4 +1,4 @@
-defmodule ExStreamClient.Client do
+defmodule ExStreamClient.HTTP do
   @moduledoc """
   Client for making requests to the Stream API.
   """

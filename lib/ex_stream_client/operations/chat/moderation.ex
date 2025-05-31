@@ -1,4 +1,4 @@
-defmodule ExStreamClient.Chat.Moderation do
+defmodule ExStreamClient.Operations.Chat.Moderation do
   @moduledoc "
 	Modules for interacting with the `chat/moderation` group of OpenAI APIs
 
@@ -6,7 +6,8 @@ defmodule ExStreamClient.Chat.Moderation do
 	"
   require Logger
   @doc ~S"
-	Query Message Flags
+	Find and filter message flags
+
 	
 	### Required Arguments:
 		
@@ -54,14 +55,19 @@ defmodule ExStreamClient.Chat.Moderation do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Unmute channel
+	Unmutes channel for user
+
+Sends events:
+- channel.unmuted
+- channel.unmuted
+
 	
 	### Required Arguments:
 		- `payload`: UnmuteChannelRequest
@@ -100,14 +106,19 @@ defmodule ExStreamClient.Chat.Moderation do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Mute channel
+	Mutes channel for user
+
+Sends events:
+- channel.muted
+- channel.muted
+
 	
 	### Required Arguments:
 		- `payload`: MuteChannelRequest
@@ -145,7 +156,7 @@ defmodule ExStreamClient.Chat.Moderation do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

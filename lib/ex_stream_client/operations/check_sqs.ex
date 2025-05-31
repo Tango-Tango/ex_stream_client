@@ -1,4 +1,4 @@
-defmodule ExStreamClient.CheckSqs do
+defmodule ExStreamClient.Operations.CheckSqs do
   @moduledoc "
 	Modules for interacting with the `check_sqs` group of OpenAI APIs
 
@@ -6,7 +6,8 @@ defmodule ExStreamClient.CheckSqs do
 	"
   require Logger
   @doc ~S"
-	Check SQS
+	Validates Amazon SQS credentials
+
 	
 	### Required Arguments:
 		- `payload`: CheckSQSRequest
@@ -43,7 +44,7 @@ defmodule ExStreamClient.CheckSqs do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

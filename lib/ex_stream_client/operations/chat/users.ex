@@ -1,4 +1,4 @@
-defmodule ExStreamClient.Chat.Users do
+defmodule ExStreamClient.Operations.Chat.Users do
   @moduledoc "
 	Modules for interacting with the `chat/users` group of OpenAI APIs
 
@@ -6,7 +6,11 @@ defmodule ExStreamClient.Chat.Users do
 	"
   require Logger
   @doc ~S"
-	Send user event
+	Sends a custom event to a user
+
+Sends events:
+- *
+
 	
 	### Required Arguments:
 		- `user_id`
@@ -45,7 +49,7 @@ defmodule ExStreamClient.Chat.Users do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

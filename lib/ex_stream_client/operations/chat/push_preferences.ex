@@ -1,4 +1,4 @@
-defmodule ExStreamClient.Chat.PushPreferences do
+defmodule ExStreamClient.Operations.Chat.PushPreferences do
   @moduledoc "
 	Modules for interacting with the `chat/push_preferences` group of OpenAI APIs
 
@@ -6,7 +6,8 @@ defmodule ExStreamClient.Chat.PushPreferences do
 	"
   require Logger
   @doc ~S"
-	Push notification preferences
+	Update the push preferences for a user and or channel member. Set to all, mentions or none
+
 	
 	### Required Arguments:
 		- `payload`: UpsertPushPreferencesRequest
@@ -45,7 +46,7 @@ defmodule ExStreamClient.Chat.PushPreferences do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

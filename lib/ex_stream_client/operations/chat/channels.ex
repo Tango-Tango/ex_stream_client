@@ -1,4 +1,4 @@
-defmodule ExStreamClient.Chat.Channels do
+defmodule ExStreamClient.Operations.Chat.Channels do
   @moduledoc "
 	Modules for interacting with the `chat/channels` group of OpenAI APIs
 
@@ -6,7 +6,8 @@ defmodule ExStreamClient.Chat.Channels do
 	"
   require Logger
   @doc ~S"
-	Partially channel member update
+	
+
 	
 	### Required Arguments:
 		- `type`
@@ -63,14 +64,15 @@ defmodule ExStreamClient.Chat.Channels do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Mark unread
+	Marks channel as unread from a specific message
+
 	
 	### Required Arguments:
 		- `type`
@@ -111,14 +113,19 @@ defmodule ExStreamClient.Chat.Channels do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Mark channels as read
+	Marks channels as read up to the specific message. If no channels is given, mark all channel as read
+
+Sends events:
+- message.read
+- message.read
+
 	
 	### Required Arguments:
 		- `payload`: MarkChannelsReadRequest
@@ -156,14 +163,19 @@ defmodule ExStreamClient.Chat.Channels do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Hide channel
+	Marks channel as hidden for current user
+
+Sends events:
+- channel.hidden
+- channel.hidden
+
 	
 	### Required Arguments:
 		- `type`
@@ -204,14 +216,22 @@ defmodule ExStreamClient.Chat.Channels do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Get or create channel
+	This Method creates a channel or returns an existing one with matching attributes
+
+Sends events:
+- channel.created
+- member.added
+- member.removed
+- member.updated
+- user.watching.start
+
 	
 	### Required Arguments:
 		- `type`
@@ -255,14 +275,15 @@ defmodule ExStreamClient.Chat.Channels do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Query channels
+	Query channels with filter query
+
 	
 	### Required Arguments:
 		- `payload`: QueryChannelsRequest
@@ -299,14 +320,21 @@ defmodule ExStreamClient.Chat.Channels do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Send new message
+	Sends new message to the specified channel
+
+Sends events:
+- message.new
+- message.updated
+- message.new
+- message.updated
+
 	
 	### Required Arguments:
 		- `type`
@@ -347,14 +375,19 @@ defmodule ExStreamClient.Chat.Channels do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Truncate channel
+	Truncates messages from a channel. Can be applied to the entire channel or scoped to specific members.
+
+Sends events:
+- channel.truncated
+- channel.truncated
+
 	
 	### Required Arguments:
 		- `type`
@@ -395,14 +428,19 @@ defmodule ExStreamClient.Chat.Channels do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Show channel
+	Shows previously hidden channel
+
+Sends events:
+- channel.visible
+- channel.visible
+
 	
 	### Required Arguments:
 		- `type`
@@ -443,14 +481,15 @@ defmodule ExStreamClient.Chat.Channels do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Get many messages
+	Returns list messages found by IDs
+
 	
 	### Required Arguments:
 		- `type`
@@ -491,14 +530,15 @@ defmodule ExStreamClient.Chat.Channels do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Send event
+	Sends event to the channel
+
 	
 	### Required Arguments:
 		- `type`
@@ -539,14 +579,15 @@ defmodule ExStreamClient.Chat.Channels do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Get draft
+	Get a draft
+
 	
 	### Required Arguments:
 		- `type`
@@ -596,14 +637,18 @@ defmodule ExStreamClient.Chat.Channels do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Delete draft
+	Deletes a draft
+
+Sends events:
+- draft.deleted
+
 	
 	### Required Arguments:
 		- `type`
@@ -653,14 +698,15 @@ defmodule ExStreamClient.Chat.Channels do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Upload file
+	Uploads file
+
 	
 	### Required Arguments:
 		- `type`
@@ -701,14 +747,15 @@ defmodule ExStreamClient.Chat.Channels do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Delete file
+	Deletes previously uploaded file
+
 	
 	### Required Arguments:
 		- `type`
@@ -757,14 +804,19 @@ defmodule ExStreamClient.Chat.Channels do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Mark read
+	Marks channel as read up to the specific message
+
+Sends events:
+- message.read
+- message.read
+
 	
 	### Required Arguments:
 		- `type`
@@ -805,14 +857,15 @@ defmodule ExStreamClient.Chat.Channels do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Upload image
+	Uploads image
+
 	
 	### Required Arguments:
 		- `type`
@@ -853,14 +906,15 @@ defmodule ExStreamClient.Chat.Channels do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Delete image
+	Deletes previously uploaded image
+
 	
 	### Required Arguments:
 		- `type`
@@ -909,14 +963,22 @@ defmodule ExStreamClient.Chat.Channels do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Get or create channel
+	This Method creates a channel or returns an existing one with matching attributes
+
+Sends events:
+- channel.created
+- member.added
+- member.removed
+- member.updated
+- user.watching.start
+
 	
 	### Required Arguments:
 		- `type`
@@ -957,14 +1019,27 @@ defmodule ExStreamClient.Chat.Channels do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Update channel
+	Change channel data
+
+Sends events:
+- channel.updated
+- member.added
+- member.removed
+- member.updated
+- message.new
+- channel.updated
+- member.added
+- member.removed
+- member.updated
+- message.new
+
 	
 	### Required Arguments:
 		- `type`
@@ -1004,14 +1079,19 @@ defmodule ExStreamClient.Chat.Channels do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Partially update channel
+	Updates certain fields of the channel
+
+Sends events:
+- channel.updated
+- channel.updated
+
 	
 	### Required Arguments:
 		- `type`
@@ -1054,14 +1134,19 @@ defmodule ExStreamClient.Chat.Channels do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Delete channel
+	Deletes channel
+
+Sends events:
+- channel.deleted
+- channel.deleted
+
 	
 	### Required Arguments:
 		- `type`
@@ -1110,14 +1195,19 @@ defmodule ExStreamClient.Chat.Channels do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Deletes channels asynchronously
+	Allows to delete several channels at once asynchronously
+
+Sends events:
+- channel.deleted
+- channel.deleted
+
 	
 	### Required Arguments:
 		- `payload`: DeleteChannelsRequest
@@ -1155,7 +1245,7 @@ defmodule ExStreamClient.Chat.Channels do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

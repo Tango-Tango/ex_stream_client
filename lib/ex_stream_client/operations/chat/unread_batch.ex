@@ -1,4 +1,4 @@
-defmodule ExStreamClient.Chat.UnreadBatch do
+defmodule ExStreamClient.Operations.Chat.UnreadBatch do
   @moduledoc "
 	Modules for interacting with the `chat/unread_batch` group of OpenAI APIs
 
@@ -6,7 +6,8 @@ defmodule ExStreamClient.Chat.UnreadBatch do
 	"
   require Logger
   @doc ~S"
-	Batch unread counts
+	Fetch unread counts in batch for multiple users in one call
+
 	
 	### Required Arguments:
 		- `payload`: UnreadCountsBatchRequest
@@ -44,7 +45,7 @@ defmodule ExStreamClient.Chat.UnreadBatch do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

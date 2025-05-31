@@ -1,4 +1,4 @@
-defmodule ExStreamClient.App do
+defmodule ExStreamClient.Operations.App do
   @moduledoc "
 	Modules for interacting with the `app` group of OpenAI APIs
 
@@ -6,7 +6,8 @@ defmodule ExStreamClient.App do
 	"
   require Logger
   @doc ~S"
-	Update App Settings
+	This Method updates one or more application settings
+
 	
 	### Required Arguments:
 		- `payload`: UpdateAppRequest
@@ -43,14 +44,15 @@ defmodule ExStreamClient.App do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Get App Settings
+	This Method returns the application settings
+
 	
 	### Required Arguments:
 		
@@ -86,7 +88,7 @@ defmodule ExStreamClient.App do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

@@ -1,4 +1,4 @@
-defmodule ExStreamClient.Chat.Drafts do
+defmodule ExStreamClient.Operations.Chat.Drafts do
   @moduledoc "
 	Modules for interacting with the `chat/drafts` group of OpenAI APIs
 
@@ -6,7 +6,8 @@ defmodule ExStreamClient.Chat.Drafts do
 	"
   require Logger
   @doc ~S"
-	Query draft messages
+	Queries draft messages for a user
+
 	
 	### Required Arguments:
 		- `payload`: QueryDraftsRequest
@@ -44,7 +45,7 @@ defmodule ExStreamClient.Chat.Drafts do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

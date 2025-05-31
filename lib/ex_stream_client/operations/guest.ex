@@ -1,4 +1,4 @@
-defmodule ExStreamClient.Guest do
+defmodule ExStreamClient.Operations.Guest do
   @moduledoc "
 	Modules for interacting with the `guest` group of OpenAI APIs
 
@@ -6,7 +6,8 @@ defmodule ExStreamClient.Guest do
 	"
   require Logger
   @doc ~S"
-	Create Guest
+	
+
 	
 	### Required Arguments:
 		- `payload`: CreateGuestRequest
@@ -43,7 +44,7 @@ defmodule ExStreamClient.Guest do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

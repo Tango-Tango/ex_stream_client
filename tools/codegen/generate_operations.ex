@@ -22,7 +22,7 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
         |> String.replace("-", "_")
         |> Macro.camelize()
         |> String.to_atom()
-        |> (&Module.concat(ExStreamClient, &1)).()
+        |> (&Module.concat(ExStreamClient.Operations, &1)).()
 
       file_path =
         [@ops_dir, Macro.underscore(name) <> ".ex"]
@@ -43,6 +43,7 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
           %{
             name: function_name,
             summary: summary,
+            description: description,
             arguments: args,
             endpoint: endpoint,
             deprecated?: _deprecated,
@@ -138,12 +139,14 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
               end
             end
 
+          description_str = if description == "", do: summary, else: description
+
           doc_ast =
             quote do
               @doc unquote(
                      [
                        "",
-                       summary,
+                       description_str,
                        "",
                        "### Required Arguments:",
                        "\t#{required_args_docstring}"
@@ -280,7 +283,7 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
                     end
                   )
 
-                case ExStreamClient.Client.request(r) do
+                case ExStreamClient.HTTP.request(r) do
                   {:ok, response} -> response.body
                   {:error, error} -> {:error, error}
                 end

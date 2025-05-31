@@ -1,4 +1,4 @@
-defmodule ExStreamClient.Permissions do
+defmodule ExStreamClient.Operations.Permissions do
   @moduledoc "
 	Modules for interacting with the `permissions` group of OpenAI APIs
 
@@ -6,7 +6,8 @@ defmodule ExStreamClient.Permissions do
 	"
   require Logger
   @doc ~S"
-	List permissions
+	Lists all available permissions
+
 	
 	### Required Arguments:
 		
@@ -43,14 +44,15 @@ defmodule ExStreamClient.Permissions do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Get permission
+	Gets custom permission
+
 	
 	### Required Arguments:
 		- `id`
@@ -87,7 +89,7 @@ defmodule ExStreamClient.Permissions do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

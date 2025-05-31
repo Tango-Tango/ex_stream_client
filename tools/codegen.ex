@@ -662,6 +662,7 @@ defmodule ExStreamClient.Tools.Codegen do
             %{
               "operationId" => id,
               "summary" => summary,
+              "description" => description,
               "requestBody" => body,
               "responses" => responses
             } = args
@@ -672,6 +673,7 @@ defmodule ExStreamClient.Tools.Codegen do
       endpoint: path,
       name: Macro.underscore(id),
       summary: summary,
+      description: description,
       deprecated?: Map.has_key?(args, "deprecated"),
       arguments: Map.get(args, "parameters", []) |> Enum.map(&parse_get_arguments(&1)),
       method: :post,
@@ -689,6 +691,7 @@ defmodule ExStreamClient.Tools.Codegen do
             %{
               "operationId" => id,
               "summary" => summary,
+              "description" => description,
               "requestBody" => body,
               "responses" => responses
             } = args
@@ -699,6 +702,7 @@ defmodule ExStreamClient.Tools.Codegen do
       endpoint: path,
       name: Macro.underscore(id),
       summary: summary,
+      description: description,
       deprecated?: Map.has_key?(args, "deprecated"),
       arguments: Map.get(args, "parameters", []) |> Enum.map(&parse_get_arguments(&1)),
       method: :put,
@@ -716,6 +720,7 @@ defmodule ExStreamClient.Tools.Codegen do
             %{
               "operationId" => id,
               "summary" => summary,
+              "description" => description,
               "requestBody" => body,
               "responses" => responses
             } = args
@@ -726,6 +731,7 @@ defmodule ExStreamClient.Tools.Codegen do
       endpoint: path,
       name: Macro.underscore(id),
       summary: summary,
+      description: description,
       deprecated?: Map.has_key?(args, "deprecated"),
       arguments: Map.get(args, "parameters", []) |> Enum.map(&parse_get_arguments(&1)),
       method: :patch,
@@ -766,6 +772,7 @@ defmodule ExStreamClient.Tools.Codegen do
             %{
               "operationId" => id,
               "summary" => summary,
+              "description" => description,
               "responses" => responses
             } = args
         },
@@ -775,6 +782,7 @@ defmodule ExStreamClient.Tools.Codegen do
       endpoint: path,
       name: Macro.underscore(id),
       summary: summary,
+      description: description,
       deprecated?: Map.has_key?(args, "deprecated"),
       arguments: Map.get(args, "parameters", []) |> Enum.map(&parse_get_arguments(&1)),
       method: :get,

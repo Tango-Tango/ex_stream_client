@@ -1,4 +1,4 @@
-defmodule ExStreamClient.Chat.Polls do
+defmodule ExStreamClient.Operations.Chat.Polls do
   @moduledoc "
 	Modules for interacting with the `chat/polls` group of OpenAI APIs
 
@@ -6,7 +6,8 @@ defmodule ExStreamClient.Chat.Polls do
 	"
   require Logger
   @doc ~S"
-	Query votes
+	Queries votes
+
 	
 	### Required Arguments:
 		- `poll_id`
@@ -56,14 +57,19 @@ defmodule ExStreamClient.Chat.Polls do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Update poll
+	Updates a poll
+
+Sends events:
+- poll.closed
+- poll.updated
+
 	
 	### Required Arguments:
 		- `payload`: UpdatePollRequest
@@ -100,14 +106,15 @@ defmodule ExStreamClient.Chat.Polls do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Create poll
+	Creates a new poll
+
 	
 	### Required Arguments:
 		- `payload`: CreatePollRequest
@@ -144,14 +151,18 @@ defmodule ExStreamClient.Chat.Polls do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Update poll option
+	Updates a poll option
+
+Sends events:
+- poll.updated
+
 	
 	### Required Arguments:
 		- `poll_id`
@@ -190,14 +201,18 @@ defmodule ExStreamClient.Chat.Polls do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Create poll option
+	Creates a poll option
+
+Sends events:
+- poll.updated
+
 	
 	### Required Arguments:
 		- `poll_id`
@@ -236,14 +251,18 @@ defmodule ExStreamClient.Chat.Polls do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Partial update poll
+	Updates a poll partially
+
+Sends events:
+- poll.updated
+
 	
 	### Required Arguments:
 		- `poll_id`
@@ -282,14 +301,15 @@ defmodule ExStreamClient.Chat.Polls do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Get poll
+	Retrieves a poll
+
 	
 	### Required Arguments:
 		- `poll_id`
@@ -336,14 +356,18 @@ defmodule ExStreamClient.Chat.Polls do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Delete poll
+	Deletes a poll
+
+Sends events:
+- poll.deleted
+
 	
 	### Required Arguments:
 		- `poll_id`
@@ -390,14 +414,15 @@ defmodule ExStreamClient.Chat.Polls do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Query polls
+	Queries polls
+
 	
 	### Required Arguments:
 		- `payload`: QueryPollsRequest
@@ -445,14 +470,15 @@ defmodule ExStreamClient.Chat.Polls do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Get poll option
+	Retrieves a poll option
+
 	
 	### Required Arguments:
 		- `poll_id`
@@ -501,14 +527,18 @@ defmodule ExStreamClient.Chat.Polls do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Delete poll option
+	Deletes a poll option
+
+Sends events:
+- poll.updated
+
 	
 	### Required Arguments:
 		- `poll_id`
@@ -557,7 +587,7 @@ defmodule ExStreamClient.Chat.Polls do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

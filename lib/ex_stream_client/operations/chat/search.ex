@@ -1,4 +1,4 @@
-defmodule ExStreamClient.Chat.Search do
+defmodule ExStreamClient.Operations.Chat.Search do
   @moduledoc "
 	Modules for interacting with the `chat/search` group of OpenAI APIs
 
@@ -6,7 +6,8 @@ defmodule ExStreamClient.Chat.Search do
 	"
   require Logger
   @doc ~S"
-	Search messages
+	Search messages across channels
+
 	
 	### Required Arguments:
 		
@@ -53,7 +54,7 @@ defmodule ExStreamClient.Chat.Search do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

@@ -21,9 +21,9 @@ defmodule ExStreamClient.Model.SearchPayload do
   end
 
   @type t :: %__MODULE__{
-          filter_conditions: map(),
+          filter_conditions: %{optional(String.t()) => any()},
           limit: integer() | nil,
-          message_filter_conditions: map() | nil,
+          message_filter_conditions: %{optional(String.t()) => any()} | nil,
           message_options: ExStreamClient.Model.MessageOptions.t() | nil,
           next: String.t() | nil,
           offset: integer() | nil,

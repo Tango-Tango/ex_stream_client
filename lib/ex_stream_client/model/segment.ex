@@ -39,7 +39,7 @@ defmodule ExStreamClient.Model.Segment do
           created_at: float(),
           deleted_at: float() | nil,
           description: String.t() | nil,
-          filter: map() | nil,
+          filter: %{optional(String.t()) => any()} | nil,
           id: String.t(),
           name: String.t(),
           size: integer(),

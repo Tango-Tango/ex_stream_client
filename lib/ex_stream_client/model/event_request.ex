@@ -10,7 +10,7 @@ defmodule ExStreamClient.Model.EventRequest do
   end
 
   @type t :: %__MODULE__{
-          custom: map() | nil,
+          custom: %{optional(String.t()) => any()} | nil,
           parent_id: String.t() | nil,
           type: String.t(),
           user: ExStreamClient.Model.UserRequest.t() | nil,

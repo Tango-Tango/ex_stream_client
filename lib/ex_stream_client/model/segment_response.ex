@@ -41,7 +41,7 @@ defmodule ExStreamClient.Model.SegmentResponse do
           created_at: float(),
           deleted_at: float(),
           description: String.t(),
-          filter: map(),
+          filter: %{optional(String.t()) => any()},
           id: String.t(),
           name: String.t(),
           size: integer(),

@@ -11,7 +11,7 @@ defmodule ExStreamClient.Model.CampaignMessageTemplate do
 
   @type t :: %__MODULE__{
           attachments: [ExStreamClient.Model.Attachment.t()],
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           poll_id: String.t(),
           text: String.t()
         }

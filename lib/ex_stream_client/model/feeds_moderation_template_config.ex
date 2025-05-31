@@ -9,5 +9,8 @@ defmodule ExStreamClient.Model.FeedsModerationTemplateConfig do
     @nested_components
   end
 
-  @type t :: %__MODULE__{config_key: String.t(), data_types: map()}
+  @type t :: %__MODULE__{
+          config_key: String.t(),
+          data_types: %{optional(String.t()) => String.t()}
+        }
 end

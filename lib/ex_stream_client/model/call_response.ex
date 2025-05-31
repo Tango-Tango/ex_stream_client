@@ -66,7 +66,7 @@ defmodule ExStreamClient.Model.CallResponse do
           created_at: float(),
           created_by: ExStreamClient.Model.UserResponse.t(),
           current_session_id: String.t(),
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           egress: ExStreamClient.Model.EgressResponse.t(),
           ended_at: float() | nil,
           id: String.t(),

@@ -34,7 +34,7 @@ defmodule ExStreamClient.Model.MessageRequest do
 
   @type t :: %__MODULE__{
           attachments: [ExStreamClient.Model.Attachment.t()] | nil,
-          custom: map() | nil,
+          custom: %{optional(String.t()) => any()} | nil,
           html: String.t() | nil,
           id: String.t() | nil,
           mentioned_users: [String.t()] | nil,

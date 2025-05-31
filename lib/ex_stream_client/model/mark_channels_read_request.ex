@@ -9,7 +9,7 @@ defmodule ExStreamClient.Model.MarkChannelsReadRequest do
   end
 
   @type t :: %__MODULE__{
-          read_by_channel: map() | nil,
+          read_by_channel: %{optional(String.t()) => String.t()} | nil,
           user: ExStreamClient.Model.UserRequest.t() | nil,
           user_id: String.t() | nil
         }

@@ -33,16 +33,16 @@ defmodule ExStreamClient.Model.CallSessionResponse do
   end
 
   @type t :: %__MODULE__{
-          accepted_by: map(),
+          accepted_by: %{optional(String.t()) => float()},
           anonymous_participant_count: integer(),
           ended_at: float() | nil,
           id: String.t(),
           live_ended_at: float() | nil,
           live_started_at: float() | nil,
-          missed_by: map(),
+          missed_by: %{optional(String.t()) => float()},
           participants: [ExStreamClient.Model.CallParticipantResponse.t()],
-          participants_count_by_role: map(),
-          rejected_by: map(),
+          participants_count_by_role: %{optional(String.t()) => integer()},
+          rejected_by: %{optional(String.t()) => float()},
           started_at: float() | nil,
           timer_ends_at: float() | nil
         }

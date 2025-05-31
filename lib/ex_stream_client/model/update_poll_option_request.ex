@@ -10,7 +10,7 @@ defmodule ExStreamClient.Model.UpdatePollOptionRequest do
   end
 
   @type t :: %__MODULE__{
-          custom: map() | nil,
+          custom: %{optional(String.t()) => any()} | nil,
           id: String.t(),
           text: String.t(),
           user: ExStreamClient.Model.UserRequest.t() | nil,

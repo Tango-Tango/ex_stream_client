@@ -15,7 +15,7 @@ defmodule ExStreamClient.Model.ReviewQueueItemNewEvent do
   @type t :: %__MODULE__{
           action: ExStreamClient.Model.ActionLogResponse.t() | nil,
           created_at: float(),
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           flags: [ExStreamClient.Model.FlagResponse.t()] | nil,
           received_at: float() | nil,
           review_queue_item: ExStreamClient.Model.ReviewQueueItemResponse.t() | nil,

@@ -25,7 +25,7 @@ defmodule ExStreamClient.Model.ActionLogResponse do
 
   @type t :: %__MODULE__{
           created_at: float(),
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           id: String.t(),
           reason: String.t(),
           review_queue_item: ExStreamClient.Model.ReviewQueueItem.t() | nil,

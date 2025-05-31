@@ -9,7 +9,7 @@ defmodule ExStreamClient.Model.ModerationPayload do
   end
 
   @type t :: %__MODULE__{
-          custom: map() | nil,
+          custom: %{optional(String.t()) => any()} | nil,
           images: [String.t()] | nil,
           texts: [String.t()] | nil,
           videos: [String.t()] | nil

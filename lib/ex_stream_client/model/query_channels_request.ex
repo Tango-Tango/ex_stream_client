@@ -22,7 +22,7 @@ defmodule ExStreamClient.Model.QueryChannelsRequest do
   end
 
   @type t :: %__MODULE__{
-          filter_conditions: map() | nil,
+          filter_conditions: %{optional(String.t()) => any()} | nil,
           limit: integer() | nil,
           member_limit: integer() | nil,
           message_limit: integer() | nil,

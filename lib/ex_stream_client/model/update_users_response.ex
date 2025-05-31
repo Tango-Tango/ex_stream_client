@@ -4,7 +4,7 @@ defmodule ExStreamClient.Model.UpdateUsersResponse do
   use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :membership_deletion_task_id, :users]
   defstruct [:duration, :membership_deletion_task_id, :users]
-  @nested_components []
+  @nested_components users: {:map, ExStreamClient.Model.FullUserResponse}
   def nested_components do
     @nested_components
   end
@@ -12,6 +12,6 @@ defmodule ExStreamClient.Model.UpdateUsersResponse do
   @type t :: %__MODULE__{
           duration: String.t(),
           membership_deletion_task_id: String.t(),
-          users: map()
+          users: %{optional(String.t()) => ExStreamClient.Model.FullUserResponse.t()}
         }
 end

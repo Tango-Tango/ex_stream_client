@@ -29,7 +29,7 @@ defmodule ExStreamClient.Model.UpdatePollRequest do
   @type t :: %__MODULE__{
           allow_answers: boolean() | nil,
           allow_user_suggested_options: boolean() | nil,
-          custom: map() | nil,
+          custom: %{optional(String.t()) => any()} | nil,
           description: String.t() | nil,
           enforce_unique_vote: boolean() | nil,
           id: String.t(),

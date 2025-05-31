@@ -13,7 +13,7 @@ defmodule ExStreamClient.Model.QueryMembersPayload do
   end
 
   @type t :: %__MODULE__{
-          filter_conditions: map(),
+          filter_conditions: %{optional(String.t()) => any()},
           id: String.t() | nil,
           limit: integer() | nil,
           members: [ExStreamClient.Model.ChannelMember.t()] | nil,

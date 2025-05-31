@@ -24,8 +24,8 @@ defmodule ExStreamClient.Model.CallType do
     :updated_at
   ]
 
-  @nested_components NotificationSettings: ExStreamClient.Model.NotificationSettings,
-                     Settings: ExStreamClient.Model.CallSettings
+  @nested_components notification_settings: ExStreamClient.Model.NotificationSettings,
+                     settings: ExStreamClient.Model.CallSettings
   def nested_components do
     @nested_components
   end

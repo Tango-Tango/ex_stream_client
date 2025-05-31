@@ -46,7 +46,7 @@ defmodule ExStreamClient.Model.ThreadResponse do
           created_at: float(),
           created_by: ExStreamClient.Model.UserResponse.t() | nil,
           created_by_user_id: String.t(),
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           deleted_at: float() | nil,
           last_message_at: float() | nil,
           parent_message: ExStreamClient.Model.MessageResponse.t() | nil,

@@ -89,12 +89,15 @@ defmodule ExStreamClient.Model.AppResponseFields do
     :webhook_url
   ]
 
-  @nested_components datadog_info: ExStreamClient.Model.DataDogInfo,
+  @nested_components call_types: {:map, ExStreamClient.Model.CallType},
+                     channel_configs: {:map, ExStreamClient.Model.ChannelConfig},
+                     datadog_info: ExStreamClient.Model.DataDogInfo,
                      file_upload_config: ExStreamClient.Model.FileUploadConfig,
                      geofences: ExStreamClient.Model.GeofenceResponse,
                      image_upload_config: ExStreamClient.Model.FileUploadConfig,
                      moderation_dashboard_preferences:
                        ExStreamClient.Model.ModerationDashboardPreferences,
+                     policies: {:map, {:array, ExStreamClient.Model.Policy}},
                      push_notifications: ExStreamClient.Model.PushNotificationFields
   def nested_components do
     @nested_components
@@ -105,10 +108,10 @@ defmodule ExStreamClient.Model.AppResponseFields do
           async_url_enrich_enabled: boolean(),
           auto_translation_enabled: boolean(),
           before_message_send_hook_url: String.t() | nil,
-          call_types: map(),
+          call_types: %{optional(String.t()) => ExStreamClient.Model.CallType.t()},
           campaign_enabled: boolean(),
           cdn_expiration_seconds: integer(),
-          channel_configs: map(),
+          channel_configs: %{optional(String.t()) => ExStreamClient.Model.ChannelConfig.t()},
           custom_action_handler_url: String.t(),
           datadog_info: ExStreamClient.Model.DataDogInfo.t() | nil,
           disable_auth_checks: boolean(),
@@ -116,7 +119,7 @@ defmodule ExStreamClient.Model.AppResponseFields do
           enforce_unique_usernames: String.t(),
           file_upload_config: ExStreamClient.Model.FileUploadConfig.t(),
           geofences: [ExStreamClient.Model.GeofenceResponse.t()] | nil,
-          grants: map(),
+          grants: %{optional(String.t()) => [String.t()]},
           guest_user_creation_disabled: boolean(),
           image_moderation_enabled: boolean(),
           image_moderation_labels: [String.t()] | nil,
@@ -130,7 +133,7 @@ defmodule ExStreamClient.Model.AppResponseFields do
           name: String.t(),
           organization: String.t(),
           permission_version: String.t(),
-          policies: map(),
+          policies: %{optional(String.t()) => [ExStreamClient.Model.Policy.t()]},
           push_notifications: ExStreamClient.Model.PushNotificationFields.t(),
           reminders_interval: integer(),
           revoke_tokens_issued_before: float() | nil,

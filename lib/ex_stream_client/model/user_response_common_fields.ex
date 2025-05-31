@@ -44,7 +44,7 @@ defmodule ExStreamClient.Model.UserResponseCommonFields do
           banned: boolean(),
           blocked_user_ids: [String.t()],
           created_at: float(),
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           deactivated_at: float() | nil,
           deleted_at: float() | nil,
           id: String.t(),
@@ -56,7 +56,7 @@ defmodule ExStreamClient.Model.UserResponseCommonFields do
           revoke_tokens_issued_before: float() | nil,
           role: String.t(),
           teams: [String.t()],
-          teams_role: map() | nil,
+          teams_role: %{optional(String.t()) => String.t()} | nil,
           updated_at: float()
         }
 end

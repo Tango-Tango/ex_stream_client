@@ -9,5 +9,9 @@ defmodule ExStreamClient.Model.PollOptionResponseData do
     @nested_components
   end
 
-  @type t :: %__MODULE__{custom: map(), id: String.t(), text: String.t()}
+  @type t :: %__MODULE__{
+          custom: %{optional(String.t()) => any()},
+          id: String.t(),
+          text: String.t()
+        }
 end

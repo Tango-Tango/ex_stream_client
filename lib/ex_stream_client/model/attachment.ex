@@ -45,7 +45,7 @@ defmodule ExStreamClient.Model.Attachment do
           author_link: String.t() | nil,
           author_name: String.t() | nil,
           color: String.t() | nil,
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           fallback: String.t() | nil,
           fields: [ExStreamClient.Model.Field.t()] | nil,
           footer: String.t() | nil,

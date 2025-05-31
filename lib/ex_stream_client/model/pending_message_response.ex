@@ -14,7 +14,7 @@ defmodule ExStreamClient.Model.PendingMessageResponse do
   @type t :: %__MODULE__{
           channel: ExStreamClient.Model.ChannelResponse.t() | nil,
           message: ExStreamClient.Model.MessageResponse.t() | nil,
-          metadata: map() | nil,
+          metadata: %{optional(String.t()) => String.t()} | nil,
           user: ExStreamClient.Model.UserResponse.t() | nil
         }
 end

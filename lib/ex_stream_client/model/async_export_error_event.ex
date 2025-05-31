@@ -21,7 +21,7 @@ defmodule ExStreamClient.Model.AsyncExportErrorEvent do
 
   @type t :: %__MODULE__{
           created_at: float(),
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           error: String.t(),
           finished_at: float(),
           received_at: float() | nil,

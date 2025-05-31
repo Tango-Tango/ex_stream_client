@@ -13,7 +13,7 @@ defmodule ExStreamClient.Model.GetTaskResponse do
           created_at: float(),
           duration: String.t(),
           error: ExStreamClient.Model.ErrorResult.t() | nil,
-          result: map() | nil,
+          result: %{optional(String.t()) => any()} | nil,
           status: String.t(),
           task_id: String.t(),
           updated_at: float()

@@ -27,7 +27,7 @@ defmodule ExStreamClient.Model.DraftPayloadResponse do
 
   @type t :: %__MODULE__{
           attachments: [ExStreamClient.Model.Attachment.t()] | nil,
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           html: String.t() | nil,
           id: String.t(),
           mentioned_users: [ExStreamClient.Model.UserResponse.t()] | nil,

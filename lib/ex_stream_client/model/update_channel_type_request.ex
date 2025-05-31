@@ -56,7 +56,7 @@ defmodule ExStreamClient.Model.UpdateChannelTypeRequest do
           commands: [String.t()] | nil,
           connect_events: boolean() | nil,
           custom_events: boolean() | nil,
-          grants: map() | nil,
+          grants: %{optional(String.t()) => [String.t()]} | nil,
           mark_messages_pending: boolean() | nil,
           max_message_length: integer(),
           mutes: boolean() | nil,

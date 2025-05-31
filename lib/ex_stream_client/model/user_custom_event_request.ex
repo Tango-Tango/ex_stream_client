@@ -9,5 +9,5 @@ defmodule ExStreamClient.Model.UserCustomEventRequest do
     @nested_components
   end
 
-  @type t :: %__MODULE__{custom: map() | nil, type: String.t()}
+  @type t :: %__MODULE__{custom: %{optional(String.t()) => any()} | nil, type: String.t()}
 end

@@ -23,7 +23,7 @@ defmodule ExStreamClient.Model.Permission do
 
   @type t :: %__MODULE__{
           action: String.t(),
-          condition: map() | nil,
+          condition: %{optional(String.t()) => any()} | nil,
           custom: boolean(),
           description: String.t(),
           id: String.t(),

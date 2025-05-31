@@ -60,7 +60,7 @@ defmodule ExStreamClient.Model.WSEvent do
           connection_id: String.t() | nil,
           created_at: float(),
           created_by: ExStreamClient.Model.UserResponse.t() | nil,
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           me: ExStreamClient.Model.OwnUserResponse.t() | nil,
           member: ExStreamClient.Model.ChannelMember.t() | nil,
           message: ExStreamClient.Model.MessageResponse.t() | nil,

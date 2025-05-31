@@ -10,7 +10,7 @@ defmodule ExStreamClient.Model.CampaignChannelTemplate do
   end
 
   @type t :: %__MODULE__{
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           id: String.t() | nil,
           members: [String.t()] | nil,
           team: String.t() | nil,

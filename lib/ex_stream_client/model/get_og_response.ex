@@ -46,7 +46,7 @@ defmodule ExStreamClient.Model.GetOGResponse do
           author_link: String.t() | nil,
           author_name: String.t() | nil,
           color: String.t() | nil,
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           duration: String.t(),
           fallback: String.t() | nil,
           fields: [ExStreamClient.Model.Field.t()] | nil,

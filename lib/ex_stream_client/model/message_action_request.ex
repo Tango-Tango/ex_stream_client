@@ -10,7 +10,7 @@ defmodule ExStreamClient.Model.MessageActionRequest do
   end
 
   @type t :: %__MODULE__{
-          form_data: map(),
+          form_data: %{optional(String.t()) => String.t()},
           user: ExStreamClient.Model.UserRequest.t() | nil,
           user_id: String.t() | nil
         }

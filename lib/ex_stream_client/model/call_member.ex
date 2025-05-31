@@ -11,7 +11,7 @@ defmodule ExStreamClient.Model.CallMember do
 
   @type t :: %__MODULE__{
           created_at: float(),
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           deleted_at: float() | nil,
           role: String.t(),
           updated_at: float(),

@@ -22,7 +22,7 @@ defmodule ExStreamClient.Model.UserRequest do
   end
 
   @type t :: %__MODULE__{
-          custom: map() | nil,
+          custom: %{optional(String.t()) => any()} | nil,
           id: String.t(),
           image: String.t() | nil,
           invisible: boolean() | nil,
@@ -31,6 +31,6 @@ defmodule ExStreamClient.Model.UserRequest do
           privacy_settings: ExStreamClient.Model.PrivacySettingsResponse.t() | nil,
           role: String.t() | nil,
           teams: [String.t()] | nil,
-          teams_role: map() | nil
+          teams_role: %{optional(String.t()) => String.t()} | nil
         }
 end

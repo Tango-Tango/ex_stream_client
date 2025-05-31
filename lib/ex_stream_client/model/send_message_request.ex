@@ -23,7 +23,7 @@ defmodule ExStreamClient.Model.SendMessageRequest do
           keep_channel_hidden: boolean() | nil,
           message: ExStreamClient.Model.MessageRequest.t(),
           pending: boolean() | nil,
-          pending_message_metadata: map() | nil,
+          pending_message_metadata: %{optional(String.t()) => String.t()} | nil,
           skip_enrich_url: boolean() | nil,
           skip_push: boolean() | nil
         }

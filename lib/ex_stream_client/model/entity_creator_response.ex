@@ -62,7 +62,7 @@ defmodule ExStreamClient.Model.EntityCreatorResponse do
           banned: boolean(),
           blocked_user_ids: [String.t()],
           created_at: float(),
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           deactivated_at: float() | nil,
           deleted_at: float() | nil,
           deleted_content_count: integer(),
@@ -81,7 +81,7 @@ defmodule ExStreamClient.Model.EntityCreatorResponse do
           role: String.t(),
           shadow_banned: boolean(),
           teams: [String.t()],
-          teams_role: map() | nil,
+          teams_role: %{optional(String.t()) => String.t()} | nil,
           updated_at: float()
         }
 end

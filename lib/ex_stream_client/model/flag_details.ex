@@ -11,7 +11,7 @@ defmodule ExStreamClient.Model.FlagDetails do
 
   @type t :: %__MODULE__{
           automod: ExStreamClient.Model.AutomodDetails.t() | nil,
-          extra: map(),
+          extra: %{optional(String.t()) => any()},
           original_text: String.t()
         }
 end

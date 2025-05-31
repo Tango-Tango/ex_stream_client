@@ -1,4 +1,4 @@
-defmodule ExStreamClient.Chat.QueryBannedUsers do
+defmodule ExStreamClient.Operations.Chat.QueryBannedUsers do
   @moduledoc "
 	Modules for interacting with the `chat/query_banned_users` group of OpenAI APIs
 
@@ -6,7 +6,8 @@ defmodule ExStreamClient.Chat.QueryBannedUsers do
 	"
   require Logger
   @doc ~S"
-	Query Banned Users
+	Find and filter channel scoped or global user bans
+
 	
 	### Required Arguments:
 		
@@ -54,7 +55,7 @@ defmodule ExStreamClient.Chat.QueryBannedUsers do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

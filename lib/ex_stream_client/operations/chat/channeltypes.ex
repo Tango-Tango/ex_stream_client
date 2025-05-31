@@ -1,4 +1,4 @@
-defmodule ExStreamClient.Chat.Channeltypes do
+defmodule ExStreamClient.Operations.Chat.Channeltypes do
   @moduledoc "
 	Modules for interacting with the `chat/channeltypes` group of OpenAI APIs
 
@@ -6,7 +6,8 @@ defmodule ExStreamClient.Chat.Channeltypes do
 	"
   require Logger
   @doc ~S"
-	Update channel type
+	Updates channel type
+
 	
 	### Required Arguments:
 		- `name`
@@ -45,14 +46,15 @@ defmodule ExStreamClient.Chat.Channeltypes do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Get channel type
+	Gets channel type
+
 	
 	### Required Arguments:
 		- `name`
@@ -89,14 +91,15 @@ defmodule ExStreamClient.Chat.Channeltypes do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Delete channel type
+	Deletes channel type
+
 	
 	### Required Arguments:
 		- `name`
@@ -133,14 +136,15 @@ defmodule ExStreamClient.Chat.Channeltypes do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Create channel type
+	Creates new channel type
+
 	
 	### Required Arguments:
 		- `payload`: CreateChannelTypeRequest
@@ -178,14 +182,15 @@ defmodule ExStreamClient.Chat.Channeltypes do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	List channel types
+	Lists all available channel types
+
 	
 	### Required Arguments:
 		
@@ -222,7 +227,7 @@ defmodule ExStreamClient.Chat.Channeltypes do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

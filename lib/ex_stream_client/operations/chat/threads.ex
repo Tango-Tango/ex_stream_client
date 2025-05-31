@@ -1,4 +1,4 @@
-defmodule ExStreamClient.Chat.Threads do
+defmodule ExStreamClient.Operations.Chat.Threads do
   @moduledoc "
 	Modules for interacting with the `chat/threads` group of OpenAI APIs
 
@@ -6,7 +6,12 @@ defmodule ExStreamClient.Chat.Threads do
 	"
   require Logger
   @doc ~S"
-	Partially update thread
+	Updates certain fields of the thread
+
+Sends events:
+- thread.updated
+- thread.updated
+
 	
 	### Required Arguments:
 		- `message_id`
@@ -45,14 +50,15 @@ defmodule ExStreamClient.Chat.Threads do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Get Thread
+	Return a specific thread
+
 	
 	### Required Arguments:
 		- `message_id`
@@ -103,14 +109,15 @@ defmodule ExStreamClient.Chat.Threads do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Query Threads
+	Returns the list of threads for specific user
+
 	
 	### Required Arguments:
 		- `payload`: QueryThreadsRequest
@@ -147,7 +154,7 @@ defmodule ExStreamClient.Chat.Threads do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

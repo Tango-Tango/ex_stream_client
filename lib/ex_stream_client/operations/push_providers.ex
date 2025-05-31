@@ -1,4 +1,4 @@
-defmodule ExStreamClient.PushProviders do
+defmodule ExStreamClient.Operations.PushProviders do
   @moduledoc "
 	Modules for interacting with the `push_providers` group of OpenAI APIs
 
@@ -6,7 +6,8 @@ defmodule ExStreamClient.PushProviders do
 	"
   require Logger
   @doc ~S"
-	Delete a push provider
+	Delete a push provider from v2 with multi bundle/package support. v1 isn't supported in this endpoint
+
 	
 	### Required Arguments:
 		- `type`
@@ -45,14 +46,15 @@ defmodule ExStreamClient.PushProviders do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Upsert a push provider
+	Upsert a push provider for v2 with multi bundle/package support
+
 	
 	### Required Arguments:
 		- `payload`: UpsertPushProviderRequest
@@ -89,14 +91,15 @@ defmodule ExStreamClient.PushProviders do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	List push providers
+	List details of all push providers.
+
 	
 	### Required Arguments:
 		
@@ -133,7 +136,7 @@ defmodule ExStreamClient.PushProviders do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

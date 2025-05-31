@@ -1,4 +1,4 @@
-defmodule ExStreamClient.Imports do
+defmodule ExStreamClient.Operations.Imports do
   @moduledoc "
 	Modules for interacting with the `imports` group of OpenAI APIs
 
@@ -6,7 +6,8 @@ defmodule ExStreamClient.Imports do
 	"
   require Logger
   @doc ~S"
-	Get import
+	Gets an import
+
 	
 	### Required Arguments:
 		- `id`
@@ -43,14 +44,15 @@ defmodule ExStreamClient.Imports do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Create import
+	Creates a new import
+
 	
 	### Required Arguments:
 		- `payload`: CreateImportRequest
@@ -87,14 +89,15 @@ defmodule ExStreamClient.Imports do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Get import
+	Gets an import
+
 	
 	### Required Arguments:
 		
@@ -130,7 +133,7 @@ defmodule ExStreamClient.Imports do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

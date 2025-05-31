@@ -1,4 +1,4 @@
-defmodule ExStreamClient.Export do
+defmodule ExStreamClient.Operations.Export do
   @moduledoc "
 	Modules for interacting with the `export` group of OpenAI APIs
 
@@ -6,7 +6,8 @@ defmodule ExStreamClient.Export do
 	"
   require Logger
   @doc ~S"
-	Export users
+	Exports user profile, reactions and messages for list of given users
+
 	
 	### Required Arguments:
 		- `payload`: ExportUsersRequest
@@ -43,7 +44,7 @@ defmodule ExStreamClient.Export do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

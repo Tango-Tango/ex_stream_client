@@ -1,4 +1,4 @@
-defmodule ExStreamClient.Og do
+defmodule ExStreamClient.Operations.Og do
   @moduledoc "
 	Modules for interacting with the `og` group of OpenAI APIs
 
@@ -6,7 +6,8 @@ defmodule ExStreamClient.Og do
 	"
   require Logger
   @doc ~S"
-	Get OG
+	Get an OpenGraph attachment for a link
+
 	
 	### Required Arguments:
 		- `url`
@@ -42,7 +43,7 @@ defmodule ExStreamClient.Og do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

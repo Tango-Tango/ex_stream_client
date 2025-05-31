@@ -1,4 +1,4 @@
-defmodule ExStreamClient.Blocklists do
+defmodule ExStreamClient.Operations.Blocklists do
   @moduledoc "
 	Modules for interacting with the `blocklists` group of OpenAI APIs
 
@@ -6,7 +6,8 @@ defmodule ExStreamClient.Blocklists do
 	"
   require Logger
   @doc ~S"
-	Create block list
+	Creates a new application blocklist, once created the blocklist can be used by any channel type
+
 	
 	### Required Arguments:
 		- `payload`: CreateBlockListRequest
@@ -43,14 +44,15 @@ defmodule ExStreamClient.Blocklists do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	List block lists
+	Returns all available block lists
+
 	
 	### Required Arguments:
 		
@@ -98,14 +100,15 @@ defmodule ExStreamClient.Blocklists do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Update block list
+	Updates contents of the block list
+
 	
 	### Required Arguments:
 		- `name`
@@ -144,14 +147,15 @@ defmodule ExStreamClient.Blocklists do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Get block list
+	Returns block list by given name
+
 	
 	### Required Arguments:
 		- `name`
@@ -199,14 +203,15 @@ defmodule ExStreamClient.Blocklists do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Delete block list
+	Deletes previously created application blocklist
+
 	
 	### Required Arguments:
 		- `name`
@@ -254,7 +259,7 @@ defmodule ExStreamClient.Blocklists do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

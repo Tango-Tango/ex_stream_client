@@ -1,4 +1,4 @@
-defmodule ExStreamClient.Users do
+defmodule ExStreamClient.Operations.Users do
   @moduledoc "
 	Modules for interacting with the `users` group of OpenAI APIs
 
@@ -6,7 +6,11 @@ defmodule ExStreamClient.Users do
 	"
   require Logger
   @doc ~S"
-	Reactivate user
+	Activates user who's been deactivated previously
+
+Sends events:
+- user.reactivated
+
 	
 	### Required Arguments:
 		- `user_id`
@@ -45,14 +49,18 @@ defmodule ExStreamClient.Users do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Upsert users
+	Update or create users in bulk
+
+Sends events:
+- user.updated
+
 	
 	### Required Arguments:
 		- `payload`: UpdateUsersRequest
@@ -89,14 +97,20 @@ defmodule ExStreamClient.Users do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Partially update user
+	Updates certain fields of the user
+
+Sends events:
+- user.presence.changed
+- user.updated
+- user.presence.changed
+
 	
 	### Required Arguments:
 		- `payload`: UpdateUsersPartialRequest
@@ -133,14 +147,15 @@ defmodule ExStreamClient.Users do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Query users
+	Find and filter users
+
 	
 	### Required Arguments:
 		
@@ -187,14 +202,19 @@ defmodule ExStreamClient.Users do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Delete Users
+	Deletes users and optionally all their belongings asynchronously.
+
+Sends events:
+- channel.deleted
+- user.deleted
+
 	
 	### Required Arguments:
 		- `payload`: DeleteUsersRequest
@@ -231,14 +251,19 @@ defmodule ExStreamClient.Users do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Reactivate users
+	Reactivate users in batches
+
+Sends events:
+- user.reactivated
+- user.reactivated
+
 	
 	### Required Arguments:
 		- `payload`: ReactivateUsersRequest
@@ -275,14 +300,15 @@ defmodule ExStreamClient.Users do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Export user
+	Exports the user's profile, reactions and messages. Raises an error if a user has more than 10k messages or reactions
+
 	
 	### Required Arguments:
 		- `user_id`
@@ -319,14 +345,18 @@ defmodule ExStreamClient.Users do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Deactivate users
+	Deactivate users in batches
+
+Sends events:
+- user.deactivated
+
 	
 	### Required Arguments:
 		- `payload`: DeactivateUsersRequest
@@ -363,14 +393,15 @@ defmodule ExStreamClient.Users do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Restore users
+	Restore soft deleted users
+
 	
 	### Required Arguments:
 		- `payload`: RestoreUsersRequest
@@ -407,14 +438,15 @@ defmodule ExStreamClient.Users do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Unblock user
+	Unblock users
+
 	
 	### Required Arguments:
 		- `payload`: UnblockUsersRequest
@@ -451,14 +483,15 @@ defmodule ExStreamClient.Users do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Block user
+	Block users
+
 	
 	### Required Arguments:
 		- `payload`: BlockUsersRequest
@@ -495,7 +528,7 @@ defmodule ExStreamClient.Users do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -503,6 +536,7 @@ defmodule ExStreamClient.Users do
 
   @doc ~S"
 	Get list of blocked Users
+
 	
 	### Required Arguments:
 		
@@ -550,14 +584,18 @@ defmodule ExStreamClient.Users do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Deactivate user
+	Deactivates user with possibility to activate it back
+
+Sends events:
+- user.deactivated
+
 	
 	### Required Arguments:
 		- `user_id`
@@ -596,7 +634,7 @@ defmodule ExStreamClient.Users do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

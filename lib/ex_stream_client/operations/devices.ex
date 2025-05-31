@@ -1,4 +1,4 @@
-defmodule ExStreamClient.Devices do
+defmodule ExStreamClient.Operations.Devices do
   @moduledoc "
 	Modules for interacting with the `devices` group of OpenAI APIs
 
@@ -6,7 +6,8 @@ defmodule ExStreamClient.Devices do
 	"
   require Logger
   @doc ~S"
-	Create device
+	Adds a new device to a user, if the same device already exists the call will have no effect
+
 	
 	### Required Arguments:
 		- `payload`: CreateDeviceRequest
@@ -43,14 +44,15 @@ defmodule ExStreamClient.Devices do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	List devices
+	Returns all available devices
+
 	
 	### Required Arguments:
 		
@@ -97,14 +99,15 @@ defmodule ExStreamClient.Devices do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Delete device
+	Deletes one device
+
 	
 	### Required Arguments:
 		- `id`
@@ -151,7 +154,7 @@ defmodule ExStreamClient.Devices do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

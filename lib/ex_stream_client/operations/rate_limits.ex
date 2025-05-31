@@ -1,4 +1,4 @@
-defmodule ExStreamClient.RateLimits do
+defmodule ExStreamClient.Operations.RateLimits do
   @moduledoc "
 	Modules for interacting with the `rate_limits` group of OpenAI APIs
 
@@ -6,7 +6,8 @@ defmodule ExStreamClient.RateLimits do
 	"
   require Logger
   @doc ~S"
-	Get rate limits
+	Get rate limits usage and quotas
+
 	
 	### Required Arguments:
 		
@@ -63,7 +64,7 @@ defmodule ExStreamClient.RateLimits do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

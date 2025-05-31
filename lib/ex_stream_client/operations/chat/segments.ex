@@ -1,4 +1,4 @@
-defmodule ExStreamClient.Chat.Segments do
+defmodule ExStreamClient.Operations.Chat.Segments do
   @moduledoc "
 	Modules for interacting with the `chat/segments` group of OpenAI APIs
 
@@ -7,6 +7,7 @@ defmodule ExStreamClient.Chat.Segments do
   require Logger
   @doc ~S"
 	Get segment
+
 	
 	### Required Arguments:
 		- `id`
@@ -43,14 +44,15 @@ defmodule ExStreamClient.Chat.Segments do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Delete segment
+	Delete a segment
+
 	
 	### Required Arguments:
 		- `id`
@@ -86,7 +88,7 @@ defmodule ExStreamClient.Chat.Segments do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -94,6 +96,7 @@ defmodule ExStreamClient.Chat.Segments do
 
   @doc ~S"
 	Query segment targets
+
 	
 	### Required Arguments:
 		- `id`
@@ -133,7 +136,7 @@ defmodule ExStreamClient.Chat.Segments do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -141,6 +144,7 @@ defmodule ExStreamClient.Chat.Segments do
 
   @doc ~S"
 	Query segments
+
 	
 	### Required Arguments:
 		- `payload`: QuerySegmentsRequest
@@ -178,7 +182,7 @@ defmodule ExStreamClient.Chat.Segments do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -186,6 +190,7 @@ defmodule ExStreamClient.Chat.Segments do
 
   @doc ~S"
 	Delete targets from a segment
+
 	
 	### Required Arguments:
 		- `id`
@@ -225,14 +230,15 @@ defmodule ExStreamClient.Chat.Segments do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Check whether a target exists in a segment
+	Check whether a target exists in a segment. Returns 200 if the target exists, 404 otherwise
+
 	
 	### Required Arguments:
 		- `id`
@@ -271,7 +277,7 @@ defmodule ExStreamClient.Chat.Segments do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

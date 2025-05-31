@@ -1,4 +1,4 @@
-defmodule ExStreamClient.Chat.Campaigns do
+defmodule ExStreamClient.Operations.Chat.Campaigns do
   @moduledoc "
 	Modules for interacting with the `chat/campaigns` group of OpenAI APIs
 
@@ -6,7 +6,8 @@ defmodule ExStreamClient.Chat.Campaigns do
 	"
   require Logger
   @doc ~S"
-	Stop campaign
+	Stops a campaign
+
 	
 	### Required Arguments:
 		- `id`
@@ -45,14 +46,15 @@ defmodule ExStreamClient.Chat.Campaigns do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Query campaigns
+	Query campaigns with filter query
+
 	
 	### Required Arguments:
 		- `payload`: QueryCampaignsRequest
@@ -90,14 +92,15 @@ defmodule ExStreamClient.Chat.Campaigns do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Get campaign
+	Get campaign by ID.
+
 	
 	### Required Arguments:
 		- `id`
@@ -147,14 +150,15 @@ defmodule ExStreamClient.Chat.Campaigns do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Start/schedule campaign
+	Starts or schedules a campaign
+
 	
 	### Required Arguments:
 		- `id`
@@ -193,7 +197,7 @@ defmodule ExStreamClient.Chat.Campaigns do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

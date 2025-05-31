@@ -1,4 +1,4 @@
-defmodule ExStreamClient.Chat.Messages do
+defmodule ExStreamClient.Operations.Chat.Messages do
   @moduledoc "
 	Modules for interacting with the `chat/messages` group of OpenAI APIs
 
@@ -6,7 +6,11 @@ defmodule ExStreamClient.Chat.Messages do
 	"
   require Logger
   @doc ~S"
-	Delete vote
+	Delete a vote from a poll
+
+Sends events:
+- poll.vote_removed
+
 	
 	### Required Arguments:
 		- `message_id`
@@ -56,14 +60,18 @@ defmodule ExStreamClient.Chat.Messages do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Delete reaction
+	Removes user reaction from the message
+
+Sends events:
+- reaction.deleted
+
 	
 	### Required Arguments:
 		- `id`
@@ -112,14 +120,19 @@ defmodule ExStreamClient.Chat.Messages do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Send reaction
+	Sends reaction to specified message
+
+Sends events:
+- reaction.new
+- reaction.updated
+
 	
 	### Required Arguments:
 		- `id`
@@ -158,14 +171,19 @@ defmodule ExStreamClient.Chat.Messages do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Run message command action
+	Executes message command action with given parameters
+
+Sends events:
+- message.new
+- message.new
+
 	
 	### Required Arguments:
 		- `id`
@@ -204,14 +222,15 @@ defmodule ExStreamClient.Chat.Messages do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Query message history
+	Queries history for one message
+
 	
 	### Required Arguments:
 		- `payload`: QueryMessageHistoryRequest
@@ -249,14 +268,18 @@ defmodule ExStreamClient.Chat.Messages do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Cast vote
+	Cast a vote on a poll
+
+Sends events:
+- poll.vote_casted
+
 	
 	### Required Arguments:
 		- `message_id`
@@ -300,14 +323,15 @@ defmodule ExStreamClient.Chat.Messages do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	
+	Get reactions on a message
+
 	
 	### Required Arguments:
 		- `id`
@@ -346,14 +370,15 @@ defmodule ExStreamClient.Chat.Messages do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Get reactions
+	Returns list of reactions of specific message
+
 	
 	### Required Arguments:
 		- `id`
@@ -402,14 +427,15 @@ defmodule ExStreamClient.Chat.Messages do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Get replies
+	Returns replies (thread) of the message
+
 	
 	### Required Arguments:
 		- `parent_id`
@@ -499,14 +525,19 @@ defmodule ExStreamClient.Chat.Messages do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Undelete message
+	Undelete a message that was previously soft-deleted
+
+Sends events:
+- message.undeleted
+- message.undeleted
+
 	
 	### Required Arguments:
 		- `id`
@@ -545,14 +576,19 @@ defmodule ExStreamClient.Chat.Messages do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Translate message
+	Translates message to a given language using automated translation software
+
+Sends events:
+- message.updated
+- message.updated
+
 	
 	### Required Arguments:
 		- `id`
@@ -591,14 +627,21 @@ defmodule ExStreamClient.Chat.Messages do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Commit message
+	Commits a pending message, which will make it visible in the channel
+
+Sends events:
+- message.new
+- message.updated
+- message.new
+- message.updated
+
 	
 	### Required Arguments:
 		- `id`
@@ -637,14 +680,19 @@ defmodule ExStreamClient.Chat.Messages do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Partially message update
+	Updates certain fields of the message
+
+Sends events:
+- message.updated
+- message.updated
+
 	
 	### Required Arguments:
 		- `id`
@@ -683,14 +731,19 @@ defmodule ExStreamClient.Chat.Messages do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Update message
+	Updates message with new data
+
+Sends events:
+- message.updated
+- message.updated
+
 	
 	### Required Arguments:
 		- `id`
@@ -729,14 +782,15 @@ defmodule ExStreamClient.Chat.Messages do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Get message
+	Returns message by ID
+
 	
 	### Required Arguments:
 		- `id`
@@ -784,14 +838,19 @@ defmodule ExStreamClient.Chat.Messages do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Delete message
+	Deletes message
+
+Sends events:
+- message.deleted
+- message.deleted
+
 	
 	### Required Arguments:
 		- `id`
@@ -840,7 +899,7 @@ defmodule ExStreamClient.Chat.Messages do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

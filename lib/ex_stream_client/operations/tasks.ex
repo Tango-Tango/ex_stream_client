@@ -1,4 +1,4 @@
-defmodule ExStreamClient.Tasks do
+defmodule ExStreamClient.Operations.Tasks do
   @moduledoc "
 	Modules for interacting with the `tasks` group of OpenAI APIs
 
@@ -6,7 +6,8 @@ defmodule ExStreamClient.Tasks do
 	"
   require Logger
   @doc ~S"
-	Get status of a task
+	Gets status of a task
+
 	
 	### Required Arguments:
 		- `id`
@@ -42,7 +43,7 @@ defmodule ExStreamClient.Tasks do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

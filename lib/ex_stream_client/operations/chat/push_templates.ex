@@ -1,4 +1,4 @@
-defmodule ExStreamClient.Chat.PushTemplates do
+defmodule ExStreamClient.Operations.Chat.PushTemplates do
   @moduledoc "
 	Modules for interacting with the `chat/push_templates` group of OpenAI APIs
 
@@ -6,7 +6,8 @@ defmodule ExStreamClient.Chat.PushTemplates do
 	"
   require Logger
   @doc ~S"
-	Upsert a push notification template
+	Create or update a push notification template for a specific event type and push provider
+
 	
 	### Required Arguments:
 		- `payload`: UpsertPushTemplateRequest
@@ -44,14 +45,15 @@ defmodule ExStreamClient.Chat.PushTemplates do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Get push notification templates
+	Retrieve push notification templates for Chat.
+
 	
 	### Required Arguments:
 		- `push_provider_type`
@@ -102,7 +104,7 @@ defmodule ExStreamClient.Chat.PushTemplates do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

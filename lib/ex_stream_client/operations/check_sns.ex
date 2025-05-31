@@ -1,4 +1,4 @@
-defmodule ExStreamClient.CheckSns do
+defmodule ExStreamClient.Operations.CheckSns do
   @moduledoc "
 	Modules for interacting with the `check_sns` group of OpenAI APIs
 
@@ -6,7 +6,8 @@ defmodule ExStreamClient.CheckSns do
 	"
   require Logger
   @doc ~S"
-	Check SNS
+	Validates Amazon SNS configuration
+
 	
 	### Required Arguments:
 		- `payload`: CheckSNSRequest
@@ -43,7 +44,7 @@ defmodule ExStreamClient.CheckSns do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

@@ -1,4 +1,4 @@
-defmodule ExStreamClient.ImportUrls do
+defmodule ExStreamClient.Operations.ImportUrls do
   @moduledoc "
 	Modules for interacting with the `import_urls` group of OpenAI APIs
 
@@ -6,7 +6,8 @@ defmodule ExStreamClient.ImportUrls do
 	"
   require Logger
   @doc ~S"
-	Create import URL
+	Creates a new import URL
+
 	
 	### Required Arguments:
 		- `payload`: CreateImportURLRequest
@@ -43,7 +44,7 @@ defmodule ExStreamClient.ImportUrls do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

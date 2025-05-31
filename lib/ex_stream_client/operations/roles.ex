@@ -1,4 +1,4 @@
-defmodule ExStreamClient.Roles do
+defmodule ExStreamClient.Operations.Roles do
   @moduledoc "
 	Modules for interacting with the `roles` group of OpenAI APIs
 
@@ -6,7 +6,8 @@ defmodule ExStreamClient.Roles do
 	"
   require Logger
   @doc ~S"
-	Create role
+	Creates custom role
+
 	
 	### Required Arguments:
 		- `payload`: CreateRoleRequest
@@ -43,14 +44,15 @@ defmodule ExStreamClient.Roles do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	List roles
+	Lists all available roles
+
 	
 	### Required Arguments:
 		
@@ -86,14 +88,15 @@ defmodule ExStreamClient.Roles do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
   end
 
   @doc ~S"
-	Delete role
+	Deletes custom role
+
 	
 	### Required Arguments:
 		- `name`
@@ -129,7 +132,7 @@ defmodule ExStreamClient.Roles do
         end
       )
 
-    case ExStreamClient.Client.request(r) do
+    case ExStreamClient.HTTP.request(r) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

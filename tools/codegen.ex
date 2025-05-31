@@ -175,7 +175,7 @@ defmodule ExStreamClient.Tools.Codegen do
   end
 
   @spec parse_type(%{required(String.t()) => any()}) :: parsed_type
-  def parse_type(%{"type" => "object", "additionalProperties" => properties} = args) do
+  def parse_type(%{"type" => "object", "additionalProperties" => properties}) do
     property = if Enum.empty?(Map.keys(properties)), do: "any", else: parse_type(properties)
 
     {:map, property}

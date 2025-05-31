@@ -30,7 +30,7 @@ defmodule ExStreamClient.Model.ModerationCheckCompletedEvent do
 
   @type t :: %__MODULE__{
           created_at: float(),
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           entity_id: String.t(),
           entity_type: String.t(),
           received_at: float() | nil,

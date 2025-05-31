@@ -12,7 +12,7 @@ defmodule ExStreamClient.Model.CampaignStartedEvent do
   @type t :: %__MODULE__{
           campaign: ExStreamClient.Model.CampaignResponse.t() | nil,
           created_at: float(),
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           received_at: float() | nil,
           type: String.t()
         }

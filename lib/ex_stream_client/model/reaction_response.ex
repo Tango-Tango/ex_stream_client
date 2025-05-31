@@ -11,7 +11,7 @@ defmodule ExStreamClient.Model.ReactionResponse do
 
   @type t :: %__MODULE__{
           created_at: float(),
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           message_id: String.t(),
           score: integer(),
           type: String.t(),

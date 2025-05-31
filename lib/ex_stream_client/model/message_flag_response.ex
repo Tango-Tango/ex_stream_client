@@ -34,7 +34,7 @@ defmodule ExStreamClient.Model.MessageFlagResponse do
           approved_at: float() | nil,
           created_at: float(),
           created_by_automod: boolean(),
-          custom: map() | nil,
+          custom: %{optional(String.t()) => any()} | nil,
           details: ExStreamClient.Model.FlagDetails.t() | nil,
           message: ExStreamClient.Model.Message.t() | nil,
           moderation_feedback: ExStreamClient.Model.FlagFeedback.t() | nil,

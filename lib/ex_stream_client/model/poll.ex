@@ -48,6 +48,7 @@ defmodule ExStreamClient.Model.Poll do
 
   @nested_components created_by: ExStreamClient.Model.User,
                      latest_answers: ExStreamClient.Model.PollVote,
+                     latest_votes_by_option: {:map, {:array, ExStreamClient.Model.PollVote}},
                      options: ExStreamClient.Model.PollOption,
                      own_votes: ExStreamClient.Model.PollVote
   def nested_components do
@@ -61,20 +62,20 @@ defmodule ExStreamClient.Model.Poll do
           created_at: float(),
           created_by: ExStreamClient.Model.User.t() | nil,
           created_by_id: String.t(),
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           description: String.t(),
           enforce_unique_vote: boolean(),
           id: String.t(),
           is_closed: boolean() | nil,
           latest_answers: [ExStreamClient.Model.PollVote.t()],
-          latest_votes_by_option: map(),
+          latest_votes_by_option: %{optional(String.t()) => [ExStreamClient.Model.PollVote.t()]},
           max_votes_allowed: integer() | nil,
           name: String.t(),
           options: [ExStreamClient.Model.PollOption.t()],
           own_votes: [ExStreamClient.Model.PollVote.t()],
           updated_at: float(),
           vote_count: integer(),
-          vote_counts_by_option: map(),
+          vote_counts_by_option: %{optional(String.t()) => integer()},
           voting_visibility: String.t() | nil
         }
 end

@@ -43,14 +43,14 @@ defmodule ExStreamClient.Model.CallSession do
     :user_permission_overrides
   ]
 
-  @nested_components ActiveSFUs: ExStreamClient.Model.SFUIDLastSeen,
-                     Participants: ExStreamClient.Model.CallParticipant
+  @nested_components active_sf_us: ExStreamClient.Model.SFUIDLastSeen,
+                     participants: ExStreamClient.Model.CallParticipant
   def nested_components do
     @nested_components
   end
 
   @type t :: %__MODULE__{
-          accepted_by: map(),
+          accepted_by: %{optional(String.t()) => float()},
           active_sf_us: [ExStreamClient.Model.SFUIDLastSeen.t()],
           anonymous_participant_count: integer(),
           app_pk: integer(),
@@ -61,15 +61,17 @@ defmodule ExStreamClient.Model.CallSession do
           ended_at: float() | nil,
           live_ended_at: float() | nil,
           live_started_at: float() | nil,
-          missed_by: map(),
+          missed_by: %{optional(String.t()) => float()},
           participants: [ExStreamClient.Model.CallParticipant.t()],
-          participants_count_by_role: map(),
-          rejected_by: map(),
+          participants_count_by_role: %{optional(String.t()) => integer()},
+          rejected_by: %{optional(String.t()) => float()},
           ring_at: float() | nil,
           session_id: String.t(),
           sfui_ds: [String.t()],
           started_at: float() | nil,
           timer_ends_at: float() | nil,
-          user_permission_overrides: map()
+          user_permission_overrides: %{
+            optional(String.t()) => %{optional(String.t()) => boolean()}
+          }
         }
 end

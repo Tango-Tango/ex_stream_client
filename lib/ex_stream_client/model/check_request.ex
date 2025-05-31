@@ -29,7 +29,7 @@ defmodule ExStreamClient.Model.CheckRequest do
           entity_id: String.t(),
           entity_type: String.t(),
           moderation_payload: ExStreamClient.Model.ModerationPayload.t() | nil,
-          options: map() | nil,
+          options: %{optional(String.t()) => any()} | nil,
           test_mode: boolean() | nil,
           user: ExStreamClient.Model.UserRequest.t() | nil,
           user_id: String.t() | nil

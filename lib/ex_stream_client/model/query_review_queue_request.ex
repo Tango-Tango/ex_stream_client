@@ -24,7 +24,7 @@ defmodule ExStreamClient.Model.QueryReviewQueueRequest do
   end
 
   @type t :: %__MODULE__{
-          filter: map() | nil,
+          filter: %{optional(String.t()) => any()} | nil,
           limit: integer() | nil,
           lock_count: integer() | nil,
           lock_duration: integer() | nil,

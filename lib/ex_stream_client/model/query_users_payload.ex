@@ -21,7 +21,7 @@ defmodule ExStreamClient.Model.QueryUsersPayload do
   end
 
   @type t :: %__MODULE__{
-          filter_conditions: map(),
+          filter_conditions: %{optional(String.t()) => any()},
           include_deactivated_users: boolean() | nil,
           limit: integer() | nil,
           offset: integer() | nil,

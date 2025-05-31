@@ -45,7 +45,7 @@ defmodule ExStreamClient.Model.ChannelMember do
           banned: boolean(),
           channel_role: String.t(),
           created_at: float(),
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           deleted_at: float() | nil,
           invite_accepted_at: float() | nil,
           invite_rejected_at: float() | nil,

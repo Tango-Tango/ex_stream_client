@@ -12,7 +12,7 @@ defmodule ExStreamClient.Model.APNS do
   @type t :: %__MODULE__{
           body: String.t(),
           "content-available": integer() | nil,
-          data: map() | nil,
+          data: %{optional(String.t()) => any()} | nil,
           "mutable-content": integer() | nil,
           sound: String.t() | nil,
           title: String.t()

@@ -21,7 +21,7 @@ defmodule ExStreamClient.Model.FlagRequest do
   end
 
   @type t :: %__MODULE__{
-          custom: map() | nil,
+          custom: %{optional(String.t()) => any()} | nil,
           entity_creator_id: String.t() | nil,
           entity_id: String.t(),
           entity_type: String.t(),

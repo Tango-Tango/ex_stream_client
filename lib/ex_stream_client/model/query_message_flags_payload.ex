@@ -11,7 +11,7 @@ defmodule ExStreamClient.Model.QueryMessageFlagsPayload do
   end
 
   @type t :: %__MODULE__{
-          filter_conditions: map() | nil,
+          filter_conditions: %{optional(String.t()) => any()} | nil,
           limit: integer() | nil,
           offset: integer() | nil,
           show_deleted_messages: boolean() | nil,

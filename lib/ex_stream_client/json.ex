@@ -22,7 +22,7 @@ defmodule ExStreamClient.JSON do
       """
       def decode(map) when is_map(map) do
         # Now that the module is loaded, convert to atom keys
-        map = for {k, v} <- map, into: %{}, do: {transform(k, :atom), v}
+        map = for {k, v} <- map, into: %{}, do: {transform(Macro.underscore(k), :atom), v}
 
         processed =
           Enum.reduce(nested_components(), map, fn {key, type_or_mod}, acc ->
@@ -54,6 +54,18 @@ defmodule ExStreamClient.JSON do
       end
 
       defp transform(val, :atom) when is_list(val), do: Enum.map(val, &transform(&1, :atom))
+
+      defp transform(val, {:map, {:array, {:component, mod}}}) when is_map(val),
+        do:
+          Enum.map(val, fn {k, v} ->
+            {transform(k, :atom), Enum.map(v, &transform(&1, mod))}
+          end)
+          |> Enum.into(%{})
+
+      defp transform(val, {:map, mod}) when is_map(val),
+        do:
+          Enum.map(val, fn {k, v} -> {transform(k, :atom), transform(v, mod)} end)
+          |> Enum.into(%{})
 
       defp transform(val, mod) when is_list(val) and is_atom(mod) do
         if Code.ensure_loaded?(mod) and function_exported?(mod, :decode, 1) do

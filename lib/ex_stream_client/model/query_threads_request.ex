@@ -23,7 +23,7 @@ defmodule ExStreamClient.Model.QueryThreadsRequest do
   end
 
   @type t :: %__MODULE__{
-          filter: map() | nil,
+          filter: %{optional(String.t()) => any()} | nil,
           limit: integer() | nil,
           member_limit: integer() | nil,
           next: String.t() | nil,

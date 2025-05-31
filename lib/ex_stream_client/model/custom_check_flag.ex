@@ -10,7 +10,7 @@ defmodule ExStreamClient.Model.CustomCheckFlag do
   end
 
   @type t :: %__MODULE__{
-          custom: map() | nil,
+          custom: %{optional(String.t()) => any()} | nil,
           labels: [String.t()] | nil,
           reason: String.t() | nil,
           type: String.t()

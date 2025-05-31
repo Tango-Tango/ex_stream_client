@@ -20,6 +20,8 @@ defmodule ExStreamClient.Model.EnrichedReaction do
   ]
 
   @nested_components created_at: ExStreamClient.Model.Time,
+                     latest_children: {:map, {:array, ExStreamClient.Model.EnrichedReaction}},
+                     own_children: {:map, {:array, ExStreamClient.Model.EnrichedReaction}},
                      updated_at: ExStreamClient.Model.Time,
                      user: ExStreamClient.Model.Data
   def nested_components do
@@ -28,13 +30,15 @@ defmodule ExStreamClient.Model.EnrichedReaction do
 
   @type t :: %__MODULE__{
           activity_id: String.t(),
-          children_counts: map() | nil,
+          children_counts: %{optional(String.t()) => integer()} | nil,
           created_at: ExStreamClient.Model.Time.t() | nil,
-          data: map() | nil,
+          data: %{optional(String.t()) => any()} | nil,
           id: String.t() | nil,
           kind: String.t(),
-          latest_children: map() | nil,
-          own_children: map() | nil,
+          latest_children:
+            %{optional(String.t()) => [ExStreamClient.Model.EnrichedReaction.t()]} | nil,
+          own_children:
+            %{optional(String.t()) => [ExStreamClient.Model.EnrichedReaction.t()]} | nil,
           parent: String.t() | nil,
           target_feeds: [String.t()] | nil,
           updated_at: ExStreamClient.Model.Time.t() | nil,

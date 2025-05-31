@@ -10,7 +10,7 @@ defmodule ExStreamClient.Model.QuerySegmentsRequest do
   end
 
   @type t :: %__MODULE__{
-          filter: map(),
+          filter: %{optional(String.t()) => any()},
           limit: integer() | nil,
           next: String.t() | nil,
           prev: String.t() | nil,

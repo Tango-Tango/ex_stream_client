@@ -11,7 +11,7 @@ defmodule ExStreamClient.Model.UserUpdatedEvent do
 
   @type t :: %__MODULE__{
           created_at: float(),
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           received_at: float() | nil,
           type: String.t(),
           user: ExStreamClient.Model.UserResponsePrivacyFields.t()

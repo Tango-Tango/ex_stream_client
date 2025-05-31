@@ -8,5 +8,5 @@ defmodule ExStreamClient.Model.CustomActionRequest do
     @nested_components
   end
 
-  @type t :: %__MODULE__{id: String.t() | nil, options: map() | nil}
+  @type t :: %__MODULE__{id: String.t() | nil, options: %{optional(String.t()) => any()} | nil}
 end

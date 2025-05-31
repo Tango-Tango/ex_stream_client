@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.VoteData do
   use ExStreamClient.JSON
   use ExStreamClient.TypeInterner
   defstruct [:answer_text, :option, :option_id]
-  @nested_components Option: ExStreamClient.Model.PollOptionResponseData
+  @nested_components option: ExStreamClient.Model.PollOptionResponseData
   def nested_components do
     @nested_components
   end

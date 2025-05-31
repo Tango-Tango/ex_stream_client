@@ -8,5 +8,5 @@ defmodule ExStreamClient.Model.FCM do
     @nested_components
   end
 
-  @type t :: %__MODULE__{data: map() | nil}
+  @type t :: %__MODULE__{data: %{optional(String.t()) => any()} | nil}
 end

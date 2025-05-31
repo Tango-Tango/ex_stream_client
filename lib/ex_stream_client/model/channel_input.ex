@@ -32,7 +32,7 @@ defmodule ExStreamClient.Model.ChannelInput do
           config_overrides: ExStreamClient.Model.ChannelConfig.t() | nil,
           created_by: ExStreamClient.Model.UserRequest.t() | nil,
           created_by_id: String.t() | nil,
-          custom: map() | nil,
+          custom: %{optional(String.t()) => any()} | nil,
           disabled: boolean() | nil,
           frozen: boolean() | nil,
           invites: [ExStreamClient.Model.ChannelMember.t()] | nil,

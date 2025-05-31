@@ -14,6 +14,6 @@ defmodule ExStreamClient.Model.LayoutSettings do
           external_app_url: String.t(),
           external_css_url: String.t(),
           name: :custom | :mobile | :"single-participant" | :grid | :spotlight,
-          options: map() | nil
+          options: %{optional(String.t()) => any()} | nil
         }
 end

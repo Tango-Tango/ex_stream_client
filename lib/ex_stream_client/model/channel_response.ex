@@ -50,7 +50,7 @@ defmodule ExStreamClient.Model.ChannelResponse do
           cooldown: integer() | nil,
           created_at: float(),
           created_by: ExStreamClient.Model.UserResponse.t() | nil,
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           deleted_at: float() | nil,
           disabled: boolean(),
           frozen: boolean(),

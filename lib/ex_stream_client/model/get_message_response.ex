@@ -12,6 +12,6 @@ defmodule ExStreamClient.Model.GetMessageResponse do
   @type t :: %__MODULE__{
           duration: String.t(),
           message: ExStreamClient.Model.MessageWithChannelResponse.t(),
-          pending_message_metadata: map() | nil
+          pending_message_metadata: %{optional(String.t()) => String.t()} | nil
         }
 end

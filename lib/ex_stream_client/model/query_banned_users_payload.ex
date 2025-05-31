@@ -13,7 +13,7 @@ defmodule ExStreamClient.Model.QueryBannedUsersPayload do
 
   @type t :: %__MODULE__{
           exclude_expired_bans: boolean() | nil,
-          filter_conditions: map(),
+          filter_conditions: %{optional(String.t()) => any()},
           limit: integer() | nil,
           offset: integer() | nil,
           sort: [ExStreamClient.Model.SortParamRequest.t()] | nil,

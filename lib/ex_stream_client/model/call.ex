@@ -57,15 +57,15 @@ defmodule ExStreamClient.Model.Call do
     :updated_at
   ]
 
-  @nested_components BlockedUsers: ExStreamClient.Model.User,
-                     CallType: ExStreamClient.Model.CallType,
-                     CreatedBy: ExStreamClient.Model.User,
-                     Egresses: ExStreamClient.Model.CallEgress,
-                     MemberLookup: ExStreamClient.Model.MemberLookup,
-                     Members: ExStreamClient.Model.CallMember,
-                     Session: ExStreamClient.Model.CallSession,
-                     Settings: ExStreamClient.Model.CallSettings,
-                     SettingsOverrides: ExStreamClient.Model.CallSettings
+  @nested_components blocked_users: ExStreamClient.Model.User,
+                     call_type: ExStreamClient.Model.CallType,
+                     created_by: ExStreamClient.Model.User,
+                     egresses: ExStreamClient.Model.CallEgress,
+                     member_lookup: ExStreamClient.Model.MemberLookup,
+                     members: ExStreamClient.Model.CallMember,
+                     session: ExStreamClient.Model.CallSession,
+                     settings: ExStreamClient.Model.CallSettings,
+                     settings_overrides: ExStreamClient.Model.CallSettings
   def nested_components do
     @nested_components
   end
@@ -82,7 +82,7 @@ defmodule ExStreamClient.Model.Call do
           created_by: ExStreamClient.Model.User.t() | nil,
           created_by_user_id: String.t(),
           current_session_id: String.t(),
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           deleted_at: float() | nil,
           egress_updated_at: float() | nil,
           egresses: [ExStreamClient.Model.CallEgress.t()],

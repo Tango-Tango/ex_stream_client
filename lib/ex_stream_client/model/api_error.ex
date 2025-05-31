@@ -23,7 +23,7 @@ defmodule ExStreamClient.Model.APIError do
           code: integer(),
           details: [integer()],
           duration: String.t(),
-          exception_fields: map() | nil,
+          exception_fields: %{optional(String.t()) => String.t()} | nil,
           message: String.t(),
           more_info: String.t(),
           status_code: integer(),

@@ -8,5 +8,5 @@ defmodule ExStreamClient.Model.UpdateMemberPartialRequest do
     @nested_components
   end
 
-  @type t :: %__MODULE__{set: map() | nil, unset: [String.t()] | nil}
+  @type t :: %__MODULE__{set: %{optional(String.t()) => any()} | nil, unset: [String.t()] | nil}
 end

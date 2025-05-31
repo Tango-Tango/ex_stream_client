@@ -10,7 +10,7 @@ defmodule ExStreamClient.Model.CheckSQSResponse do
   end
 
   @type t :: %__MODULE__{
-          data: map() | nil,
+          data: %{optional(String.t()) => any()} | nil,
           duration: String.t(),
           error: String.t() | nil,
           status: :error | :ok

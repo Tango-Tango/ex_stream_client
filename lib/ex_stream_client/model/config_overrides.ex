@@ -26,7 +26,7 @@ defmodule ExStreamClient.Model.ConfigOverrides do
           blocklist: String.t() | nil,
           blocklist_behavior: (:block | :flag) | nil,
           commands: [String.t()],
-          grants: map(),
+          grants: %{optional(String.t()) => [String.t()]},
           max_message_length: integer() | nil,
           quotes: boolean() | nil,
           reactions: boolean() | nil,

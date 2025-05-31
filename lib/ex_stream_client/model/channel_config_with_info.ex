@@ -86,7 +86,7 @@ defmodule ExStreamClient.Model.ChannelConfigWithInfo do
           connect_events: boolean(),
           created_at: float(),
           custom_events: boolean(),
-          grants: map() | nil,
+          grants: %{optional(String.t()) => [String.t()]} | nil,
           mark_messages_pending: boolean(),
           max_message_length: integer(),
           message_retention: any(),

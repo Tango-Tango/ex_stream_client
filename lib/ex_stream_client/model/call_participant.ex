@@ -35,7 +35,7 @@ defmodule ExStreamClient.Model.CallParticipant do
           ban_expires: float() | nil,
           banned: boolean(),
           created_at: float() | nil,
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           deactivated_at: float() | nil,
           deleted_at: float() | nil,
           id: String.t(),
@@ -49,7 +49,7 @@ defmodule ExStreamClient.Model.CallParticipant do
           revoke_tokens_issued_before: float() | nil,
           role: String.t(),
           teams: [String.t()] | nil,
-          teams_role: map(),
+          teams_role: %{optional(String.t()) => String.t()},
           updated_at: float() | nil,
           user_session_id: String.t()
         }

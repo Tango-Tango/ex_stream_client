@@ -25,7 +25,7 @@ defmodule ExStreamClient.Model.ThreadParticipant do
           app_pk: integer(),
           channel_cid: String.t(),
           created_at: float(),
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           last_read_at: float(),
           last_thread_message_at: float() | nil,
           left_thread_at: float() | nil,

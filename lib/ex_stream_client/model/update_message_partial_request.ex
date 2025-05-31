@@ -9,7 +9,7 @@ defmodule ExStreamClient.Model.UpdateMessagePartialRequest do
   end
 
   @type t :: %__MODULE__{
-          set: map() | nil,
+          set: %{optional(String.t()) => any()} | nil,
           skip_enrich_url: boolean() | nil,
           unset: [String.t()] | nil,
           user: ExStreamClient.Model.UserRequest.t() | nil,

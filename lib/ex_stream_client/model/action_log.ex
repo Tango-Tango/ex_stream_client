@@ -36,7 +36,7 @@ defmodule ExStreamClient.Model.ActionLog do
 
   @type t :: %__MODULE__{
           created_at: float(),
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           id: String.t(),
           reason: String.t(),
           reporter_type: String.t(),

@@ -11,7 +11,7 @@ defmodule ExStreamClient.Model.ModerationActionConfig do
 
   @type t :: %__MODULE__{
           action: String.t(),
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           description: String.t(),
           entity_type: String.t(),
           icon: String.t(),

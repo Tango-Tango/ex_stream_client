@@ -46,7 +46,7 @@ defmodule ExStreamClient.Model.EntityCreator do
           ban_expires: float() | nil,
           banned: boolean(),
           created_at: float() | nil,
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           deactivated_at: float() | nil,
           deleted_at: float() | nil,
           deleted_content_count: integer(),
@@ -60,7 +60,7 @@ defmodule ExStreamClient.Model.EntityCreator do
           revoke_tokens_issued_before: float() | nil,
           role: String.t(),
           teams: [String.t()] | nil,
-          teams_role: map(),
+          teams_role: %{optional(String.t()) => String.t()},
           updated_at: float() | nil
         }
 end

@@ -30,7 +30,7 @@ defmodule ExStreamClient.Model.ModerationFlagResponse do
 
   @type t :: %__MODULE__{
           created_at: String.t(),
-          custom: map() | nil,
+          custom: %{optional(String.t()) => any()} | nil,
           entity_creator_id: String.t() | nil,
           entity_id: String.t(),
           entity_type: String.t(),
@@ -38,7 +38,7 @@ defmodule ExStreamClient.Model.ModerationFlagResponse do
           labels: [String.t()] | nil,
           moderation_payload: ExStreamClient.Model.ModerationPayload.t() | nil,
           reason: String.t() | nil,
-          result: [map()] | nil,
+          result: [%{optional(String.t()) => any()}] | nil,
           review_queue_item: ExStreamClient.Model.ReviewQueueItem.t() | nil,
           review_queue_item_id: String.t() | nil,
           type: String.t(),

@@ -54,12 +54,27 @@ defmodule ExStreamClient.Tools.Codegen.GenerateModel do
       nested_components =
         (component.required_props ++ component.optional_props)
         |> Enum.reduce(%{}, fn %{name: name} = prop, acc ->
+          name = name |> Macro.underscore()
+
           {_, type} =
             case Map.get(prop, :type, nil) do
-              {:array, {:component, comp}} -> {name, Codegen.string_to_component(comp)}
-              {:component, comp} -> {name, Codegen.string_to_component(comp)}
-              {:enum, _} -> {name, :atom}
-              _ -> {nil, nil}
+              {:array, {:component, comp}} ->
+                {name, Codegen.string_to_component(comp)}
+
+              {:component, comp} ->
+                {name, Codegen.string_to_component(comp)}
+
+              {:map, {:component, comp}} ->
+                {name, {:map, Codegen.string_to_component(comp)}}
+
+              {:map, {:array, {:component, comp}}} ->
+                {name, {:map, {:array, Codegen.string_to_component(comp)}}}
+
+              {:enum, _} ->
+                {name, :atom}
+
+              _ ->
+                {nil, nil}
             end
 
           if type != nil, do: Map.put(acc, String.to_atom(name), type), else: acc
@@ -138,7 +153,6 @@ defmodule ExStreamClient.Tools.Codegen.GenerateModel do
 
                 :enum ->
                   quoted_type = Codegen.type_to_spec({:enum, component.enum})
-                  IO.inspect(quoted_type)
 
                   [
                     quote do

@@ -92,7 +92,7 @@ defmodule ExStreamClient.Model.UpdateChannelTypeResponse do
           created_at: float(),
           custom_events: boolean(),
           duration: String.t(),
-          grants: map(),
+          grants: %{optional(String.t()) => [String.t()]},
           mark_messages_pending: boolean(),
           max_message_length: integer(),
           message_retention: any(),

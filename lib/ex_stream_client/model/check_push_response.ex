@@ -13,18 +13,19 @@ defmodule ExStreamClient.Model.CheckPushResponse do
     :skip_devices
   ]
 
-  @nested_components []
+  @nested_components device_errors: {:map, ExStreamClient.Model.DeviceErrorInfo}
   def nested_components do
     @nested_components
   end
 
   @type t :: %__MODULE__{
-          device_errors: map() | nil,
+          device_errors:
+            %{optional(String.t()) => ExStreamClient.Model.DeviceErrorInfo.t()} | nil,
           duration: String.t(),
           general_errors: [String.t()] | nil,
           rendered_apn_template: String.t() | nil,
           rendered_firebase_template: String.t() | nil,
-          rendered_message: map() | nil,
+          rendered_message: %{optional(String.t()) => String.t()} | nil,
           skip_devices: boolean() | nil
         }
 end

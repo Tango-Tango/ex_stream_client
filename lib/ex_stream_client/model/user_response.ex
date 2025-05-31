@@ -55,7 +55,7 @@ defmodule ExStreamClient.Model.UserResponse do
           banned: boolean(),
           blocked_user_ids: [String.t()],
           created_at: float(),
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           deactivated_at: float() | nil,
           deleted_at: float() | nil,
           devices: [ExStreamClient.Model.DeviceResponse.t()] | nil,
@@ -72,7 +72,7 @@ defmodule ExStreamClient.Model.UserResponse do
           role: String.t(),
           shadow_banned: boolean(),
           teams: [String.t()],
-          teams_role: map() | nil,
+          teams_role: %{optional(String.t()) => String.t()} | nil,
           updated_at: float()
         }
 end

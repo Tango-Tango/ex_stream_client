@@ -11,7 +11,7 @@ defmodule ExStreamClient.Model.AsyncExportChannelsEvent do
 
   @type t :: %__MODULE__{
           created_at: float(),
-          custom: map(),
+          custom: %{optional(String.t()) => any()},
           finished_at: float(),
           received_at: float() | nil,
           started_at: float(),

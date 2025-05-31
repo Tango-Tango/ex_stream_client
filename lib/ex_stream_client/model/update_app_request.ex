@@ -85,7 +85,7 @@ defmodule ExStreamClient.Model.UpdateAppRequest do
           feeds_v2_region: String.t() | nil,
           file_upload_config: ExStreamClient.Model.FileUploadConfig.t() | nil,
           firebase_config: ExStreamClient.Model.FirebaseConfig.t() | nil,
-          grants: map() | nil,
+          grants: %{optional(String.t()) => [String.t()]} | nil,
           guest_user_creation_disabled: boolean() | nil,
           huawei_config: ExStreamClient.Model.HuaweiConfig.t() | nil,
           image_moderation_block_labels: [String.t()] | nil,

@@ -174,6 +174,13 @@ defmodule ExStreamClient.Tools.Codegen do
     nil
   end
 
+  @spec parse_type(%{required(String.t()) => any()}) :: parsed_type
+  def parse_type(%{"type" => "object", "additionalProperties" => properties}) do
+    property = if Enum.empty?(Map.keys(properties)), do: "any", else: parse_type(properties)
+
+    {:map, property}
+  end
+
   @spec parse_type(%{required(String.t()) => String.t()}) :: String.t()
   def parse_type(%{"type" => type}), do: type
 
@@ -886,6 +893,10 @@ defmodule ExStreamClient.Tools.Codegen do
 
   def type_to_spec({:enum, l}) when is_list(l) do
     Enum.reduce(l, &{:|, [], [&1, &2]})
+  end
+
+  def type_to_spec({:map, nested}) do
+    quote(do: %{optional(String.t()) => unquote(type_to_spec(nested))})
   end
 
   def type_to_spec({:object, nested}) when is_map(nested) do

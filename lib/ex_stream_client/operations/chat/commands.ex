@@ -1,8 +1,8 @@
 defmodule ExStreamClient.Operations.Chat.Commands do
   @moduledoc "
-	Modules for interacting with the `chat/commands` group of OpenAI APIs
+	Modules for interacting with the `chat/commands` group of Stream APIs
 
-	API Reference: https://platform.openai.com/docs/api-reference/chat/commands
+	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
 	"
   require Logger
   @doc ~S"

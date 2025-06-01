@@ -1,8 +1,8 @@
 defmodule ExStreamClient.Operations.CheckSqs do
   @moduledoc "
-	Modules for interacting with the `check_sqs` group of OpenAI APIs
+	Modules for interacting with the `check_sqs` group of Stream APIs
 
-	API Reference: https://platform.openai.com/docs/api-reference/check_sqs
+	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
 	"
   require Logger
   @doc ~S"

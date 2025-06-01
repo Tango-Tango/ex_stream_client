@@ -31,8 +31,8 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
       moduledoc_string =
         [
           "",
-          "Modules for interacting with the `#{name}` group of OpenAI APIs\n",
-          "API Reference: https://platform.openai.com/docs/api-reference/#{name}",
+          "Modules for interacting with the `#{name}` group of Stream APIs\n",
+          "API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2",
           ""
         ]
         |> Enum.join("\n\t")

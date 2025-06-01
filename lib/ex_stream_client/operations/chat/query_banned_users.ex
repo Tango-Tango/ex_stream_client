@@ -1,8 +1,8 @@
 defmodule ExStreamClient.Operations.Chat.QueryBannedUsers do
   @moduledoc "
-	Modules for interacting with the `chat/query_banned_users` group of OpenAI APIs
+	Modules for interacting with the `chat/query_banned_users` group of Stream APIs
 
-	API Reference: https://platform.openai.com/docs/api-reference/chat/query_banned_users
+	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
 	"
   require Logger
   @doc ~S"

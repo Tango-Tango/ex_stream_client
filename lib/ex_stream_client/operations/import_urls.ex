@@ -1,8 +1,8 @@
 defmodule ExStreamClient.Operations.ImportUrls do
   @moduledoc "
-	Modules for interacting with the `import_urls` group of OpenAI APIs
+	Modules for interacting with the `import_urls` group of Stream APIs
 
-	API Reference: https://platform.openai.com/docs/api-reference/import_urls
+	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
 	"
   require Logger
   @doc ~S"

@@ -1,8 +1,8 @@
 defmodule ExStreamClient.Operations.Chat.Polls do
   @moduledoc "
-	Modules for interacting with the `chat/polls` group of OpenAI APIs
+	Modules for interacting with the `chat/polls` group of Stream APIs
 
-	API Reference: https://platform.openai.com/docs/api-reference/chat/polls
+	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
 	"
   require Logger
   @doc ~S"

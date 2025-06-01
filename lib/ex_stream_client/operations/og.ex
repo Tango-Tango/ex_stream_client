@@ -1,8 +1,8 @@
 defmodule ExStreamClient.Operations.Og do
   @moduledoc "
-	Modules for interacting with the `og` group of OpenAI APIs
+	Modules for interacting with the `og` group of Stream APIs
 
-	API Reference: https://platform.openai.com/docs/api-reference/og
+	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
 	"
   require Logger
   @doc ~S"

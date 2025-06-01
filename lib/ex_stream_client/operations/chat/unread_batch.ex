@@ -1,8 +1,8 @@
 defmodule ExStreamClient.Operations.Chat.UnreadBatch do
   @moduledoc "
-	Modules for interacting with the `chat/unread_batch` group of OpenAI APIs
+	Modules for interacting with the `chat/unread_batch` group of Stream APIs
 
-	API Reference: https://platform.openai.com/docs/api-reference/chat/unread_batch
+	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
 	"
   require Logger
   @doc ~S"

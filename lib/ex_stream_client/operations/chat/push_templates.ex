@@ -1,8 +1,8 @@
 defmodule ExStreamClient.Operations.Chat.PushTemplates do
   @moduledoc "
-	Modules for interacting with the `chat/push_templates` group of OpenAI APIs
+	Modules for interacting with the `chat/push_templates` group of Stream APIs
 
-	API Reference: https://platform.openai.com/docs/api-reference/chat/push_templates
+	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
 	"
   require Logger
   @doc ~S"

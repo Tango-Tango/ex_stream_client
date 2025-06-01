@@ -1,8 +1,8 @@
 defmodule ExStreamClient.Operations.Permissions do
   @moduledoc "
-	Modules for interacting with the `permissions` group of OpenAI APIs
+	Modules for interacting with the `permissions` group of Stream APIs
 
-	API Reference: https://platform.openai.com/docs/api-reference/permissions
+	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
 	"
   require Logger
   @doc ~S"

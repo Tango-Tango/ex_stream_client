@@ -1,8 +1,8 @@
 defmodule ExStreamClient.Operations.Tasks do
   @moduledoc "
-	Modules for interacting with the `tasks` group of OpenAI APIs
+	Modules for interacting with the `tasks` group of Stream APIs
 
-	API Reference: https://platform.openai.com/docs/api-reference/tasks
+	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
 	"
   require Logger
   @doc ~S"

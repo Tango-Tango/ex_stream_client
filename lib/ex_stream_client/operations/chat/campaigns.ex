@@ -1,8 +1,8 @@
 defmodule ExStreamClient.Operations.Chat.Campaigns do
   @moduledoc "
-	Modules for interacting with the `chat/campaigns` group of OpenAI APIs
+	Modules for interacting with the `chat/campaigns` group of Stream APIs
 
-	API Reference: https://platform.openai.com/docs/api-reference/chat/campaigns
+	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
 	"
   require Logger
   @doc ~S"

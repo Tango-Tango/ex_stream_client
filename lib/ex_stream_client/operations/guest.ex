@@ -1,8 +1,8 @@
 defmodule ExStreamClient.Operations.Guest do
   @moduledoc "
-	Modules for interacting with the `guest` group of OpenAI APIs
+	Modules for interacting with the `guest` group of Stream APIs
 
-	API Reference: https://platform.openai.com/docs/api-reference/guest
+	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
 	"
   require Logger
   @doc ~S"

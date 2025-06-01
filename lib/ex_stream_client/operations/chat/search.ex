@@ -1,8 +1,8 @@
 defmodule ExStreamClient.Operations.Chat.Search do
   @moduledoc "
-	Modules for interacting with the `chat/search` group of OpenAI APIs
+	Modules for interacting with the `chat/search` group of Stream APIs
 
-	API Reference: https://platform.openai.com/docs/api-reference/chat/search
+	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
 	"
   require Logger
   @doc ~S"

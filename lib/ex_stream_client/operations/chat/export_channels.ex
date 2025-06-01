@@ -1,8 +1,8 @@
 defmodule ExStreamClient.Operations.Chat.ExportChannels do
   @moduledoc "
-	Modules for interacting with the `chat/export_channels` group of OpenAI APIs
+	Modules for interacting with the `chat/export_channels` group of Stream APIs
 
-	API Reference: https://platform.openai.com/docs/api-reference/chat/export_channels
+	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
 	"
   require Logger
   @doc ~S"

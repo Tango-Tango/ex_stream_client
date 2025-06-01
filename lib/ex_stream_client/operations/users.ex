@@ -1,8 +1,8 @@
 defmodule ExStreamClient.Operations.Users do
   @moduledoc "
-	Modules for interacting with the `users` group of OpenAI APIs
+	Modules for interacting with the `users` group of Stream APIs
 
-	API Reference: https://platform.openai.com/docs/api-reference/users
+	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
 	"
   require Logger
   @doc ~S"

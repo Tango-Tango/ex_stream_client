@@ -56,6 +56,18 @@ defmodule ExStreamClient.MixProject do
       extras: ["README.md", "CHANGELOG.md"],
       source_url: @source_url,
       homepage_url: @source_url,
+      groups_for_extras: [],
+      groups_for_modules: [
+        "Chat API": ~r"ExStreamClient.Operations.Chat.",
+        "Common API": ~r"ExStreamClient.Operations.",
+        Model: ~r"ExStreamClient.Model."
+      ],
+      nest_modules_by_prefix: [
+        ExStreamClient.Operations.Chat,
+        ExStreamClient.Operations,
+        ExStreamClient.Model
+      ],
+      skip_module_groups: ["Mix Tasks"],
       # Optional
       filter_modules: &__MODULE__.docs_filter/2
     ]
@@ -65,7 +77,7 @@ defmodule ExStreamClient.MixProject do
   defp elixirc_paths(_), do: ["lib"]
 
   def docs_filter(module, _docs) do
-    not String.starts_with?(Atom.to_string(module), "Mix.") and
-      not String.starts_with?(Atom.to_string(module), "ExStreamClient.Tools.")
+    not String.starts_with?(Atom.to_string(module), "Elixir.Mix.") and
+      not String.starts_with?(Atom.to_string(module), "Elixir.ExStreamClient.Tools.")
   end
 end

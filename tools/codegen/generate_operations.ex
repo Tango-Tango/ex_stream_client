@@ -28,15 +28,6 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
         [@ops_dir, Macro.underscore(name) <> ".ex"]
         |> Path.join()
 
-      moduledoc_string =
-        [
-          "",
-          "Modules for interacting with the `#{name}` group of Stream APIs\n",
-          "API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2",
-          ""
-        ]
-        |> Enum.join("\n\t")
-
       function_asts =
         functions
         |> Enum.map(fn fx ->
@@ -139,25 +130,21 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
               end
             end
 
-          description_str = if description == "", do: summary, else: description
+          description_str = if(description == "", do: summary, else: description)
 
           doc_ast =
             quote do
               @doc unquote(
-                     [
-                       "",
-                       description_str,
-                       "",
-                       "### Required Arguments:",
-                       "\t#{required_args_docstring}"
-                     ]
+                     [format_events_as_code(description_str), ""]
+                     |> maybe_append(merged_required_args != [], "### Required Arguments:")
+                     |> maybe_append(merged_required_args != [], "#{required_args_docstring}")
                      |> maybe_append(merged_optional_args != [], "### Optional Arguments:")
                      |> maybe_append(
                        merged_optional_args != [],
-                       "\t#{optional_args_docstring}"
+                       "#{optional_args_docstring}"
                      )
                      |> maybe_append(true, "")
-                     |> Enum.join("\n\t")
+                     |> Enum.join("\n")
                      |> as_heredoc()
                    )
             end
@@ -297,10 +284,18 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
           |> maybe_append(true, method_impl_ast)
         end)
 
+      moduledoc_string =
+        [
+          "Modules for interacting with the `#{name}` group of Stream APIs\n",
+          "API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2",
+          ""
+        ]
+        |> Enum.join("\n")
+
       mod_ast =
         quote do
           defmodule unquote(modname) do
-            @moduledoc unquote(moduledoc_string)
+            @moduledoc unquote(as_heredoc(moduledoc_string))
             require Logger
             unquote_splicing(function_asts |> List.flatten())
           end
@@ -311,8 +306,22 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
     end)
   end
 
+  defp format_events_as_code(description) do
+    description
+    |> String.split("\n")
+    |> Enum.reduce({[], false}, fn
+      "- " <> event, {acc, true} -> {["- `#{event}`" | acc], true}
+      line, {acc, true} -> {[line | acc], line == ""}
+      "Sends events" <> _ = line, {acc, false} -> {["### #{line}" | acc], true}
+      line, {acc, in_events} -> {[line | acc], in_events}
+    end)
+    |> elem(0)
+    |> Enum.reverse()
+    |> Enum.join("\n")
+  end
+
   defp build_arg_docstring(args) do
-    Enum.map_join(args, "\n\t\t", fn i ->
+    Enum.map_join(args, "\n", fn i ->
       s = "- `#{i.name}`"
 
       s =
@@ -325,7 +334,7 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
 
       s =
         case i.type do
-          {:component, ref} -> "#{s}: #{ref}"
+          {:component, ref} -> "#{s}: `#{Codegen.string_to_component(ref)}`"
           _ -> s
         end
 
@@ -334,9 +343,9 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
   end
 
   defp as_heredoc(string) do
-    {:sigil_S, [],
+    {:sigil_S, [delimiter: ~s(""")],
      [
-       {:<<>>, [], [string]},
+       {:<<>>, [indentation: 0], [string]},
        []
      ]}
   end

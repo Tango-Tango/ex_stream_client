@@ -96,7 +96,7 @@ defmodule ExStreamClient.HTTP do
   end
 
   defp safe_decode_atoms(body) do
-    {:ok, Jason.decode!(body, keys: :atoms!)}
+    {:ok, Jason.decode!(body, keys: :strings)}
   rescue
     _ -> {:error, :invalid_atoms}
   end

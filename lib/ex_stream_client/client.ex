@@ -72,7 +72,7 @@ defmodule ExStreamClient.HTTP do
       |> Req.Request.prepend_response_steps(
         decode_error_json: fn {request, response} ->
           if response.status in 400..599 and is_binary(response.body) do
-            case decode_json_with_fallback(response.body) do
+            case Jason.decode(response.body, keys: :strings) do
               {:ok, decoded} -> {request, %{response | body: decoded}}
               _ -> {request, response}
             end
@@ -81,42 +81,4 @@ defmodule ExStreamClient.HTTP do
           end
         end
       )
-
-  defp decode_json_with_fallback(body) do
-    case safe_decode_atoms(body) do
-      {:ok, decoded} ->
-        {:ok, decoded}
-
-      {:error, _} ->
-        case safe_decode_strings(body) do
-          {:ok, decoded} -> {:ok, convert_to_snake_case(decoded)}
-          error -> error
-        end
-    end
-  end
-
-  defp safe_decode_atoms(body) do
-    {:ok, Jason.decode!(body, keys: :strings)}
-  rescue
-    _ -> {:error, :invalid_atoms}
-  end
-
-  defp safe_decode_strings(body) do
-    {:ok, Jason.decode!(body, keys: :strings)}
-  rescue
-    e -> {:error, e}
-  end
-
-  defp convert_to_snake_case(decoded) when is_map(decoded) do
-    for {k, v} <- decoded, into: %{} do
-      snake_key = Macro.underscore(k)
-      {try_convert_to_atom(snake_key), v}
-    end
-  end
-
-  defp try_convert_to_atom(key) do
-    String.to_existing_atom(key)
-  rescue
-    _ -> key
-  end
 end

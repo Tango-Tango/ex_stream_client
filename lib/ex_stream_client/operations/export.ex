@@ -1,17 +1,18 @@
 defmodule ExStreamClient.Operations.Export do
-  @moduledoc "
-	Modules for interacting with the `export` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `export` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Exports user profile, reactions and messages for list of given users
 
-	
-	### Required Arguments:
-		- `payload`: ExportUsersRequest
-	"
+  @doc ~S"""
+  Exports user profile, reactions and messages for list of given users
+
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.ExportUsersRequest`
+  """
   @spec export_users(ExStreamClient.Model.ExportUsersRequest.t()) ::
           {:ok, ExStreamClient.Model.ExportUsersResponse.t()} | {:error, any()}
   def export_users(payload) do

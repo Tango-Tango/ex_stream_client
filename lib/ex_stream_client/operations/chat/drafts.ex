@@ -1,17 +1,18 @@
 defmodule ExStreamClient.Operations.Chat.Drafts do
-  @moduledoc "
-	Modules for interacting with the `chat/drafts` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `chat/drafts` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Queries draft messages for a user
 
-	
-	### Required Arguments:
-		- `payload`: QueryDraftsRequest
-	"
+  @doc ~S"""
+  Queries draft messages for a user
+
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.QueryDraftsRequest`
+  """
   @spec query_drafts(ExStreamClient.Model.QueryDraftsRequest.t()) ::
           {:ok, ExStreamClient.Model.QueryDraftsResponse.t()} | {:error, any()}
   def query_drafts(payload) do

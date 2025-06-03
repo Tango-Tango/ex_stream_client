@@ -1,17 +1,18 @@
 defmodule ExStreamClient.Operations.Guest do
-  @moduledoc "
-	Modules for interacting with the `guest` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `guest` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	
 
-	
-	### Required Arguments:
-		- `payload`: CreateGuestRequest
-	"
+  @doc ~S"""
+
+
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.CreateGuestRequest`
+  """
   @spec create_guest(ExStreamClient.Model.CreateGuestRequest.t()) ::
           {:ok, ExStreamClient.Model.CreateGuestResponse.t()} | {:error, any()}
   def create_guest(payload) do

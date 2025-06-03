@@ -1,21 +1,22 @@
 defmodule ExStreamClient.Operations.Chat.Channels do
-  @moduledoc "
-	Modules for interacting with the `chat/channels` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `chat/channels` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	
 
-	
-	### Required Arguments:
-		- `type`
-		- `id`
-		- `payload`: UpdateMemberPartialRequest
-	### Optional Arguments:
-		- `user_id`
-	"
+  @doc ~S"""
+
+
+
+  ### Required Arguments:
+  - `type`
+  - `id`
+  - `payload`: `Elixir.ExStreamClient.Model.UpdateMemberPartialRequest`
+  ### Optional Arguments:
+  - `user_id`
+  """
   @spec update_member_partial(
           String.t(),
           String.t(),
@@ -70,15 +71,15 @@ defmodule ExStreamClient.Operations.Chat.Channels do
     end
   end
 
-  @doc ~S"
-	Marks channel as unread from a specific message
+  @doc ~S"""
+  Marks channel as unread from a specific message
 
-	
-	### Required Arguments:
-		- `type`
-		- `id`
-		- `payload`: MarkUnreadRequest
-	"
+
+  ### Required Arguments:
+  - `type`
+  - `id`
+  - `payload`: `Elixir.ExStreamClient.Model.MarkUnreadRequest`
+  """
   @spec mark_unread(String.t(), String.t(), ExStreamClient.Model.MarkUnreadRequest.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def mark_unread(type, id, payload) do
@@ -119,17 +120,17 @@ defmodule ExStreamClient.Operations.Chat.Channels do
     end
   end
 
-  @doc ~S"
-	Marks channels as read up to the specific message. If no channels is given, mark all channel as read
+  @doc ~S"""
+  Marks channels as read up to the specific message. If no channels is given, mark all channel as read
 
-Sends events:
-- message.read
-- message.read
+  ### Sends events:
+  - `message.read`
+  - `message.read`
 
-	
-	### Required Arguments:
-		- `payload`: MarkChannelsReadRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.MarkChannelsReadRequest`
+  """
   @spec mark_channels_read(ExStreamClient.Model.MarkChannelsReadRequest.t()) ::
           {:ok, ExStreamClient.Model.MarkReadResponse.t()} | {:error, any()}
   def mark_channels_read(payload) do
@@ -169,19 +170,19 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Marks channel as hidden for current user
+  @doc ~S"""
+  Marks channel as hidden for current user
 
-Sends events:
-- channel.hidden
-- channel.hidden
+  ### Sends events:
+  - `channel.hidden`
+  - `channel.hidden`
 
-	
-	### Required Arguments:
-		- `type`
-		- `id`
-		- `payload`: HideChannelRequest
-	"
+
+  ### Required Arguments:
+  - `type`
+  - `id`
+  - `payload`: `Elixir.ExStreamClient.Model.HideChannelRequest`
+  """
   @spec hide_channel(String.t(), String.t(), ExStreamClient.Model.HideChannelRequest.t()) ::
           {:ok, ExStreamClient.Model.HideChannelResponse.t()} | {:error, any()}
   def hide_channel(type, id, payload) do
@@ -222,22 +223,22 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	This Method creates a channel or returns an existing one with matching attributes
+  @doc ~S"""
+  This Method creates a channel or returns an existing one with matching attributes
 
-Sends events:
-- channel.created
-- member.added
-- member.removed
-- member.updated
-- user.watching.start
+  ### Sends events:
+  - `channel.created`
+  - `member.added`
+  - `member.removed`
+  - `member.updated`
+  - `user.watching.start`
 
-	
-	### Required Arguments:
-		- `type`
-		- `id`
-		- `payload`: ChannelGetOrCreateRequest
-	"
+
+  ### Required Arguments:
+  - `type`
+  - `id`
+  - `payload`: `Elixir.ExStreamClient.Model.ChannelGetOrCreateRequest`
+  """
   @spec get_or_create_channel(
           String.t(),
           String.t(),
@@ -281,13 +282,13 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Query channels with filter query
+  @doc ~S"""
+  Query channels with filter query
 
-	
-	### Required Arguments:
-		- `payload`: QueryChannelsRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.QueryChannelsRequest`
+  """
   @spec query_channels(ExStreamClient.Model.QueryChannelsRequest.t()) ::
           {:ok, ExStreamClient.Model.QueryChannelsResponse.t()} | {:error, any()}
   def query_channels(payload) do
@@ -326,21 +327,21 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Sends new message to the specified channel
+  @doc ~S"""
+  Sends new message to the specified channel
 
-Sends events:
-- message.new
-- message.updated
-- message.new
-- message.updated
+  ### Sends events:
+  - `message.new`
+  - `message.updated`
+  - `message.new`
+  - `message.updated`
 
-	
-	### Required Arguments:
-		- `type`
-		- `id`
-		- `payload`: SendMessageRequest
-	"
+
+  ### Required Arguments:
+  - `type`
+  - `id`
+  - `payload`: `Elixir.ExStreamClient.Model.SendMessageRequest`
+  """
   @spec send_message(String.t(), String.t(), ExStreamClient.Model.SendMessageRequest.t()) ::
           {:ok, ExStreamClient.Model.SendMessageResponse.t()} | {:error, any()}
   def send_message(type, id, payload) do
@@ -381,19 +382,19 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Truncates messages from a channel. Can be applied to the entire channel or scoped to specific members.
+  @doc ~S"""
+  Truncates messages from a channel. Can be applied to the entire channel or scoped to specific members.
 
-Sends events:
-- channel.truncated
-- channel.truncated
+  ### Sends events:
+  - `channel.truncated`
+  - `channel.truncated`
 
-	
-	### Required Arguments:
-		- `type`
-		- `id`
-		- `payload`: TruncateChannelRequest
-	"
+
+  ### Required Arguments:
+  - `type`
+  - `id`
+  - `payload`: `Elixir.ExStreamClient.Model.TruncateChannelRequest`
+  """
   @spec truncate_channel(String.t(), String.t(), ExStreamClient.Model.TruncateChannelRequest.t()) ::
           {:ok, ExStreamClient.Model.TruncateChannelResponse.t()} | {:error, any()}
   def truncate_channel(type, id, payload) do
@@ -434,19 +435,19 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Shows previously hidden channel
+  @doc ~S"""
+  Shows previously hidden channel
 
-Sends events:
-- channel.visible
-- channel.visible
+  ### Sends events:
+  - `channel.visible`
+  - `channel.visible`
 
-	
-	### Required Arguments:
-		- `type`
-		- `id`
-		- `payload`: ShowChannelRequest
-	"
+
+  ### Required Arguments:
+  - `type`
+  - `id`
+  - `payload`: `Elixir.ExStreamClient.Model.ShowChannelRequest`
+  """
   @spec show_channel(String.t(), String.t(), ExStreamClient.Model.ShowChannelRequest.t()) ::
           {:ok, ExStreamClient.Model.ShowChannelResponse.t()} | {:error, any()}
   def show_channel(type, id, payload) do
@@ -487,15 +488,15 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Returns list messages found by IDs
+  @doc ~S"""
+  Returns list messages found by IDs
 
-	
-	### Required Arguments:
-		- `type`
-		- `id`
-		- `ids`
-	"
+
+  ### Required Arguments:
+  - `type`
+  - `id`
+  - `ids`
+  """
   @spec get_many_messages(String.t(), String.t(), list()) ::
           {:ok, ExStreamClient.Model.GetManyMessagesResponse.t()} | {:error, any()}
   def get_many_messages(type, id, ids) do
@@ -536,15 +537,15 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Sends event to the channel
+  @doc ~S"""
+  Sends event to the channel
 
-	
-	### Required Arguments:
-		- `type`
-		- `id`
-		- `payload`: SendEventRequest
-	"
+
+  ### Required Arguments:
+  - `type`
+  - `id`
+  - `payload`: `Elixir.ExStreamClient.Model.SendEventRequest`
+  """
   @spec send_event(String.t(), String.t(), ExStreamClient.Model.SendEventRequest.t()) ::
           {:ok, ExStreamClient.Model.EventResponse.t()} | {:error, any()}
   def send_event(type, id, payload) do
@@ -585,17 +586,17 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Get a draft
+  @doc ~S"""
+  Get a draft
 
-	
-	### Required Arguments:
-		- `type`
-		- `id`
-	### Optional Arguments:
-		- `parent_id`
-		- `user_id`
-	"
+
+  ### Required Arguments:
+  - `type`
+  - `id`
+  ### Optional Arguments:
+  - `parent_id`
+  - `user_id`
+  """
   @spec get_draft(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.GetDraftResponse.t()} | {:error, any()}
   @spec get_draft(String.t(), String.t(), [{:user_id, String.t()} | {:parent_id, String.t()}]) ::
@@ -643,20 +644,20 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Deletes a draft
+  @doc ~S"""
+  Deletes a draft
 
-Sends events:
-- draft.deleted
+  ### Sends events:
+  - `draft.deleted`
 
-	
-	### Required Arguments:
-		- `type`
-		- `id`
-	### Optional Arguments:
-		- `parent_id`
-		- `user_id`
-	"
+
+  ### Required Arguments:
+  - `type`
+  - `id`
+  ### Optional Arguments:
+  - `parent_id`
+  - `user_id`
+  """
   @spec delete_draft(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   @spec delete_draft(String.t(), String.t(), [{:user_id, String.t()} | {:parent_id, String.t()}]) ::
@@ -704,15 +705,15 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Uploads file
+  @doc ~S"""
+  Uploads file
 
-	
-	### Required Arguments:
-		- `type`
-		- `id`
-		- `payload`: FileUploadRequest
-	"
+
+  ### Required Arguments:
+  - `type`
+  - `id`
+  - `payload`: `Elixir.ExStreamClient.Model.FileUploadRequest`
+  """
   @spec upload_file(String.t(), String.t(), ExStreamClient.Model.FileUploadRequest.t()) ::
           {:ok, ExStreamClient.Model.FileUploadResponse.t()} | {:error, any()}
   def upload_file(type, id, payload) do
@@ -753,16 +754,16 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Deletes previously uploaded file
+  @doc ~S"""
+  Deletes previously uploaded file
 
-	
-	### Required Arguments:
-		- `type`
-		- `id`
-	### Optional Arguments:
-		- `url`
-	"
+
+  ### Required Arguments:
+  - `type`
+  - `id`
+  ### Optional Arguments:
+  - `url`
+  """
   @spec delete_file(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   @spec delete_file(String.t(), String.t(), url: String.t()) ::
@@ -810,19 +811,19 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Marks channel as read up to the specific message
+  @doc ~S"""
+  Marks channel as read up to the specific message
 
-Sends events:
-- message.read
-- message.read
+  ### Sends events:
+  - `message.read`
+  - `message.read`
 
-	
-	### Required Arguments:
-		- `type`
-		- `id`
-		- `payload`: MarkReadRequest
-	"
+
+  ### Required Arguments:
+  - `type`
+  - `id`
+  - `payload`: `Elixir.ExStreamClient.Model.MarkReadRequest`
+  """
   @spec mark_read(String.t(), String.t(), ExStreamClient.Model.MarkReadRequest.t()) ::
           {:ok, ExStreamClient.Model.MarkReadResponse.t()} | {:error, any()}
   def mark_read(type, id, payload) do
@@ -863,15 +864,15 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Uploads image
+  @doc ~S"""
+  Uploads image
 
-	
-	### Required Arguments:
-		- `type`
-		- `id`
-		- `payload`: ImageUploadRequest
-	"
+
+  ### Required Arguments:
+  - `type`
+  - `id`
+  - `payload`: `Elixir.ExStreamClient.Model.ImageUploadRequest`
+  """
   @spec upload_image(String.t(), String.t(), ExStreamClient.Model.ImageUploadRequest.t()) ::
           {:ok, ExStreamClient.Model.ImageUploadResponse.t()} | {:error, any()}
   def upload_image(type, id, payload) do
@@ -912,16 +913,16 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Deletes previously uploaded image
+  @doc ~S"""
+  Deletes previously uploaded image
 
-	
-	### Required Arguments:
-		- `type`
-		- `id`
-	### Optional Arguments:
-		- `url`
-	"
+
+  ### Required Arguments:
+  - `type`
+  - `id`
+  ### Optional Arguments:
+  - `url`
+  """
   @spec delete_image(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   @spec delete_image(String.t(), String.t(), url: String.t()) ::
@@ -969,21 +970,21 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	This Method creates a channel or returns an existing one with matching attributes
+  @doc ~S"""
+  This Method creates a channel or returns an existing one with matching attributes
 
-Sends events:
-- channel.created
-- member.added
-- member.removed
-- member.updated
-- user.watching.start
+  ### Sends events:
+  - `channel.created`
+  - `member.added`
+  - `member.removed`
+  - `member.updated`
+  - `user.watching.start`
 
-	
-	### Required Arguments:
-		- `type`
-		- `payload`: ChannelGetOrCreateRequest
-	"
+
+  ### Required Arguments:
+  - `type`
+  - `payload`: `Elixir.ExStreamClient.Model.ChannelGetOrCreateRequest`
+  """
   @spec get_or_create_distinct_channel(
           String.t(),
           ExStreamClient.Model.ChannelGetOrCreateRequest.t()
@@ -1025,27 +1026,27 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Change channel data
+  @doc ~S"""
+  Change channel data
 
-Sends events:
-- channel.updated
-- member.added
-- member.removed
-- member.updated
-- message.new
-- channel.updated
-- member.added
-- member.removed
-- member.updated
-- message.new
+  ### Sends events:
+  - `channel.updated`
+  - `member.added`
+  - `member.removed`
+  - `member.updated`
+  - `message.new`
+  - `channel.updated`
+  - `member.added`
+  - `member.removed`
+  - `member.updated`
+  - `message.new`
 
-	
-	### Required Arguments:
-		- `type`
-		- `id`
-		- `payload`: UpdateChannelRequest
-	"
+
+  ### Required Arguments:
+  - `type`
+  - `id`
+  - `payload`: `Elixir.ExStreamClient.Model.UpdateChannelRequest`
+  """
   @spec update_channel(String.t(), String.t(), ExStreamClient.Model.UpdateChannelRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateChannelResponse.t()} | {:error, any()}
   def update_channel(type, id, payload) do
@@ -1085,19 +1086,19 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Updates certain fields of the channel
+  @doc ~S"""
+  Updates certain fields of the channel
 
-Sends events:
-- channel.updated
-- channel.updated
+  ### Sends events:
+  - `channel.updated`
+  - `channel.updated`
 
-	
-	### Required Arguments:
-		- `type`
-		- `id`
-		- `payload`: UpdateChannelPartialRequest
-	"
+
+  ### Required Arguments:
+  - `type`
+  - `id`
+  - `payload`: `Elixir.ExStreamClient.Model.UpdateChannelPartialRequest`
+  """
   @spec update_channel_partial(
           String.t(),
           String.t(),
@@ -1140,20 +1141,20 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Deletes channel
+  @doc ~S"""
+  Deletes channel
 
-Sends events:
-- channel.deleted
-- channel.deleted
+  ### Sends events:
+  - `channel.deleted`
+  - `channel.deleted`
 
-	
-	### Required Arguments:
-		- `type`
-		- `id`
-	### Optional Arguments:
-		- `hard_delete`
-	"
+
+  ### Required Arguments:
+  - `type`
+  - `id`
+  ### Optional Arguments:
+  - `hard_delete`
+  """
   @spec delete_channel(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.DeleteChannelResponse.t()} | {:error, any()}
   @spec delete_channel(String.t(), String.t(), hard_delete: boolean()) ::
@@ -1201,17 +1202,17 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Allows to delete several channels at once asynchronously
+  @doc ~S"""
+  Allows to delete several channels at once asynchronously
 
-Sends events:
-- channel.deleted
-- channel.deleted
+  ### Sends events:
+  - `channel.deleted`
+  - `channel.deleted`
 
-	
-	### Required Arguments:
-		- `payload`: DeleteChannelsRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.DeleteChannelsRequest`
+  """
   @spec delete_channels(ExStreamClient.Model.DeleteChannelsRequest.t()) ::
           {:ok, ExStreamClient.Model.DeleteChannelsResponse.t()} | {:error, any()}
   def delete_channels(payload) do

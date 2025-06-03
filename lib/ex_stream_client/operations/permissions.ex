@@ -1,17 +1,16 @@
 defmodule ExStreamClient.Operations.Permissions do
-  @moduledoc "
-	Modules for interacting with the `permissions` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `permissions` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Lists all available permissions
 
-	
-	### Required Arguments:
-		
-	"
+  @doc ~S"""
+  Lists all available permissions
+
+
+  """
   @spec list_permissions() ::
           {:ok, ExStreamClient.Model.ListPermissionsResponse.t()} | {:error, any()}
   def list_permissions() do
@@ -50,13 +49,13 @@ defmodule ExStreamClient.Operations.Permissions do
     end
   end
 
-  @doc ~S"
-	Gets custom permission
+  @doc ~S"""
+  Gets custom permission
 
-	
-	### Required Arguments:
-		- `id`
-	"
+
+  ### Required Arguments:
+  - `id`
+  """
   @spec get_permission(String.t()) ::
           {:ok, ExStreamClient.Model.GetCustomPermissionResponse.t()} | {:error, any()}
   def get_permission(id) do

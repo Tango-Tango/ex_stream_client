@@ -1,17 +1,18 @@
 defmodule ExStreamClient.Operations.CheckSqs do
-  @moduledoc "
-	Modules for interacting with the `check_sqs` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `check_sqs` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Validates Amazon SQS credentials
 
-	
-	### Required Arguments:
-		- `payload`: CheckSQSRequest
-	"
+  @doc ~S"""
+  Validates Amazon SQS credentials
+
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.CheckSQSRequest`
+  """
   @spec check_sqs(ExStreamClient.Model.CheckSQSRequest.t()) ::
           {:ok, ExStreamClient.Model.CheckSQSResponse.t()} | {:error, any()}
   def check_sqs(payload) do

@@ -1,17 +1,18 @@
 defmodule ExStreamClient.Operations.ExternalStorage do
-  @moduledoc "
-	Modules for interacting with the `external_storage` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `external_storage` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	
 
-	
-	### Required Arguments:
-		- `name`
-	"
+  @doc ~S"""
+
+
+
+  ### Required Arguments:
+  - `name`
+  """
   @spec check_external_storage(String.t()) ::
           {:ok, ExStreamClient.Model.CheckExternalStorageResponse.t()} | {:error, any()}
   def check_external_storage(name) do
@@ -50,13 +51,13 @@ defmodule ExStreamClient.Operations.ExternalStorage do
     end
   end
 
-  @doc ~S"
-	Creates new external storage
+  @doc ~S"""
+  Creates new external storage
 
-	
-	### Required Arguments:
-		- `payload`: CreateExternalStorageRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.CreateExternalStorageRequest`
+  """
   @spec create_external_storage(ExStreamClient.Model.CreateExternalStorageRequest.t()) ::
           {:ok, ExStreamClient.Model.CreateExternalStorageResponse.t()} | {:error, any()}
   def create_external_storage(payload) do
@@ -95,13 +96,11 @@ defmodule ExStreamClient.Operations.ExternalStorage do
     end
   end
 
-  @doc ~S"
-	Lists external storage
+  @doc ~S"""
+  Lists external storage
 
-	
-	### Required Arguments:
-		
-	"
+
+  """
   @spec list_external_storage() ::
           {:ok, ExStreamClient.Model.ListExternalStorageResponse.t()} | {:error, any()}
   def list_external_storage() do
@@ -140,14 +139,14 @@ defmodule ExStreamClient.Operations.ExternalStorage do
     end
   end
 
-  @doc ~S"
-	
+  @doc ~S"""
 
-	
-	### Required Arguments:
-		- `name`
-		- `payload`: UpdateExternalStorageRequest
-	"
+
+
+  ### Required Arguments:
+  - `name`
+  - `payload`: `Elixir.ExStreamClient.Model.UpdateExternalStorageRequest`
+  """
   @spec update_external_storage(String.t(), ExStreamClient.Model.UpdateExternalStorageRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateExternalStorageResponse.t()} | {:error, any()}
   def update_external_storage(name, payload) do
@@ -187,13 +186,13 @@ defmodule ExStreamClient.Operations.ExternalStorage do
     end
   end
 
-  @doc ~S"
-	Deletes external storage
+  @doc ~S"""
+  Deletes external storage
 
-	
-	### Required Arguments:
-		- `name`
-	"
+
+  ### Required Arguments:
+  - `name`
+  """
   @spec delete_external_storage(String.t()) ::
           {:ok, ExStreamClient.Model.DeleteExternalStorageResponse.t()} | {:error, any()}
   def delete_external_storage(name) do

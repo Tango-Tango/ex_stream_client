@@ -1,19 +1,18 @@
 defmodule ExStreamClient.Operations.Chat.Members do
-  @moduledoc "
-	Modules for interacting with the `chat/members` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `chat/members` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Find and filter channel members
 
-	
-	### Required Arguments:
-		
-	### Optional Arguments:
-		- `payload`: QueryMembersPayload
-	"
+  @doc ~S"""
+  Find and filter channel members
+
+
+  ### Optional Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.QueryMembersPayload`
+  """
   @spec query_members() :: {:ok, ExStreamClient.Model.MembersResponse.t()} | {:error, any()}
   @spec query_members(payload: ExStreamClient.Model.QueryMembersPayload.t()) ::
           {:ok, ExStreamClient.Model.MembersResponse.t()} | {:error, any()}

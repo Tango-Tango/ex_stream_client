@@ -1,17 +1,18 @@
 defmodule ExStreamClient.Operations.Tasks do
-  @moduledoc "
-	Modules for interacting with the `tasks` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `tasks` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Gets status of a task
 
-	
-	### Required Arguments:
-		- `id`
-	"
+  @doc ~S"""
+  Gets status of a task
+
+
+  ### Required Arguments:
+  - `id`
+  """
   @spec get_task(String.t()) :: {:ok, ExStreamClient.Model.GetTaskResponse.t()} | {:error, any()}
   def get_task(id) do
     request_opts = [url: "/api/v2/tasks/#{id}", method: :get, params: []] ++ []

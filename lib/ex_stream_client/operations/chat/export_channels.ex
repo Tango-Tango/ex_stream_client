@@ -1,17 +1,18 @@
 defmodule ExStreamClient.Operations.Chat.ExportChannels do
-  @moduledoc "
-	Modules for interacting with the `chat/export_channels` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `chat/export_channels` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Exports channel data to JSON file
 
-	
-	### Required Arguments:
-		- `payload`: ExportChannelsRequest
-	"
+  @doc ~S"""
+  Exports channel data to JSON file
+
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.ExportChannelsRequest`
+  """
   @spec export_channels(ExStreamClient.Model.ExportChannelsRequest.t()) ::
           {:ok, ExStreamClient.Model.ExportChannelsResponse.t()} | {:error, any()}
   def export_channels(payload) do

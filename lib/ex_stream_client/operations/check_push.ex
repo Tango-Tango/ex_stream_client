@@ -1,17 +1,18 @@
 defmodule ExStreamClient.Operations.CheckPush do
-  @moduledoc "
-	Modules for interacting with the `check_push` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `check_push` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Sends a test message via push, this is a test endpoint to verify your push settings
 
-	
-	### Required Arguments:
-		- `payload`: CheckPushRequest
-	"
+  @doc ~S"""
+  Sends a test message via push, this is a test endpoint to verify your push settings
+
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.CheckPushRequest`
+  """
   @spec check_push(ExStreamClient.Model.CheckPushRequest.t()) ::
           {:ok, ExStreamClient.Model.CheckPushResponse.t()} | {:error, any()}
   def check_push(payload) do

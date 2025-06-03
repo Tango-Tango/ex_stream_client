@@ -1,19 +1,18 @@
 defmodule ExStreamClient.Operations.Chat.QueryBannedUsers do
-  @moduledoc "
-	Modules for interacting with the `chat/query_banned_users` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `chat/query_banned_users` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Find and filter channel scoped or global user bans
 
-	
-	### Required Arguments:
-		
-	### Optional Arguments:
-		- `payload`: QueryBannedUsersPayload
-	"
+  @doc ~S"""
+  Find and filter channel scoped or global user bans
+
+
+  ### Optional Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.QueryBannedUsersPayload`
+  """
   @spec query_banned_users() ::
           {:ok, ExStreamClient.Model.QueryBannedUsersResponse.t()} | {:error, any()}
   @spec query_banned_users(payload: ExStreamClient.Model.QueryBannedUsersPayload.t()) ::

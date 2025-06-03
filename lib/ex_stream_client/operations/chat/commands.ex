@@ -1,17 +1,18 @@
 defmodule ExStreamClient.Operations.Chat.Commands do
-  @moduledoc "
-	Modules for interacting with the `chat/commands` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `chat/commands` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Creates custom chat command
 
-	
-	### Required Arguments:
-		- `payload`: CreateCommandRequest
-	"
+  @doc ~S"""
+  Creates custom chat command
+
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.CreateCommandRequest`
+  """
   @spec create_command(ExStreamClient.Model.CreateCommandRequest.t()) ::
           {:ok, ExStreamClient.Model.CreateCommandResponse.t()} | {:error, any()}
   def create_command(payload) do
@@ -50,13 +51,11 @@ defmodule ExStreamClient.Operations.Chat.Commands do
     end
   end
 
-  @doc ~S"
-	Returns all custom commands
+  @doc ~S"""
+  Returns all custom commands
 
-	
-	### Required Arguments:
-		
-	"
+
+  """
   @spec list_commands() :: {:ok, ExStreamClient.Model.ListCommandsResponse.t()} | {:error, any()}
   def list_commands() do
     request_opts = [url: "/api/v2/chat/commands", method: :get, params: []] ++ []
@@ -94,14 +93,14 @@ defmodule ExStreamClient.Operations.Chat.Commands do
     end
   end
 
-  @doc ~S"
-	Updates custom chat command
+  @doc ~S"""
+  Updates custom chat command
 
-	
-	### Required Arguments:
-		- `name`
-		- `payload`: UpdateCommandRequest
-	"
+
+  ### Required Arguments:
+  - `name`
+  - `payload`: `Elixir.ExStreamClient.Model.UpdateCommandRequest`
+  """
   @spec update_command(String.t(), ExStreamClient.Model.UpdateCommandRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateCommandResponse.t()} | {:error, any()}
   def update_command(name, payload) do
@@ -141,13 +140,13 @@ defmodule ExStreamClient.Operations.Chat.Commands do
     end
   end
 
-  @doc ~S"
-	Returns custom command by its name
+  @doc ~S"""
+  Returns custom command by its name
 
-	
-	### Required Arguments:
-		- `name`
-	"
+
+  ### Required Arguments:
+  - `name`
+  """
   @spec get_command(String.t()) ::
           {:ok, ExStreamClient.Model.GetCommandResponse.t()} | {:error, any()}
   def get_command(name) do
@@ -186,13 +185,13 @@ defmodule ExStreamClient.Operations.Chat.Commands do
     end
   end
 
-  @doc ~S"
-	Deletes custom chat command
+  @doc ~S"""
+  Deletes custom chat command
 
-	
-	### Required Arguments:
-		- `name`
-	"
+
+  ### Required Arguments:
+  - `name`
+  """
   @spec delete_command(String.t()) ::
           {:ok, ExStreamClient.Model.DeleteCommandResponse.t()} | {:error, any()}
   def delete_command(name) do

@@ -1,18 +1,19 @@
 defmodule ExStreamClient.Operations.Chat.Campaigns do
-  @moduledoc "
-	Modules for interacting with the `chat/campaigns` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `chat/campaigns` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Stops a campaign
 
-	
-	### Required Arguments:
-		- `id`
-		- `payload`: StopCampaignRequest
-	"
+  @doc ~S"""
+  Stops a campaign
+
+
+  ### Required Arguments:
+  - `id`
+  - `payload`: `Elixir.ExStreamClient.Model.StopCampaignRequest`
+  """
   @spec schedule_campaign(String.t(), ExStreamClient.Model.StopCampaignRequest.t()) ::
           {:ok, ExStreamClient.Model.CampaignResponse.t()} | {:error, any()}
   def schedule_campaign(id, payload) do
@@ -52,13 +53,13 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
     end
   end
 
-  @doc ~S"
-	Query campaigns with filter query
+  @doc ~S"""
+  Query campaigns with filter query
 
-	
-	### Required Arguments:
-		- `payload`: QueryCampaignsRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.QueryCampaignsRequest`
+  """
   @spec query_campaigns(ExStreamClient.Model.QueryCampaignsRequest.t()) ::
           {:ok, ExStreamClient.Model.QueryCampaignsResponse.t()} | {:error, any()}
   def query_campaigns(payload) do
@@ -98,17 +99,17 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
     end
   end
 
-  @doc ~S"
-	Get campaign by ID.
+  @doc ~S"""
+  Get campaign by ID.
 
-	
-	### Required Arguments:
-		- `id`
-	### Optional Arguments:
-		- `prev`
-		- `next`
-		- `limit`
-	"
+
+  ### Required Arguments:
+  - `id`
+  ### Optional Arguments:
+  - `prev`
+  - `next`
+  - `limit`
+  """
   @spec get_campaign(String.t()) ::
           {:ok, ExStreamClient.Model.GetCampaignResponse.t()} | {:error, any()}
   @spec get_campaign(String.t(), [{:limit, integer()} | {:next, String.t()} | {:prev, String.t()}]) ::
@@ -156,14 +157,14 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
     end
   end
 
-  @doc ~S"
-	Starts or schedules a campaign
+  @doc ~S"""
+  Starts or schedules a campaign
 
-	
-	### Required Arguments:
-		- `id`
-		- `payload`: StartCampaignRequest
-	"
+
+  ### Required Arguments:
+  - `id`
+  - `payload`: `Elixir.ExStreamClient.Model.StartCampaignRequest`
+  """
   @spec start_campaign(String.t(), ExStreamClient.Model.StartCampaignRequest.t()) ::
           {:ok, ExStreamClient.Model.StartCampaignResponse.t()} | {:error, any()}
   def start_campaign(id, payload) do

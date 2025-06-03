@@ -1,17 +1,18 @@
 defmodule ExStreamClient.Operations.Roles do
-  @moduledoc "
-	Modules for interacting with the `roles` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `roles` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Creates custom role
 
-	
-	### Required Arguments:
-		- `payload`: CreateRoleRequest
-	"
+  @doc ~S"""
+  Creates custom role
+
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.CreateRoleRequest`
+  """
   @spec create_role(ExStreamClient.Model.CreateRoleRequest.t()) ::
           {:ok, ExStreamClient.Model.CreateRoleResponse.t()} | {:error, any()}
   def create_role(payload) do
@@ -50,13 +51,11 @@ defmodule ExStreamClient.Operations.Roles do
     end
   end
 
-  @doc ~S"
-	Lists all available roles
+  @doc ~S"""
+  Lists all available roles
 
-	
-	### Required Arguments:
-		
-	"
+
+  """
   @spec list_roles() :: {:ok, ExStreamClient.Model.ListRolesResponse.t()} | {:error, any()}
   def list_roles() do
     request_opts = [url: "/api/v2/roles", method: :get, params: []] ++ []
@@ -94,13 +93,13 @@ defmodule ExStreamClient.Operations.Roles do
     end
   end
 
-  @doc ~S"
-	Deletes custom role
+  @doc ~S"""
+  Deletes custom role
 
-	
-	### Required Arguments:
-		- `name`
-	"
+
+  ### Required Arguments:
+  - `name`
+  """
   @spec delete_role(String.t()) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_role(name) do
     request_opts = [url: "/api/v2/roles/#{name}", method: :delete, params: []] ++ []

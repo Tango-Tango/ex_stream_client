@@ -1,24 +1,25 @@
 defmodule ExStreamClient.Operations.Chat.Messages do
-  @moduledoc "
-	Modules for interacting with the `chat/messages` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `chat/messages` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Delete a vote from a poll
 
-Sends events:
-- poll.vote_removed
+  @doc ~S"""
+  Delete a vote from a poll
 
-	
-	### Required Arguments:
-		- `message_id`
-		- `poll_id`
-		- `vote_id`
-	### Optional Arguments:
-		- `user_id`
-	"
+  ### Sends events:
+  - `poll.vote_removed`
+
+
+  ### Required Arguments:
+  - `message_id`
+  - `poll_id`
+  - `vote_id`
+  ### Optional Arguments:
+  - `user_id`
+  """
   @spec remove_poll_vote(String.t(), String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.PollVoteResponse.t()} | {:error, any()}
   @spec remove_poll_vote(String.t(), String.t(), String.t(), user_id: String.t()) ::
@@ -66,19 +67,19 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Removes user reaction from the message
+  @doc ~S"""
+  Removes user reaction from the message
 
-Sends events:
-- reaction.deleted
+  ### Sends events:
+  - `reaction.deleted`
 
-	
-	### Required Arguments:
-		- `id`
-		- `type`
-	### Optional Arguments:
-		- `user_id`
-	"
+
+  ### Required Arguments:
+  - `id`
+  - `type`
+  ### Optional Arguments:
+  - `user_id`
+  """
   @spec delete_reaction(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.DeleteReactionResponse.t()} | {:error, any()}
   @spec delete_reaction(String.t(), String.t(), user_id: String.t()) ::
@@ -126,18 +127,18 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Sends reaction to specified message
+  @doc ~S"""
+  Sends reaction to specified message
 
-Sends events:
-- reaction.new
-- reaction.updated
+  ### Sends events:
+  - `reaction.new`
+  - `reaction.updated`
 
-	
-	### Required Arguments:
-		- `id`
-		- `payload`: SendReactionRequest
-	"
+
+  ### Required Arguments:
+  - `id`
+  - `payload`: `Elixir.ExStreamClient.Model.SendReactionRequest`
+  """
   @spec send_reaction(String.t(), ExStreamClient.Model.SendReactionRequest.t()) ::
           {:ok, ExStreamClient.Model.SendReactionResponse.t()} | {:error, any()}
   def send_reaction(id, payload) do
@@ -177,18 +178,18 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Executes message command action with given parameters
+  @doc ~S"""
+  Executes message command action with given parameters
 
-Sends events:
-- message.new
-- message.new
+  ### Sends events:
+  - `message.new`
+  - `message.new`
 
-	
-	### Required Arguments:
-		- `id`
-		- `payload`: MessageActionRequest
-	"
+
+  ### Required Arguments:
+  - `id`
+  - `payload`: `Elixir.ExStreamClient.Model.MessageActionRequest`
+  """
   @spec run_message_action(String.t(), ExStreamClient.Model.MessageActionRequest.t()) ::
           {:ok, ExStreamClient.Model.MessageResponse.t()} | {:error, any()}
   def run_message_action(id, payload) do
@@ -228,13 +229,13 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Queries history for one message
+  @doc ~S"""
+  Queries history for one message
 
-	
-	### Required Arguments:
-		- `payload`: QueryMessageHistoryRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.QueryMessageHistoryRequest`
+  """
   @spec query_message_history(ExStreamClient.Model.QueryMessageHistoryRequest.t()) ::
           {:ok, ExStreamClient.Model.QueryMessageHistoryResponse.t()} | {:error, any()}
   def query_message_history(payload) do
@@ -274,18 +275,18 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Cast a vote on a poll
+  @doc ~S"""
+  Cast a vote on a poll
 
-Sends events:
-- poll.vote_casted
+  ### Sends events:
+  - `poll.vote_casted`
 
-	
-	### Required Arguments:
-		- `message_id`
-		- `poll_id`
-		- `payload`: CastPollVoteRequest
-	"
+
+  ### Required Arguments:
+  - `message_id`
+  - `poll_id`
+  - `payload`: `Elixir.ExStreamClient.Model.CastPollVoteRequest`
+  """
   @spec cast_poll_vote(String.t(), String.t(), ExStreamClient.Model.CastPollVoteRequest.t()) ::
           {:ok, ExStreamClient.Model.PollVoteResponse.t()} | {:error, any()}
   def cast_poll_vote(message_id, poll_id, payload) do
@@ -329,14 +330,14 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Get reactions on a message
+  @doc ~S"""
+  Get reactions on a message
 
-	
-	### Required Arguments:
-		- `id`
-		- `payload`: QueryReactionsRequest
-	"
+
+  ### Required Arguments:
+  - `id`
+  - `payload`: `Elixir.ExStreamClient.Model.QueryReactionsRequest`
+  """
   @spec query_reactions(String.t(), ExStreamClient.Model.QueryReactionsRequest.t()) ::
           {:ok, ExStreamClient.Model.QueryReactionsResponse.t()} | {:error, any()}
   def query_reactions(id, payload) do
@@ -376,16 +377,16 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Returns list of reactions of specific message
+  @doc ~S"""
+  Returns list of reactions of specific message
 
-	
-	### Required Arguments:
-		- `id`
-	### Optional Arguments:
-		- `limit`
-		- `offset`
-	"
+
+  ### Required Arguments:
+  - `id`
+  ### Optional Arguments:
+  - `limit`
+  - `offset`
+  """
   @spec get_reactions(String.t()) ::
           {:ok, ExStreamClient.Model.GetReactionsResponse.t()} | {:error, any()}
   @spec get_reactions(String.t(), [{:offset, integer()} | {:limit, integer()}]) ::
@@ -433,27 +434,27 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Returns replies (thread) of the message
+  @doc ~S"""
+  Returns replies (thread) of the message
 
-	
-	### Required Arguments:
-		- `parent_id`
-	### Optional Arguments:
-		- `sort`
-		- `limit`
-		- `offset`
-		- `id_gte`
-		- `id_gt`
-		- `id_lte`
-		- `id_lt`
-		- `created_at_after_or_equal`
-		- `created_at_after`
-		- `created_at_before_or_equal`
-		- `created_at_before`
-		- `id_around`
-		- `created_at_around`
-	"
+
+  ### Required Arguments:
+  - `parent_id`
+  ### Optional Arguments:
+  - `sort`
+  - `limit`
+  - `offset`
+  - `id_gte`
+  - `id_gt`
+  - `id_lte`
+  - `id_lt`
+  - `created_at_after_or_equal`
+  - `created_at_after`
+  - `created_at_before_or_equal`
+  - `created_at_before`
+  - `id_around`
+  - `created_at_around`
+  """
   @spec get_replies(String.t()) ::
           {:ok, ExStreamClient.Model.GetRepliesResponse.t()} | {:error, any()}
   @spec get_replies(String.t(), [
@@ -531,18 +532,18 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Undelete a message that was previously soft-deleted
+  @doc ~S"""
+  Undelete a message that was previously soft-deleted
 
-Sends events:
-- message.undeleted
-- message.undeleted
+  ### Sends events:
+  - `message.undeleted`
+  - `message.undeleted`
 
-	
-	### Required Arguments:
-		- `id`
-		- `payload`: UpdateMessageRequest
-	"
+
+  ### Required Arguments:
+  - `id`
+  - `payload`: `Elixir.ExStreamClient.Model.UpdateMessageRequest`
+  """
   @spec undelete_message(String.t(), ExStreamClient.Model.UpdateMessageRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateMessageResponse.t()} | {:error, any()}
   def undelete_message(id, payload) do
@@ -582,18 +583,18 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Translates message to a given language using automated translation software
+  @doc ~S"""
+  Translates message to a given language using automated translation software
 
-Sends events:
-- message.updated
-- message.updated
+  ### Sends events:
+  - `message.updated`
+  - `message.updated`
 
-	
-	### Required Arguments:
-		- `id`
-		- `payload`: TranslateMessageRequest
-	"
+
+  ### Required Arguments:
+  - `id`
+  - `payload`: `Elixir.ExStreamClient.Model.TranslateMessageRequest`
+  """
   @spec translate_message(String.t(), ExStreamClient.Model.TranslateMessageRequest.t()) ::
           {:ok, ExStreamClient.Model.MessageResponse.t()} | {:error, any()}
   def translate_message(id, payload) do
@@ -633,20 +634,20 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Commits a pending message, which will make it visible in the channel
+  @doc ~S"""
+  Commits a pending message, which will make it visible in the channel
 
-Sends events:
-- message.new
-- message.updated
-- message.new
-- message.updated
+  ### Sends events:
+  - `message.new`
+  - `message.updated`
+  - `message.new`
+  - `message.updated`
 
-	
-	### Required Arguments:
-		- `id`
-		- `payload`: CommitMessageRequest
-	"
+
+  ### Required Arguments:
+  - `id`
+  - `payload`: `Elixir.ExStreamClient.Model.CommitMessageRequest`
+  """
   @spec commit_message(String.t(), ExStreamClient.Model.CommitMessageRequest.t()) ::
           {:ok, ExStreamClient.Model.MessageResponse.t()} | {:error, any()}
   def commit_message(id, payload) do
@@ -686,18 +687,18 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Updates certain fields of the message
+  @doc ~S"""
+  Updates certain fields of the message
 
-Sends events:
-- message.updated
-- message.updated
+  ### Sends events:
+  - `message.updated`
+  - `message.updated`
 
-	
-	### Required Arguments:
-		- `id`
-		- `payload`: UpdateMessagePartialRequest
-	"
+
+  ### Required Arguments:
+  - `id`
+  - `payload`: `Elixir.ExStreamClient.Model.UpdateMessagePartialRequest`
+  """
   @spec update_message_partial(String.t(), ExStreamClient.Model.UpdateMessagePartialRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateMessagePartialResponse.t()} | {:error, any()}
   def update_message_partial(id, payload) do
@@ -737,18 +738,18 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Updates message with new data
+  @doc ~S"""
+  Updates message with new data
 
-Sends events:
-- message.updated
-- message.updated
+  ### Sends events:
+  - `message.updated`
+  - `message.updated`
 
-	
-	### Required Arguments:
-		- `id`
-		- `payload`: UpdateMessageRequest
-	"
+
+  ### Required Arguments:
+  - `id`
+  - `payload`: `Elixir.ExStreamClient.Model.UpdateMessageRequest`
+  """
   @spec update_message(String.t(), ExStreamClient.Model.UpdateMessageRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateMessageResponse.t()} | {:error, any()}
   def update_message(id, payload) do
@@ -788,15 +789,15 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Returns message by ID
+  @doc ~S"""
+  Returns message by ID
 
-	
-	### Required Arguments:
-		- `id`
-	### Optional Arguments:
-		- `show_deleted_message`
-	"
+
+  ### Required Arguments:
+  - `id`
+  ### Optional Arguments:
+  - `show_deleted_message`
+  """
   @spec get_message(String.t()) ::
           {:ok, ExStreamClient.Model.GetMessageResponse.t()} | {:error, any()}
   @spec get_message(String.t(), show_deleted_message: boolean()) ::
@@ -844,20 +845,20 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Deletes message
+  @doc ~S"""
+  Deletes message
 
-Sends events:
-- message.deleted
-- message.deleted
+  ### Sends events:
+  - `message.deleted`
+  - `message.deleted`
 
-	
-	### Required Arguments:
-		- `id`
-	### Optional Arguments:
-		- `hard`
-		- `deleted_by`
-	"
+
+  ### Required Arguments:
+  - `id`
+  ### Optional Arguments:
+  - `hard`
+  - `deleted_by`
+  """
   @spec delete_message(String.t()) ::
           {:ok, ExStreamClient.Model.DeleteMessageResponse.t()} | {:error, any()}
   @spec delete_message(String.t(), [{:deleted_by, String.t()} | {:hard, boolean()}]) ::

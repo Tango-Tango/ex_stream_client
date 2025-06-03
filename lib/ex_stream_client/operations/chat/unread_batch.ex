@@ -1,17 +1,18 @@
 defmodule ExStreamClient.Operations.Chat.UnreadBatch do
-  @moduledoc "
-	Modules for interacting with the `chat/unread_batch` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `chat/unread_batch` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Fetch unread counts in batch for multiple users in one call
 
-	
-	### Required Arguments:
-		- `payload`: UnreadCountsBatchRequest
-	"
+  @doc ~S"""
+  Fetch unread counts in batch for multiple users in one call
+
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.UnreadCountsBatchRequest`
+  """
   @spec unread_counts_batch(ExStreamClient.Model.UnreadCountsBatchRequest.t()) ::
           {:ok, ExStreamClient.Model.UnreadCountsBatchResponse.t()} | {:error, any()}
   def unread_counts_batch(payload) do

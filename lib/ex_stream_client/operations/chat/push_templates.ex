@@ -1,17 +1,18 @@
 defmodule ExStreamClient.Operations.Chat.PushTemplates do
-  @moduledoc "
-	Modules for interacting with the `chat/push_templates` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `chat/push_templates` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Create or update a push notification template for a specific event type and push provider
 
-	
-	### Required Arguments:
-		- `payload`: UpsertPushTemplateRequest
-	"
+  @doc ~S"""
+  Create or update a push notification template for a specific event type and push provider
+
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.UpsertPushTemplateRequest`
+  """
   @spec upsert_push_template(ExStreamClient.Model.UpsertPushTemplateRequest.t()) ::
           {:ok, ExStreamClient.Model.UpsertPushTemplateResponse.t()} | {:error, any()}
   def upsert_push_template(payload) do
@@ -51,15 +52,15 @@ defmodule ExStreamClient.Operations.Chat.PushTemplates do
     end
   end
 
-  @doc ~S"
-	Retrieve push notification templates for Chat.
+  @doc ~S"""
+  Retrieve push notification templates for Chat.
 
-	
-	### Required Arguments:
-		- `push_provider_type`
-	### Optional Arguments:
-		- `push_provider_name`
-	"
+
+  ### Required Arguments:
+  - `push_provider_type`
+  ### Optional Arguments:
+  - `push_provider_name`
+  """
   @spec get_push_templates(String.t()) ::
           {:ok, ExStreamClient.Model.GetPushTemplatesResponse.t()} | {:error, any()}
   @spec get_push_templates(String.t(), push_provider_name: String.t()) ::

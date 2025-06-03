@@ -1,17 +1,18 @@
 defmodule ExStreamClient.Operations.Moderation do
-  @moduledoc "
-	Modules for interacting with the `moderation` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `moderation` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Custom check, add your own AI model reports to the review queue
 
-	
-	### Required Arguments:
-		- `payload`: CustomCheckRequest
-	"
+  @doc ~S"""
+  Custom check, add your own AI model reports to the review queue
+
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.CustomCheckRequest`
+  """
   @spec custom_check(ExStreamClient.Model.CustomCheckRequest.t()) ::
           {:ok, ExStreamClient.Model.CustomCheckResponse.t()} | {:error, any()}
   def custom_check(payload) do
@@ -51,17 +52,17 @@ defmodule ExStreamClient.Operations.Moderation do
     end
   end
 
-  @doc ~S"
-	Unban a user from a channel or globally.
+  @doc ~S"""
+  Unban a user from a channel or globally.
 
-	
-	### Required Arguments:
-		- `target_user_id`
-		- `payload`: UnbanRequest
-	### Optional Arguments:
-		- `channel_cid`
-		- `created_by`
-	"
+
+  ### Required Arguments:
+  - `target_user_id`
+  - `payload`: `Elixir.ExStreamClient.Model.UnbanRequest`
+  ### Optional Arguments:
+  - `channel_cid`
+  - `created_by`
+  """
   @spec unban(String.t(), ExStreamClient.Model.UnbanRequest.t()) ::
           {:ok, ExStreamClient.Model.UnbanResponse.t()} | {:error, any()}
   @spec unban(String.t(), ExStreamClient.Model.UnbanRequest.t(), [
@@ -113,13 +114,13 @@ defmodule ExStreamClient.Operations.Moderation do
     end
   end
 
-  @doc ~S"
-	Take action on flagged content, such as marking content as safe, deleting content, banning users, or executing custom moderation actions. Supports various action types with configurable parameters.
+  @doc ~S"""
+  Take action on flagged content, such as marking content as safe, deleting content, banning users, or executing custom moderation actions. Supports various action types with configurable parameters.
 
-	
-	### Required Arguments:
-		- `payload`: SubmitActionRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.SubmitActionRequest`
+  """
   @spec submit_action(ExStreamClient.Model.SubmitActionRequest.t()) ::
           {:ok, ExStreamClient.Model.SubmitActionResponse.t()} | {:error, any()}
   def submit_action(payload) do
@@ -159,13 +160,13 @@ defmodule ExStreamClient.Operations.Moderation do
     end
   end
 
-  @doc ~S"
-	Unmute a user
+  @doc ~S"""
+  Unmute a user
 
-	
-	### Required Arguments:
-		- `payload`: UnmuteRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.UnmuteRequest`
+  """
   @spec unmute(ExStreamClient.Model.UnmuteRequest.t()) ::
           {:ok, ExStreamClient.Model.UnmuteResponse.t()} | {:error, any()}
   def unmute(payload) do
@@ -205,13 +206,13 @@ defmodule ExStreamClient.Operations.Moderation do
     end
   end
 
-  @doc ~S"
-	Search and filter moderation configurations across your application. This endpoint is designed for building moderation dashboards and managing multiple configuration sets.
+  @doc ~S"""
+  Search and filter moderation configurations across your application. This endpoint is designed for building moderation dashboards and managing multiple configuration sets.
 
-	
-	### Required Arguments:
-		- `payload`: QueryModerationConfigsRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.QueryModerationConfigsRequest`
+  """
   @spec query_moderation_configs(ExStreamClient.Model.QueryModerationConfigsRequest.t()) ::
           {:ok, ExStreamClient.Model.QueryModerationConfigsResponse.t()} | {:error, any()}
   def query_moderation_configs(payload) do
@@ -251,13 +252,13 @@ defmodule ExStreamClient.Operations.Moderation do
     end
   end
 
-  @doc ~S"
-	Retrieve a specific review queue item by its ID
+  @doc ~S"""
+  Retrieve a specific review queue item by its ID
 
-	
-	### Required Arguments:
-		- `id`
-	"
+
+  ### Required Arguments:
+  - `id`
+  """
   @spec get_review_queue_item(String.t()) ::
           {:ok, ExStreamClient.Model.GetReviewQueueItemResponse.t()} | {:error, any()}
   def get_review_queue_item(id) do
@@ -296,13 +297,13 @@ defmodule ExStreamClient.Operations.Moderation do
     end
   end
 
-  @doc ~S"
-	Moderate multiple images in bulk using a CSV file
+  @doc ~S"""
+  Moderate multiple images in bulk using a CSV file
 
-	
-	### Required Arguments:
-		- `payload`: BulkImageModerationRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.BulkImageModerationRequest`
+  """
   @spec bulk_image_moderation(ExStreamClient.Model.BulkImageModerationRequest.t()) ::
           {:ok, ExStreamClient.Model.BulkImageModerationResponse.t()} | {:error, any()}
   def bulk_image_moderation(payload) do
@@ -343,13 +344,13 @@ defmodule ExStreamClient.Operations.Moderation do
     end
   end
 
-  @doc ~S"
-	Search and filter moderation action logs with support for pagination. View the history of moderation actions taken, including who performed them and when.
+  @doc ~S"""
+  Search and filter moderation action logs with support for pagination. View the history of moderation actions taken, including who performed them and when.
 
-	
-	### Required Arguments:
-		- `payload`: QueryModerationLogsRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.QueryModerationLogsRequest`
+  """
   @spec query_moderation_logs(ExStreamClient.Model.QueryModerationLogsRequest.t()) ::
           {:ok, ExStreamClient.Model.QueryModerationLogsResponse.t()} | {:error, any()}
   def query_moderation_logs(payload) do
@@ -388,13 +389,13 @@ defmodule ExStreamClient.Operations.Moderation do
     end
   end
 
-  @doc ~S"
-	Upsert feeds template for moderation
+  @doc ~S"""
+  Upsert feeds template for moderation
 
-	
-	### Required Arguments:
-		- `payload`: UpsertModerationTemplateRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.UpsertModerationTemplateRequest`
+  """
   @spec v2_upsert_template(ExStreamClient.Model.UpsertModerationTemplateRequest.t()) ::
           {:ok, ExStreamClient.Model.UpsertModerationTemplateResponse.t()} | {:error, any()}
   def v2_upsert_template(payload) do
@@ -435,13 +436,11 @@ defmodule ExStreamClient.Operations.Moderation do
     end
   end
 
-  @doc ~S"
-	Retrieve a list of feed moderation templates that define preset moderation rules and configurations. Limited to 100 templates per request.
+  @doc ~S"""
+  Retrieve a list of feed moderation templates that define preset moderation rules and configurations. Limited to 100 templates per request.
 
-	
-	### Required Arguments:
-		
-	"
+
+  """
   @spec v2_query_templates() ::
           {:ok, ExStreamClient.Model.QueryFeedModerationTemplatesResponse.t()} | {:error, any()}
   def v2_query_templates() do
@@ -481,13 +480,11 @@ defmodule ExStreamClient.Operations.Moderation do
     end
   end
 
-  @doc ~S"
-	Delete a specific moderation template by its name
+  @doc ~S"""
+  Delete a specific moderation template by its name
 
-	
-	### Required Arguments:
-		
-	"
+
+  """
   @spec v2_delete_template() ::
           {:ok, ExStreamClient.Model.DeleteModerationTemplateResponse.t()} | {:error, any()}
   def v2_delete_template() do
@@ -527,13 +524,13 @@ defmodule ExStreamClient.Operations.Moderation do
     end
   end
 
-  @doc ~S"
-	Mute a user. Mutes are generally not visible to the user you mute, while block is something you notice.
+  @doc ~S"""
+  Mute a user. Mutes are generally not visible to the user you mute, while block is something you notice.
 
-	
-	### Required Arguments:
-		- `payload`: MuteRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.MuteRequest`
+  """
   @spec mute(ExStreamClient.Model.MuteRequest.t()) ::
           {:ok, ExStreamClient.Model.MuteResponse.t()} | {:error, any()}
   def mute(payload) do
@@ -572,13 +569,13 @@ defmodule ExStreamClient.Operations.Moderation do
     end
   end
 
-  @doc ~S"
-	Ban a user from a channel or the entire app
+  @doc ~S"""
+  Ban a user from a channel or the entire app
 
-	
-	### Required Arguments:
-		- `payload`: BanRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.BanRequest`
+  """
   @spec ban(ExStreamClient.Model.BanRequest.t()) ::
           {:ok, ExStreamClient.Model.BanResponse.t()} | {:error, any()}
   def ban(payload) do
@@ -617,13 +614,13 @@ defmodule ExStreamClient.Operations.Moderation do
     end
   end
 
-  @doc ~S"
-	Create a new moderation configuration or update an existing one. Configure settings for content filtering, AI analysis, toxicity detection, and other moderation features.
+  @doc ~S"""
+  Create a new moderation configuration or update an existing one. Configure settings for content filtering, AI analysis, toxicity detection, and other moderation features.
 
-	
-	### Required Arguments:
-		- `payload`: UpsertConfigRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.UpsertConfigRequest`
+  """
   @spec upsert_config(ExStreamClient.Model.UpsertConfigRequest.t()) ::
           {:ok, ExStreamClient.Model.UpsertConfigResponse.t()} | {:error, any()}
   def upsert_config(payload) do
@@ -663,13 +660,13 @@ defmodule ExStreamClient.Operations.Moderation do
     end
   end
 
-  @doc ~S"
-	Query review queue items allows you to filter the review queue items. This is used for building a moderation dashboard.
+  @doc ~S"""
+  Query review queue items allows you to filter the review queue items. This is used for building a moderation dashboard.
 
-	
-	### Required Arguments:
-		- `payload`: QueryReviewQueueRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.QueryReviewQueueRequest`
+  """
   @spec query_review_queue(ExStreamClient.Model.QueryReviewQueueRequest.t()) ::
           {:ok, ExStreamClient.Model.QueryReviewQueueResponse.t()} | {:error, any()}
   def query_review_queue(payload) do
@@ -709,15 +706,15 @@ defmodule ExStreamClient.Operations.Moderation do
     end
   end
 
-  @doc ~S"
-	Retrieve a specific moderation configuration by its key and team. This configuration contains settings for various moderation features like toxicity detection, AI analysis, and filtering rules.
+  @doc ~S"""
+  Retrieve a specific moderation configuration by its key and team. This configuration contains settings for various moderation features like toxicity detection, AI analysis, and filtering rules.
 
-	
-	### Required Arguments:
-		- `key`
-	### Optional Arguments:
-		- `team`
-	"
+
+  ### Required Arguments:
+  - `key`
+  ### Optional Arguments:
+  - `team`
+  """
   @spec get_config(String.t()) ::
           {:ok, ExStreamClient.Model.GetConfigResponse.t()} | {:error, any()}
   @spec get_config(String.t(), team: String.t()) ::
@@ -765,15 +762,15 @@ defmodule ExStreamClient.Operations.Moderation do
     end
   end
 
-  @doc ~S"
-	Delete a specific moderation policy by its name
+  @doc ~S"""
+  Delete a specific moderation policy by its name
 
-	
-	### Required Arguments:
-		- `key`
-	### Optional Arguments:
-		- `team`
-	"
+
+  ### Required Arguments:
+  - `key`
+  ### Optional Arguments:
+  - `team`
+  """
   @spec delete_config(String.t()) ::
           {:ok, ExStreamClient.Model.DeleteModerationConfigResponse.t()} | {:error, any()}
   @spec delete_config(String.t(), team: String.t()) ::
@@ -821,13 +818,13 @@ defmodule ExStreamClient.Operations.Moderation do
     end
   end
 
-  @doc ~S"
-	Query flags associated with moderation items. This is used for building a moderation dashboard.
+  @doc ~S"""
+  Query flags associated with moderation items. This is used for building a moderation dashboard.
 
-	
-	### Required Arguments:
-		- `payload`: QueryModerationFlagsRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.QueryModerationFlagsRequest`
+  """
   @spec query_moderation_flags(ExStreamClient.Model.QueryModerationFlagsRequest.t()) ::
           {:ok, ExStreamClient.Model.QueryModerationFlagsResponse.t()} | {:error, any()}
   def query_moderation_flags(payload) do
@@ -866,13 +863,13 @@ defmodule ExStreamClient.Operations.Moderation do
     end
   end
 
-  @doc ~S"
-	Flag any type of content (messages, users, channels, activities) for moderation review. Supports custom content types and additional metadata for flagged content.
+  @doc ~S"""
+  Flag any type of content (messages, users, channels, activities) for moderation review. Supports custom content types and additional metadata for flagged content.
 
-	
-	### Required Arguments:
-		- `payload`: FlagRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.FlagRequest`
+  """
   @spec flag(ExStreamClient.Model.FlagRequest.t()) ::
           {:ok, ExStreamClient.Model.FlagResponse.t()} | {:error, any()}
   def flag(payload) do
@@ -911,13 +908,13 @@ defmodule ExStreamClient.Operations.Moderation do
     end
   end
 
-  @doc ~S"
-	Run moderation checks on the provided content
+  @doc ~S"""
+  Run moderation checks on the provided content
 
-	
-	### Required Arguments:
-		- `payload`: CheckRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.CheckRequest`
+  """
   @spec check(ExStreamClient.Model.CheckRequest.t()) ::
           {:ok, ExStreamClient.Model.CheckResponse.t()} | {:error, any()}
   def check(payload) do

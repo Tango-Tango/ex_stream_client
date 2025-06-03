@@ -1,17 +1,18 @@
 defmodule ExStreamClient.Operations.Chat.Segments do
-  @moduledoc "
-	Modules for interacting with the `chat/segments` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `chat/segments` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Get segment
 
-	
-	### Required Arguments:
-		- `id`
-	"
+  @doc ~S"""
+  Get segment
+
+
+  ### Required Arguments:
+  - `id`
+  """
   @spec get_segment(String.t()) ::
           {:ok, ExStreamClient.Model.GetSegmentResponse.t()} | {:error, any()}
   def get_segment(id) do
@@ -50,13 +51,13 @@ defmodule ExStreamClient.Operations.Chat.Segments do
     end
   end
 
-  @doc ~S"
-	Delete a segment
+  @doc ~S"""
+  Delete a segment
 
-	
-	### Required Arguments:
-		- `id`
-	"
+
+  ### Required Arguments:
+  - `id`
+  """
   @spec delete_segment(String.t()) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_segment(id) do
     request_opts = [url: "/api/v2/chat/segments/#{id}", method: :delete, params: []] ++ []
@@ -94,14 +95,14 @@ defmodule ExStreamClient.Operations.Chat.Segments do
     end
   end
 
-  @doc ~S"
-	Query segment targets
+  @doc ~S"""
+  Query segment targets
 
-	
-	### Required Arguments:
-		- `id`
-		- `payload`: QuerySegmentTargetsRequest
-	"
+
+  ### Required Arguments:
+  - `id`
+  - `payload`: `Elixir.ExStreamClient.Model.QuerySegmentTargetsRequest`
+  """
   @spec query_segment_targets(String.t(), ExStreamClient.Model.QuerySegmentTargetsRequest.t()) ::
           {:ok, ExStreamClient.Model.QuerySegmentTargetsResponse.t()} | {:error, any()}
   def query_segment_targets(id, payload) do
@@ -142,13 +143,13 @@ defmodule ExStreamClient.Operations.Chat.Segments do
     end
   end
 
-  @doc ~S"
-	Query segments
+  @doc ~S"""
+  Query segments
 
-	
-	### Required Arguments:
-		- `payload`: QuerySegmentsRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.QuerySegmentsRequest`
+  """
   @spec query_segments(ExStreamClient.Model.QuerySegmentsRequest.t()) ::
           {:ok, ExStreamClient.Model.QuerySegmentsResponse.t()} | {:error, any()}
   def query_segments(payload) do
@@ -188,14 +189,14 @@ defmodule ExStreamClient.Operations.Chat.Segments do
     end
   end
 
-  @doc ~S"
-	Delete targets from a segment
+  @doc ~S"""
+  Delete targets from a segment
 
-	
-	### Required Arguments:
-		- `id`
-		- `payload`: DeleteSegmentTargetsRequest
-	"
+
+  ### Required Arguments:
+  - `id`
+  - `payload`: `Elixir.ExStreamClient.Model.DeleteSegmentTargetsRequest`
+  """
   @spec delete_segment_targets(String.t(), ExStreamClient.Model.DeleteSegmentTargetsRequest.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_segment_targets(id, payload) do
@@ -236,14 +237,14 @@ defmodule ExStreamClient.Operations.Chat.Segments do
     end
   end
 
-  @doc ~S"
-	Check whether a target exists in a segment. Returns 200 if the target exists, 404 otherwise
+  @doc ~S"""
+  Check whether a target exists in a segment. Returns 200 if the target exists, 404 otherwise
 
-	
-	### Required Arguments:
-		- `id`
-		- `target_id`
-	"
+
+  ### Required Arguments:
+  - `id`
+  - `target_id`
+  """
   @spec segment_target_exists(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def segment_target_exists(id, target_id) do

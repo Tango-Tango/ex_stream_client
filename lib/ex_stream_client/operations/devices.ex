@@ -1,17 +1,18 @@
 defmodule ExStreamClient.Operations.Devices do
-  @moduledoc "
-	Modules for interacting with the `devices` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `devices` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Adds a new device to a user, if the same device already exists the call will have no effect
 
-	
-	### Required Arguments:
-		- `payload`: CreateDeviceRequest
-	"
+  @doc ~S"""
+  Adds a new device to a user, if the same device already exists the call will have no effect
+
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.CreateDeviceRequest`
+  """
   @spec create_device(ExStreamClient.Model.CreateDeviceRequest.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def create_device(payload) do
@@ -50,15 +51,13 @@ defmodule ExStreamClient.Operations.Devices do
     end
   end
 
-  @doc ~S"
-	Returns all available devices
+  @doc ~S"""
+  Returns all available devices
 
-	
-	### Required Arguments:
-		
-	### Optional Arguments:
-		- `user_id`
-	"
+
+  ### Optional Arguments:
+  - `user_id`
+  """
   @spec list_devices() :: {:ok, ExStreamClient.Model.ListDevicesResponse.t()} | {:error, any()}
   @spec list_devices(user_id: String.t()) ::
           {:ok, ExStreamClient.Model.ListDevicesResponse.t()} | {:error, any()}
@@ -105,15 +104,15 @@ defmodule ExStreamClient.Operations.Devices do
     end
   end
 
-  @doc ~S"
-	Deletes one device
+  @doc ~S"""
+  Deletes one device
 
-	
-	### Required Arguments:
-		- `id`
-	### Optional Arguments:
-		- `user_id`
-	"
+
+  ### Required Arguments:
+  - `id`
+  ### Optional Arguments:
+  - `user_id`
+  """
   @spec delete_device(String.t()) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   @spec delete_device(String.t(), user_id: String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}

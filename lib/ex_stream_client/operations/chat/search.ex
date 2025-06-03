@@ -1,19 +1,18 @@
 defmodule ExStreamClient.Operations.Chat.Search do
-  @moduledoc "
-	Modules for interacting with the `chat/search` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `chat/search` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Search messages across channels
 
-	
-	### Required Arguments:
-		
-	### Optional Arguments:
-		- `payload`: SearchPayload
-	"
+  @doc ~S"""
+  Search messages across channels
+
+
+  ### Optional Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.SearchPayload`
+  """
   @spec search() :: {:ok, ExStreamClient.Model.SearchResponse.t()} | {:error, any()}
   @spec search(payload: ExStreamClient.Model.SearchPayload.t()) ::
           {:ok, ExStreamClient.Model.SearchResponse.t()} | {:error, any()}

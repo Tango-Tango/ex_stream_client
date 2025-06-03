@@ -1,17 +1,18 @@
 defmodule ExStreamClient.Operations.CheckSns do
-  @moduledoc "
-	Modules for interacting with the `check_sns` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `check_sns` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Validates Amazon SNS configuration
 
-	
-	### Required Arguments:
-		- `payload`: CheckSNSRequest
-	"
+  @doc ~S"""
+  Validates Amazon SNS configuration
+
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.CheckSNSRequest`
+  """
   @spec check_sns(ExStreamClient.Model.CheckSNSRequest.t()) ::
           {:ok, ExStreamClient.Model.CheckSNSResponse.t()} | {:error, any()}
   def check_sns(payload) do

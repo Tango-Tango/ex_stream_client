@@ -1,17 +1,18 @@
 defmodule ExStreamClient.Operations.Blocklists do
-  @moduledoc "
-	Modules for interacting with the `blocklists` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `blocklists` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Creates a new application blocklist, once created the blocklist can be used by any channel type
 
-	
-	### Required Arguments:
-		- `payload`: CreateBlockListRequest
-	"
+  @doc ~S"""
+  Creates a new application blocklist, once created the blocklist can be used by any channel type
+
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.CreateBlockListRequest`
+  """
   @spec create_block_list(ExStreamClient.Model.CreateBlockListRequest.t()) ::
           {:ok, ExStreamClient.Model.CreateBlockListResponse.t()} | {:error, any()}
   def create_block_list(payload) do
@@ -50,15 +51,13 @@ defmodule ExStreamClient.Operations.Blocklists do
     end
   end
 
-  @doc ~S"
-	Returns all available block lists
+  @doc ~S"""
+  Returns all available block lists
 
-	
-	### Required Arguments:
-		
-	### Optional Arguments:
-		- `team`
-	"
+
+  ### Optional Arguments:
+  - `team`
+  """
   @spec list_block_lists() ::
           {:ok, ExStreamClient.Model.ListBlockListResponse.t()} | {:error, any()}
   @spec list_block_lists(team: String.t()) ::
@@ -106,14 +105,14 @@ defmodule ExStreamClient.Operations.Blocklists do
     end
   end
 
-  @doc ~S"
-	Updates contents of the block list
+  @doc ~S"""
+  Updates contents of the block list
 
-	
-	### Required Arguments:
-		- `name`
-		- `payload`: UpdateBlockListRequest
-	"
+
+  ### Required Arguments:
+  - `name`
+  - `payload`: `Elixir.ExStreamClient.Model.UpdateBlockListRequest`
+  """
   @spec update_block_list(String.t(), ExStreamClient.Model.UpdateBlockListRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateBlockListResponse.t()} | {:error, any()}
   def update_block_list(name, payload) do
@@ -153,15 +152,15 @@ defmodule ExStreamClient.Operations.Blocklists do
     end
   end
 
-  @doc ~S"
-	Returns block list by given name
+  @doc ~S"""
+  Returns block list by given name
 
-	
-	### Required Arguments:
-		- `name`
-	### Optional Arguments:
-		- `team`
-	"
+
+  ### Required Arguments:
+  - `name`
+  ### Optional Arguments:
+  - `team`
+  """
   @spec get_block_list(String.t()) ::
           {:ok, ExStreamClient.Model.GetBlockListResponse.t()} | {:error, any()}
   @spec get_block_list(String.t(), team: String.t()) ::
@@ -209,15 +208,15 @@ defmodule ExStreamClient.Operations.Blocklists do
     end
   end
 
-  @doc ~S"
-	Deletes previously created application blocklist
+  @doc ~S"""
+  Deletes previously created application blocklist
 
-	
-	### Required Arguments:
-		- `name`
-	### Optional Arguments:
-		- `team`
-	"
+
+  ### Required Arguments:
+  - `name`
+  ### Optional Arguments:
+  - `team`
+  """
   @spec delete_block_list(String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   @spec delete_block_list(String.t(), team: String.t()) ::

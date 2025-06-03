@@ -1,20 +1,21 @@
 defmodule ExStreamClient.Operations.Chat.Polls do
-  @moduledoc "
-	Modules for interacting with the `chat/polls` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `chat/polls` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Queries votes
 
-	
-	### Required Arguments:
-		- `poll_id`
-		- `payload`: QueryPollVotesRequest
-	### Optional Arguments:
-		- `user_id`
-	"
+  @doc ~S"""
+  Queries votes
+
+
+  ### Required Arguments:
+  - `poll_id`
+  - `payload`: `Elixir.ExStreamClient.Model.QueryPollVotesRequest`
+  ### Optional Arguments:
+  - `user_id`
+  """
   @spec query_poll_votes(String.t(), ExStreamClient.Model.QueryPollVotesRequest.t()) ::
           {:ok, ExStreamClient.Model.PollVotesResponse.t()} | {:error, any()}
   @spec query_poll_votes(String.t(), ExStreamClient.Model.QueryPollVotesRequest.t(),
@@ -63,17 +64,17 @@ defmodule ExStreamClient.Operations.Chat.Polls do
     end
   end
 
-  @doc ~S"
-	Updates a poll
+  @doc ~S"""
+  Updates a poll
 
-Sends events:
-- poll.closed
-- poll.updated
+  ### Sends events:
+  - `poll.closed`
+  - `poll.updated`
 
-	
-	### Required Arguments:
-		- `payload`: UpdatePollRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.UpdatePollRequest`
+  """
   @spec update_poll(ExStreamClient.Model.UpdatePollRequest.t()) ::
           {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
   def update_poll(payload) do
@@ -112,13 +113,13 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Creates a new poll
+  @doc ~S"""
+  Creates a new poll
 
-	
-	### Required Arguments:
-		- `payload`: CreatePollRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.CreatePollRequest`
+  """
   @spec create_poll(ExStreamClient.Model.CreatePollRequest.t()) ::
           {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
   def create_poll(payload) do
@@ -157,17 +158,17 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Updates a poll option
+  @doc ~S"""
+  Updates a poll option
 
-Sends events:
-- poll.updated
+  ### Sends events:
+  - `poll.updated`
 
-	
-	### Required Arguments:
-		- `poll_id`
-		- `payload`: UpdatePollOptionRequest
-	"
+
+  ### Required Arguments:
+  - `poll_id`
+  - `payload`: `Elixir.ExStreamClient.Model.UpdatePollOptionRequest`
+  """
   @spec update_poll_option(String.t(), ExStreamClient.Model.UpdatePollOptionRequest.t()) ::
           {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
   def update_poll_option(poll_id, payload) do
@@ -207,17 +208,17 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Creates a poll option
+  @doc ~S"""
+  Creates a poll option
 
-Sends events:
-- poll.updated
+  ### Sends events:
+  - `poll.updated`
 
-	
-	### Required Arguments:
-		- `poll_id`
-		- `payload`: CreatePollOptionRequest
-	"
+
+  ### Required Arguments:
+  - `poll_id`
+  - `payload`: `Elixir.ExStreamClient.Model.CreatePollOptionRequest`
+  """
   @spec create_poll_option(String.t(), ExStreamClient.Model.CreatePollOptionRequest.t()) ::
           {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
   def create_poll_option(poll_id, payload) do
@@ -257,17 +258,17 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Updates a poll partially
+  @doc ~S"""
+  Updates a poll partially
 
-Sends events:
-- poll.updated
+  ### Sends events:
+  - `poll.updated`
 
-	
-	### Required Arguments:
-		- `poll_id`
-		- `payload`: UpdatePollPartialRequest
-	"
+
+  ### Required Arguments:
+  - `poll_id`
+  - `payload`: `Elixir.ExStreamClient.Model.UpdatePollPartialRequest`
+  """
   @spec update_poll_partial(String.t(), ExStreamClient.Model.UpdatePollPartialRequest.t()) ::
           {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
   def update_poll_partial(poll_id, payload) do
@@ -307,15 +308,15 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Retrieves a poll
+  @doc ~S"""
+  Retrieves a poll
 
-	
-	### Required Arguments:
-		- `poll_id`
-	### Optional Arguments:
-		- `user_id`
-	"
+
+  ### Required Arguments:
+  - `poll_id`
+  ### Optional Arguments:
+  - `user_id`
+  """
   @spec get_poll(String.t()) :: {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
   @spec get_poll(String.t(), user_id: String.t()) ::
           {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
@@ -362,18 +363,18 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Deletes a poll
+  @doc ~S"""
+  Deletes a poll
 
-Sends events:
-- poll.deleted
+  ### Sends events:
+  - `poll.deleted`
 
-	
-	### Required Arguments:
-		- `poll_id`
-	### Optional Arguments:
-		- `user_id`
-	"
+
+  ### Required Arguments:
+  - `poll_id`
+  ### Optional Arguments:
+  - `user_id`
+  """
   @spec delete_poll(String.t()) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   @spec delete_poll(String.t(), user_id: String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
@@ -420,15 +421,15 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Queries polls
+  @doc ~S"""
+  Queries polls
 
-	
-	### Required Arguments:
-		- `payload`: QueryPollsRequest
-	### Optional Arguments:
-		- `user_id`
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.QueryPollsRequest`
+  ### Optional Arguments:
+  - `user_id`
+  """
   @spec query_polls(ExStreamClient.Model.QueryPollsRequest.t()) ::
           {:ok, ExStreamClient.Model.QueryPollsResponse.t()} | {:error, any()}
   @spec query_polls(ExStreamClient.Model.QueryPollsRequest.t(), user_id: String.t()) ::
@@ -476,16 +477,16 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Retrieves a poll option
+  @doc ~S"""
+  Retrieves a poll option
 
-	
-	### Required Arguments:
-		- `poll_id`
-		- `option_id`
-	### Optional Arguments:
-		- `user_id`
-	"
+
+  ### Required Arguments:
+  - `poll_id`
+  - `option_id`
+  ### Optional Arguments:
+  - `user_id`
+  """
   @spec get_poll_option(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
   @spec get_poll_option(String.t(), String.t(), user_id: String.t()) ::
@@ -533,19 +534,19 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Deletes a poll option
+  @doc ~S"""
+  Deletes a poll option
 
-Sends events:
-- poll.updated
+  ### Sends events:
+  - `poll.updated`
 
-	
-	### Required Arguments:
-		- `poll_id`
-		- `option_id`
-	### Optional Arguments:
-		- `user_id`
-	"
+
+  ### Required Arguments:
+  - `poll_id`
+  - `option_id`
+  ### Optional Arguments:
+  - `user_id`
+  """
   @spec delete_poll_option(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   @spec delete_poll_option(String.t(), String.t(), user_id: String.t()) ::

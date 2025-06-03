@@ -1,17 +1,16 @@
 defmodule ExStreamClient.Operations.Chat.Unread do
-  @moduledoc "
-	Modules for interacting with the `chat/unread` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `chat/unread` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Fetch unread counts for a single user
 
-	
-	### Required Arguments:
-		
-	"
+  @doc ~S"""
+  Fetch unread counts for a single user
+
+
+  """
   @spec unread_counts() ::
           {:ok, ExStreamClient.Model.WrappedUnreadCountsResponse.t()} | {:error, any()}
   def unread_counts() do

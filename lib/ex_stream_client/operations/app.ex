@@ -1,17 +1,18 @@
 defmodule ExStreamClient.Operations.App do
-  @moduledoc "
-	Modules for interacting with the `app` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `app` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	This Method updates one or more application settings
 
-	
-	### Required Arguments:
-		- `payload`: UpdateAppRequest
-	"
+  @doc ~S"""
+  This Method updates one or more application settings
+
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.UpdateAppRequest`
+  """
   @spec update_app(ExStreamClient.Model.UpdateAppRequest.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def update_app(payload) do
@@ -50,13 +51,11 @@ defmodule ExStreamClient.Operations.App do
     end
   end
 
-  @doc ~S"
-	This Method returns the application settings
+  @doc ~S"""
+  This Method returns the application settings
 
-	
-	### Required Arguments:
-		
-	"
+
+  """
   @spec get_app() :: {:ok, ExStreamClient.Model.GetApplicationResponse.t()} | {:error, any()}
   def get_app() do
     request_opts = [url: "/api/v2/app", method: :get, params: []] ++ []

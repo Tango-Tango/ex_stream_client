@@ -1,21 +1,22 @@
 defmodule ExStreamClient.Operations.Users do
-  @moduledoc "
-	Modules for interacting with the `users` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `users` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Activates user who's been deactivated previously
 
-Sends events:
-- user.reactivated
+  @doc ~S"""
+  Activates user who's been deactivated previously
 
-	
-	### Required Arguments:
-		- `user_id`
-		- `payload`: ReactivateUserRequest
-	"
+  ### Sends events:
+  - `user.reactivated`
+
+
+  ### Required Arguments:
+  - `user_id`
+  - `payload`: `Elixir.ExStreamClient.Model.ReactivateUserRequest`
+  """
   @spec reactivate_user(String.t(), ExStreamClient.Model.ReactivateUserRequest.t()) ::
           {:ok, ExStreamClient.Model.ReactivateUserResponse.t()} | {:error, any()}
   def reactivate_user(user_id, payload) do
@@ -55,16 +56,16 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Update or create users in bulk
+  @doc ~S"""
+  Update or create users in bulk
 
-Sends events:
-- user.updated
+  ### Sends events:
+  - `user.updated`
 
-	
-	### Required Arguments:
-		- `payload`: UpdateUsersRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.UpdateUsersRequest`
+  """
   @spec update_users(ExStreamClient.Model.UpdateUsersRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateUsersResponse.t()} | {:error, any()}
   def update_users(payload) do
@@ -103,18 +104,18 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Updates certain fields of the user
+  @doc ~S"""
+  Updates certain fields of the user
 
-Sends events:
-- user.presence.changed
-- user.updated
-- user.presence.changed
+  ### Sends events:
+  - `user.presence.changed`
+  - `user.updated`
+  - `user.presence.changed`
 
-	
-	### Required Arguments:
-		- `payload`: UpdateUsersPartialRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.UpdateUsersPartialRequest`
+  """
   @spec update_users_partial(ExStreamClient.Model.UpdateUsersPartialRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateUsersResponse.t()} | {:error, any()}
   def update_users_partial(payload) do
@@ -153,15 +154,13 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Find and filter users
+  @doc ~S"""
+  Find and filter users
 
-	
-	### Required Arguments:
-		
-	### Optional Arguments:
-		- `payload`: QueryUsersPayload
-	"
+
+  ### Optional Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.QueryUsersPayload`
+  """
   @spec query_users() :: {:ok, ExStreamClient.Model.QueryUsersResponse.t()} | {:error, any()}
   @spec query_users(payload: ExStreamClient.Model.QueryUsersPayload.t()) ::
           {:ok, ExStreamClient.Model.QueryUsersResponse.t()} | {:error, any()}
@@ -208,17 +207,17 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Deletes users and optionally all their belongings asynchronously.
+  @doc ~S"""
+  Deletes users and optionally all their belongings asynchronously.
 
-Sends events:
-- channel.deleted
-- user.deleted
+  ### Sends events:
+  - `channel.deleted`
+  - `user.deleted`
 
-	
-	### Required Arguments:
-		- `payload`: DeleteUsersRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.DeleteUsersRequest`
+  """
   @spec delete_users(ExStreamClient.Model.DeleteUsersRequest.t()) ::
           {:ok, ExStreamClient.Model.DeleteUsersResponse.t()} | {:error, any()}
   def delete_users(payload) do
@@ -257,17 +256,17 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Reactivate users in batches
+  @doc ~S"""
+  Reactivate users in batches
 
-Sends events:
-- user.reactivated
-- user.reactivated
+  ### Sends events:
+  - `user.reactivated`
+  - `user.reactivated`
 
-	
-	### Required Arguments:
-		- `payload`: ReactivateUsersRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.ReactivateUsersRequest`
+  """
   @spec reactivate_users(ExStreamClient.Model.ReactivateUsersRequest.t()) ::
           {:ok, ExStreamClient.Model.ReactivateUsersResponse.t()} | {:error, any()}
   def reactivate_users(payload) do
@@ -306,13 +305,13 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Exports the user's profile, reactions and messages. Raises an error if a user has more than 10k messages or reactions
+  @doc ~S"""
+  Exports the user's profile, reactions and messages. Raises an error if a user has more than 10k messages or reactions
 
-	
-	### Required Arguments:
-		- `user_id`
-	"
+
+  ### Required Arguments:
+  - `user_id`
+  """
   @spec export_user(String.t()) ::
           {:ok, ExStreamClient.Model.ExportUserResponse.t()} | {:error, any()}
   def export_user(user_id) do
@@ -351,16 +350,16 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Deactivate users in batches
+  @doc ~S"""
+  Deactivate users in batches
 
-Sends events:
-- user.deactivated
+  ### Sends events:
+  - `user.deactivated`
 
-	
-	### Required Arguments:
-		- `payload`: DeactivateUsersRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.DeactivateUsersRequest`
+  """
   @spec deactivate_users(ExStreamClient.Model.DeactivateUsersRequest.t()) ::
           {:ok, ExStreamClient.Model.DeactivateUsersResponse.t()} | {:error, any()}
   def deactivate_users(payload) do
@@ -399,13 +398,13 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Restore soft deleted users
+  @doc ~S"""
+  Restore soft deleted users
 
-	
-	### Required Arguments:
-		- `payload`: RestoreUsersRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.RestoreUsersRequest`
+  """
   @spec restore_users(ExStreamClient.Model.RestoreUsersRequest.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def restore_users(payload) do
@@ -444,13 +443,13 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Unblock users
+  @doc ~S"""
+  Unblock users
 
-	
-	### Required Arguments:
-		- `payload`: UnblockUsersRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.UnblockUsersRequest`
+  """
   @spec unblock_users(ExStreamClient.Model.UnblockUsersRequest.t()) ::
           {:ok, ExStreamClient.Model.UnblockUsersResponse.t()} | {:error, any()}
   def unblock_users(payload) do
@@ -489,13 +488,13 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Block users
+  @doc ~S"""
+  Block users
 
-	
-	### Required Arguments:
-		- `payload`: BlockUsersRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.BlockUsersRequest`
+  """
   @spec block_users(ExStreamClient.Model.BlockUsersRequest.t()) ::
           {:ok, ExStreamClient.Model.BlockUsersResponse.t()} | {:error, any()}
   def block_users(payload) do
@@ -534,15 +533,13 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Get list of blocked Users
+  @doc ~S"""
+  Get list of blocked Users
 
-	
-	### Required Arguments:
-		
-	### Optional Arguments:
-		- `user_id`
-	"
+
+  ### Optional Arguments:
+  - `user_id`
+  """
   @spec get_blocked_users() ::
           {:ok, ExStreamClient.Model.GetBlockedUsersResponse.t()} | {:error, any()}
   @spec get_blocked_users(user_id: String.t()) ::
@@ -590,17 +587,17 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Deactivates user with possibility to activate it back
+  @doc ~S"""
+  Deactivates user with possibility to activate it back
 
-Sends events:
-- user.deactivated
+  ### Sends events:
+  - `user.deactivated`
 
-	
-	### Required Arguments:
-		- `user_id`
-		- `payload`: DeactivateUserRequest
-	"
+
+  ### Required Arguments:
+  - `user_id`
+  - `payload`: `Elixir.ExStreamClient.Model.DeactivateUserRequest`
+  """
   @spec deactivate_user(String.t(), ExStreamClient.Model.DeactivateUserRequest.t()) ::
           {:ok, ExStreamClient.Model.DeactivateUserResponse.t()} | {:error, any()}
   def deactivate_user(user_id, payload) do

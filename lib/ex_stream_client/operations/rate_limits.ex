@@ -1,23 +1,22 @@
 defmodule ExStreamClient.Operations.RateLimits do
-  @moduledoc "
-	Modules for interacting with the `rate_limits` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `rate_limits` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Get rate limits usage and quotas
 
-	
-	### Required Arguments:
-		
-	### Optional Arguments:
-		- `server_side`
-		- `android`
-		- `ios`
-		- `web`
-		- `endpoints`
-	"
+  @doc ~S"""
+  Get rate limits usage and quotas
+
+
+  ### Optional Arguments:
+  - `server_side`
+  - `android`
+  - `ios`
+  - `web`
+  - `endpoints`
+  """
   @spec get_rate_limits() ::
           {:ok, ExStreamClient.Model.GetRateLimitsResponse.t()} | {:error, any()}
   @spec get_rate_limits([

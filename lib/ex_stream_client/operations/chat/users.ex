@@ -1,21 +1,22 @@
 defmodule ExStreamClient.Operations.Chat.Users do
-  @moduledoc "
-	Modules for interacting with the `chat/users` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `chat/users` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Sends a custom event to a user
 
-Sends events:
-- *
+  @doc ~S"""
+  Sends a custom event to a user
 
-	
-	### Required Arguments:
-		- `user_id`
-		- `payload`: SendUserCustomEventRequest
-	"
+  ### Sends events:
+  - `*`
+
+
+  ### Required Arguments:
+  - `user_id`
+  - `payload`: `Elixir.ExStreamClient.Model.SendUserCustomEventRequest`
+  """
   @spec send_user_custom_event(String.t(), ExStreamClient.Model.SendUserCustomEventRequest.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def send_user_custom_event(user_id, payload) do

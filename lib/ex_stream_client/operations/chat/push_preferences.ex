@@ -1,17 +1,18 @@
 defmodule ExStreamClient.Operations.Chat.PushPreferences do
-  @moduledoc "
-	Modules for interacting with the `chat/push_preferences` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `chat/push_preferences` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Update the push preferences for a user and or channel member. Set to all, mentions or none
 
-	
-	### Required Arguments:
-		- `payload`: UpsertPushPreferencesRequest
-	"
+  @doc ~S"""
+  Update the push preferences for a user and or channel member. Set to all, mentions or none
+
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.UpsertPushPreferencesRequest`
+  """
   @spec update_push_notification_preferences(
           ExStreamClient.Model.UpsertPushPreferencesRequest.t()
         ) :: {:ok, ExStreamClient.Model.UpsertPushPreferencesResponse.t()} | {:error, any()}

@@ -1,18 +1,19 @@
 defmodule ExStreamClient.Operations.PushProviders do
-  @moduledoc "
-	Modules for interacting with the `push_providers` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `push_providers` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Delete a push provider from v2 with multi bundle/package support. v1 isn't supported in this endpoint
 
-	
-	### Required Arguments:
-		- `type`
-		- `name`
-	"
+  @doc ~S"""
+  Delete a push provider from v2 with multi bundle/package support. v1 isn't supported in this endpoint
+
+
+  ### Required Arguments:
+  - `type`
+  - `name`
+  """
   @spec delete_push_provider(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_push_provider(type, name) do
@@ -52,13 +53,13 @@ defmodule ExStreamClient.Operations.PushProviders do
     end
   end
 
-  @doc ~S"
-	Upsert a push provider for v2 with multi bundle/package support
+  @doc ~S"""
+  Upsert a push provider for v2 with multi bundle/package support
 
-	
-	### Required Arguments:
-		- `payload`: UpsertPushProviderRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.UpsertPushProviderRequest`
+  """
   @spec upsert_push_provider(ExStreamClient.Model.UpsertPushProviderRequest.t()) ::
           {:ok, ExStreamClient.Model.UpsertPushProviderResponse.t()} | {:error, any()}
   def upsert_push_provider(payload) do
@@ -97,13 +98,11 @@ defmodule ExStreamClient.Operations.PushProviders do
     end
   end
 
-  @doc ~S"
-	List details of all push providers.
+  @doc ~S"""
+  List details of all push providers.
 
-	
-	### Required Arguments:
-		
-	"
+
+  """
   @spec list_push_providers() ::
           {:ok, ExStreamClient.Model.ListPushProvidersResponse.t()} | {:error, any()}
   def list_push_providers() do

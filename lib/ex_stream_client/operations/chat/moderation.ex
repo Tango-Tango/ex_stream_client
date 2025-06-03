@@ -1,19 +1,18 @@
 defmodule ExStreamClient.Operations.Chat.Moderation do
-  @moduledoc "
-	Modules for interacting with the `chat/moderation` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `chat/moderation` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Find and filter message flags
 
-	
-	### Required Arguments:
-		
-	### Optional Arguments:
-		- `payload`: QueryMessageFlagsPayload
-	"
+  @doc ~S"""
+  Find and filter message flags
+
+
+  ### Optional Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.QueryMessageFlagsPayload`
+  """
   @spec query_message_flags() ::
           {:ok, ExStreamClient.Model.QueryMessageFlagsResponse.t()} | {:error, any()}
   @spec query_message_flags(payload: ExStreamClient.Model.QueryMessageFlagsPayload.t()) ::
@@ -61,17 +60,17 @@ defmodule ExStreamClient.Operations.Chat.Moderation do
     end
   end
 
-  @doc ~S"
-	Unmutes channel for user
+  @doc ~S"""
+  Unmutes channel for user
 
-Sends events:
-- channel.unmuted
-- channel.unmuted
+  ### Sends events:
+  - `channel.unmuted`
+  - `channel.unmuted`
 
-	
-	### Required Arguments:
-		- `payload`: UnmuteChannelRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.UnmuteChannelRequest`
+  """
   @spec unmute_channel(ExStreamClient.Model.UnmuteChannelRequest.t()) ::
           {:ok, ExStreamClient.Model.UnmuteResponse.t()} | {:error, any()}
   def unmute_channel(payload) do
@@ -112,17 +111,17 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Mutes channel for user
+  @doc ~S"""
+  Mutes channel for user
 
-Sends events:
-- channel.muted
-- channel.muted
+  ### Sends events:
+  - `channel.muted`
+  - `channel.muted`
 
-	
-	### Required Arguments:
-		- `payload`: MuteChannelRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.MuteChannelRequest`
+  """
   @spec mute_channel(ExStreamClient.Model.MuteChannelRequest.t()) ::
           {:ok, ExStreamClient.Model.MuteChannelResponse.t()} | {:error, any()}
   def mute_channel(payload) do

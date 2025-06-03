@@ -1,17 +1,18 @@
 defmodule ExStreamClient.Operations.ImportUrls do
-  @moduledoc "
-	Modules for interacting with the `import_urls` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `import_urls` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Creates a new import URL
 
-	
-	### Required Arguments:
-		- `payload`: CreateImportURLRequest
-	"
+  @doc ~S"""
+  Creates a new import URL
+
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.CreateImportURLRequest`
+  """
   @spec create_import_url(ExStreamClient.Model.CreateImportURLRequest.t()) ::
           {:ok, ExStreamClient.Model.CreateImportURLResponse.t()} | {:error, any()}
   def create_import_url(payload) do

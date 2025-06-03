@@ -1,17 +1,18 @@
 defmodule ExStreamClient.Operations.Imports do
-  @moduledoc "
-	Modules for interacting with the `imports` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `imports` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Gets an import
 
-	
-	### Required Arguments:
-		- `id`
-	"
+  @doc ~S"""
+  Gets an import
+
+
+  ### Required Arguments:
+  - `id`
+  """
   @spec get_import(String.t()) ::
           {:ok, ExStreamClient.Model.GetImportResponse.t()} | {:error, any()}
   def get_import(id) do
@@ -50,13 +51,13 @@ defmodule ExStreamClient.Operations.Imports do
     end
   end
 
-  @doc ~S"
-	Creates a new import
+  @doc ~S"""
+  Creates a new import
 
-	
-	### Required Arguments:
-		- `payload`: CreateImportRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.CreateImportRequest`
+  """
   @spec create_import(ExStreamClient.Model.CreateImportRequest.t()) ::
           {:ok, ExStreamClient.Model.CreateImportResponse.t()} | {:error, any()}
   def create_import(payload) do
@@ -95,13 +96,11 @@ defmodule ExStreamClient.Operations.Imports do
     end
   end
 
-  @doc ~S"
-	Gets an import
+  @doc ~S"""
+  Gets an import
 
-	
-	### Required Arguments:
-		
-	"
+
+  """
   @spec list_imports() :: {:ok, ExStreamClient.Model.ListImportsResponse.t()} | {:error, any()}
   def list_imports() do
     request_opts = [url: "/api/v2/imports", method: :get, params: []] ++ []

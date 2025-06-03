@@ -1,22 +1,23 @@
 defmodule ExStreamClient.Operations.Chat.Threads do
-  @moduledoc "
-	Modules for interacting with the `chat/threads` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `chat/threads` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Updates certain fields of the thread
 
-Sends events:
-- thread.updated
-- thread.updated
+  @doc ~S"""
+  Updates certain fields of the thread
 
-	
-	### Required Arguments:
-		- `message_id`
-		- `payload`: UpdateThreadPartialRequest
-	"
+  ### Sends events:
+  - `thread.updated`
+  - `thread.updated`
+
+
+  ### Required Arguments:
+  - `message_id`
+  - `payload`: `Elixir.ExStreamClient.Model.UpdateThreadPartialRequest`
+  """
   @spec update_thread_partial(String.t(), ExStreamClient.Model.UpdateThreadPartialRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateThreadPartialResponse.t()} | {:error, any()}
   def update_thread_partial(message_id, payload) do
@@ -56,17 +57,17 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Return a specific thread
+  @doc ~S"""
+  Return a specific thread
 
-	
-	### Required Arguments:
-		- `message_id`
-	### Optional Arguments:
-		- `reply_limit`
-		- `participant_limit`
-		- `member_limit`
-	"
+
+  ### Required Arguments:
+  - `message_id`
+  ### Optional Arguments:
+  - `reply_limit`
+  - `participant_limit`
+  - `member_limit`
+  """
   @spec get_thread(String.t()) ::
           {:ok, ExStreamClient.Model.GetThreadResponse.t()} | {:error, any()}
   @spec get_thread(String.t(), [
@@ -115,13 +116,13 @@ Sends events:
     end
   end
 
-  @doc ~S"
-	Returns the list of threads for specific user
+  @doc ~S"""
+  Returns the list of threads for specific user
 
-	
-	### Required Arguments:
-		- `payload`: QueryThreadsRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.QueryThreadsRequest`
+  """
   @spec query_threads(ExStreamClient.Model.QueryThreadsRequest.t()) ::
           {:ok, ExStreamClient.Model.QueryThreadsResponse.t()} | {:error, any()}
   def query_threads(payload) do

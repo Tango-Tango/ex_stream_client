@@ -1,18 +1,19 @@
 defmodule ExStreamClient.Operations.Chat.Channeltypes do
-  @moduledoc "
-	Modules for interacting with the `chat/channeltypes` group of Stream APIs
+  @moduledoc ~S"""
+  Modules for interacting with the `chat/channeltypes` group of Stream APIs
 
-	API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
-	"
+  API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+  """
   require Logger
-  @doc ~S"
-	Updates channel type
 
-	
-	### Required Arguments:
-		- `name`
-		- `payload`: UpdateChannelTypeRequest
-	"
+  @doc ~S"""
+  Updates channel type
+
+
+  ### Required Arguments:
+  - `name`
+  - `payload`: `Elixir.ExStreamClient.Model.UpdateChannelTypeRequest`
+  """
   @spec update_channel_type(String.t(), ExStreamClient.Model.UpdateChannelTypeRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateChannelTypeResponse.t()} | {:error, any()}
   def update_channel_type(name, payload) do
@@ -52,13 +53,13 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
     end
   end
 
-  @doc ~S"
-	Gets channel type
+  @doc ~S"""
+  Gets channel type
 
-	
-	### Required Arguments:
-		- `name`
-	"
+
+  ### Required Arguments:
+  - `name`
+  """
   @spec get_channel_type(String.t()) ::
           {:ok, ExStreamClient.Model.GetChannelTypeResponse.t()} | {:error, any()}
   def get_channel_type(name) do
@@ -97,13 +98,13 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
     end
   end
 
-  @doc ~S"
-	Deletes channel type
+  @doc ~S"""
+  Deletes channel type
 
-	
-	### Required Arguments:
-		- `name`
-	"
+
+  ### Required Arguments:
+  - `name`
+  """
   @spec delete_channel_type(String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_channel_type(name) do
@@ -142,13 +143,13 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
     end
   end
 
-  @doc ~S"
-	Creates new channel type
+  @doc ~S"""
+  Creates new channel type
 
-	
-	### Required Arguments:
-		- `payload`: CreateChannelTypeRequest
-	"
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.CreateChannelTypeRequest`
+  """
   @spec create_channel_type(ExStreamClient.Model.CreateChannelTypeRequest.t()) ::
           {:ok, ExStreamClient.Model.CreateChannelTypeResponse.t()} | {:error, any()}
   def create_channel_type(payload) do
@@ -188,13 +189,11 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
     end
   end
 
-  @doc ~S"
-	Lists all available channel types
+  @doc ~S"""
+  Lists all available channel types
 
-	
-	### Required Arguments:
-		
-	"
+
+  """
   @spec list_channel_types() ::
           {:ok, ExStreamClient.Model.ListChannelTypesResponse.t()} | {:error, any()}
   def list_channel_types() do

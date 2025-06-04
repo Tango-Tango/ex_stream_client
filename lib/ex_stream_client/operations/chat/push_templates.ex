@@ -12,10 +12,16 @@ defmodule ExStreamClient.Operations.Chat.PushTemplates do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.UpsertPushTemplateRequest`
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec upsert_push_template(ExStreamClient.Model.UpsertPushTemplateRequest.t()) ::
           {:ok, ExStreamClient.Model.UpsertPushTemplateResponse.t()} | {:error, any()}
-  def upsert_push_template(payload) do
+  @spec upsert_push_template(ExStreamClient.Model.UpsertPushTemplateRequest.t(), client: module()) ::
+          {:ok, ExStreamClient.Model.UpsertPushTemplateResponse.t()} | {:error, any()}
+  def upsert_push_template(payload, opts \\ []) do
+    client = get_client(opts)
+
     request_opts =
       [url: "/api/v2/chat/push_templates", method: :post, params: []] ++ [json: payload]
 
@@ -46,7 +52,7 @@ defmodule ExStreamClient.Operations.Chat.PushTemplates do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -60,12 +66,15 @@ defmodule ExStreamClient.Operations.Chat.PushTemplates do
   - `push_provider_type`
   ### Optional Arguments:
   - `push_provider_name`
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec get_push_templates(String.t()) ::
           {:ok, ExStreamClient.Model.GetPushTemplatesResponse.t()} | {:error, any()}
-  @spec get_push_templates(String.t(), push_provider_name: String.t()) ::
+  @spec get_push_templates(String.t(), [{:client, module()} | {:push_provider_name, String.t()}]) ::
           {:ok, ExStreamClient.Model.GetPushTemplatesResponse.t()} | {:error, any()}
   def get_push_templates(push_provider_type, opts \\ []) do
+    client = get_client(opts)
+
     request_opts =
       [
         url: "/api/v2/chat/push_templates",
@@ -105,9 +114,20 @@ defmodule ExStreamClient.Operations.Chat.PushTemplates do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
+  end
+
+  defp get_client(opts) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless Code.ensure_loaded?(client) and function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
+    client
   end
 end

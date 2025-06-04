@@ -859,6 +859,7 @@ defmodule ExStreamClient.Tools.Codegen do
   def type_to_spec("allOf"), do: quote(do: any())
   def type_to_spec("anyOf"), do: quote(do: any())
   def type_to_spec("any"), do: quote(do: any())
+  def type_to_spec("module"), do: quote(do: module())
 
   def type_to_spec({:oneOf, {:enum, keys}}) do
     keys

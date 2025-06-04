@@ -13,10 +13,17 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
   ### Required Arguments:
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.StopCampaignRequest`
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec schedule_campaign(String.t(), ExStreamClient.Model.StopCampaignRequest.t()) ::
           {:ok, ExStreamClient.Model.CampaignResponse.t()} | {:error, any()}
-  def schedule_campaign(id, payload) do
+  @spec schedule_campaign(String.t(), ExStreamClient.Model.StopCampaignRequest.t(),
+          client: module()
+        ) :: {:ok, ExStreamClient.Model.CampaignResponse.t()} | {:error, any()}
+  def schedule_campaign(id, payload, opts \\ []) do
+    client = get_client(opts)
+
     request_opts =
       [url: "/api/v2/chat/campaigns/#{id}/stop", method: :post, params: []] ++ [json: payload]
 
@@ -47,7 +54,7 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -59,10 +66,16 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.QueryCampaignsRequest`
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec query_campaigns(ExStreamClient.Model.QueryCampaignsRequest.t()) ::
           {:ok, ExStreamClient.Model.QueryCampaignsResponse.t()} | {:error, any()}
-  def query_campaigns(payload) do
+  @spec query_campaigns(ExStreamClient.Model.QueryCampaignsRequest.t(), client: module()) ::
+          {:ok, ExStreamClient.Model.QueryCampaignsResponse.t()} | {:error, any()}
+  def query_campaigns(payload, opts \\ []) do
+    client = get_client(opts)
+
     request_opts =
       [url: "/api/v2/chat/campaigns/query", method: :post, params: []] ++ [json: payload]
 
@@ -93,7 +106,7 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -109,12 +122,16 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
   - `prev`
   - `next`
   - `limit`
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec get_campaign(String.t()) ::
           {:ok, ExStreamClient.Model.GetCampaignResponse.t()} | {:error, any()}
-  @spec get_campaign(String.t(), [{:limit, integer()} | {:next, String.t()} | {:prev, String.t()}]) ::
-          {:ok, ExStreamClient.Model.GetCampaignResponse.t()} | {:error, any()}
+  @spec get_campaign(String.t(), [
+          {:client, module()} | {:limit, integer()} | {:next, String.t()} | {:prev, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.GetCampaignResponse.t()} | {:error, any()}
   def get_campaign(id, opts \\ []) do
+    client = get_client(opts)
+
     request_opts =
       [
         url: "/api/v2/chat/campaigns/#{id}",
@@ -151,7 +168,7 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -164,10 +181,17 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
   ### Required Arguments:
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.StartCampaignRequest`
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec start_campaign(String.t(), ExStreamClient.Model.StartCampaignRequest.t()) ::
           {:ok, ExStreamClient.Model.StartCampaignResponse.t()} | {:error, any()}
-  def start_campaign(id, payload) do
+  @spec start_campaign(String.t(), ExStreamClient.Model.StartCampaignRequest.t(),
+          client: module()
+        ) :: {:ok, ExStreamClient.Model.StartCampaignResponse.t()} | {:error, any()}
+  def start_campaign(id, payload, opts \\ []) do
+    client = get_client(opts)
+
     request_opts =
       [url: "/api/v2/chat/campaigns/#{id}/start", method: :post, params: []] ++ [json: payload]
 
@@ -198,9 +222,20 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
+  end
+
+  defp get_client(opts) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless Code.ensure_loaded?(client) and function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
+    client
   end
 end

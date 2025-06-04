@@ -12,12 +12,16 @@ defmodule ExStreamClient.Operations.Chat.Moderation do
 
   ### Optional Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.QueryMessageFlagsPayload`
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec query_message_flags() ::
           {:ok, ExStreamClient.Model.QueryMessageFlagsResponse.t()} | {:error, any()}
-  @spec query_message_flags(payload: ExStreamClient.Model.QueryMessageFlagsPayload.t()) ::
-          {:ok, ExStreamClient.Model.QueryMessageFlagsResponse.t()} | {:error, any()}
+  @spec query_message_flags([
+          {:client, module()} | {:payload, ExStreamClient.Model.QueryMessageFlagsPayload.t()}
+        ]) :: {:ok, ExStreamClient.Model.QueryMessageFlagsResponse.t()} | {:error, any()}
   def query_message_flags(opts \\ []) do
+    client = get_client(opts)
+
     request_opts =
       [
         url: "/api/v2/chat/moderation/flags/message",
@@ -54,7 +58,7 @@ defmodule ExStreamClient.Operations.Chat.Moderation do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -70,10 +74,16 @@ defmodule ExStreamClient.Operations.Chat.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.UnmuteChannelRequest`
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec unmute_channel(ExStreamClient.Model.UnmuteChannelRequest.t()) ::
           {:ok, ExStreamClient.Model.UnmuteResponse.t()} | {:error, any()}
-  def unmute_channel(payload) do
+  @spec unmute_channel(ExStreamClient.Model.UnmuteChannelRequest.t(), client: module()) ::
+          {:ok, ExStreamClient.Model.UnmuteResponse.t()} | {:error, any()}
+  def unmute_channel(payload, opts \\ []) do
+    client = get_client(opts)
+
     request_opts =
       [url: "/api/v2/chat/moderation/unmute/channel", method: :post, params: []] ++
         [json: payload]
@@ -105,7 +115,7 @@ defmodule ExStreamClient.Operations.Chat.Moderation do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -121,10 +131,16 @@ defmodule ExStreamClient.Operations.Chat.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.MuteChannelRequest`
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec mute_channel(ExStreamClient.Model.MuteChannelRequest.t()) ::
           {:ok, ExStreamClient.Model.MuteChannelResponse.t()} | {:error, any()}
-  def mute_channel(payload) do
+  @spec mute_channel(ExStreamClient.Model.MuteChannelRequest.t(), client: module()) ::
+          {:ok, ExStreamClient.Model.MuteChannelResponse.t()} | {:error, any()}
+  def mute_channel(payload, opts \\ []) do
+    client = get_client(opts)
+
     request_opts =
       [url: "/api/v2/chat/moderation/mute/channel", method: :post, params: []] ++ [json: payload]
 
@@ -155,9 +171,20 @@ defmodule ExStreamClient.Operations.Chat.Moderation do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
+  end
+
+  defp get_client(opts) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless Code.ensure_loaded?(client) and function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
+    client
   end
 end

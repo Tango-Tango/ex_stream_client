@@ -12,10 +12,15 @@ defmodule ExStreamClient.Operations.Export do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.ExportUsersRequest`
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec export_users(ExStreamClient.Model.ExportUsersRequest.t()) ::
           {:ok, ExStreamClient.Model.ExportUsersResponse.t()} | {:error, any()}
-  def export_users(payload) do
+  @spec export_users(ExStreamClient.Model.ExportUsersRequest.t(), client: module()) ::
+          {:ok, ExStreamClient.Model.ExportUsersResponse.t()} | {:error, any()}
+  def export_users(payload, opts \\ []) do
+    client = get_client(opts)
     request_opts = [url: "/api/v2/export/users", method: :post, params: []] ++ [json: payload]
 
     r =
@@ -45,9 +50,20 @@ defmodule ExStreamClient.Operations.Export do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
+  end
+
+  defp get_client(opts) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless Code.ensure_loaded?(client) and function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
+    client
   end
 end

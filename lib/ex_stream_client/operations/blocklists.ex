@@ -12,10 +12,15 @@ defmodule ExStreamClient.Operations.Blocklists do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.CreateBlockListRequest`
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec create_block_list(ExStreamClient.Model.CreateBlockListRequest.t()) ::
           {:ok, ExStreamClient.Model.CreateBlockListResponse.t()} | {:error, any()}
-  def create_block_list(payload) do
+  @spec create_block_list(ExStreamClient.Model.CreateBlockListRequest.t(), client: module()) ::
+          {:ok, ExStreamClient.Model.CreateBlockListResponse.t()} | {:error, any()}
+  def create_block_list(payload, opts \\ []) do
+    client = get_client(opts)
     request_opts = [url: "/api/v2/blocklists", method: :post, params: []] ++ [json: payload]
 
     r =
@@ -45,7 +50,7 @@ defmodule ExStreamClient.Operations.Blocklists do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -57,12 +62,15 @@ defmodule ExStreamClient.Operations.Blocklists do
 
   ### Optional Arguments:
   - `team`
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec list_block_lists() ::
           {:ok, ExStreamClient.Model.ListBlockListResponse.t()} | {:error, any()}
-  @spec list_block_lists(team: String.t()) ::
+  @spec list_block_lists([{:client, module()} | {:team, String.t()}]) ::
           {:ok, ExStreamClient.Model.ListBlockListResponse.t()} | {:error, any()}
   def list_block_lists(opts \\ []) do
+    client = get_client(opts)
+
     request_opts =
       [
         url: "/api/v2/blocklists",
@@ -99,7 +107,7 @@ defmodule ExStreamClient.Operations.Blocklists do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -112,10 +120,17 @@ defmodule ExStreamClient.Operations.Blocklists do
   ### Required Arguments:
   - `name`
   - `payload`: `Elixir.ExStreamClient.Model.UpdateBlockListRequest`
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec update_block_list(String.t(), ExStreamClient.Model.UpdateBlockListRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateBlockListResponse.t()} | {:error, any()}
-  def update_block_list(name, payload) do
+  @spec update_block_list(String.t(), ExStreamClient.Model.UpdateBlockListRequest.t(),
+          client: module()
+        ) :: {:ok, ExStreamClient.Model.UpdateBlockListResponse.t()} | {:error, any()}
+  def update_block_list(name, payload, opts \\ []) do
+    client = get_client(opts)
+
     request_opts =
       [url: "/api/v2/blocklists/#{name}", method: :put, params: []] ++ [json: payload]
 
@@ -146,7 +161,7 @@ defmodule ExStreamClient.Operations.Blocklists do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -160,12 +175,15 @@ defmodule ExStreamClient.Operations.Blocklists do
   - `name`
   ### Optional Arguments:
   - `team`
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec get_block_list(String.t()) ::
           {:ok, ExStreamClient.Model.GetBlockListResponse.t()} | {:error, any()}
-  @spec get_block_list(String.t(), team: String.t()) ::
+  @spec get_block_list(String.t(), [{:client, module()} | {:team, String.t()}]) ::
           {:ok, ExStreamClient.Model.GetBlockListResponse.t()} | {:error, any()}
   def get_block_list(name, opts \\ []) do
+    client = get_client(opts)
+
     request_opts =
       [
         url: "/api/v2/blocklists/#{name}",
@@ -202,7 +220,7 @@ defmodule ExStreamClient.Operations.Blocklists do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -216,12 +234,15 @@ defmodule ExStreamClient.Operations.Blocklists do
   - `name`
   ### Optional Arguments:
   - `team`
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec delete_block_list(String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec delete_block_list(String.t(), team: String.t()) ::
+  @spec delete_block_list(String.t(), [{:client, module()} | {:team, String.t()}]) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_block_list(name, opts \\ []) do
+    client = get_client(opts)
+
     request_opts =
       [
         url: "/api/v2/blocklists/#{name}",
@@ -258,9 +279,20 @@ defmodule ExStreamClient.Operations.Blocklists do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
+  end
+
+  defp get_client(opts) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless Code.ensure_loaded?(client) and function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
+    client
   end
 end

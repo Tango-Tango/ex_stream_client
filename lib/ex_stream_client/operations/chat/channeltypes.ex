@@ -13,10 +13,17 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
   ### Required Arguments:
   - `name`
   - `payload`: `Elixir.ExStreamClient.Model.UpdateChannelTypeRequest`
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec update_channel_type(String.t(), ExStreamClient.Model.UpdateChannelTypeRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateChannelTypeResponse.t()} | {:error, any()}
-  def update_channel_type(name, payload) do
+  @spec update_channel_type(String.t(), ExStreamClient.Model.UpdateChannelTypeRequest.t(),
+          client: module()
+        ) :: {:ok, ExStreamClient.Model.UpdateChannelTypeResponse.t()} | {:error, any()}
+  def update_channel_type(name, payload, opts \\ []) do
+    client = get_client(opts)
+
     request_opts =
       [url: "/api/v2/chat/channeltypes/#{name}", method: :put, params: []] ++ [json: payload]
 
@@ -47,7 +54,7 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -59,10 +66,15 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
 
   ### Required Arguments:
   - `name`
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec get_channel_type(String.t()) ::
           {:ok, ExStreamClient.Model.GetChannelTypeResponse.t()} | {:error, any()}
-  def get_channel_type(name) do
+  @spec get_channel_type(String.t(), client: module()) ::
+          {:ok, ExStreamClient.Model.GetChannelTypeResponse.t()} | {:error, any()}
+  def get_channel_type(name, opts \\ []) do
+    client = get_client(opts)
     request_opts = [url: "/api/v2/chat/channeltypes/#{name}", method: :get, params: []] ++ []
 
     r =
@@ -92,7 +104,7 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -104,10 +116,15 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
 
   ### Required Arguments:
   - `name`
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec delete_channel_type(String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  def delete_channel_type(name) do
+  @spec delete_channel_type(String.t(), client: module()) ::
+          {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  def delete_channel_type(name, opts \\ []) do
+    client = get_client(opts)
     request_opts = [url: "/api/v2/chat/channeltypes/#{name}", method: :delete, params: []] ++ []
 
     r =
@@ -137,7 +154,7 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -149,10 +166,16 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.CreateChannelTypeRequest`
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec create_channel_type(ExStreamClient.Model.CreateChannelTypeRequest.t()) ::
           {:ok, ExStreamClient.Model.CreateChannelTypeResponse.t()} | {:error, any()}
-  def create_channel_type(payload) do
+  @spec create_channel_type(ExStreamClient.Model.CreateChannelTypeRequest.t(), client: module()) ::
+          {:ok, ExStreamClient.Model.CreateChannelTypeResponse.t()} | {:error, any()}
+  def create_channel_type(payload, opts \\ []) do
+    client = get_client(opts)
+
     request_opts =
       [url: "/api/v2/chat/channeltypes", method: :post, params: []] ++ [json: payload]
 
@@ -183,7 +206,7 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -193,10 +216,15 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
   Lists all available channel types
 
 
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec list_channel_types() ::
           {:ok, ExStreamClient.Model.ListChannelTypesResponse.t()} | {:error, any()}
-  def list_channel_types() do
+  @spec list_channel_types(client: module()) ::
+          {:ok, ExStreamClient.Model.ListChannelTypesResponse.t()} | {:error, any()}
+  def list_channel_types(opts \\ []) do
+    client = get_client(opts)
     request_opts = [url: "/api/v2/chat/channeltypes", method: :get, params: []] ++ []
 
     r =
@@ -226,9 +254,20 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
+  end
+
+  defp get_client(opts) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless Code.ensure_loaded?(client) and function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
+    client
   end
 end

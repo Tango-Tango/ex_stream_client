@@ -17,13 +17,19 @@ defmodule ExStreamClient.Operations.Users do
   - `user_id`
   - `payload`: `Elixir.ExStreamClient.Model.ReactivateUserRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec reactivate_user(String.t(), ExStreamClient.Model.ReactivateUserRequest.t()) ::
           {:ok, ExStreamClient.Model.ReactivateUserResponse.t()} | {:error, any()}
-  @spec reactivate_user(String.t(), ExStreamClient.Model.ReactivateUserRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.ReactivateUserResponse.t()} | {:error, any()}
+  @spec reactivate_user(String.t(), ExStreamClient.Model.ReactivateUserRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.ReactivateUserResponse.t()} | {:error, any()}
   def reactivate_user(user_id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -57,7 +63,7 @@ defmodule ExStreamClient.Operations.Users do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -73,12 +79,19 @@ defmodule ExStreamClient.Operations.Users do
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.UpdateUsersRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec update_users(ExStreamClient.Model.UpdateUsersRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateUsersResponse.t()} | {:error, any()}
-  @spec update_users(ExStreamClient.Model.UpdateUsersRequest.t(), client: module()) ::
-          {:ok, ExStreamClient.Model.UpdateUsersResponse.t()} | {:error, any()}
+  @spec update_users(ExStreamClient.Model.UpdateUsersRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.UpdateUsersResponse.t()} | {:error, any()}
   def update_users(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/users", method: :post, params: []] ++ [json: payload]
@@ -110,7 +123,7 @@ defmodule ExStreamClient.Operations.Users do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -128,12 +141,19 @@ defmodule ExStreamClient.Operations.Users do
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.UpdateUsersPartialRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec update_users_partial(ExStreamClient.Model.UpdateUsersPartialRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateUsersResponse.t()} | {:error, any()}
-  @spec update_users_partial(ExStreamClient.Model.UpdateUsersPartialRequest.t(), client: module()) ::
-          {:ok, ExStreamClient.Model.UpdateUsersResponse.t()} | {:error, any()}
+  @spec update_users_partial(ExStreamClient.Model.UpdateUsersPartialRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.UpdateUsersResponse.t()} | {:error, any()}
   def update_users_partial(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/users", method: :patch, params: []] ++ [json: payload]
@@ -165,7 +185,7 @@ defmodule ExStreamClient.Operations.Users do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -176,12 +196,20 @@ defmodule ExStreamClient.Operations.Users do
 
 
   ### Optional Arguments:
-  - `payload`: `Elixir.ExStreamClient.Model.QueryUsersPayload`
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
+  - `payload`: `Elixir.ExStreamClient.Model.QueryUsersPayload`
   """
   @spec query_users() :: {:ok, ExStreamClient.Model.QueryUsersResponse.t()} | {:error, any()}
-  @spec query_users([{:client, module()} | {:payload, ExStreamClient.Model.QueryUsersPayload.t()}]) ::
-          {:ok, ExStreamClient.Model.QueryUsersResponse.t()} | {:error, any()}
+  @spec query_users([
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:payload, ExStreamClient.Model.QueryUsersPayload.t()}
+        ]) :: {:ok, ExStreamClient.Model.QueryUsersResponse.t()} | {:error, any()}
   def query_users(opts \\ []) do
     client = get_client(opts)
 
@@ -221,7 +249,7 @@ defmodule ExStreamClient.Operations.Users do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -238,12 +266,19 @@ defmodule ExStreamClient.Operations.Users do
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.DeleteUsersRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec delete_users(ExStreamClient.Model.DeleteUsersRequest.t()) ::
           {:ok, ExStreamClient.Model.DeleteUsersResponse.t()} | {:error, any()}
-  @spec delete_users(ExStreamClient.Model.DeleteUsersRequest.t(), client: module()) ::
-          {:ok, ExStreamClient.Model.DeleteUsersResponse.t()} | {:error, any()}
+  @spec delete_users(ExStreamClient.Model.DeleteUsersRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.DeleteUsersResponse.t()} | {:error, any()}
   def delete_users(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/users/delete", method: :post, params: []] ++ [json: payload]
@@ -275,7 +310,7 @@ defmodule ExStreamClient.Operations.Users do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -292,12 +327,19 @@ defmodule ExStreamClient.Operations.Users do
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.ReactivateUsersRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec reactivate_users(ExStreamClient.Model.ReactivateUsersRequest.t()) ::
           {:ok, ExStreamClient.Model.ReactivateUsersResponse.t()} | {:error, any()}
-  @spec reactivate_users(ExStreamClient.Model.ReactivateUsersRequest.t(), client: module()) ::
-          {:ok, ExStreamClient.Model.ReactivateUsersResponse.t()} | {:error, any()}
+  @spec reactivate_users(ExStreamClient.Model.ReactivateUsersRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.ReactivateUsersResponse.t()} | {:error, any()}
   def reactivate_users(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/users/reactivate", method: :post, params: []] ++ [json: payload]
@@ -329,7 +371,7 @@ defmodule ExStreamClient.Operations.Users do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -342,12 +384,19 @@ defmodule ExStreamClient.Operations.Users do
   ### Required Arguments:
   - `user_id`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec export_user(String.t()) ::
           {:ok, ExStreamClient.Model.ExportUserResponse.t()} | {:error, any()}
-  @spec export_user(String.t(), client: module()) ::
-          {:ok, ExStreamClient.Model.ExportUserResponse.t()} | {:error, any()}
+  @spec export_user(String.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.ExportUserResponse.t()} | {:error, any()}
   def export_user(user_id, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/users/#{user_id}/export", method: :get, params: []] ++ []
@@ -379,7 +428,7 @@ defmodule ExStreamClient.Operations.Users do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -395,12 +444,19 @@ defmodule ExStreamClient.Operations.Users do
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.DeactivateUsersRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec deactivate_users(ExStreamClient.Model.DeactivateUsersRequest.t()) ::
           {:ok, ExStreamClient.Model.DeactivateUsersResponse.t()} | {:error, any()}
-  @spec deactivate_users(ExStreamClient.Model.DeactivateUsersRequest.t(), client: module()) ::
-          {:ok, ExStreamClient.Model.DeactivateUsersResponse.t()} | {:error, any()}
+  @spec deactivate_users(ExStreamClient.Model.DeactivateUsersRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.DeactivateUsersResponse.t()} | {:error, any()}
   def deactivate_users(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/users/deactivate", method: :post, params: []] ++ [json: payload]
@@ -432,7 +488,7 @@ defmodule ExStreamClient.Operations.Users do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -445,12 +501,19 @@ defmodule ExStreamClient.Operations.Users do
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.RestoreUsersRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec restore_users(ExStreamClient.Model.RestoreUsersRequest.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec restore_users(ExStreamClient.Model.RestoreUsersRequest.t(), client: module()) ::
-          {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  @spec restore_users(ExStreamClient.Model.RestoreUsersRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def restore_users(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/users/restore", method: :post, params: []] ++ [json: payload]
@@ -482,7 +545,7 @@ defmodule ExStreamClient.Operations.Users do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -495,12 +558,19 @@ defmodule ExStreamClient.Operations.Users do
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.UnblockUsersRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec unblock_users(ExStreamClient.Model.UnblockUsersRequest.t()) ::
           {:ok, ExStreamClient.Model.UnblockUsersResponse.t()} | {:error, any()}
-  @spec unblock_users(ExStreamClient.Model.UnblockUsersRequest.t(), client: module()) ::
-          {:ok, ExStreamClient.Model.UnblockUsersResponse.t()} | {:error, any()}
+  @spec unblock_users(ExStreamClient.Model.UnblockUsersRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.UnblockUsersResponse.t()} | {:error, any()}
   def unblock_users(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/users/unblock", method: :post, params: []] ++ [json: payload]
@@ -532,7 +602,7 @@ defmodule ExStreamClient.Operations.Users do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -545,12 +615,19 @@ defmodule ExStreamClient.Operations.Users do
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.BlockUsersRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec block_users(ExStreamClient.Model.BlockUsersRequest.t()) ::
           {:ok, ExStreamClient.Model.BlockUsersResponse.t()} | {:error, any()}
-  @spec block_users(ExStreamClient.Model.BlockUsersRequest.t(), client: module()) ::
-          {:ok, ExStreamClient.Model.BlockUsersResponse.t()} | {:error, any()}
+  @spec block_users(ExStreamClient.Model.BlockUsersRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.BlockUsersResponse.t()} | {:error, any()}
   def block_users(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/users/block", method: :post, params: []] ++ [json: payload]
@@ -582,7 +659,7 @@ defmodule ExStreamClient.Operations.Users do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -593,13 +670,21 @@ defmodule ExStreamClient.Operations.Users do
 
 
   ### Optional Arguments:
-  - `user_id`
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
+  - `user_id`
   """
   @spec get_blocked_users() ::
           {:ok, ExStreamClient.Model.GetBlockedUsersResponse.t()} | {:error, any()}
-  @spec get_blocked_users([{:client, module()} | {:user_id, String.t()}]) ::
-          {:ok, ExStreamClient.Model.GetBlockedUsersResponse.t()} | {:error, any()}
+  @spec get_blocked_users([
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:user_id, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.GetBlockedUsersResponse.t()} | {:error, any()}
   def get_blocked_users(opts \\ []) do
     client = get_client(opts)
 
@@ -639,7 +724,7 @@ defmodule ExStreamClient.Operations.Users do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -656,13 +741,19 @@ defmodule ExStreamClient.Operations.Users do
   - `user_id`
   - `payload`: `Elixir.ExStreamClient.Model.DeactivateUserRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec deactivate_user(String.t(), ExStreamClient.Model.DeactivateUserRequest.t()) ::
           {:ok, ExStreamClient.Model.DeactivateUserResponse.t()} | {:error, any()}
-  @spec deactivate_user(String.t(), ExStreamClient.Model.DeactivateUserRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.DeactivateUserResponse.t()} | {:error, any()}
+  @spec deactivate_user(String.t(), ExStreamClient.Model.DeactivateUserRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.DeactivateUserResponse.t()} | {:error, any()}
   def deactivate_user(user_id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -696,7 +787,7 @@ defmodule ExStreamClient.Operations.Users do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -711,5 +802,9 @@ defmodule ExStreamClient.Operations.Users do
     end
 
     client
+  end
+
+  defp get_request_opts(opts) do
+    Keyword.take(opts, [:api_key, :api_key_secret, :endpoint])
   end
 end

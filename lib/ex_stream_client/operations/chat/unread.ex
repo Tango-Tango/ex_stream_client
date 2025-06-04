@@ -11,12 +11,19 @@ defmodule ExStreamClient.Operations.Chat.Unread do
 
 
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec unread_counts() ::
           {:ok, ExStreamClient.Model.WrappedUnreadCountsResponse.t()} | {:error, any()}
-  @spec unread_counts(client: module()) ::
-          {:ok, ExStreamClient.Model.WrappedUnreadCountsResponse.t()} | {:error, any()}
+  @spec unread_counts([
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.WrappedUnreadCountsResponse.t()} | {:error, any()}
   def unread_counts(opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/chat/unread", method: :get, params: []] ++ []
@@ -48,7 +55,7 @@ defmodule ExStreamClient.Operations.Chat.Unread do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -63,5 +70,9 @@ defmodule ExStreamClient.Operations.Chat.Unread do
     end
 
     client
+  end
+
+  defp get_request_opts(opts) do
+    Keyword.take(opts, [:api_key, :api_key_secret, :endpoint])
   end
 end

@@ -63,6 +63,33 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
             |> Enum.concat([
               %{
                 in: "opts",
+                name: "api_key_secret",
+                type: "string",
+                description:
+                  "API key secret to use. If not provided, the default secret from config will be used.",
+                required?: false,
+                example: "ExStreamClient.Config.api_key_secret()"
+              },
+              %{
+                in: "opts",
+                name: "api_key",
+                type: "string",
+                description:
+                  "API key to use. If not provided, the default key from config will be used.",
+                required?: false,
+                example: "ExStreamClient.Config.api_key()"
+              },
+              %{
+                in: "opts",
+                name: "endpoint",
+                type: "string",
+                description:
+                  "Endpoint to use. If not provided, the default endpoint from config will be used.",
+                required?: false,
+                example: "ExStreamClient.Config.endpoint()"
+              },
+              %{
+                in: "opts",
                 name: "client",
                 type: "module",
                 description: "HTTP client to use. Must implement `ExStreamClient.Http.Behavior`",
@@ -73,7 +100,9 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
 
           has_optional_args? = !Enum.empty?(merged_optional_args)
           required_args_docstring = build_arg_docstring(merged_required_args)
-          optional_args_docstring = build_arg_docstring(merged_optional_args)
+
+          optional_args_docstring =
+            build_arg_docstring(merged_optional_args |> Enum.sort_by(& &1.name))
 
           # convert non-optional args into [arg1, arg2, arg3] representation
           arg_names =
@@ -277,7 +306,7 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
                     end
                   )
 
-                case client.request(r, opts) do
+                case client.request(r, get_request_opts(opts)) do
                   {:ok, response} -> response.body
                   {:error, error} -> {:error, error}
                 end
@@ -315,6 +344,13 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
               end
 
               client
+            end
+
+            defp get_request_opts(opts) do
+              Keyword.take(
+                opts,
+                [:api_key, :api_key_secret, :endpoint]
+              )
             end
           end
         end

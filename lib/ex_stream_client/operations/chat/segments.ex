@@ -13,12 +13,19 @@ defmodule ExStreamClient.Operations.Chat.Segments do
   ### Required Arguments:
   - `id`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec get_segment(String.t()) ::
           {:ok, ExStreamClient.Model.GetSegmentResponse.t()} | {:error, any()}
-  @spec get_segment(String.t(), client: module()) ::
-          {:ok, ExStreamClient.Model.GetSegmentResponse.t()} | {:error, any()}
+  @spec get_segment(String.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.GetSegmentResponse.t()} | {:error, any()}
   def get_segment(id, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/chat/segments/#{id}", method: :get, params: []] ++ []
@@ -50,7 +57,7 @@ defmodule ExStreamClient.Operations.Chat.Segments do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -63,11 +70,18 @@ defmodule ExStreamClient.Operations.Chat.Segments do
   ### Required Arguments:
   - `id`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec delete_segment(String.t()) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec delete_segment(String.t(), client: module()) ::
-          {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  @spec delete_segment(String.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_segment(id, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/chat/segments/#{id}", method: :delete, params: []] ++ []
@@ -99,7 +113,7 @@ defmodule ExStreamClient.Operations.Chat.Segments do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -113,13 +127,19 @@ defmodule ExStreamClient.Operations.Chat.Segments do
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.QuerySegmentTargetsRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec query_segment_targets(String.t(), ExStreamClient.Model.QuerySegmentTargetsRequest.t()) ::
           {:ok, ExStreamClient.Model.QuerySegmentTargetsResponse.t()} | {:error, any()}
-  @spec query_segment_targets(String.t(), ExStreamClient.Model.QuerySegmentTargetsRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.QuerySegmentTargetsResponse.t()} | {:error, any()}
+  @spec query_segment_targets(String.t(), ExStreamClient.Model.QuerySegmentTargetsRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.QuerySegmentTargetsResponse.t()} | {:error, any()}
   def query_segment_targets(id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -154,7 +174,7 @@ defmodule ExStreamClient.Operations.Chat.Segments do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -167,12 +187,19 @@ defmodule ExStreamClient.Operations.Chat.Segments do
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.QuerySegmentsRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec query_segments(ExStreamClient.Model.QuerySegmentsRequest.t()) ::
           {:ok, ExStreamClient.Model.QuerySegmentsResponse.t()} | {:error, any()}
-  @spec query_segments(ExStreamClient.Model.QuerySegmentsRequest.t(), client: module()) ::
-          {:ok, ExStreamClient.Model.QuerySegmentsResponse.t()} | {:error, any()}
+  @spec query_segments(ExStreamClient.Model.QuerySegmentsRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.QuerySegmentsResponse.t()} | {:error, any()}
   def query_segments(payload, opts \\ []) do
     client = get_client(opts)
 
@@ -206,7 +233,7 @@ defmodule ExStreamClient.Operations.Chat.Segments do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -220,13 +247,19 @@ defmodule ExStreamClient.Operations.Chat.Segments do
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.DeleteSegmentTargetsRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec delete_segment_targets(String.t(), ExStreamClient.Model.DeleteSegmentTargetsRequest.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec delete_segment_targets(String.t(), ExStreamClient.Model.DeleteSegmentTargetsRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  @spec delete_segment_targets(String.t(), ExStreamClient.Model.DeleteSegmentTargetsRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_segment_targets(id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -261,7 +294,7 @@ defmodule ExStreamClient.Operations.Chat.Segments do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -275,12 +308,19 @@ defmodule ExStreamClient.Operations.Chat.Segments do
   - `id`
   - `target_id`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec segment_target_exists(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec segment_target_exists(String.t(), String.t(), client: module()) ::
-          {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  @spec segment_target_exists(String.t(), String.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def segment_target_exists(id, target_id, opts \\ []) do
     client = get_client(opts)
 
@@ -314,7 +354,7 @@ defmodule ExStreamClient.Operations.Chat.Segments do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -329,5 +369,9 @@ defmodule ExStreamClient.Operations.Chat.Segments do
     end
 
     client
+  end
+
+  defp get_request_opts(opts) do
+    Keyword.take(opts, [:api_key, :api_key_secret, :endpoint])
   end
 end

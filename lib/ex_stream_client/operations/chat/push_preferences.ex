@@ -13,14 +13,22 @@ defmodule ExStreamClient.Operations.Chat.PushPreferences do
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.UpsertPushPreferencesRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec update_push_notification_preferences(
           ExStreamClient.Model.UpsertPushPreferencesRequest.t()
         ) :: {:ok, ExStreamClient.Model.UpsertPushPreferencesResponse.t()} | {:error, any()}
   @spec update_push_notification_preferences(
           ExStreamClient.Model.UpsertPushPreferencesRequest.t(),
-          client: module()
+          [
+            {:client, module()}
+            | {:endpoint, String.t()}
+            | {:api_key, String.t()}
+            | {:api_key_secret, String.t()}
+          ]
         ) :: {:ok, ExStreamClient.Model.UpsertPushPreferencesResponse.t()} | {:error, any()}
   def update_push_notification_preferences(payload, opts \\ []) do
     client = get_client(opts)
@@ -55,7 +63,7 @@ defmodule ExStreamClient.Operations.Chat.PushPreferences do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -70,5 +78,9 @@ defmodule ExStreamClient.Operations.Chat.PushPreferences do
     end
 
     client
+  end
+
+  defp get_request_opts(opts) do
+    Keyword.take(opts, [:api_key, :api_key_secret, :endpoint])
   end
 end

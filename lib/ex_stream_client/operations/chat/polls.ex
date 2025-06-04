@@ -14,13 +14,20 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   - `poll_id`
   - `payload`: `Elixir.ExStreamClient.Model.QueryPollVotesRequest`
   ### Optional Arguments:
-  - `user_id`
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
+  - `user_id`
   """
   @spec query_poll_votes(String.t(), ExStreamClient.Model.QueryPollVotesRequest.t()) ::
           {:ok, ExStreamClient.Model.PollVotesResponse.t()} | {:error, any()}
   @spec query_poll_votes(String.t(), ExStreamClient.Model.QueryPollVotesRequest.t(), [
-          {:client, module()} | {:user_id, String.t()}
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:user_id, String.t()}
         ]) :: {:ok, ExStreamClient.Model.PollVotesResponse.t()} | {:error, any()}
   def query_poll_votes(poll_id, payload, opts \\ []) do
     client = get_client(opts)
@@ -61,7 +68,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -78,12 +85,19 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.UpdatePollRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec update_poll(ExStreamClient.Model.UpdatePollRequest.t()) ::
           {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
-  @spec update_poll(ExStreamClient.Model.UpdatePollRequest.t(), client: module()) ::
-          {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
+  @spec update_poll(ExStreamClient.Model.UpdatePollRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
   def update_poll(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/chat/polls", method: :put, params: []] ++ [json: payload]
@@ -115,7 +129,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -128,12 +142,19 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.CreatePollRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec create_poll(ExStreamClient.Model.CreatePollRequest.t()) ::
           {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
-  @spec create_poll(ExStreamClient.Model.CreatePollRequest.t(), client: module()) ::
-          {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
+  @spec create_poll(ExStreamClient.Model.CreatePollRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
   def create_poll(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/chat/polls", method: :post, params: []] ++ [json: payload]
@@ -165,7 +186,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -182,13 +203,19 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   - `poll_id`
   - `payload`: `Elixir.ExStreamClient.Model.UpdatePollOptionRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec update_poll_option(String.t(), ExStreamClient.Model.UpdatePollOptionRequest.t()) ::
           {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
-  @spec update_poll_option(String.t(), ExStreamClient.Model.UpdatePollOptionRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
+  @spec update_poll_option(String.t(), ExStreamClient.Model.UpdatePollOptionRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
   def update_poll_option(poll_id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -222,7 +249,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -239,13 +266,19 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   - `poll_id`
   - `payload`: `Elixir.ExStreamClient.Model.CreatePollOptionRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec create_poll_option(String.t(), ExStreamClient.Model.CreatePollOptionRequest.t()) ::
           {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
-  @spec create_poll_option(String.t(), ExStreamClient.Model.CreatePollOptionRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
+  @spec create_poll_option(String.t(), ExStreamClient.Model.CreatePollOptionRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
   def create_poll_option(poll_id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -279,7 +312,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -296,13 +329,19 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   - `poll_id`
   - `payload`: `Elixir.ExStreamClient.Model.UpdatePollPartialRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec update_poll_partial(String.t(), ExStreamClient.Model.UpdatePollPartialRequest.t()) ::
           {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
-  @spec update_poll_partial(String.t(), ExStreamClient.Model.UpdatePollPartialRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
+  @spec update_poll_partial(String.t(), ExStreamClient.Model.UpdatePollPartialRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
   def update_poll_partial(poll_id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -336,7 +375,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -349,12 +388,20 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   ### Required Arguments:
   - `poll_id`
   ### Optional Arguments:
-  - `user_id`
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
+  - `user_id`
   """
   @spec get_poll(String.t()) :: {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
-  @spec get_poll(String.t(), [{:client, module()} | {:user_id, String.t()}]) ::
-          {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
+  @spec get_poll(String.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:user_id, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
   def get_poll(poll_id, opts \\ []) do
     client = get_client(opts)
 
@@ -394,7 +441,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -410,12 +457,20 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   ### Required Arguments:
   - `poll_id`
   ### Optional Arguments:
-  - `user_id`
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
+  - `user_id`
   """
   @spec delete_poll(String.t()) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec delete_poll(String.t(), [{:client, module()} | {:user_id, String.t()}]) ::
-          {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  @spec delete_poll(String.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:user_id, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_poll(poll_id, opts \\ []) do
     client = get_client(opts)
 
@@ -455,7 +510,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -468,13 +523,20 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.QueryPollsRequest`
   ### Optional Arguments:
-  - `user_id`
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
+  - `user_id`
   """
   @spec query_polls(ExStreamClient.Model.QueryPollsRequest.t()) ::
           {:ok, ExStreamClient.Model.QueryPollsResponse.t()} | {:error, any()}
   @spec query_polls(ExStreamClient.Model.QueryPollsRequest.t(), [
-          {:client, module()} | {:user_id, String.t()}
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:user_id, String.t()}
         ]) :: {:ok, ExStreamClient.Model.QueryPollsResponse.t()} | {:error, any()}
   def query_polls(payload, opts \\ []) do
     client = get_client(opts)
@@ -515,7 +577,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -529,13 +591,21 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   - `poll_id`
   - `option_id`
   ### Optional Arguments:
-  - `user_id`
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
+  - `user_id`
   """
   @spec get_poll_option(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
-  @spec get_poll_option(String.t(), String.t(), [{:client, module()} | {:user_id, String.t()}]) ::
-          {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
+  @spec get_poll_option(String.t(), String.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:user_id, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
   def get_poll_option(poll_id, option_id, opts \\ []) do
     client = get_client(opts)
 
@@ -575,7 +645,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -592,13 +662,21 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   - `poll_id`
   - `option_id`
   ### Optional Arguments:
-  - `user_id`
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
+  - `user_id`
   """
   @spec delete_poll_option(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec delete_poll_option(String.t(), String.t(), [{:client, module()} | {:user_id, String.t()}]) ::
-          {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  @spec delete_poll_option(String.t(), String.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:user_id, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_poll_option(poll_id, option_id, opts \\ []) do
     client = get_client(opts)
 
@@ -638,7 +716,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -653,5 +731,9 @@ defmodule ExStreamClient.Operations.Chat.Polls do
     end
 
     client
+  end
+
+  defp get_request_opts(opts) do
+    Keyword.take(opts, [:api_key, :api_key_secret, :endpoint])
   end
 end

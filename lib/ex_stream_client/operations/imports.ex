@@ -13,12 +13,19 @@ defmodule ExStreamClient.Operations.Imports do
   ### Required Arguments:
   - `id`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec get_import(String.t()) ::
           {:ok, ExStreamClient.Model.GetImportResponse.t()} | {:error, any()}
-  @spec get_import(String.t(), client: module()) ::
-          {:ok, ExStreamClient.Model.GetImportResponse.t()} | {:error, any()}
+  @spec get_import(String.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.GetImportResponse.t()} | {:error, any()}
   def get_import(id, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/imports/#{id}", method: :get, params: []] ++ []
@@ -50,7 +57,7 @@ defmodule ExStreamClient.Operations.Imports do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -63,12 +70,19 @@ defmodule ExStreamClient.Operations.Imports do
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.CreateImportRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec create_import(ExStreamClient.Model.CreateImportRequest.t()) ::
           {:ok, ExStreamClient.Model.CreateImportResponse.t()} | {:error, any()}
-  @spec create_import(ExStreamClient.Model.CreateImportRequest.t(), client: module()) ::
-          {:ok, ExStreamClient.Model.CreateImportResponse.t()} | {:error, any()}
+  @spec create_import(ExStreamClient.Model.CreateImportRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.CreateImportResponse.t()} | {:error, any()}
   def create_import(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/imports", method: :post, params: []] ++ [json: payload]
@@ -100,7 +114,7 @@ defmodule ExStreamClient.Operations.Imports do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -111,11 +125,18 @@ defmodule ExStreamClient.Operations.Imports do
 
 
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec list_imports() :: {:ok, ExStreamClient.Model.ListImportsResponse.t()} | {:error, any()}
-  @spec list_imports(client: module()) ::
-          {:ok, ExStreamClient.Model.ListImportsResponse.t()} | {:error, any()}
+  @spec list_imports([
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.ListImportsResponse.t()} | {:error, any()}
   def list_imports(opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/imports", method: :get, params: []] ++ []
@@ -147,7 +168,7 @@ defmodule ExStreamClient.Operations.Imports do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -162,5 +183,9 @@ defmodule ExStreamClient.Operations.Imports do
     end
 
     client
+  end
+
+  defp get_request_opts(opts) do
+    Keyword.take(opts, [:api_key, :api_key_secret, :endpoint])
   end
 end

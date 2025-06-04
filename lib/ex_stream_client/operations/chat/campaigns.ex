@@ -14,13 +14,19 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.StopCampaignRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec schedule_campaign(String.t(), ExStreamClient.Model.StopCampaignRequest.t()) ::
           {:ok, ExStreamClient.Model.CampaignResponse.t()} | {:error, any()}
-  @spec schedule_campaign(String.t(), ExStreamClient.Model.StopCampaignRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.CampaignResponse.t()} | {:error, any()}
+  @spec schedule_campaign(String.t(), ExStreamClient.Model.StopCampaignRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.CampaignResponse.t()} | {:error, any()}
   def schedule_campaign(id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -54,7 +60,7 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -67,12 +73,19 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.QueryCampaignsRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec query_campaigns(ExStreamClient.Model.QueryCampaignsRequest.t()) ::
           {:ok, ExStreamClient.Model.QueryCampaignsResponse.t()} | {:error, any()}
-  @spec query_campaigns(ExStreamClient.Model.QueryCampaignsRequest.t(), client: module()) ::
-          {:ok, ExStreamClient.Model.QueryCampaignsResponse.t()} | {:error, any()}
+  @spec query_campaigns(ExStreamClient.Model.QueryCampaignsRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.QueryCampaignsResponse.t()} | {:error, any()}
   def query_campaigns(payload, opts \\ []) do
     client = get_client(opts)
 
@@ -106,7 +119,7 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -119,15 +132,24 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
   ### Required Arguments:
   - `id`
   ### Optional Arguments:
-  - `prev`
-  - `next`
-  - `limit`
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
+  - `limit`
+  - `next`
+  - `prev`
   """
   @spec get_campaign(String.t()) ::
           {:ok, ExStreamClient.Model.GetCampaignResponse.t()} | {:error, any()}
   @spec get_campaign(String.t(), [
-          {:client, module()} | {:limit, integer()} | {:next, String.t()} | {:prev, String.t()}
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:limit, integer()}
+          | {:next, String.t()}
+          | {:prev, String.t()}
         ]) :: {:ok, ExStreamClient.Model.GetCampaignResponse.t()} | {:error, any()}
   def get_campaign(id, opts \\ []) do
     client = get_client(opts)
@@ -168,7 +190,7 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -182,13 +204,19 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.StartCampaignRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec start_campaign(String.t(), ExStreamClient.Model.StartCampaignRequest.t()) ::
           {:ok, ExStreamClient.Model.StartCampaignResponse.t()} | {:error, any()}
-  @spec start_campaign(String.t(), ExStreamClient.Model.StartCampaignRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.StartCampaignResponse.t()} | {:error, any()}
+  @spec start_campaign(String.t(), ExStreamClient.Model.StartCampaignRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.StartCampaignResponse.t()} | {:error, any()}
   def start_campaign(id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -222,7 +250,7 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -237,5 +265,9 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
     end
 
     client
+  end
+
+  defp get_request_opts(opts) do
+    Keyword.take(opts, [:api_key, :api_key_secret, :endpoint])
   end
 end

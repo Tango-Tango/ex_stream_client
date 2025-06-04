@@ -11,12 +11,19 @@ defmodule ExStreamClient.Operations.Chat.Members do
 
 
   ### Optional Arguments:
-  - `payload`: `Elixir.ExStreamClient.Model.QueryMembersPayload`
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
+  - `payload`: `Elixir.ExStreamClient.Model.QueryMembersPayload`
   """
   @spec query_members() :: {:ok, ExStreamClient.Model.MembersResponse.t()} | {:error, any()}
   @spec query_members([
-          {:client, module()} | {:payload, ExStreamClient.Model.QueryMembersPayload.t()}
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:payload, ExStreamClient.Model.QueryMembersPayload.t()}
         ]) :: {:ok, ExStreamClient.Model.MembersResponse.t()} | {:error, any()}
   def query_members(opts \\ []) do
     client = get_client(opts)
@@ -57,7 +64,7 @@ defmodule ExStreamClient.Operations.Chat.Members do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -72,5 +79,9 @@ defmodule ExStreamClient.Operations.Chat.Members do
     end
 
     client
+  end
+
+  defp get_request_opts(opts) do
+    Keyword.take(opts, [:api_key, :api_key_secret, :endpoint])
   end
 end

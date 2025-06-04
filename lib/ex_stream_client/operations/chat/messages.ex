@@ -18,13 +18,20 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   - `poll_id`
   - `vote_id`
   ### Optional Arguments:
-  - `user_id`
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
+  - `user_id`
   """
   @spec remove_poll_vote(String.t(), String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.PollVoteResponse.t()} | {:error, any()}
   @spec remove_poll_vote(String.t(), String.t(), String.t(), [
-          {:client, module()} | {:user_id, String.t()}
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:user_id, String.t()}
         ]) :: {:ok, ExStreamClient.Model.PollVoteResponse.t()} | {:error, any()}
   def remove_poll_vote(message_id, poll_id, vote_id, opts \\ []) do
     client = get_client(opts)
@@ -65,7 +72,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -82,13 +89,21 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   - `id`
   - `type`
   ### Optional Arguments:
-  - `user_id`
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
+  - `user_id`
   """
   @spec delete_reaction(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.DeleteReactionResponse.t()} | {:error, any()}
-  @spec delete_reaction(String.t(), String.t(), [{:client, module()} | {:user_id, String.t()}]) ::
-          {:ok, ExStreamClient.Model.DeleteReactionResponse.t()} | {:error, any()}
+  @spec delete_reaction(String.t(), String.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:user_id, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.DeleteReactionResponse.t()} | {:error, any()}
   def delete_reaction(id, type, opts \\ []) do
     client = get_client(opts)
 
@@ -128,7 +143,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -146,12 +161,19 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.SendReactionRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec send_reaction(String.t(), ExStreamClient.Model.SendReactionRequest.t()) ::
           {:ok, ExStreamClient.Model.SendReactionResponse.t()} | {:error, any()}
-  @spec send_reaction(String.t(), ExStreamClient.Model.SendReactionRequest.t(), client: module()) ::
-          {:ok, ExStreamClient.Model.SendReactionResponse.t()} | {:error, any()}
+  @spec send_reaction(String.t(), ExStreamClient.Model.SendReactionRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.SendReactionResponse.t()} | {:error, any()}
   def send_reaction(id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -185,7 +207,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -203,13 +225,19 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.MessageActionRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec run_message_action(String.t(), ExStreamClient.Model.MessageActionRequest.t()) ::
           {:ok, ExStreamClient.Model.MessageResponse.t()} | {:error, any()}
-  @spec run_message_action(String.t(), ExStreamClient.Model.MessageActionRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.MessageResponse.t()} | {:error, any()}
+  @spec run_message_action(String.t(), ExStreamClient.Model.MessageActionRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.MessageResponse.t()} | {:error, any()}
   def run_message_action(id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -243,7 +271,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -256,13 +284,19 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.QueryMessageHistoryRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec query_message_history(ExStreamClient.Model.QueryMessageHistoryRequest.t()) ::
           {:ok, ExStreamClient.Model.QueryMessageHistoryResponse.t()} | {:error, any()}
-  @spec query_message_history(ExStreamClient.Model.QueryMessageHistoryRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.QueryMessageHistoryResponse.t()} | {:error, any()}
+  @spec query_message_history(ExStreamClient.Model.QueryMessageHistoryRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.QueryMessageHistoryResponse.t()} | {:error, any()}
   def query_message_history(payload, opts \\ []) do
     client = get_client(opts)
 
@@ -296,7 +330,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -314,13 +348,19 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   - `poll_id`
   - `payload`: `Elixir.ExStreamClient.Model.CastPollVoteRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec cast_poll_vote(String.t(), String.t(), ExStreamClient.Model.CastPollVoteRequest.t()) ::
           {:ok, ExStreamClient.Model.PollVoteResponse.t()} | {:error, any()}
-  @spec cast_poll_vote(String.t(), String.t(), ExStreamClient.Model.CastPollVoteRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.PollVoteResponse.t()} | {:error, any()}
+  @spec cast_poll_vote(String.t(), String.t(), ExStreamClient.Model.CastPollVoteRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.PollVoteResponse.t()} | {:error, any()}
   def cast_poll_vote(message_id, poll_id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -358,7 +398,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -372,13 +412,19 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.QueryReactionsRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec query_reactions(String.t(), ExStreamClient.Model.QueryReactionsRequest.t()) ::
           {:ok, ExStreamClient.Model.QueryReactionsResponse.t()} | {:error, any()}
-  @spec query_reactions(String.t(), ExStreamClient.Model.QueryReactionsRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.QueryReactionsResponse.t()} | {:error, any()}
+  @spec query_reactions(String.t(), ExStreamClient.Model.QueryReactionsRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.QueryReactionsResponse.t()} | {:error, any()}
   def query_reactions(id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -412,7 +458,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -425,14 +471,22 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   ### Required Arguments:
   - `id`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   - `limit`
   - `offset`
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec get_reactions(String.t()) ::
           {:ok, ExStreamClient.Model.GetReactionsResponse.t()} | {:error, any()}
   @spec get_reactions(String.t(), [
-          {:client, module()} | {:offset, integer()} | {:limit, integer()}
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:offset, integer()}
+          | {:limit, integer()}
         ]) :: {:ok, ExStreamClient.Model.GetReactionsResponse.t()} | {:error, any()}
   def get_reactions(id, opts \\ []) do
     client = get_client(opts)
@@ -473,7 +527,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -486,25 +540,31 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   ### Required Arguments:
   - `parent_id`
   ### Optional Arguments:
-  - `sort`
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `created_at_after`
+  - `created_at_after_or_equal`
+  - `created_at_around`
+  - `created_at_before`
+  - `created_at_before_or_equal`
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
+  - `id_around`
+  - `id_gt`
+  - `id_gte`
+  - `id_lt`
+  - `id_lte`
   - `limit`
   - `offset`
-  - `id_gte`
-  - `id_gt`
-  - `id_lte`
-  - `id_lt`
-  - `created_at_after_or_equal`
-  - `created_at_after`
-  - `created_at_before_or_equal`
-  - `created_at_before`
-  - `id_around`
-  - `created_at_around`
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `sort`
   """
   @spec get_replies(String.t()) ::
           {:ok, ExStreamClient.Model.GetRepliesResponse.t()} | {:error, any()}
   @spec get_replies(String.t(), [
           {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
           | {:created_at_around, float()}
           | {:id_around, String.t()}
           | {:created_at_before, float()}
@@ -575,7 +635,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -593,13 +653,19 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.UpdateMessageRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec undelete_message(String.t(), ExStreamClient.Model.UpdateMessageRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateMessageResponse.t()} | {:error, any()}
-  @spec undelete_message(String.t(), ExStreamClient.Model.UpdateMessageRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.UpdateMessageResponse.t()} | {:error, any()}
+  @spec undelete_message(String.t(), ExStreamClient.Model.UpdateMessageRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.UpdateMessageResponse.t()} | {:error, any()}
   def undelete_message(id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -633,7 +699,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -651,13 +717,19 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.TranslateMessageRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec translate_message(String.t(), ExStreamClient.Model.TranslateMessageRequest.t()) ::
           {:ok, ExStreamClient.Model.MessageResponse.t()} | {:error, any()}
-  @spec translate_message(String.t(), ExStreamClient.Model.TranslateMessageRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.MessageResponse.t()} | {:error, any()}
+  @spec translate_message(String.t(), ExStreamClient.Model.TranslateMessageRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.MessageResponse.t()} | {:error, any()}
   def translate_message(id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -691,7 +763,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -711,13 +783,19 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.CommitMessageRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec commit_message(String.t(), ExStreamClient.Model.CommitMessageRequest.t()) ::
           {:ok, ExStreamClient.Model.MessageResponse.t()} | {:error, any()}
-  @spec commit_message(String.t(), ExStreamClient.Model.CommitMessageRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.MessageResponse.t()} | {:error, any()}
+  @spec commit_message(String.t(), ExStreamClient.Model.CommitMessageRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.MessageResponse.t()} | {:error, any()}
   def commit_message(id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -751,7 +829,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -769,13 +847,19 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.UpdateMessagePartialRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec update_message_partial(String.t(), ExStreamClient.Model.UpdateMessagePartialRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateMessagePartialResponse.t()} | {:error, any()}
-  @spec update_message_partial(String.t(), ExStreamClient.Model.UpdateMessagePartialRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.UpdateMessagePartialResponse.t()} | {:error, any()}
+  @spec update_message_partial(String.t(), ExStreamClient.Model.UpdateMessagePartialRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.UpdateMessagePartialResponse.t()} | {:error, any()}
   def update_message_partial(id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -809,7 +893,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -827,13 +911,19 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.UpdateMessageRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec update_message(String.t(), ExStreamClient.Model.UpdateMessageRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateMessageResponse.t()} | {:error, any()}
-  @spec update_message(String.t(), ExStreamClient.Model.UpdateMessageRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.UpdateMessageResponse.t()} | {:error, any()}
+  @spec update_message(String.t(), ExStreamClient.Model.UpdateMessageRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.UpdateMessageResponse.t()} | {:error, any()}
   def update_message(id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -867,7 +957,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -880,13 +970,21 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   ### Required Arguments:
   - `id`
   ### Optional Arguments:
-  - `show_deleted_message`
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
+  - `show_deleted_message`
   """
   @spec get_message(String.t()) ::
           {:ok, ExStreamClient.Model.GetMessageResponse.t()} | {:error, any()}
-  @spec get_message(String.t(), [{:client, module()} | {:show_deleted_message, boolean()}]) ::
-          {:ok, ExStreamClient.Model.GetMessageResponse.t()} | {:error, any()}
+  @spec get_message(String.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:show_deleted_message, boolean()}
+        ]) :: {:ok, ExStreamClient.Model.GetMessageResponse.t()} | {:error, any()}
   def get_message(id, opts \\ []) do
     client = get_client(opts)
 
@@ -926,7 +1024,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -943,14 +1041,22 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   ### Required Arguments:
   - `id`
   ### Optional Arguments:
-  - `hard`
-  - `deleted_by`
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `deleted_by`
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
+  - `hard`
   """
   @spec delete_message(String.t()) ::
           {:ok, ExStreamClient.Model.DeleteMessageResponse.t()} | {:error, any()}
   @spec delete_message(String.t(), [
-          {:client, module()} | {:deleted_by, String.t()} | {:hard, boolean()}
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:deleted_by, String.t()}
+          | {:hard, boolean()}
         ]) :: {:ok, ExStreamClient.Model.DeleteMessageResponse.t()} | {:error, any()}
   def delete_message(id, opts \\ []) do
     client = get_client(opts)
@@ -991,7 +1097,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -1006,5 +1112,9 @@ defmodule ExStreamClient.Operations.Chat.Messages do
     end
 
     client
+  end
+
+  defp get_request_opts(opts) do
+    Keyword.take(opts, [:api_key, :api_key_secret, :endpoint])
   end
 end

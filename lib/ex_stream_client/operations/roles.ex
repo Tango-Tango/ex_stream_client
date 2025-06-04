@@ -13,12 +13,19 @@ defmodule ExStreamClient.Operations.Roles do
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.CreateRoleRequest`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec create_role(ExStreamClient.Model.CreateRoleRequest.t()) ::
           {:ok, ExStreamClient.Model.CreateRoleResponse.t()} | {:error, any()}
-  @spec create_role(ExStreamClient.Model.CreateRoleRequest.t(), client: module()) ::
-          {:ok, ExStreamClient.Model.CreateRoleResponse.t()} | {:error, any()}
+  @spec create_role(ExStreamClient.Model.CreateRoleRequest.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.CreateRoleResponse.t()} | {:error, any()}
   def create_role(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/roles", method: :post, params: []] ++ [json: payload]
@@ -50,7 +57,7 @@ defmodule ExStreamClient.Operations.Roles do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -61,11 +68,18 @@ defmodule ExStreamClient.Operations.Roles do
 
 
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec list_roles() :: {:ok, ExStreamClient.Model.ListRolesResponse.t()} | {:error, any()}
-  @spec list_roles(client: module()) ::
-          {:ok, ExStreamClient.Model.ListRolesResponse.t()} | {:error, any()}
+  @spec list_roles([
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.ListRolesResponse.t()} | {:error, any()}
   def list_roles(opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/roles", method: :get, params: []] ++ []
@@ -97,7 +111,7 @@ defmodule ExStreamClient.Operations.Roles do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -110,11 +124,18 @@ defmodule ExStreamClient.Operations.Roles do
   ### Required Arguments:
   - `name`
   ### Optional Arguments:
+  - `api_key`: API key to use. If not provided, the default key from config will be used.(e.g., `ExStreamClient.Config.api_key()`)
+  - `api_key_secret`: API key secret to use. If not provided, the default secret from config will be used.(e.g., `ExStreamClient.Config.api_key_secret()`)
   - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `endpoint`: Endpoint to use. If not provided, the default endpoint from config will be used.(e.g., `ExStreamClient.Config.endpoint()`)
   """
   @spec delete_role(String.t()) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec delete_role(String.t(), client: module()) ::
-          {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  @spec delete_role(String.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_role(name, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/roles/#{name}", method: :delete, params: []] ++ []
@@ -146,7 +167,7 @@ defmodule ExStreamClient.Operations.Roles do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -161,5 +182,9 @@ defmodule ExStreamClient.Operations.Roles do
     end
 
     client
+  end
+
+  defp get_request_opts(opts) do
+    Keyword.take(opts, [:api_key, :api_key_secret, :endpoint])
   end
 end

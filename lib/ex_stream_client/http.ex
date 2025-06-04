@@ -19,11 +19,12 @@ defmodule ExStreamClient.Http do
   @impl true
   @spec request(Req.Request.t(), Keyword.t()) :: {:ok, Req.Response.t()} | {:error, Exception.t()}
   def request(%Req.Request{} = request, opts) do
-    url = ExStreamClient.Config.endpoint()
-    api_key = ExStreamClient.Config.api_key()
+    url = Keyword.get(opts, :endpoint, ExStreamClient.Config.endpoint())
+    api_key = Keyword.get(opts, :api_key, ExStreamClient.Config.api_key())
+    api_key_secret = Keyword.get(opts, :api_key_secret, ExStreamClient.Config.api_key_secret())
 
     token =
-      case ExStreamClient.Token.Server.get() do
+      case ExStreamClient.Token.Server.get(api_key, api_key_secret) do
         {:ok, token} ->
           token
 

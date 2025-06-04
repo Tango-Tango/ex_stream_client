@@ -10,10 +10,21 @@ defmodule ExStreamClient.Operations.Permissions do
   Lists all available permissions
 
 
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec list_permissions() ::
           {:ok, ExStreamClient.Model.ListPermissionsResponse.t()} | {:error, any()}
-  def list_permissions() do
+  @spec list_permissions(client: module()) ::
+          {:ok, ExStreamClient.Model.ListPermissionsResponse.t()} | {:error, any()}
+  def list_permissions(opts \\ []) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
     request_opts = [url: "/api/v2/permissions", method: :get, params: []] ++ []
 
     r =
@@ -43,7 +54,7 @@ defmodule ExStreamClient.Operations.Permissions do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -55,10 +66,21 @@ defmodule ExStreamClient.Operations.Permissions do
 
   ### Required Arguments:
   - `id`
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec get_permission(String.t()) ::
           {:ok, ExStreamClient.Model.GetCustomPermissionResponse.t()} | {:error, any()}
-  def get_permission(id) do
+  @spec get_permission(String.t(), client: module()) ::
+          {:ok, ExStreamClient.Model.GetCustomPermissionResponse.t()} | {:error, any()}
+  def get_permission(id, opts \\ []) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
     request_opts = [url: "/api/v2/permissions/#{id}", method: :get, params: []] ++ []
 
     r =
@@ -88,7 +110,7 @@ defmodule ExStreamClient.Operations.Permissions do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

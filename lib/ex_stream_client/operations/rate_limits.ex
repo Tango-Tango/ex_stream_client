@@ -16,17 +16,26 @@ defmodule ExStreamClient.Operations.RateLimits do
   - `ios`
   - `web`
   - `endpoints`
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec get_rate_limits() ::
           {:ok, ExStreamClient.Model.GetRateLimitsResponse.t()} | {:error, any()}
   @spec get_rate_limits([
-          {:endpoints, String.t()}
+          {:client, module()}
+          | {:endpoints, String.t()}
           | {:web, boolean()}
           | {:ios, boolean()}
           | {:android, boolean()}
           | {:server_side, boolean()}
         ]) :: {:ok, ExStreamClient.Model.GetRateLimitsResponse.t()} | {:error, any()}
   def get_rate_limits(opts \\ []) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
     request_opts =
       [
         url: "/api/v2/rate_limits",
@@ -63,7 +72,7 @@ defmodule ExStreamClient.Operations.RateLimits do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

@@ -58,7 +58,19 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
                 ]
               )
 
-          merged_optional_args = Enum.filter(args, &(!Map.get(&1, :required?)))
+          merged_optional_args =
+            Enum.filter(args, &(!Map.get(&1, :required?)))
+            |> Enum.concat([
+              %{
+                in: "opts",
+                name: "client",
+                type: "module",
+                description: "HTTP client to use. Must implement `ExStreamClient.Http.Behavior`",
+                required?: false,
+                example: "ExStreamClient.Http"
+              }
+            ])
+
           has_optional_args? = !Enum.empty?(merged_optional_args)
           required_args_docstring = build_arg_docstring(merged_required_args)
           optional_args_docstring = build_arg_docstring(merged_optional_args)
@@ -149,13 +161,6 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
                    )
             end
 
-          opts_param_ast =
-            if has_optional_args? do
-              [quote(do: opts \\ [])]
-            else
-              []
-            end
-
           url_ast =
             endpoint
             |> String.replace(~r/\{(\w+)\}/, "#\\{\\1\\}")
@@ -242,7 +247,14 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
           # Add the decode step to the request
           method_impl_ast =
             quote do
-              def unquote(name)(unquote_splicing(arg_names), unquote_splicing(opts_param_ast)) do
+              def unquote(name)(unquote_splicing(arg_names), opts \\ []) do
+                client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+                unless function_exported?(client, :request, 2) do
+                  raise ArgumentError,
+                        "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+                end
+
                 request_opts =
                   [
                     url: unquote(url_ast),
@@ -270,7 +282,7 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
                     end
                   )
 
-                case ExStreamClient.HTTP.request(r) do
+                case client.request(r, opts) do
                   {:ok, response} -> response.body
                   {:error, error} -> {:error, error}
                 end
@@ -329,7 +341,7 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
 
       s =
         if Map.get(i, :example, "") != "",
-          do: "#{s}\n\n*Example*: `#{Map.get(i, :example)}`",
+          do: "#{s}(e.g., `#{Map.get(i, :example)}`)",
           else: s
 
       s =

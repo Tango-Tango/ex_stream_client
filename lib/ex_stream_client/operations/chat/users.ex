@@ -16,10 +16,22 @@ defmodule ExStreamClient.Operations.Chat.Users do
   ### Required Arguments:
   - `user_id`
   - `payload`: `Elixir.ExStreamClient.Model.SendUserCustomEventRequest`
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec send_user_custom_event(String.t(), ExStreamClient.Model.SendUserCustomEventRequest.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  def send_user_custom_event(user_id, payload) do
+  @spec send_user_custom_event(String.t(), ExStreamClient.Model.SendUserCustomEventRequest.t(),
+          client: module()
+        ) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  def send_user_custom_event(user_id, payload, opts \\ []) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
     request_opts =
       [url: "/api/v2/chat/users/#{user_id}/event", method: :post, params: []] ++ [json: payload]
 
@@ -50,7 +62,7 @@ defmodule ExStreamClient.Operations.Chat.Users do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

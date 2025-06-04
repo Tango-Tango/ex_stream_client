@@ -12,10 +12,21 @@ defmodule ExStreamClient.Operations.Chat.Drafts do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.QueryDraftsRequest`
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec query_drafts(ExStreamClient.Model.QueryDraftsRequest.t()) ::
           {:ok, ExStreamClient.Model.QueryDraftsResponse.t()} | {:error, any()}
-  def query_drafts(payload) do
+  @spec query_drafts(ExStreamClient.Model.QueryDraftsRequest.t(), client: module()) ::
+          {:ok, ExStreamClient.Model.QueryDraftsResponse.t()} | {:error, any()}
+  def query_drafts(payload, opts \\ []) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
     request_opts =
       [url: "/api/v2/chat/drafts/query", method: :post, params: []] ++ [json: payload]
 
@@ -46,7 +57,7 @@ defmodule ExStreamClient.Operations.Chat.Drafts do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

@@ -12,10 +12,21 @@ defmodule ExStreamClient.Operations.Devices do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.CreateDeviceRequest`
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec create_device(ExStreamClient.Model.CreateDeviceRequest.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  def create_device(payload) do
+  @spec create_device(ExStreamClient.Model.CreateDeviceRequest.t(), client: module()) ::
+          {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  def create_device(payload, opts \\ []) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
     request_opts = [url: "/api/v2/devices", method: :post, params: []] ++ [json: payload]
 
     r =
@@ -45,7 +56,7 @@ defmodule ExStreamClient.Operations.Devices do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -57,11 +68,19 @@ defmodule ExStreamClient.Operations.Devices do
 
   ### Optional Arguments:
   - `user_id`
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec list_devices() :: {:ok, ExStreamClient.Model.ListDevicesResponse.t()} | {:error, any()}
-  @spec list_devices(user_id: String.t()) ::
+  @spec list_devices([{:client, module()} | {:user_id, String.t()}]) ::
           {:ok, ExStreamClient.Model.ListDevicesResponse.t()} | {:error, any()}
   def list_devices(opts \\ []) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
     request_opts =
       [
         url: "/api/v2/devices",
@@ -98,7 +117,7 @@ defmodule ExStreamClient.Operations.Devices do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -112,11 +131,19 @@ defmodule ExStreamClient.Operations.Devices do
   - `id`
   ### Optional Arguments:
   - `user_id`
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec delete_device(String.t()) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec delete_device(String.t(), user_id: String.t()) ::
+  @spec delete_device(String.t(), [{:client, module()} | {:user_id, String.t()}]) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_device(id, opts \\ []) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
     request_opts =
       [
         url: "/api/v2/devices",
@@ -153,7 +180,7 @@ defmodule ExStreamClient.Operations.Devices do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

@@ -1,7 +1,9 @@
-defmodule ExStreamClient.HTTP do
+defmodule ExStreamClient.Http do
   @moduledoc """
   Client for making requests to the Stream API.
   """
+  @behaviour ExStreamClient.Http.Behavior
+
   require Logger
 
   @static_headers [
@@ -14,8 +16,9 @@ defmodule ExStreamClient.HTTP do
   @doc """
   Makes a request to the Stream API. This function is called by the generated operations modules.
   """
-  @spec request(Req.Request.t()) :: {:ok, Req.Response.t()} | {:error, Exception.t()}
-  def request(%Req.Request{} = request) do
+  @impl true
+  @spec request(Req.Request.t(), Keyword.t()) :: {:ok, Req.Response.t()} | {:error, Exception.t()}
+  def request(%Req.Request{} = request, opts) do
     url = ExStreamClient.Config.endpoint()
     api_key = ExStreamClient.Config.api_key()
 

@@ -12,9 +12,20 @@ defmodule ExStreamClient.Operations.Tasks do
 
   ### Required Arguments:
   - `id`
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec get_task(String.t()) :: {:ok, ExStreamClient.Model.GetTaskResponse.t()} | {:error, any()}
-  def get_task(id) do
+  @spec get_task(String.t(), client: module()) ::
+          {:ok, ExStreamClient.Model.GetTaskResponse.t()} | {:error, any()}
+  def get_task(id, opts \\ []) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
     request_opts = [url: "/api/v2/tasks/#{id}", method: :get, params: []] ++ []
 
     r =
@@ -44,7 +55,7 @@ defmodule ExStreamClient.Operations.Tasks do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

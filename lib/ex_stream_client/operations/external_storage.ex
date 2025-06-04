@@ -12,10 +12,21 @@ defmodule ExStreamClient.Operations.ExternalStorage do
 
   ### Required Arguments:
   - `name`
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec check_external_storage(String.t()) ::
           {:ok, ExStreamClient.Model.CheckExternalStorageResponse.t()} | {:error, any()}
-  def check_external_storage(name) do
+  @spec check_external_storage(String.t(), client: module()) ::
+          {:ok, ExStreamClient.Model.CheckExternalStorageResponse.t()} | {:error, any()}
+  def check_external_storage(name, opts \\ []) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
     request_opts = [url: "/api/v2/external_storage/#{name}/check", method: :get, params: []] ++ []
 
     r =
@@ -45,7 +56,7 @@ defmodule ExStreamClient.Operations.ExternalStorage do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -57,10 +68,22 @@ defmodule ExStreamClient.Operations.ExternalStorage do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.CreateExternalStorageRequest`
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec create_external_storage(ExStreamClient.Model.CreateExternalStorageRequest.t()) ::
           {:ok, ExStreamClient.Model.CreateExternalStorageResponse.t()} | {:error, any()}
-  def create_external_storage(payload) do
+  @spec create_external_storage(ExStreamClient.Model.CreateExternalStorageRequest.t(),
+          client: module()
+        ) :: {:ok, ExStreamClient.Model.CreateExternalStorageResponse.t()} | {:error, any()}
+  def create_external_storage(payload, opts \\ []) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
     request_opts = [url: "/api/v2/external_storage", method: :post, params: []] ++ [json: payload]
 
     r =
@@ -90,7 +113,7 @@ defmodule ExStreamClient.Operations.ExternalStorage do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -100,10 +123,21 @@ defmodule ExStreamClient.Operations.ExternalStorage do
   Lists external storage
 
 
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec list_external_storage() ::
           {:ok, ExStreamClient.Model.ListExternalStorageResponse.t()} | {:error, any()}
-  def list_external_storage() do
+  @spec list_external_storage(client: module()) ::
+          {:ok, ExStreamClient.Model.ListExternalStorageResponse.t()} | {:error, any()}
+  def list_external_storage(opts \\ []) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
     request_opts = [url: "/api/v2/external_storage", method: :get, params: []] ++ []
 
     r =
@@ -133,7 +167,7 @@ defmodule ExStreamClient.Operations.ExternalStorage do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -146,10 +180,22 @@ defmodule ExStreamClient.Operations.ExternalStorage do
   ### Required Arguments:
   - `name`
   - `payload`: `Elixir.ExStreamClient.Model.UpdateExternalStorageRequest`
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec update_external_storage(String.t(), ExStreamClient.Model.UpdateExternalStorageRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateExternalStorageResponse.t()} | {:error, any()}
-  def update_external_storage(name, payload) do
+  @spec update_external_storage(String.t(), ExStreamClient.Model.UpdateExternalStorageRequest.t(),
+          client: module()
+        ) :: {:ok, ExStreamClient.Model.UpdateExternalStorageResponse.t()} | {:error, any()}
+  def update_external_storage(name, payload, opts \\ []) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
     request_opts =
       [url: "/api/v2/external_storage/#{name}", method: :put, params: []] ++ [json: payload]
 
@@ -180,7 +226,7 @@ defmodule ExStreamClient.Operations.ExternalStorage do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -192,10 +238,21 @@ defmodule ExStreamClient.Operations.ExternalStorage do
 
   ### Required Arguments:
   - `name`
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec delete_external_storage(String.t()) ::
           {:ok, ExStreamClient.Model.DeleteExternalStorageResponse.t()} | {:error, any()}
-  def delete_external_storage(name) do
+  @spec delete_external_storage(String.t(), client: module()) ::
+          {:ok, ExStreamClient.Model.DeleteExternalStorageResponse.t()} | {:error, any()}
+  def delete_external_storage(name, opts \\ []) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
     request_opts = [url: "/api/v2/external_storage/#{name}", method: :delete, params: []] ++ []
 
     r =
@@ -225,7 +282,7 @@ defmodule ExStreamClient.Operations.ExternalStorage do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

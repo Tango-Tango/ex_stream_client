@@ -12,11 +12,19 @@ defmodule ExStreamClient.Operations.Chat.Search do
 
   ### Optional Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.SearchPayload`
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec search() :: {:ok, ExStreamClient.Model.SearchResponse.t()} | {:error, any()}
-  @spec search(payload: ExStreamClient.Model.SearchPayload.t()) ::
+  @spec search([{:client, module()} | {:payload, ExStreamClient.Model.SearchPayload.t()}]) ::
           {:ok, ExStreamClient.Model.SearchResponse.t()} | {:error, any()}
   def search(opts \\ []) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
     request_opts =
       [
         url: "/api/v2/chat/search",
@@ -53,7 +61,7 @@ defmodule ExStreamClient.Operations.Chat.Search do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

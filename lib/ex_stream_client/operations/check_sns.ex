@@ -12,10 +12,21 @@ defmodule ExStreamClient.Operations.CheckSns do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.CheckSNSRequest`
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec check_sns(ExStreamClient.Model.CheckSNSRequest.t()) ::
           {:ok, ExStreamClient.Model.CheckSNSResponse.t()} | {:error, any()}
-  def check_sns(payload) do
+  @spec check_sns(ExStreamClient.Model.CheckSNSRequest.t(), client: module()) ::
+          {:ok, ExStreamClient.Model.CheckSNSResponse.t()} | {:error, any()}
+  def check_sns(payload, opts \\ []) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
     request_opts = [url: "/api/v2/check_sns", method: :post, params: []] ++ [json: payload]
 
     r =
@@ -45,7 +56,7 @@ defmodule ExStreamClient.Operations.CheckSns do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

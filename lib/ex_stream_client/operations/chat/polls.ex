@@ -15,13 +15,21 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   - `payload`: `Elixir.ExStreamClient.Model.QueryPollVotesRequest`
   ### Optional Arguments:
   - `user_id`
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec query_poll_votes(String.t(), ExStreamClient.Model.QueryPollVotesRequest.t()) ::
           {:ok, ExStreamClient.Model.PollVotesResponse.t()} | {:error, any()}
-  @spec query_poll_votes(String.t(), ExStreamClient.Model.QueryPollVotesRequest.t(),
-          user_id: String.t()
-        ) :: {:ok, ExStreamClient.Model.PollVotesResponse.t()} | {:error, any()}
+  @spec query_poll_votes(String.t(), ExStreamClient.Model.QueryPollVotesRequest.t(), [
+          {:client, module()} | {:user_id, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.PollVotesResponse.t()} | {:error, any()}
   def query_poll_votes(poll_id, payload, opts \\ []) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
     request_opts =
       [
         url: "/api/v2/chat/polls/#{poll_id}/votes",
@@ -58,7 +66,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -74,10 +82,21 @@ defmodule ExStreamClient.Operations.Chat.Polls do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.UpdatePollRequest`
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec update_poll(ExStreamClient.Model.UpdatePollRequest.t()) ::
           {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
-  def update_poll(payload) do
+  @spec update_poll(ExStreamClient.Model.UpdatePollRequest.t(), client: module()) ::
+          {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
+  def update_poll(payload, opts \\ []) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
     request_opts = [url: "/api/v2/chat/polls", method: :put, params: []] ++ [json: payload]
 
     r =
@@ -107,7 +126,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -119,10 +138,21 @@ defmodule ExStreamClient.Operations.Chat.Polls do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.CreatePollRequest`
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec create_poll(ExStreamClient.Model.CreatePollRequest.t()) ::
           {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
-  def create_poll(payload) do
+  @spec create_poll(ExStreamClient.Model.CreatePollRequest.t(), client: module()) ::
+          {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
+  def create_poll(payload, opts \\ []) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
     request_opts = [url: "/api/v2/chat/polls", method: :post, params: []] ++ [json: payload]
 
     r =
@@ -152,7 +182,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -168,10 +198,22 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   ### Required Arguments:
   - `poll_id`
   - `payload`: `Elixir.ExStreamClient.Model.UpdatePollOptionRequest`
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec update_poll_option(String.t(), ExStreamClient.Model.UpdatePollOptionRequest.t()) ::
           {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
-  def update_poll_option(poll_id, payload) do
+  @spec update_poll_option(String.t(), ExStreamClient.Model.UpdatePollOptionRequest.t(),
+          client: module()
+        ) :: {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
+  def update_poll_option(poll_id, payload, opts \\ []) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
     request_opts =
       [url: "/api/v2/chat/polls/#{poll_id}/options", method: :put, params: []] ++ [json: payload]
 
@@ -202,7 +244,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -218,10 +260,22 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   ### Required Arguments:
   - `poll_id`
   - `payload`: `Elixir.ExStreamClient.Model.CreatePollOptionRequest`
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec create_poll_option(String.t(), ExStreamClient.Model.CreatePollOptionRequest.t()) ::
           {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
-  def create_poll_option(poll_id, payload) do
+  @spec create_poll_option(String.t(), ExStreamClient.Model.CreatePollOptionRequest.t(),
+          client: module()
+        ) :: {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
+  def create_poll_option(poll_id, payload, opts \\ []) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
     request_opts =
       [url: "/api/v2/chat/polls/#{poll_id}/options", method: :post, params: []] ++ [json: payload]
 
@@ -252,7 +306,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -268,10 +322,22 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   ### Required Arguments:
   - `poll_id`
   - `payload`: `Elixir.ExStreamClient.Model.UpdatePollPartialRequest`
+  ### Optional Arguments:
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec update_poll_partial(String.t(), ExStreamClient.Model.UpdatePollPartialRequest.t()) ::
           {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
-  def update_poll_partial(poll_id, payload) do
+  @spec update_poll_partial(String.t(), ExStreamClient.Model.UpdatePollPartialRequest.t(),
+          client: module()
+        ) :: {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
+  def update_poll_partial(poll_id, payload, opts \\ []) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
     request_opts =
       [url: "/api/v2/chat/polls/#{poll_id}", method: :patch, params: []] ++ [json: payload]
 
@@ -302,7 +368,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -316,11 +382,19 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   - `poll_id`
   ### Optional Arguments:
   - `user_id`
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec get_poll(String.t()) :: {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
-  @spec get_poll(String.t(), user_id: String.t()) ::
+  @spec get_poll(String.t(), [{:client, module()} | {:user_id, String.t()}]) ::
           {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
   def get_poll(poll_id, opts \\ []) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
     request_opts =
       [
         url: "/api/v2/chat/polls/#{poll_id}",
@@ -357,7 +431,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -374,11 +448,19 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   - `poll_id`
   ### Optional Arguments:
   - `user_id`
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec delete_poll(String.t()) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec delete_poll(String.t(), user_id: String.t()) ::
+  @spec delete_poll(String.t(), [{:client, module()} | {:user_id, String.t()}]) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_poll(poll_id, opts \\ []) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
     request_opts =
       [
         url: "/api/v2/chat/polls/#{poll_id}",
@@ -415,7 +497,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -429,12 +511,21 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   - `payload`: `Elixir.ExStreamClient.Model.QueryPollsRequest`
   ### Optional Arguments:
   - `user_id`
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec query_polls(ExStreamClient.Model.QueryPollsRequest.t()) ::
           {:ok, ExStreamClient.Model.QueryPollsResponse.t()} | {:error, any()}
-  @spec query_polls(ExStreamClient.Model.QueryPollsRequest.t(), user_id: String.t()) ::
-          {:ok, ExStreamClient.Model.QueryPollsResponse.t()} | {:error, any()}
+  @spec query_polls(ExStreamClient.Model.QueryPollsRequest.t(), [
+          {:client, module()} | {:user_id, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.QueryPollsResponse.t()} | {:error, any()}
   def query_polls(payload, opts \\ []) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
     request_opts =
       [
         url: "/api/v2/chat/polls/query",
@@ -471,7 +562,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -486,12 +577,20 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   - `option_id`
   ### Optional Arguments:
   - `user_id`
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec get_poll_option(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
-  @spec get_poll_option(String.t(), String.t(), user_id: String.t()) ::
+  @spec get_poll_option(String.t(), String.t(), [{:client, module()} | {:user_id, String.t()}]) ::
           {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
   def get_poll_option(poll_id, option_id, opts \\ []) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
     request_opts =
       [
         url: "/api/v2/chat/polls/#{poll_id}/options/#{option_id}",
@@ -528,7 +627,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -546,12 +645,20 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   - `option_id`
   ### Optional Arguments:
   - `user_id`
+  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
   """
   @spec delete_poll_option(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec delete_poll_option(String.t(), String.t(), user_id: String.t()) ::
+  @spec delete_poll_option(String.t(), String.t(), [{:client, module()} | {:user_id, String.t()}]) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_poll_option(poll_id, option_id, opts \\ []) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
     request_opts =
       [
         url: "/api/v2/chat/polls/#{poll_id}/options/#{option_id}",
@@ -588,7 +695,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case ExStreamClient.HTTP.request(r) do
+    case client.request(r, opts) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end

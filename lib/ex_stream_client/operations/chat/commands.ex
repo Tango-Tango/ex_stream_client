@@ -20,13 +20,7 @@ defmodule ExStreamClient.Operations.Chat.Commands do
   @spec create_command(ExStreamClient.Model.CreateCommandRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.CreateCommandResponse.t()} | {:error, any()}
   def create_command(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/chat/commands", method: :post, params: []] ++ [json: payload]
 
     r =
@@ -73,13 +67,7 @@ defmodule ExStreamClient.Operations.Chat.Commands do
   @spec list_commands(client: module()) ::
           {:ok, ExStreamClient.Model.ListCommandsResponse.t()} | {:error, any()}
   def list_commands(opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/chat/commands", method: :get, params: []] ++ []
 
     r =
@@ -131,12 +119,7 @@ defmodule ExStreamClient.Operations.Chat.Commands do
           client: module()
         ) :: {:ok, ExStreamClient.Model.UpdateCommandResponse.t()} | {:error, any()}
   def update_command(name, payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/chat/commands/#{name}", method: :put, params: []] ++ [json: payload]
@@ -188,13 +171,7 @@ defmodule ExStreamClient.Operations.Chat.Commands do
   @spec get_command(String.t(), client: module()) ::
           {:ok, ExStreamClient.Model.GetCommandResponse.t()} | {:error, any()}
   def get_command(name, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/chat/commands/#{name}", method: :get, params: []] ++ []
 
     r =
@@ -244,13 +221,7 @@ defmodule ExStreamClient.Operations.Chat.Commands do
   @spec delete_command(String.t(), client: module()) ::
           {:ok, ExStreamClient.Model.DeleteCommandResponse.t()} | {:error, any()}
   def delete_command(name, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/chat/commands/#{name}", method: :delete, params: []] ++ []
 
     r =
@@ -284,5 +255,16 @@ defmodule ExStreamClient.Operations.Chat.Commands do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
+  end
+
+  defp get_client(opts) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless Code.ensure_loaded?(client) and function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
+    client
   end
 end

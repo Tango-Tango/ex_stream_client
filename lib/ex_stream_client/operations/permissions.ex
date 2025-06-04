@@ -18,13 +18,7 @@ defmodule ExStreamClient.Operations.Permissions do
   @spec list_permissions(client: module()) ::
           {:ok, ExStreamClient.Model.ListPermissionsResponse.t()} | {:error, any()}
   def list_permissions(opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/permissions", method: :get, params: []] ++ []
 
     r =
@@ -74,13 +68,7 @@ defmodule ExStreamClient.Operations.Permissions do
   @spec get_permission(String.t(), client: module()) ::
           {:ok, ExStreamClient.Model.GetCustomPermissionResponse.t()} | {:error, any()}
   def get_permission(id, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/permissions/#{id}", method: :get, params: []] ++ []
 
     r =
@@ -114,5 +102,16 @@ defmodule ExStreamClient.Operations.Permissions do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
+  end
+
+  defp get_client(opts) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless Code.ensure_loaded?(client) and function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
+    client
   end
 end

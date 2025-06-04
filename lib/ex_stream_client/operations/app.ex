@@ -20,13 +20,7 @@ defmodule ExStreamClient.Operations.App do
   @spec update_app(ExStreamClient.Model.UpdateAppRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def update_app(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/app", method: :patch, params: []] ++ [json: payload]
 
     r =
@@ -73,13 +67,7 @@ defmodule ExStreamClient.Operations.App do
   @spec get_app(client: module()) ::
           {:ok, ExStreamClient.Model.GetApplicationResponse.t()} | {:error, any()}
   def get_app(opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/app", method: :get, params: []] ++ []
 
     r =
@@ -113,5 +101,16 @@ defmodule ExStreamClient.Operations.App do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
+  end
+
+  defp get_client(opts) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless Code.ensure_loaded?(client) and function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
+    client
   end
 end

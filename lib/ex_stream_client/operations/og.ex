@@ -19,12 +19,7 @@ defmodule ExStreamClient.Operations.Og do
   @spec get_og(String.t(), client: module()) ::
           {:ok, ExStreamClient.Model.GetOGResponse.t()} | {:error, any()}
   def get_og(url, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [
@@ -66,5 +61,16 @@ defmodule ExStreamClient.Operations.Og do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
+  end
+
+  defp get_client(opts) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless Code.ensure_loaded?(client) and function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
+    client
   end
 end

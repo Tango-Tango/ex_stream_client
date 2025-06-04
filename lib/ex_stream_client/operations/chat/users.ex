@@ -25,12 +25,7 @@ defmodule ExStreamClient.Operations.Chat.Users do
           client: module()
         ) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def send_user_custom_event(user_id, payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/chat/users/#{user_id}/event", method: :post, params: []] ++ [json: payload]
@@ -66,5 +61,16 @@ defmodule ExStreamClient.Operations.Chat.Users do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
+  end
+
+  defp get_client(opts) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless Code.ensure_loaded?(client) and function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
+    client
   end
 end

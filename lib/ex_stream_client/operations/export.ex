@@ -20,13 +20,7 @@ defmodule ExStreamClient.Operations.Export do
   @spec export_users(ExStreamClient.Model.ExportUsersRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.ExportUsersResponse.t()} | {:error, any()}
   def export_users(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/export/users", method: :post, params: []] ++ [json: payload]
 
     r =
@@ -60,5 +54,16 @@ defmodule ExStreamClient.Operations.Export do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
+  end
+
+  defp get_client(opts) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless Code.ensure_loaded?(client) and function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
+    client
   end
 end

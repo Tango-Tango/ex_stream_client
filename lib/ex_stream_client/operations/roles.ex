@@ -20,13 +20,7 @@ defmodule ExStreamClient.Operations.Roles do
   @spec create_role(ExStreamClient.Model.CreateRoleRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.CreateRoleResponse.t()} | {:error, any()}
   def create_role(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/roles", method: :post, params: []] ++ [json: payload]
 
     r =
@@ -73,13 +67,7 @@ defmodule ExStreamClient.Operations.Roles do
   @spec list_roles(client: module()) ::
           {:ok, ExStreamClient.Model.ListRolesResponse.t()} | {:error, any()}
   def list_roles(opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/roles", method: :get, params: []] ++ []
 
     r =
@@ -128,13 +116,7 @@ defmodule ExStreamClient.Operations.Roles do
   @spec delete_role(String.t(), client: module()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_role(name, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/roles/#{name}", method: :delete, params: []] ++ []
 
     r =
@@ -168,5 +150,16 @@ defmodule ExStreamClient.Operations.Roles do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
+  end
+
+  defp get_client(opts) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless Code.ensure_loaded?(client) and function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
+    client
   end
 end

@@ -20,13 +20,7 @@ defmodule ExStreamClient.Operations.Guest do
   @spec create_guest(ExStreamClient.Model.CreateGuestRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.CreateGuestResponse.t()} | {:error, any()}
   def create_guest(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/guest", method: :post, params: []] ++ [json: payload]
 
     r =
@@ -60,5 +54,16 @@ defmodule ExStreamClient.Operations.Guest do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
+  end
+
+  defp get_client(opts) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless Code.ensure_loaded?(client) and function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
+    client
   end
 end

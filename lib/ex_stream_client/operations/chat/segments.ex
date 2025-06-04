@@ -20,13 +20,7 @@ defmodule ExStreamClient.Operations.Chat.Segments do
   @spec get_segment(String.t(), client: module()) ::
           {:ok, ExStreamClient.Model.GetSegmentResponse.t()} | {:error, any()}
   def get_segment(id, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/chat/segments/#{id}", method: :get, params: []] ++ []
 
     r =
@@ -75,13 +69,7 @@ defmodule ExStreamClient.Operations.Chat.Segments do
   @spec delete_segment(String.t(), client: module()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_segment(id, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/chat/segments/#{id}", method: :delete, params: []] ++ []
 
     r =
@@ -133,12 +121,7 @@ defmodule ExStreamClient.Operations.Chat.Segments do
           client: module()
         ) :: {:ok, ExStreamClient.Model.QuerySegmentTargetsResponse.t()} | {:error, any()}
   def query_segment_targets(id, payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/chat/segments/#{id}/targets/query", method: :post, params: []] ++
@@ -191,12 +174,7 @@ defmodule ExStreamClient.Operations.Chat.Segments do
   @spec query_segments(ExStreamClient.Model.QuerySegmentsRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.QuerySegmentsResponse.t()} | {:error, any()}
   def query_segments(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/chat/segments/query", method: :post, params: []] ++ [json: payload]
@@ -250,12 +228,7 @@ defmodule ExStreamClient.Operations.Chat.Segments do
           client: module()
         ) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_segment_targets(id, payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/chat/segments/#{id}/deletetargets", method: :post, params: []] ++
@@ -309,12 +282,7 @@ defmodule ExStreamClient.Operations.Chat.Segments do
   @spec segment_target_exists(String.t(), String.t(), client: module()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def segment_target_exists(id, target_id, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/chat/segments/#{id}/target/#{target_id}", method: :get, params: []] ++ []
@@ -350,5 +318,16 @@ defmodule ExStreamClient.Operations.Chat.Segments do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
+  end
+
+  defp get_client(opts) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless Code.ensure_loaded?(client) and function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
+    client
   end
 end

@@ -20,13 +20,7 @@ defmodule ExStreamClient.Operations.Devices do
   @spec create_device(ExStreamClient.Model.CreateDeviceRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def create_device(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/devices", method: :post, params: []] ++ [json: payload]
 
     r =
@@ -74,12 +68,7 @@ defmodule ExStreamClient.Operations.Devices do
   @spec list_devices([{:client, module()} | {:user_id, String.t()}]) ::
           {:ok, ExStreamClient.Model.ListDevicesResponse.t()} | {:error, any()}
   def list_devices(opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [
@@ -137,12 +126,7 @@ defmodule ExStreamClient.Operations.Devices do
   @spec delete_device(String.t(), [{:client, module()} | {:user_id, String.t()}]) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_device(id, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [
@@ -184,5 +168,16 @@ defmodule ExStreamClient.Operations.Devices do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
+  end
+
+  defp get_client(opts) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless Code.ensure_loaded?(client) and function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
+    client
   end
 end

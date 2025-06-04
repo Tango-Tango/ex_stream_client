@@ -18,12 +18,7 @@ defmodule ExStreamClient.Operations.Chat.Search do
   @spec search([{:client, module()} | {:payload, ExStreamClient.Model.SearchPayload.t()}]) ::
           {:ok, ExStreamClient.Model.SearchResponse.t()} | {:error, any()}
   def search(opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [
@@ -65,5 +60,16 @@ defmodule ExStreamClient.Operations.Chat.Search do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
+  end
+
+  defp get_client(opts) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless Code.ensure_loaded?(client) and function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
+    client
   end
 end

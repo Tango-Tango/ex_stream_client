@@ -22,12 +22,7 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
           client: module()
         ) :: {:ok, ExStreamClient.Model.CampaignResponse.t()} | {:error, any()}
   def schedule_campaign(id, payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/chat/campaigns/#{id}/stop", method: :post, params: []] ++ [json: payload]
@@ -79,12 +74,7 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
   @spec query_campaigns(ExStreamClient.Model.QueryCampaignsRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.QueryCampaignsResponse.t()} | {:error, any()}
   def query_campaigns(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/chat/campaigns/query", method: :post, params: []] ++ [json: payload]
@@ -140,12 +130,7 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
           {:client, module()} | {:limit, integer()} | {:next, String.t()} | {:prev, String.t()}
         ]) :: {:ok, ExStreamClient.Model.GetCampaignResponse.t()} | {:error, any()}
   def get_campaign(id, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [
@@ -205,12 +190,7 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
           client: module()
         ) :: {:ok, ExStreamClient.Model.StartCampaignResponse.t()} | {:error, any()}
   def start_campaign(id, payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/chat/campaigns/#{id}/start", method: :post, params: []] ++ [json: payload]
@@ -246,5 +226,16 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
+  end
+
+  defp get_client(opts) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless Code.ensure_loaded?(client) and function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
+    client
   end
 end

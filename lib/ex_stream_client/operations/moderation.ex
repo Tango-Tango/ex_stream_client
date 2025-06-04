@@ -20,12 +20,7 @@ defmodule ExStreamClient.Operations.Moderation do
   @spec custom_check(ExStreamClient.Model.CustomCheckRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.CustomCheckResponse.t()} | {:error, any()}
   def custom_check(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/moderation/custom_check", method: :post, params: []] ++ [json: payload]
@@ -81,12 +76,7 @@ defmodule ExStreamClient.Operations.Moderation do
           {:client, module()} | {:created_by, String.t()} | {:channel_cid, String.t()}
         ]) :: {:ok, ExStreamClient.Model.UnbanResponse.t()} | {:error, any()}
   def unban(target_user_id, payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [
@@ -147,12 +137,7 @@ defmodule ExStreamClient.Operations.Moderation do
   @spec submit_action(ExStreamClient.Model.SubmitActionRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.SubmitActionResponse.t()} | {:error, any()}
   def submit_action(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/moderation/submit_action", method: :post, params: []] ++ [json: payload]
@@ -204,12 +189,7 @@ defmodule ExStreamClient.Operations.Moderation do
   @spec unmute(ExStreamClient.Model.UnmuteRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.UnmuteResponse.t()} | {:error, any()}
   def unmute(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/moderation/unmute", method: :post, params: []] ++ [json: payload]
@@ -262,12 +242,7 @@ defmodule ExStreamClient.Operations.Moderation do
           client: module()
         ) :: {:ok, ExStreamClient.Model.QueryModerationConfigsResponse.t()} | {:error, any()}
   def query_moderation_configs(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/moderation/configs", method: :post, params: []] ++ [json: payload]
@@ -319,13 +294,7 @@ defmodule ExStreamClient.Operations.Moderation do
   @spec get_review_queue_item(String.t(), client: module()) ::
           {:ok, ExStreamClient.Model.GetReviewQueueItemResponse.t()} | {:error, any()}
   def get_review_queue_item(id, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/moderation/review_queue/#{id}", method: :get, params: []] ++ []
 
     r =
@@ -376,12 +345,7 @@ defmodule ExStreamClient.Operations.Moderation do
           client: module()
         ) :: {:ok, ExStreamClient.Model.BulkImageModerationResponse.t()} | {:error, any()}
   def bulk_image_moderation(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/moderation/bulk_image_moderation", method: :post, params: []] ++
@@ -435,13 +399,7 @@ defmodule ExStreamClient.Operations.Moderation do
           client: module()
         ) :: {:ok, ExStreamClient.Model.QueryModerationLogsResponse.t()} | {:error, any()}
   def query_moderation_logs(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/moderation/logs", method: :post, params: []] ++ [json: payload]
 
     r =
@@ -492,12 +450,7 @@ defmodule ExStreamClient.Operations.Moderation do
           client: module()
         ) :: {:ok, ExStreamClient.Model.UpsertModerationTemplateResponse.t()} | {:error, any()}
   def v2_upsert_template(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/moderation/feeds_moderation_template", method: :post, params: []] ++
@@ -548,12 +501,7 @@ defmodule ExStreamClient.Operations.Moderation do
   @spec v2_query_templates(client: module()) ::
           {:ok, ExStreamClient.Model.QueryFeedModerationTemplatesResponse.t()} | {:error, any()}
   def v2_query_templates(opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/moderation/feeds_moderation_template", method: :get, params: []] ++ []
@@ -603,12 +551,7 @@ defmodule ExStreamClient.Operations.Moderation do
   @spec v2_delete_template(client: module()) ::
           {:ok, ExStreamClient.Model.DeleteModerationTemplateResponse.t()} | {:error, any()}
   def v2_delete_template(opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/moderation/feeds_moderation_template", method: :delete, params: []] ++ []
@@ -660,13 +603,7 @@ defmodule ExStreamClient.Operations.Moderation do
   @spec mute(ExStreamClient.Model.MuteRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.MuteResponse.t()} | {:error, any()}
   def mute(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/moderation/mute", method: :post, params: []] ++ [json: payload]
 
     r =
@@ -716,13 +653,7 @@ defmodule ExStreamClient.Operations.Moderation do
   @spec ban(ExStreamClient.Model.BanRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.BanResponse.t()} | {:error, any()}
   def ban(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/moderation/ban", method: :post, params: []] ++ [json: payload]
 
     r =
@@ -772,12 +703,7 @@ defmodule ExStreamClient.Operations.Moderation do
   @spec upsert_config(ExStreamClient.Model.UpsertConfigRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.UpsertConfigResponse.t()} | {:error, any()}
   def upsert_config(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/moderation/config", method: :post, params: []] ++ [json: payload]
@@ -829,12 +755,7 @@ defmodule ExStreamClient.Operations.Moderation do
   @spec query_review_queue(ExStreamClient.Model.QueryReviewQueueRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.QueryReviewQueueResponse.t()} | {:error, any()}
   def query_review_queue(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/moderation/review_queue", method: :post, params: []] ++ [json: payload]
@@ -887,12 +808,7 @@ defmodule ExStreamClient.Operations.Moderation do
   @spec get_config(String.t(), [{:client, module()} | {:team, String.t()}]) ::
           {:ok, ExStreamClient.Model.GetConfigResponse.t()} | {:error, any()}
   def get_config(key, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [
@@ -951,12 +867,7 @@ defmodule ExStreamClient.Operations.Moderation do
   @spec delete_config(String.t(), [{:client, module()} | {:team, String.t()}]) ::
           {:ok, ExStreamClient.Model.DeleteModerationConfigResponse.t()} | {:error, any()}
   def delete_config(key, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [
@@ -1015,13 +926,7 @@ defmodule ExStreamClient.Operations.Moderation do
           client: module()
         ) :: {:ok, ExStreamClient.Model.QueryModerationFlagsResponse.t()} | {:error, any()}
   def query_moderation_flags(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/moderation/flags", method: :post, params: []] ++ [json: payload]
 
     r =
@@ -1071,13 +976,7 @@ defmodule ExStreamClient.Operations.Moderation do
   @spec flag(ExStreamClient.Model.FlagRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.FlagResponse.t()} | {:error, any()}
   def flag(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/moderation/flag", method: :post, params: []] ++ [json: payload]
 
     r =
@@ -1127,13 +1026,7 @@ defmodule ExStreamClient.Operations.Moderation do
   @spec check(ExStreamClient.Model.CheckRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.CheckResponse.t()} | {:error, any()}
   def check(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/moderation/check", method: :post, params: []] ++ [json: payload]
 
     r =
@@ -1167,5 +1060,16 @@ defmodule ExStreamClient.Operations.Moderation do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
+  end
+
+  defp get_client(opts) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless Code.ensure_loaded?(client) and function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
+    client
   end
 end

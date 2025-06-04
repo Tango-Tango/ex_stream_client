@@ -21,12 +21,7 @@ defmodule ExStreamClient.Operations.PushProviders do
   @spec delete_push_provider(String.t(), String.t(), client: module()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_push_provider(type, name, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/push_providers/#{type}/#{name}", method: :delete, params: []] ++ []
@@ -78,13 +73,7 @@ defmodule ExStreamClient.Operations.PushProviders do
   @spec upsert_push_provider(ExStreamClient.Model.UpsertPushProviderRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.UpsertPushProviderResponse.t()} | {:error, any()}
   def upsert_push_provider(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/push_providers", method: :post, params: []] ++ [json: payload]
 
     r =
@@ -132,13 +121,7 @@ defmodule ExStreamClient.Operations.PushProviders do
   @spec list_push_providers(client: module()) ::
           {:ok, ExStreamClient.Model.ListPushProvidersResponse.t()} | {:error, any()}
   def list_push_providers(opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/push_providers", method: :get, params: []] ++ []
 
     r =
@@ -172,5 +155,16 @@ defmodule ExStreamClient.Operations.PushProviders do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
+  end
+
+  defp get_client(opts) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless Code.ensure_loaded?(client) and function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
+    client
   end
 end

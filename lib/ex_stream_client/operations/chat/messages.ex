@@ -27,12 +27,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
           {:client, module()} | {:user_id, String.t()}
         ]) :: {:ok, ExStreamClient.Model.PollVoteResponse.t()} | {:error, any()}
   def remove_poll_vote(message_id, poll_id, vote_id, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [
@@ -95,12 +90,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   @spec delete_reaction(String.t(), String.t(), [{:client, module()} | {:user_id, String.t()}]) ::
           {:ok, ExStreamClient.Model.DeleteReactionResponse.t()} | {:error, any()}
   def delete_reaction(id, type, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [
@@ -163,12 +153,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   @spec send_reaction(String.t(), ExStreamClient.Model.SendReactionRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.SendReactionResponse.t()} | {:error, any()}
   def send_reaction(id, payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/chat/messages/#{id}/reaction", method: :post, params: []] ++ [json: payload]
@@ -226,12 +211,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
           client: module()
         ) :: {:ok, ExStreamClient.Model.MessageResponse.t()} | {:error, any()}
   def run_message_action(id, payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/chat/messages/#{id}/action", method: :post, params: []] ++ [json: payload]
@@ -284,12 +264,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
           client: module()
         ) :: {:ok, ExStreamClient.Model.QueryMessageHistoryResponse.t()} | {:error, any()}
   def query_message_history(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/chat/messages/history", method: :post, params: []] ++ [json: payload]
@@ -347,12 +322,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
           client: module()
         ) :: {:ok, ExStreamClient.Model.PollVoteResponse.t()} | {:error, any()}
   def cast_poll_vote(message_id, poll_id, payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [
@@ -410,12 +380,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
           client: module()
         ) :: {:ok, ExStreamClient.Model.QueryReactionsResponse.t()} | {:error, any()}
   def query_reactions(id, payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/chat/messages/#{id}/reactions", method: :post, params: []] ++ [json: payload]
@@ -470,12 +435,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
           {:client, module()} | {:offset, integer()} | {:limit, integer()}
         ]) :: {:ok, ExStreamClient.Model.GetReactionsResponse.t()} | {:error, any()}
   def get_reactions(id, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [
@@ -560,12 +520,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
           | {:sort, list()}
         ]) :: {:ok, ExStreamClient.Model.GetRepliesResponse.t()} | {:error, any()}
   def get_replies(parent_id, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [
@@ -646,12 +601,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
           client: module()
         ) :: {:ok, ExStreamClient.Model.UpdateMessageResponse.t()} | {:error, any()}
   def undelete_message(id, payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/chat/messages/#{id}/undelete", method: :post, params: []] ++ [json: payload]
@@ -709,12 +659,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
           client: module()
         ) :: {:ok, ExStreamClient.Model.MessageResponse.t()} | {:error, any()}
   def translate_message(id, payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/chat/messages/#{id}/translate", method: :post, params: []] ++ [json: payload]
@@ -774,12 +719,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
           client: module()
         ) :: {:ok, ExStreamClient.Model.MessageResponse.t()} | {:error, any()}
   def commit_message(id, payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/chat/messages/#{id}/commit", method: :post, params: []] ++ [json: payload]
@@ -837,12 +777,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
           client: module()
         ) :: {:ok, ExStreamClient.Model.UpdateMessagePartialResponse.t()} | {:error, any()}
   def update_message_partial(id, payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/chat/messages/#{id}", method: :put, params: []] ++ [json: payload]
@@ -900,12 +835,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
           client: module()
         ) :: {:ok, ExStreamClient.Model.UpdateMessageResponse.t()} | {:error, any()}
   def update_message(id, payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/chat/messages/#{id}", method: :post, params: []] ++ [json: payload]
@@ -958,12 +888,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   @spec get_message(String.t(), [{:client, module()} | {:show_deleted_message, boolean()}]) ::
           {:ok, ExStreamClient.Model.GetMessageResponse.t()} | {:error, any()}
   def get_message(id, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [
@@ -1028,12 +953,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
           {:client, module()} | {:deleted_by, String.t()} | {:hard, boolean()}
         ]) :: {:ok, ExStreamClient.Model.DeleteMessageResponse.t()} | {:error, any()}
   def delete_message(id, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [
@@ -1075,5 +995,16 @@ defmodule ExStreamClient.Operations.Chat.Messages do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
+  end
+
+  defp get_client(opts) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless Code.ensure_loaded?(client) and function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
+    client
   end
 end

@@ -20,12 +20,7 @@ defmodule ExStreamClient.Operations.Chat.Moderation do
           {:client, module()} | {:payload, ExStreamClient.Model.QueryMessageFlagsPayload.t()}
         ]) :: {:ok, ExStreamClient.Model.QueryMessageFlagsResponse.t()} | {:error, any()}
   def query_message_flags(opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [
@@ -87,12 +82,7 @@ defmodule ExStreamClient.Operations.Chat.Moderation do
   @spec unmute_channel(ExStreamClient.Model.UnmuteChannelRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.UnmuteResponse.t()} | {:error, any()}
   def unmute_channel(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/chat/moderation/unmute/channel", method: :post, params: []] ++
@@ -149,12 +139,7 @@ defmodule ExStreamClient.Operations.Chat.Moderation do
   @spec mute_channel(ExStreamClient.Model.MuteChannelRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.MuteChannelResponse.t()} | {:error, any()}
   def mute_channel(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/chat/moderation/mute/channel", method: :post, params: []] ++ [json: payload]
@@ -190,5 +175,16 @@ defmodule ExStreamClient.Operations.Chat.Moderation do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
+  end
+
+  defp get_client(opts) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless Code.ensure_loaded?(client) and function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
+    client
   end
 end

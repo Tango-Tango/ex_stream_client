@@ -248,12 +248,7 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
           method_impl_ast =
             quote do
               def unquote(name)(unquote_splicing(arg_names), opts \\ []) do
-                client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-                unless function_exported?(client, :request, 2) do
-                  raise ArgumentError,
-                        "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-                end
+                client = get_client(opts)
 
                 request_opts =
                   [
@@ -310,6 +305,17 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
             @moduledoc unquote(as_heredoc(moduledoc_string))
             require Logger
             unquote_splicing(function_asts |> List.flatten())
+
+            defp get_client(opts) do
+              client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+              unless Code.ensure_loaded?(client) and function_exported?(client, :request, 2) do
+                raise ArgumentError,
+                      "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+              end
+
+              client
+            end
           end
         end
 

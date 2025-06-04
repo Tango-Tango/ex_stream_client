@@ -25,12 +25,7 @@ defmodule ExStreamClient.Operations.Users do
           client: module()
         ) :: {:ok, ExStreamClient.Model.ReactivateUserResponse.t()} | {:error, any()}
   def reactivate_user(user_id, payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/users/#{user_id}/reactivate", method: :post, params: []] ++ [json: payload]
@@ -85,13 +80,7 @@ defmodule ExStreamClient.Operations.Users do
   @spec update_users(ExStreamClient.Model.UpdateUsersRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.UpdateUsersResponse.t()} | {:error, any()}
   def update_users(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/users", method: :post, params: []] ++ [json: payload]
 
     r =
@@ -146,13 +135,7 @@ defmodule ExStreamClient.Operations.Users do
   @spec update_users_partial(ExStreamClient.Model.UpdateUsersPartialRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.UpdateUsersResponse.t()} | {:error, any()}
   def update_users_partial(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/users", method: :patch, params: []] ++ [json: payload]
 
     r =
@@ -200,12 +183,7 @@ defmodule ExStreamClient.Operations.Users do
   @spec query_users([{:client, module()} | {:payload, ExStreamClient.Model.QueryUsersPayload.t()}]) ::
           {:ok, ExStreamClient.Model.QueryUsersResponse.t()} | {:error, any()}
   def query_users(opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [
@@ -267,13 +245,7 @@ defmodule ExStreamClient.Operations.Users do
   @spec delete_users(ExStreamClient.Model.DeleteUsersRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.DeleteUsersResponse.t()} | {:error, any()}
   def delete_users(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/users/delete", method: :post, params: []] ++ [json: payload]
 
     r =
@@ -327,13 +299,7 @@ defmodule ExStreamClient.Operations.Users do
   @spec reactivate_users(ExStreamClient.Model.ReactivateUsersRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.ReactivateUsersResponse.t()} | {:error, any()}
   def reactivate_users(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/users/reactivate", method: :post, params: []] ++ [json: payload]
 
     r =
@@ -383,13 +349,7 @@ defmodule ExStreamClient.Operations.Users do
   @spec export_user(String.t(), client: module()) ::
           {:ok, ExStreamClient.Model.ExportUserResponse.t()} | {:error, any()}
   def export_user(user_id, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/users/#{user_id}/export", method: :get, params: []] ++ []
 
     r =
@@ -442,13 +402,7 @@ defmodule ExStreamClient.Operations.Users do
   @spec deactivate_users(ExStreamClient.Model.DeactivateUsersRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.DeactivateUsersResponse.t()} | {:error, any()}
   def deactivate_users(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/users/deactivate", method: :post, params: []] ++ [json: payload]
 
     r =
@@ -498,13 +452,7 @@ defmodule ExStreamClient.Operations.Users do
   @spec restore_users(ExStreamClient.Model.RestoreUsersRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def restore_users(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/users/restore", method: :post, params: []] ++ [json: payload]
 
     r =
@@ -554,13 +502,7 @@ defmodule ExStreamClient.Operations.Users do
   @spec unblock_users(ExStreamClient.Model.UnblockUsersRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.UnblockUsersResponse.t()} | {:error, any()}
   def unblock_users(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/users/unblock", method: :post, params: []] ++ [json: payload]
 
     r =
@@ -610,13 +552,7 @@ defmodule ExStreamClient.Operations.Users do
   @spec block_users(ExStreamClient.Model.BlockUsersRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.BlockUsersResponse.t()} | {:error, any()}
   def block_users(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
-
+    client = get_client(opts)
     request_opts = [url: "/api/v2/users/block", method: :post, params: []] ++ [json: payload]
 
     r =
@@ -665,12 +601,7 @@ defmodule ExStreamClient.Operations.Users do
   @spec get_blocked_users([{:client, module()} | {:user_id, String.t()}]) ::
           {:ok, ExStreamClient.Model.GetBlockedUsersResponse.t()} | {:error, any()}
   def get_blocked_users(opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [
@@ -733,12 +664,7 @@ defmodule ExStreamClient.Operations.Users do
           client: module()
         ) :: {:ok, ExStreamClient.Model.DeactivateUserResponse.t()} | {:error, any()}
   def deactivate_user(user_id, payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/users/#{user_id}/deactivate", method: :post, params: []] ++ [json: payload]
@@ -774,5 +700,16 @@ defmodule ExStreamClient.Operations.Users do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
+  end
+
+  defp get_client(opts) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless Code.ensure_loaded?(client) and function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
+    client
   end
 end

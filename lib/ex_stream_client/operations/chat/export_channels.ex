@@ -20,12 +20,7 @@ defmodule ExStreamClient.Operations.Chat.ExportChannels do
   @spec export_channels(ExStreamClient.Model.ExportChannelsRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.ExportChannelsResponse.t()} | {:error, any()}
   def export_channels(payload, opts \\ []) do
-    client = Keyword.get(opts, :client, ExStreamClient.Http)
-
-    unless function_exported?(client, :request, 2) do
-      raise ArgumentError,
-            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
-    end
+    client = get_client(opts)
 
     request_opts =
       [url: "/api/v2/chat/export_channels", method: :post, params: []] ++ [json: payload]
@@ -61,5 +56,16 @@ defmodule ExStreamClient.Operations.Chat.ExportChannels do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
+  end
+
+  defp get_client(opts) do
+    client = Keyword.get(opts, :client, ExStreamClient.Http)
+
+    unless Code.ensure_loaded?(client) and function_exported?(client, :request, 2) do
+      raise ArgumentError,
+            "client #{inspect(client)} must implement request/2 to conform to ExStreamClient.Http.Behavior"
+    end
+
+    client
   end
 end

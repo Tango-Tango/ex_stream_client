@@ -30,7 +30,7 @@ defmodule ExStreamClient.Token.User do
   ## Options
   - `expires_at`: The expiration time for the token as a `DateTime` struct. If not provided, the token will not expire.
   """
-  @spec get(String.t(), DateTime.t() | nil) :: {:ok, String.t(), map()} | {:error, any()}
+  @spec get(String.t(), DateTime.t() | nil) :: {:ok, String.t()} | {:error, any()}
   def get(user_id, expires_at \\ nil) do
     claims = %{"user_id" => user_id}
 

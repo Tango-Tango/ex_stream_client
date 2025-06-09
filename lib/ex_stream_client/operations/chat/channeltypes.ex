@@ -3,6 +3,15 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
   Modules for interacting with the `chat/channeltypes` group of Stream APIs
 
   API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+
+
+  ### Shared options
+  All functions in this module accept the following optional parameters:
+
+   * `api_key` - API key to use. If not provided, the default key from config will be used
+   * `api_key_secret` - API key secret to use. If not provided, the default secret from config will be used
+   * `endpoint` - endpoint to use. If not provided, the default endpoint from config will be used
+   * `client` - HTTP client to use. Must implement `ExStreamClient.Http.Behavior`. Defaults to `ExStreamClient.Http`
   """
   require Logger
 
@@ -13,14 +22,11 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
   ### Required Arguments:
   - `name`
   - `payload`: `Elixir.ExStreamClient.Model.UpdateChannelTypeRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec update_channel_type(String.t(), ExStreamClient.Model.UpdateChannelTypeRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateChannelTypeResponse.t()} | {:error, any()}
-  @spec update_channel_type(String.t(), ExStreamClient.Model.UpdateChannelTypeRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.UpdateChannelTypeResponse.t()} | {:error, any()}
   def update_channel_type(name, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -54,7 +60,7 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -66,12 +72,10 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
 
   ### Required Arguments:
   - `name`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_channel_type(String.t()) ::
-          {:ok, ExStreamClient.Model.GetChannelTypeResponse.t()} | {:error, any()}
-  @spec get_channel_type(String.t(), client: module()) ::
           {:ok, ExStreamClient.Model.GetChannelTypeResponse.t()} | {:error, any()}
   def get_channel_type(name, opts \\ []) do
     client = get_client(opts)
@@ -104,7 +108,7 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -116,12 +120,10 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
 
   ### Required Arguments:
   - `name`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec delete_channel_type(String.t()) ::
-          {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec delete_channel_type(String.t(), client: module()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_channel_type(name, opts \\ []) do
     client = get_client(opts)
@@ -154,7 +156,7 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -166,12 +168,10 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.CreateChannelTypeRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec create_channel_type(ExStreamClient.Model.CreateChannelTypeRequest.t()) ::
-          {:ok, ExStreamClient.Model.CreateChannelTypeResponse.t()} | {:error, any()}
-  @spec create_channel_type(ExStreamClient.Model.CreateChannelTypeRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.CreateChannelTypeResponse.t()} | {:error, any()}
   def create_channel_type(payload, opts \\ []) do
     client = get_client(opts)
@@ -206,7 +206,7 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -216,12 +216,10 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
   Lists all available channel types
 
 
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec list_channel_types() ::
-          {:ok, ExStreamClient.Model.ListChannelTypesResponse.t()} | {:error, any()}
-  @spec list_channel_types(client: module()) ::
           {:ok, ExStreamClient.Model.ListChannelTypesResponse.t()} | {:error, any()}
   def list_channel_types(opts \\ []) do
     client = get_client(opts)
@@ -254,7 +252,7 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -269,5 +267,9 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
     end
 
     client
+  end
+
+  defp get_request_opts(opts) do
+    Keyword.take(opts, [:api_key, :api_key_secret, :endpoint])
   end
 end

@@ -14,11 +14,21 @@ defmodule ExStreamClient.Token.User do
   """
   @spec signer() :: Joken.Signer.t()
   def signer do
+    signer(ExStreamClient.Config.api_key_secret())
+  end
+
+  @doc """
+  Returns the signer used for user tokens.
+  """
+  @spec signer(String.t() | nil) :: Joken.Signer.t()
+  def signer(secret) when is_binary(secret) do
     Joken.Signer.create(
       "HS256",
-      ExStreamClient.Config.api_key_secret()
+      secret
     )
   end
+
+  def signer(_), do: signer(ExStreamClient.Config.api_key_secret())
 
   @doc """
   Generates a user token for the given user ID.
@@ -30,8 +40,9 @@ defmodule ExStreamClient.Token.User do
   ## Options
   - `expires_at`: The expiration time for the token as a `DateTime` struct. If not provided, the token will not expire.
   """
-  @spec get(String.t(), DateTime.t() | nil) :: {:ok, String.t()} | {:error, any()}
-  def get(user_id, expires_at \\ nil) do
+  @spec get(String.t(), DateTime.t() | nil, String.t() | nil) ::
+          {:ok, String.t()} | {:error, any()}
+  def get(user_id, expires_at \\ nil, secret \\ nil) do
     claims = %{"user_id" => user_id}
 
     claims =
@@ -48,7 +59,7 @@ defmodule ExStreamClient.Token.User do
 
     case generate_and_sign(
            claims,
-           signer()
+           signer(secret)
          ) do
       {:ok, token, _} -> {:ok, token}
       {:error, reason} -> {:error, reason}

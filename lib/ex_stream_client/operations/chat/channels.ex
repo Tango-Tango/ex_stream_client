@@ -3,6 +3,15 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   Modules for interacting with the `chat/channels` group of Stream APIs
 
   API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+
+
+  ### Shared options
+  All functions in this module accept the following optional parameters:
+
+   * `api_key` - API key to use. If not provided, the default key from config will be used
+   * `api_key_secret` - API key secret to use. If not provided, the default secret from config will be used
+   * `endpoint` - endpoint to use. If not provided, the default endpoint from config will be used
+   * `client` - HTTP client to use. Must implement `ExStreamClient.Http.Behavior`. Defaults to `ExStreamClient.Http`
   """
   require Logger
 
@@ -16,7 +25,8 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `payload`: `Elixir.ExStreamClient.Model.UpdateMemberPartialRequest`
   ### Optional Arguments:
   - `user_id`
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec update_member_partial(
           String.t(),
@@ -27,19 +37,22 @@ defmodule ExStreamClient.Operations.Chat.Channels do
           String.t(),
           String.t(),
           ExStreamClient.Model.UpdateMemberPartialRequest.t(),
-          [{:client, module()} | {:user_id, String.t()}]
+          [
+            {:client, module()}
+            | {:endpoint, String.t()}
+            | {:api_key, String.t()}
+            | {:api_key_secret, String.t()}
+            | {:payload, ExStreamClient.Model.UpdateMemberPartialRequest.t()}
+            | {:id, String.t()}
+            | {:type, String.t()}
+          ]
         ) :: {:ok, ExStreamClient.Model.UpdateMemberPartialResponse.t()} | {:error, any()}
   def update_member_partial(type, id, payload, opts \\ []) do
     client = get_client(opts)
 
     request_opts =
-      [
-        url: "/api/v2/chat/channels/#{type}/#{id}/member",
-        method: :patch,
-        params:
-          Keyword.merge([], Keyword.take(opts, [:user_id]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-      ] ++ [json: payload]
+      [url: "/api/v2/chat/channels/#{type}/#{id}/member", method: :patch, params: []] ++
+        [json: payload]
 
     r =
       Req.new(request_opts)
@@ -68,7 +81,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -82,14 +95,11 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `type`
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.MarkUnreadRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec mark_unread(String.t(), String.t(), ExStreamClient.Model.MarkUnreadRequest.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec mark_unread(String.t(), String.t(), ExStreamClient.Model.MarkUnreadRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def mark_unread(type, id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -124,7 +134,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -140,12 +150,10 @@ defmodule ExStreamClient.Operations.Chat.Channels do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.MarkChannelsReadRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec mark_channels_read(ExStreamClient.Model.MarkChannelsReadRequest.t()) ::
-          {:ok, ExStreamClient.Model.MarkReadResponse.t()} | {:error, any()}
-  @spec mark_channels_read(ExStreamClient.Model.MarkChannelsReadRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.MarkReadResponse.t()} | {:error, any()}
   def mark_channels_read(payload, opts \\ []) do
     client = get_client(opts)
@@ -180,7 +188,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -198,14 +206,11 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `type`
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.HideChannelRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec hide_channel(String.t(), String.t(), ExStreamClient.Model.HideChannelRequest.t()) ::
           {:ok, ExStreamClient.Model.HideChannelResponse.t()} | {:error, any()}
-  @spec hide_channel(String.t(), String.t(), ExStreamClient.Model.HideChannelRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.HideChannelResponse.t()} | {:error, any()}
   def hide_channel(type, id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -240,7 +245,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -261,19 +266,13 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `type`
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.ChannelGetOrCreateRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_or_create_channel(
           String.t(),
           String.t(),
           ExStreamClient.Model.ChannelGetOrCreateRequest.t()
-        ) :: {:ok, ExStreamClient.Model.ChannelStateResponse.t()} | {:error, any()}
-  @spec get_or_create_channel(
-          String.t(),
-          String.t(),
-          ExStreamClient.Model.ChannelGetOrCreateRequest.t(),
-          client: module()
         ) :: {:ok, ExStreamClient.Model.ChannelStateResponse.t()} | {:error, any()}
   def get_or_create_channel(type, id, payload, opts \\ []) do
     client = get_client(opts)
@@ -309,7 +308,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -321,12 +320,10 @@ defmodule ExStreamClient.Operations.Chat.Channels do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.QueryChannelsRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec query_channels(ExStreamClient.Model.QueryChannelsRequest.t()) ::
-          {:ok, ExStreamClient.Model.QueryChannelsResponse.t()} | {:error, any()}
-  @spec query_channels(ExStreamClient.Model.QueryChannelsRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.QueryChannelsResponse.t()} | {:error, any()}
   def query_channels(payload, opts \\ []) do
     client = get_client(opts)
@@ -359,7 +356,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -379,14 +376,11 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `type`
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.SendMessageRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec send_message(String.t(), String.t(), ExStreamClient.Model.SendMessageRequest.t()) ::
           {:ok, ExStreamClient.Model.SendMessageResponse.t()} | {:error, any()}
-  @spec send_message(String.t(), String.t(), ExStreamClient.Model.SendMessageRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.SendMessageResponse.t()} | {:error, any()}
   def send_message(type, id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -421,7 +415,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -439,14 +433,11 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `type`
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.TruncateChannelRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec truncate_channel(String.t(), String.t(), ExStreamClient.Model.TruncateChannelRequest.t()) ::
           {:ok, ExStreamClient.Model.TruncateChannelResponse.t()} | {:error, any()}
-  @spec truncate_channel(String.t(), String.t(), ExStreamClient.Model.TruncateChannelRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.TruncateChannelResponse.t()} | {:error, any()}
   def truncate_channel(type, id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -481,7 +472,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -499,14 +490,11 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `type`
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.ShowChannelRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec show_channel(String.t(), String.t(), ExStreamClient.Model.ShowChannelRequest.t()) ::
           {:ok, ExStreamClient.Model.ShowChannelResponse.t()} | {:error, any()}
-  @spec show_channel(String.t(), String.t(), ExStreamClient.Model.ShowChannelRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.ShowChannelResponse.t()} | {:error, any()}
   def show_channel(type, id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -541,7 +529,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -555,24 +543,17 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `type`
   - `id`
   - `ids`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_many_messages(String.t(), String.t(), list()) ::
-          {:ok, ExStreamClient.Model.GetManyMessagesResponse.t()} | {:error, any()}
-  @spec get_many_messages(String.t(), String.t(), list(), client: module()) ::
           {:ok, ExStreamClient.Model.GetManyMessagesResponse.t()} | {:error, any()}
   def get_many_messages(type, id, ids, opts \\ []) do
     client = get_client(opts)
 
     request_opts =
-      [
-        url: "/api/v2/chat/channels/#{type}/#{id}/messages",
-        method: :get,
-        params:
-          Keyword.merge([ids: ids], Keyword.take(opts, []))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-      ] ++ []
+      [url: "/api/v2/chat/channels/#{type}/#{id}/messages", method: :get, params: [ids: ids]] ++
+        []
 
     r =
       Req.new(request_opts)
@@ -601,7 +582,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -615,14 +596,11 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `type`
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.SendEventRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec send_event(String.t(), String.t(), ExStreamClient.Model.SendEventRequest.t()) ::
           {:ok, ExStreamClient.Model.EventResponse.t()} | {:error, any()}
-  @spec send_event(String.t(), String.t(), ExStreamClient.Model.SendEventRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.EventResponse.t()} | {:error, any()}
   def send_event(type, id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -657,7 +635,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -673,24 +651,24 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   ### Optional Arguments:
   - `parent_id`
   - `user_id`
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_draft(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.GetDraftResponse.t()} | {:error, any()}
   @spec get_draft(String.t(), String.t(), [
-          {:client, module()} | {:user_id, String.t()} | {:parent_id, String.t()}
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:id, String.t()}
+          | {:type, String.t()}
         ]) :: {:ok, ExStreamClient.Model.GetDraftResponse.t()} | {:error, any()}
   def get_draft(type, id, opts \\ []) do
     client = get_client(opts)
 
     request_opts =
-      [
-        url: "/api/v2/chat/channels/#{type}/#{id}/draft",
-        method: :get,
-        params:
-          Keyword.merge([], Keyword.take(opts, [:parent_id, :user_id]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-      ] ++ []
+      [url: "/api/v2/chat/channels/#{type}/#{id}/draft", method: :get, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -719,7 +697,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -738,24 +716,24 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   ### Optional Arguments:
   - `parent_id`
   - `user_id`
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec delete_draft(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   @spec delete_draft(String.t(), String.t(), [
-          {:client, module()} | {:user_id, String.t()} | {:parent_id, String.t()}
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:id, String.t()}
+          | {:type, String.t()}
         ]) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_draft(type, id, opts \\ []) do
     client = get_client(opts)
 
     request_opts =
-      [
-        url: "/api/v2/chat/channels/#{type}/#{id}/draft",
-        method: :delete,
-        params:
-          Keyword.merge([], Keyword.take(opts, [:parent_id, :user_id]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-      ] ++ []
+      [url: "/api/v2/chat/channels/#{type}/#{id}/draft", method: :delete, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -784,7 +762,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -798,14 +776,11 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `type`
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.FileUploadRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec upload_file(String.t(), String.t(), ExStreamClient.Model.FileUploadRequest.t()) ::
           {:ok, ExStreamClient.Model.FileUploadResponse.t()} | {:error, any()}
-  @spec upload_file(String.t(), String.t(), ExStreamClient.Model.FileUploadRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.FileUploadResponse.t()} | {:error, any()}
   def upload_file(type, id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -840,7 +815,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -855,23 +830,24 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `id`
   ### Optional Arguments:
   - `url`
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec delete_file(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec delete_file(String.t(), String.t(), [{:client, module()} | {:url, String.t()}]) ::
-          {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  @spec delete_file(String.t(), String.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:id, String.t()}
+          | {:type, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_file(type, id, opts \\ []) do
     client = get_client(opts)
 
     request_opts =
-      [
-        url: "/api/v2/chat/channels/#{type}/#{id}/file",
-        method: :delete,
-        params:
-          Keyword.merge([], Keyword.take(opts, [:url]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-      ] ++ []
+      [url: "/api/v2/chat/channels/#{type}/#{id}/file", method: :delete, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -900,7 +876,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -918,14 +894,11 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `type`
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.MarkReadRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec mark_read(String.t(), String.t(), ExStreamClient.Model.MarkReadRequest.t()) ::
           {:ok, ExStreamClient.Model.MarkReadResponse.t()} | {:error, any()}
-  @spec mark_read(String.t(), String.t(), ExStreamClient.Model.MarkReadRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.MarkReadResponse.t()} | {:error, any()}
   def mark_read(type, id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -960,7 +933,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -974,14 +947,11 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `type`
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.ImageUploadRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec upload_image(String.t(), String.t(), ExStreamClient.Model.ImageUploadRequest.t()) ::
           {:ok, ExStreamClient.Model.ImageUploadResponse.t()} | {:error, any()}
-  @spec upload_image(String.t(), String.t(), ExStreamClient.Model.ImageUploadRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.ImageUploadResponse.t()} | {:error, any()}
   def upload_image(type, id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -1016,7 +986,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -1031,23 +1001,24 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `id`
   ### Optional Arguments:
   - `url`
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec delete_image(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec delete_image(String.t(), String.t(), [{:client, module()} | {:url, String.t()}]) ::
-          {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  @spec delete_image(String.t(), String.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:id, String.t()}
+          | {:type, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_image(type, id, opts \\ []) do
     client = get_client(opts)
 
     request_opts =
-      [
-        url: "/api/v2/chat/channels/#{type}/#{id}/image",
-        method: :delete,
-        params:
-          Keyword.merge([], Keyword.take(opts, [:url]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-      ] ++ []
+      [url: "/api/v2/chat/channels/#{type}/#{id}/image", method: :delete, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -1076,7 +1047,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -1096,17 +1067,12 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   ### Required Arguments:
   - `type`
   - `payload`: `Elixir.ExStreamClient.Model.ChannelGetOrCreateRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_or_create_distinct_channel(
           String.t(),
           ExStreamClient.Model.ChannelGetOrCreateRequest.t()
-        ) :: {:ok, ExStreamClient.Model.ChannelStateResponse.t()} | {:error, any()}
-  @spec get_or_create_distinct_channel(
-          String.t(),
-          ExStreamClient.Model.ChannelGetOrCreateRequest.t(),
-          client: module()
         ) :: {:ok, ExStreamClient.Model.ChannelStateResponse.t()} | {:error, any()}
   def get_or_create_distinct_channel(type, payload, opts \\ []) do
     client = get_client(opts)
@@ -1141,7 +1107,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -1167,14 +1133,11 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `type`
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.UpdateChannelRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec update_channel(String.t(), String.t(), ExStreamClient.Model.UpdateChannelRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateChannelResponse.t()} | {:error, any()}
-  @spec update_channel(String.t(), String.t(), ExStreamClient.Model.UpdateChannelRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.UpdateChannelResponse.t()} | {:error, any()}
   def update_channel(type, id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -1208,7 +1171,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -1226,19 +1189,13 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `type`
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.UpdateChannelPartialRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec update_channel_partial(
           String.t(),
           String.t(),
           ExStreamClient.Model.UpdateChannelPartialRequest.t()
-        ) :: {:ok, ExStreamClient.Model.UpdateChannelPartialResponse.t()} | {:error, any()}
-  @spec update_channel_partial(
-          String.t(),
-          String.t(),
-          ExStreamClient.Model.UpdateChannelPartialRequest.t(),
-          client: module()
         ) :: {:ok, ExStreamClient.Model.UpdateChannelPartialResponse.t()} | {:error, any()}
   def update_channel_partial(type, id, payload, opts \\ []) do
     client = get_client(opts)
@@ -1273,7 +1230,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -1292,23 +1249,22 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `id`
   ### Optional Arguments:
   - `hard_delete`
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec delete_channel(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.DeleteChannelResponse.t()} | {:error, any()}
-  @spec delete_channel(String.t(), String.t(), [{:client, module()} | {:hard_delete, boolean()}]) ::
-          {:ok, ExStreamClient.Model.DeleteChannelResponse.t()} | {:error, any()}
+  @spec delete_channel(String.t(), String.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:id, String.t()}
+          | {:type, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.DeleteChannelResponse.t()} | {:error, any()}
   def delete_channel(type, id, opts \\ []) do
     client = get_client(opts)
-
-    request_opts =
-      [
-        url: "/api/v2/chat/channels/#{type}/#{id}",
-        method: :delete,
-        params:
-          Keyword.merge([], Keyword.take(opts, [:hard_delete]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-      ] ++ []
+    request_opts = [url: "/api/v2/chat/channels/#{type}/#{id}", method: :delete, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -1337,7 +1293,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -1353,12 +1309,10 @@ defmodule ExStreamClient.Operations.Chat.Channels do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.DeleteChannelsRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec delete_channels(ExStreamClient.Model.DeleteChannelsRequest.t()) ::
-          {:ok, ExStreamClient.Model.DeleteChannelsResponse.t()} | {:error, any()}
-  @spec delete_channels(ExStreamClient.Model.DeleteChannelsRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.DeleteChannelsResponse.t()} | {:error, any()}
   def delete_channels(payload, opts \\ []) do
     client = get_client(opts)
@@ -1393,7 +1347,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -1408,5 +1362,9 @@ defmodule ExStreamClient.Operations.Chat.Channels do
     end
 
     client
+  end
+
+  defp get_request_opts(opts) do
+    Keyword.take(opts, [:api_key, :api_key_secret, :endpoint])
   end
 end

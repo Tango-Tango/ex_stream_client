@@ -3,6 +3,15 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   Modules for interacting with the `chat/polls` group of Stream APIs
 
   API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+
+
+  ### Shared options
+  All functions in this module accept the following optional parameters:
+
+   * `api_key` - API key to use. If not provided, the default key from config will be used
+   * `api_key_secret` - API key secret to use. If not provided, the default secret from config will be used
+   * `endpoint` - endpoint to use. If not provided, the default endpoint from config will be used
+   * `client` - HTTP client to use. Must implement `ExStreamClient.Http.Behavior`. Defaults to `ExStreamClient.Http`
   """
   require Logger
 
@@ -15,24 +24,24 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   - `payload`: `Elixir.ExStreamClient.Model.QueryPollVotesRequest`
   ### Optional Arguments:
   - `user_id`
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec query_poll_votes(String.t(), ExStreamClient.Model.QueryPollVotesRequest.t()) ::
           {:ok, ExStreamClient.Model.PollVotesResponse.t()} | {:error, any()}
   @spec query_poll_votes(String.t(), ExStreamClient.Model.QueryPollVotesRequest.t(), [
-          {:client, module()} | {:user_id, String.t()}
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:payload, ExStreamClient.Model.QueryPollVotesRequest.t()}
+          | {:poll_id, String.t()}
         ]) :: {:ok, ExStreamClient.Model.PollVotesResponse.t()} | {:error, any()}
   def query_poll_votes(poll_id, payload, opts \\ []) do
     client = get_client(opts)
 
     request_opts =
-      [
-        url: "/api/v2/chat/polls/#{poll_id}/votes",
-        method: :post,
-        params:
-          Keyword.merge([], Keyword.take(opts, [:user_id]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-      ] ++ [json: payload]
+      [url: "/api/v2/chat/polls/#{poll_id}/votes", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -61,7 +70,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -77,12 +86,10 @@ defmodule ExStreamClient.Operations.Chat.Polls do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.UpdatePollRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec update_poll(ExStreamClient.Model.UpdatePollRequest.t()) ::
-          {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
-  @spec update_poll(ExStreamClient.Model.UpdatePollRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
   def update_poll(payload, opts \\ []) do
     client = get_client(opts)
@@ -115,7 +122,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -127,12 +134,10 @@ defmodule ExStreamClient.Operations.Chat.Polls do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.CreatePollRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec create_poll(ExStreamClient.Model.CreatePollRequest.t()) ::
-          {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
-  @spec create_poll(ExStreamClient.Model.CreatePollRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
   def create_poll(payload, opts \\ []) do
     client = get_client(opts)
@@ -165,7 +170,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -181,14 +186,11 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   ### Required Arguments:
   - `poll_id`
   - `payload`: `Elixir.ExStreamClient.Model.UpdatePollOptionRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec update_poll_option(String.t(), ExStreamClient.Model.UpdatePollOptionRequest.t()) ::
           {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
-  @spec update_poll_option(String.t(), ExStreamClient.Model.UpdatePollOptionRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
   def update_poll_option(poll_id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -222,7 +224,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -238,14 +240,11 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   ### Required Arguments:
   - `poll_id`
   - `payload`: `Elixir.ExStreamClient.Model.CreatePollOptionRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec create_poll_option(String.t(), ExStreamClient.Model.CreatePollOptionRequest.t()) ::
           {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
-  @spec create_poll_option(String.t(), ExStreamClient.Model.CreatePollOptionRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
   def create_poll_option(poll_id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -279,7 +278,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -295,14 +294,11 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   ### Required Arguments:
   - `poll_id`
   - `payload`: `Elixir.ExStreamClient.Model.UpdatePollPartialRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec update_poll_partial(String.t(), ExStreamClient.Model.UpdatePollPartialRequest.t()) ::
           {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
-  @spec update_poll_partial(String.t(), ExStreamClient.Model.UpdatePollPartialRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
   def update_poll_partial(poll_id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -336,7 +332,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -350,22 +346,20 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   - `poll_id`
   ### Optional Arguments:
   - `user_id`
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_poll(String.t()) :: {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
-  @spec get_poll(String.t(), [{:client, module()} | {:user_id, String.t()}]) ::
-          {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
+  @spec get_poll(String.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:poll_id, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
   def get_poll(poll_id, opts \\ []) do
     client = get_client(opts)
-
-    request_opts =
-      [
-        url: "/api/v2/chat/polls/#{poll_id}",
-        method: :get,
-        params:
-          Keyword.merge([], Keyword.take(opts, [:user_id]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-      ] ++ []
+    request_opts = [url: "/api/v2/chat/polls/#{poll_id}", method: :get, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -394,7 +388,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -411,22 +405,20 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   - `poll_id`
   ### Optional Arguments:
   - `user_id`
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec delete_poll(String.t()) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec delete_poll(String.t(), [{:client, module()} | {:user_id, String.t()}]) ::
-          {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  @spec delete_poll(String.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:poll_id, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_poll(poll_id, opts \\ []) do
     client = get_client(opts)
-
-    request_opts =
-      [
-        url: "/api/v2/chat/polls/#{poll_id}",
-        method: :delete,
-        params:
-          Keyword.merge([], Keyword.take(opts, [:user_id]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-      ] ++ []
+    request_opts = [url: "/api/v2/chat/polls/#{poll_id}", method: :delete, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -455,7 +447,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -469,24 +461,21 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   - `payload`: `Elixir.ExStreamClient.Model.QueryPollsRequest`
   ### Optional Arguments:
   - `user_id`
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec query_polls(ExStreamClient.Model.QueryPollsRequest.t()) ::
           {:ok, ExStreamClient.Model.QueryPollsResponse.t()} | {:error, any()}
   @spec query_polls(ExStreamClient.Model.QueryPollsRequest.t(), [
-          {:client, module()} | {:user_id, String.t()}
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:payload, ExStreamClient.Model.QueryPollsRequest.t()}
         ]) :: {:ok, ExStreamClient.Model.QueryPollsResponse.t()} | {:error, any()}
   def query_polls(payload, opts \\ []) do
     client = get_client(opts)
-
-    request_opts =
-      [
-        url: "/api/v2/chat/polls/query",
-        method: :post,
-        params:
-          Keyword.merge([], Keyword.take(opts, [:user_id]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-      ] ++ [json: payload]
+    request_opts = [url: "/api/v2/chat/polls/query", method: :post, params: []] ++ [json: payload]
 
     r =
       Req.new(request_opts)
@@ -515,7 +504,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -530,23 +519,24 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   - `option_id`
   ### Optional Arguments:
   - `user_id`
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_poll_option(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
-  @spec get_poll_option(String.t(), String.t(), [{:client, module()} | {:user_id, String.t()}]) ::
-          {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
+  @spec get_poll_option(String.t(), String.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:option_id, String.t()}
+          | {:poll_id, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
   def get_poll_option(poll_id, option_id, opts \\ []) do
     client = get_client(opts)
 
     request_opts =
-      [
-        url: "/api/v2/chat/polls/#{poll_id}/options/#{option_id}",
-        method: :get,
-        params:
-          Keyword.merge([], Keyword.take(opts, [:user_id]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-      ] ++ []
+      [url: "/api/v2/chat/polls/#{poll_id}/options/#{option_id}", method: :get, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -575,7 +565,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -593,23 +583,25 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   - `option_id`
   ### Optional Arguments:
   - `user_id`
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec delete_poll_option(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec delete_poll_option(String.t(), String.t(), [{:client, module()} | {:user_id, String.t()}]) ::
-          {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  @spec delete_poll_option(String.t(), String.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:option_id, String.t()}
+          | {:poll_id, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_poll_option(poll_id, option_id, opts \\ []) do
     client = get_client(opts)
 
     request_opts =
-      [
-        url: "/api/v2/chat/polls/#{poll_id}/options/#{option_id}",
-        method: :delete,
-        params:
-          Keyword.merge([], Keyword.take(opts, [:user_id]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-      ] ++ []
+      [url: "/api/v2/chat/polls/#{poll_id}/options/#{option_id}", method: :delete, params: []] ++
+        []
 
     r =
       Req.new(request_opts)
@@ -638,7 +630,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -653,5 +645,9 @@ defmodule ExStreamClient.Operations.Chat.Polls do
     end
 
     client
+  end
+
+  defp get_request_opts(opts) do
+    Keyword.take(opts, [:api_key, :api_key_secret, :endpoint])
   end
 end

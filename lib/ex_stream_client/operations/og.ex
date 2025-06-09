@@ -3,6 +3,15 @@ defmodule ExStreamClient.Operations.Og do
   Modules for interacting with the `og` group of Stream APIs
 
   API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+
+
+  ### Shared options
+  All functions in this module accept the following optional parameters:
+
+   * `api_key` - API key to use. If not provided, the default key from config will be used
+   * `api_key_secret` - API key secret to use. If not provided, the default secret from config will be used
+   * `endpoint` - endpoint to use. If not provided, the default endpoint from config will be used
+   * `client` - HTTP client to use. Must implement `ExStreamClient.Http.Behavior`. Defaults to `ExStreamClient.Http`
   """
   require Logger
 
@@ -12,23 +21,13 @@ defmodule ExStreamClient.Operations.Og do
 
   ### Required Arguments:
   - `url`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_og(String.t()) :: {:ok, ExStreamClient.Model.GetOGResponse.t()} | {:error, any()}
-  @spec get_og(String.t(), client: module()) ::
-          {:ok, ExStreamClient.Model.GetOGResponse.t()} | {:error, any()}
   def get_og(url, opts \\ []) do
     client = get_client(opts)
-
-    request_opts =
-      [
-        url: "/api/v2/og",
-        method: :get,
-        params:
-          Keyword.merge([url: url], Keyword.take(opts, []))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-      ] ++ []
+    request_opts = [url: "/api/v2/og", method: :get, params: [url: url]] ++ []
 
     r =
       Req.new(request_opts)
@@ -57,7 +56,7 @@ defmodule ExStreamClient.Operations.Og do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -72,5 +71,9 @@ defmodule ExStreamClient.Operations.Og do
     end
 
     client
+  end
+
+  defp get_request_opts(opts) do
+    Keyword.take(opts, [:api_key, :api_key_secret, :endpoint])
   end
 end

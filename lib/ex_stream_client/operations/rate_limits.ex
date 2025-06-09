@@ -3,6 +3,15 @@ defmodule ExStreamClient.Operations.RateLimits do
   Modules for interacting with the `rate_limits` group of Stream APIs
 
   API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+
+
+  ### Shared options
+  All functions in this module accept the following optional parameters:
+
+   * `api_key` - API key to use. If not provided, the default key from config will be used
+   * `api_key_secret` - API key secret to use. If not provided, the default secret from config will be used
+   * `endpoint` - endpoint to use. If not provided, the default endpoint from config will be used
+   * `client` - HTTP client to use. Must implement `ExStreamClient.Http.Behavior`. Defaults to `ExStreamClient.Http`
   """
   require Logger
 
@@ -11,34 +20,25 @@ defmodule ExStreamClient.Operations.RateLimits do
 
 
   ### Optional Arguments:
-  - `server_side`
   - `android`
-  - `ios`
-  - `web`
   - `endpoints`
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `ios`
+  - `server_side`
+  - `web`
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_rate_limits() ::
           {:ok, ExStreamClient.Model.GetRateLimitsResponse.t()} | {:error, any()}
   @spec get_rate_limits([
           {:client, module()}
-          | {:endpoints, String.t()}
-          | {:web, boolean()}
-          | {:ios, boolean()}
-          | {:android, boolean()}
-          | {:server_side, boolean()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
         ]) :: {:ok, ExStreamClient.Model.GetRateLimitsResponse.t()} | {:error, any()}
   def get_rate_limits(opts \\ []) do
     client = get_client(opts)
-
-    request_opts =
-      [
-        url: "/api/v2/rate_limits",
-        method: :get,
-        params:
-          Keyword.merge([], Keyword.take(opts, [:server_side, :android, :ios, :web, :endpoints]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-      ] ++ []
+    request_opts = [url: "/api/v2/rate_limits", method: :get, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -67,7 +67,7 @@ defmodule ExStreamClient.Operations.RateLimits do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -82,5 +82,9 @@ defmodule ExStreamClient.Operations.RateLimits do
     end
 
     client
+  end
+
+  defp get_request_opts(opts) do
+    Keyword.take(opts, [:api_key, :api_key_secret, :endpoint])
   end
 end

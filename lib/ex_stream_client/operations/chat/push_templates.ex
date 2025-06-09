@@ -3,6 +3,15 @@ defmodule ExStreamClient.Operations.Chat.PushTemplates do
   Modules for interacting with the `chat/push_templates` group of Stream APIs
 
   API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+
+
+  ### Shared options
+  All functions in this module accept the following optional parameters:
+
+   * `api_key` - API key to use. If not provided, the default key from config will be used
+   * `api_key_secret` - API key secret to use. If not provided, the default secret from config will be used
+   * `endpoint` - endpoint to use. If not provided, the default endpoint from config will be used
+   * `client` - HTTP client to use. Must implement `ExStreamClient.Http.Behavior`. Defaults to `ExStreamClient.Http`
   """
   require Logger
 
@@ -12,12 +21,10 @@ defmodule ExStreamClient.Operations.Chat.PushTemplates do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.UpsertPushTemplateRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec upsert_push_template(ExStreamClient.Model.UpsertPushTemplateRequest.t()) ::
-          {:ok, ExStreamClient.Model.UpsertPushTemplateResponse.t()} | {:error, any()}
-  @spec upsert_push_template(ExStreamClient.Model.UpsertPushTemplateRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.UpsertPushTemplateResponse.t()} | {:error, any()}
   def upsert_push_template(payload, opts \\ []) do
     client = get_client(opts)
@@ -52,7 +59,7 @@ defmodule ExStreamClient.Operations.Chat.PushTemplates do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -66,12 +73,18 @@ defmodule ExStreamClient.Operations.Chat.PushTemplates do
   - `push_provider_type`
   ### Optional Arguments:
   - `push_provider_name`
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_push_templates(String.t()) ::
           {:ok, ExStreamClient.Model.GetPushTemplatesResponse.t()} | {:error, any()}
-  @spec get_push_templates(String.t(), [{:client, module()} | {:push_provider_name, String.t()}]) ::
-          {:ok, ExStreamClient.Model.GetPushTemplatesResponse.t()} | {:error, any()}
+  @spec get_push_templates(String.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:push_provider_type, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.GetPushTemplatesResponse.t()} | {:error, any()}
   def get_push_templates(push_provider_type, opts \\ []) do
     client = get_client(opts)
 
@@ -80,10 +93,7 @@ defmodule ExStreamClient.Operations.Chat.PushTemplates do
         url: "/api/v2/chat/push_templates",
         method: :get,
         params:
-          Keyword.merge(
-            [push_provider_type: push_provider_type],
-            Keyword.take(opts, [:push_provider_name])
-          )
+          Keyword.merge([push_provider_type: push_provider_type], Keyword.take(opts, []))
           |> Enum.reject(fn {_k, v} -> is_nil(v) end)
       ] ++ []
 
@@ -114,7 +124,7 @@ defmodule ExStreamClient.Operations.Chat.PushTemplates do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -129,5 +139,9 @@ defmodule ExStreamClient.Operations.Chat.PushTemplates do
     end
 
     client
+  end
+
+  defp get_request_opts(opts) do
+    Keyword.take(opts, [:api_key, :api_key_secret, :endpoint])
   end
 end

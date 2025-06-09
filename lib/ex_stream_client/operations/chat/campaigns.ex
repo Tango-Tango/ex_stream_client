@@ -3,6 +3,15 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
   Modules for interacting with the `chat/campaigns` group of Stream APIs
 
   API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+
+
+  ### Shared options
+  All functions in this module accept the following optional parameters:
+
+   * `api_key` - API key to use. If not provided, the default key from config will be used
+   * `api_key_secret` - API key secret to use. If not provided, the default secret from config will be used
+   * `endpoint` - endpoint to use. If not provided, the default endpoint from config will be used
+   * `client` - HTTP client to use. Must implement `ExStreamClient.Http.Behavior`. Defaults to `ExStreamClient.Http`
   """
   require Logger
 
@@ -13,14 +22,11 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
   ### Required Arguments:
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.StopCampaignRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec schedule_campaign(String.t(), ExStreamClient.Model.StopCampaignRequest.t()) ::
           {:ok, ExStreamClient.Model.CampaignResponse.t()} | {:error, any()}
-  @spec schedule_campaign(String.t(), ExStreamClient.Model.StopCampaignRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.CampaignResponse.t()} | {:error, any()}
   def schedule_campaign(id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -54,7 +60,7 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -66,12 +72,10 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.QueryCampaignsRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec query_campaigns(ExStreamClient.Model.QueryCampaignsRequest.t()) ::
-          {:ok, ExStreamClient.Model.QueryCampaignsResponse.t()} | {:error, any()}
-  @spec query_campaigns(ExStreamClient.Model.QueryCampaignsRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.QueryCampaignsResponse.t()} | {:error, any()}
   def query_campaigns(payload, opts \\ []) do
     client = get_client(opts)
@@ -106,7 +110,7 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -119,27 +123,24 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
   ### Required Arguments:
   - `id`
   ### Optional Arguments:
-  - `prev`
-  - `next`
   - `limit`
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `next`
+  - `prev`
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_campaign(String.t()) ::
           {:ok, ExStreamClient.Model.GetCampaignResponse.t()} | {:error, any()}
   @spec get_campaign(String.t(), [
-          {:client, module()} | {:limit, integer()} | {:next, String.t()} | {:prev, String.t()}
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:id, String.t()}
         ]) :: {:ok, ExStreamClient.Model.GetCampaignResponse.t()} | {:error, any()}
   def get_campaign(id, opts \\ []) do
     client = get_client(opts)
-
-    request_opts =
-      [
-        url: "/api/v2/chat/campaigns/#{id}",
-        method: :get,
-        params:
-          Keyword.merge([], Keyword.take(opts, [:prev, :next, :limit]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-      ] ++ []
+    request_opts = [url: "/api/v2/chat/campaigns/#{id}", method: :get, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -168,7 +169,7 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -181,14 +182,11 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
   ### Required Arguments:
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.StartCampaignRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec start_campaign(String.t(), ExStreamClient.Model.StartCampaignRequest.t()) ::
           {:ok, ExStreamClient.Model.StartCampaignResponse.t()} | {:error, any()}
-  @spec start_campaign(String.t(), ExStreamClient.Model.StartCampaignRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.StartCampaignResponse.t()} | {:error, any()}
   def start_campaign(id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -222,7 +220,7 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -237,5 +235,9 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
     end
 
     client
+  end
+
+  defp get_request_opts(opts) do
+    Keyword.take(opts, [:api_key, :api_key_secret, :endpoint])
   end
 end

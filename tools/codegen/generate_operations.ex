@@ -58,9 +58,15 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
                 ]
               )
 
+          merged_optional_args = Enum.filter(args, &(!Map.get(&1, :required?)))
+          has_optional_args? = !Enum.empty?(merged_optional_args)
+          required_args_docstring = build_arg_docstring(merged_required_args)
+
+          optional_args_docstring =
+            build_arg_docstring(merged_optional_args |> Enum.sort_by(& &1.name))
+
           merged_optional_args =
-            Enum.filter(args, &(!Map.get(&1, :required?)))
-            |> Enum.concat([
+            Enum.concat(merged_required_args, [
               %{
                 in: "opts",
                 name: "api_key_secret",
@@ -97,12 +103,6 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
                 example: "ExStreamClient.Http"
               }
             ])
-
-          has_optional_args? = !Enum.empty?(merged_optional_args)
-          required_args_docstring = build_arg_docstring(merged_required_args)
-
-          optional_args_docstring =
-            build_arg_docstring(merged_optional_args |> Enum.sort_by(& &1.name))
 
           # convert non-optional args into [arg1, arg2, arg3] representation
           arg_names =
@@ -179,10 +179,12 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
                      [format_events_as_code(description_str), ""]
                      |> maybe_append(merged_required_args != [], "### Required Arguments:")
                      |> maybe_append(merged_required_args != [], "#{required_args_docstring}")
-                     |> maybe_append(merged_optional_args != [], "### Optional Arguments:")
+                     |> maybe_append(has_optional_args?, "### Optional Arguments:")
+                     |> maybe_append(has_optional_args?, "#{optional_args_docstring}")
+                     |> maybe_append(true, "")
                      |> maybe_append(
-                       merged_optional_args != [],
-                       "#{optional_args_docstring}"
+                       true,
+                       "All options from [Shared Options](#module-shared-options) are supported."
                      )
                      |> maybe_append(true, "")
                      |> Enum.join("\n")
@@ -324,6 +326,14 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
         [
           "Modules for interacting with the `#{name}` group of Stream APIs\n",
           "API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2",
+          "\n",
+          "### Shared options",
+          "All functions in this module accept the following optional parameters:",
+          "",
+          " * `api_key` - API key to use. If not provided, the default key from config will be used",
+          " * `api_key_secret` - API key secret to use. If not provided, the default secret from config will be used",
+          " * `endpoint` - endpoint to use. If not provided, the default endpoint from config will be used",
+          " * `client` - HTTP client to use. Must implement `ExStreamClient.Http.Behavior`. Defaults to `ExStreamClient.Http`",
           ""
         ]
         |> Enum.join("\n")

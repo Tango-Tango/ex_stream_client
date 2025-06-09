@@ -12,6 +12,7 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
    * `api_key_secret` - API key secret to use. If not provided, the default secret from config will be used
    * `endpoint` - endpoint to use. If not provided, the default endpoint from config will be used
    * `client` - HTTP client to use. Must implement `ExStreamClient.Http.Behavior`. Defaults to `ExStreamClient.Http`
+   * `req_opts` - all of these options will be forwarded to req. See `Req.new/1` for available options
   """
   require Logger
 
@@ -32,6 +33,8 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
 
     request_opts =
       [url: "/api/v2/chat/campaigns/#{id}/stop", method: :post, params: []] ++ [json: payload]
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -83,6 +86,8 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
     request_opts =
       [url: "/api/v2/chat/campaigns/query", method: :post, params: []] ++ [json: payload]
 
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
@@ -132,7 +137,8 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
   @spec get_campaign(String.t()) ::
           {:ok, ExStreamClient.Model.GetCampaignResponse.t()} | {:error, any()}
   @spec get_campaign(String.t(), [
-          {:client, module()}
+          {:req_opts, keyword()}
+          | {:client, module()}
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
@@ -141,6 +147,7 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
   def get_campaign(id, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/chat/campaigns/#{id}", method: :get, params: []] ++ []
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -192,6 +199,8 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
 
     request_opts =
       [url: "/api/v2/chat/campaigns/#{id}/start", method: :post, params: []] ++ [json: payload]
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)

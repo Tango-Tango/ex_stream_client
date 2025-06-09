@@ -3,6 +3,15 @@ defmodule ExStreamClient.Operations.Blocklists do
   Modules for interacting with the `blocklists` group of Stream APIs
 
   API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+
+
+  ### Shared options
+  All functions in this module accept the following optional parameters:
+
+   * `api_key` - API key to use. If not provided, the default key from config will be used
+   * `api_key_secret` - API key secret to use. If not provided, the default secret from config will be used
+   * `endpoint` - endpoint to use. If not provided, the default endpoint from config will be used
+   * `client` - HTTP client to use. Must implement `ExStreamClient.Http.Behavior`. Defaults to `ExStreamClient.Http`
   """
   require Logger
 
@@ -12,12 +21,10 @@ defmodule ExStreamClient.Operations.Blocklists do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.CreateBlockListRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec create_block_list(ExStreamClient.Model.CreateBlockListRequest.t()) ::
-          {:ok, ExStreamClient.Model.CreateBlockListResponse.t()} | {:error, any()}
-  @spec create_block_list(ExStreamClient.Model.CreateBlockListRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.CreateBlockListResponse.t()} | {:error, any()}
   def create_block_list(payload, opts \\ []) do
     client = get_client(opts)
@@ -50,7 +57,7 @@ defmodule ExStreamClient.Operations.Blocklists do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -62,23 +69,20 @@ defmodule ExStreamClient.Operations.Blocklists do
 
   ### Optional Arguments:
   - `team`
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec list_block_lists() ::
           {:ok, ExStreamClient.Model.ListBlockListResponse.t()} | {:error, any()}
-  @spec list_block_lists([{:client, module()} | {:team, String.t()}]) ::
-          {:ok, ExStreamClient.Model.ListBlockListResponse.t()} | {:error, any()}
+  @spec list_block_lists([
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.ListBlockListResponse.t()} | {:error, any()}
   def list_block_lists(opts \\ []) do
     client = get_client(opts)
-
-    request_opts =
-      [
-        url: "/api/v2/blocklists",
-        method: :get,
-        params:
-          Keyword.merge([], Keyword.take(opts, [:team]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-      ] ++ []
+    request_opts = [url: "/api/v2/blocklists", method: :get, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -107,7 +111,7 @@ defmodule ExStreamClient.Operations.Blocklists do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -120,14 +124,11 @@ defmodule ExStreamClient.Operations.Blocklists do
   ### Required Arguments:
   - `name`
   - `payload`: `Elixir.ExStreamClient.Model.UpdateBlockListRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec update_block_list(String.t(), ExStreamClient.Model.UpdateBlockListRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateBlockListResponse.t()} | {:error, any()}
-  @spec update_block_list(String.t(), ExStreamClient.Model.UpdateBlockListRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.UpdateBlockListResponse.t()} | {:error, any()}
   def update_block_list(name, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -161,7 +162,7 @@ defmodule ExStreamClient.Operations.Blocklists do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -175,23 +176,21 @@ defmodule ExStreamClient.Operations.Blocklists do
   - `name`
   ### Optional Arguments:
   - `team`
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_block_list(String.t()) ::
           {:ok, ExStreamClient.Model.GetBlockListResponse.t()} | {:error, any()}
-  @spec get_block_list(String.t(), [{:client, module()} | {:team, String.t()}]) ::
-          {:ok, ExStreamClient.Model.GetBlockListResponse.t()} | {:error, any()}
+  @spec get_block_list(String.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:name, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.GetBlockListResponse.t()} | {:error, any()}
   def get_block_list(name, opts \\ []) do
     client = get_client(opts)
-
-    request_opts =
-      [
-        url: "/api/v2/blocklists/#{name}",
-        method: :get,
-        params:
-          Keyword.merge([], Keyword.take(opts, [:team]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-      ] ++ []
+    request_opts = [url: "/api/v2/blocklists/#{name}", method: :get, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -220,7 +219,7 @@ defmodule ExStreamClient.Operations.Blocklists do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -234,23 +233,21 @@ defmodule ExStreamClient.Operations.Blocklists do
   - `name`
   ### Optional Arguments:
   - `team`
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec delete_block_list(String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec delete_block_list(String.t(), [{:client, module()} | {:team, String.t()}]) ::
-          {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  @spec delete_block_list(String.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:name, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_block_list(name, opts \\ []) do
     client = get_client(opts)
-
-    request_opts =
-      [
-        url: "/api/v2/blocklists/#{name}",
-        method: :delete,
-        params:
-          Keyword.merge([], Keyword.take(opts, [:team]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-      ] ++ []
+    request_opts = [url: "/api/v2/blocklists/#{name}", method: :delete, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -279,7 +276,7 @@ defmodule ExStreamClient.Operations.Blocklists do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -294,5 +291,9 @@ defmodule ExStreamClient.Operations.Blocklists do
     end
 
     client
+  end
+
+  defp get_request_opts(opts) do
+    Keyword.take(opts, [:api_key, :api_key_secret, :endpoint])
   end
 end

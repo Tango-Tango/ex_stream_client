@@ -3,6 +3,15 @@ defmodule ExStreamClient.Operations.Imports do
   Modules for interacting with the `imports` group of Stream APIs
 
   API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+
+
+  ### Shared options
+  All functions in this module accept the following optional parameters:
+
+   * `api_key` - API key to use. If not provided, the default key from config will be used
+   * `api_key_secret` - API key secret to use. If not provided, the default secret from config will be used
+   * `endpoint` - endpoint to use. If not provided, the default endpoint from config will be used
+   * `client` - HTTP client to use. Must implement `ExStreamClient.Http.Behavior`. Defaults to `ExStreamClient.Http`
   """
   require Logger
 
@@ -12,12 +21,10 @@ defmodule ExStreamClient.Operations.Imports do
 
   ### Required Arguments:
   - `id`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_import(String.t()) ::
-          {:ok, ExStreamClient.Model.GetImportResponse.t()} | {:error, any()}
-  @spec get_import(String.t(), client: module()) ::
           {:ok, ExStreamClient.Model.GetImportResponse.t()} | {:error, any()}
   def get_import(id, opts \\ []) do
     client = get_client(opts)
@@ -50,7 +57,7 @@ defmodule ExStreamClient.Operations.Imports do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -62,12 +69,10 @@ defmodule ExStreamClient.Operations.Imports do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.CreateImportRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec create_import(ExStreamClient.Model.CreateImportRequest.t()) ::
-          {:ok, ExStreamClient.Model.CreateImportResponse.t()} | {:error, any()}
-  @spec create_import(ExStreamClient.Model.CreateImportRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.CreateImportResponse.t()} | {:error, any()}
   def create_import(payload, opts \\ []) do
     client = get_client(opts)
@@ -100,7 +105,7 @@ defmodule ExStreamClient.Operations.Imports do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -110,12 +115,10 @@ defmodule ExStreamClient.Operations.Imports do
   Gets an import
 
 
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec list_imports() :: {:ok, ExStreamClient.Model.ListImportsResponse.t()} | {:error, any()}
-  @spec list_imports(client: module()) ::
-          {:ok, ExStreamClient.Model.ListImportsResponse.t()} | {:error, any()}
   def list_imports(opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/imports", method: :get, params: []] ++ []
@@ -147,7 +150,7 @@ defmodule ExStreamClient.Operations.Imports do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -162,5 +165,9 @@ defmodule ExStreamClient.Operations.Imports do
     end
 
     client
+  end
+
+  defp get_request_opts(opts) do
+    Keyword.take(opts, [:api_key, :api_key_secret, :endpoint])
   end
 end

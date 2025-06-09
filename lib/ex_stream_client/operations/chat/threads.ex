@@ -3,6 +3,15 @@ defmodule ExStreamClient.Operations.Chat.Threads do
   Modules for interacting with the `chat/threads` group of Stream APIs
 
   API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+
+
+  ### Shared options
+  All functions in this module accept the following optional parameters:
+
+   * `api_key` - API key to use. If not provided, the default key from config will be used
+   * `api_key_secret` - API key secret to use. If not provided, the default secret from config will be used
+   * `endpoint` - endpoint to use. If not provided, the default endpoint from config will be used
+   * `client` - HTTP client to use. Must implement `ExStreamClient.Http.Behavior`. Defaults to `ExStreamClient.Http`
   """
   require Logger
 
@@ -17,14 +26,11 @@ defmodule ExStreamClient.Operations.Chat.Threads do
   ### Required Arguments:
   - `message_id`
   - `payload`: `Elixir.ExStreamClient.Model.UpdateThreadPartialRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec update_thread_partial(String.t(), ExStreamClient.Model.UpdateThreadPartialRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateThreadPartialResponse.t()} | {:error, any()}
-  @spec update_thread_partial(String.t(), ExStreamClient.Model.UpdateThreadPartialRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.UpdateThreadPartialResponse.t()} | {:error, any()}
   def update_thread_partial(message_id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -58,7 +64,7 @@ defmodule ExStreamClient.Operations.Chat.Threads do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -71,30 +77,24 @@ defmodule ExStreamClient.Operations.Chat.Threads do
   ### Required Arguments:
   - `message_id`
   ### Optional Arguments:
-  - `reply_limit`
-  - `participant_limit`
   - `member_limit`
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+  - `participant_limit`
+  - `reply_limit`
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_thread(String.t()) ::
           {:ok, ExStreamClient.Model.GetThreadResponse.t()} | {:error, any()}
   @spec get_thread(String.t(), [
           {:client, module()}
-          | {:member_limit, integer()}
-          | {:participant_limit, integer()}
-          | {:reply_limit, integer()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:message_id, String.t()}
         ]) :: {:ok, ExStreamClient.Model.GetThreadResponse.t()} | {:error, any()}
   def get_thread(message_id, opts \\ []) do
     client = get_client(opts)
-
-    request_opts =
-      [
-        url: "/api/v2/chat/threads/#{message_id}",
-        method: :get,
-        params:
-          Keyword.merge([], Keyword.take(opts, [:reply_limit, :participant_limit, :member_limit]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-      ] ++ []
+    request_opts = [url: "/api/v2/chat/threads/#{message_id}", method: :get, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -123,7 +123,7 @@ defmodule ExStreamClient.Operations.Chat.Threads do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -135,12 +135,10 @@ defmodule ExStreamClient.Operations.Chat.Threads do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.QueryThreadsRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec query_threads(ExStreamClient.Model.QueryThreadsRequest.t()) ::
-          {:ok, ExStreamClient.Model.QueryThreadsResponse.t()} | {:error, any()}
-  @spec query_threads(ExStreamClient.Model.QueryThreadsRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.QueryThreadsResponse.t()} | {:error, any()}
   def query_threads(payload, opts \\ []) do
     client = get_client(opts)
@@ -173,7 +171,7 @@ defmodule ExStreamClient.Operations.Chat.Threads do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -188,5 +186,9 @@ defmodule ExStreamClient.Operations.Chat.Threads do
     end
 
     client
+  end
+
+  defp get_request_opts(opts) do
+    Keyword.take(opts, [:api_key, :api_key_secret, :endpoint])
   end
 end

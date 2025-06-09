@@ -3,6 +3,15 @@ defmodule ExStreamClient.Operations.Devices do
   Modules for interacting with the `devices` group of Stream APIs
 
   API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+
+
+  ### Shared options
+  All functions in this module accept the following optional parameters:
+
+   * `api_key` - API key to use. If not provided, the default key from config will be used
+   * `api_key_secret` - API key secret to use. If not provided, the default secret from config will be used
+   * `endpoint` - endpoint to use. If not provided, the default endpoint from config will be used
+   * `client` - HTTP client to use. Must implement `ExStreamClient.Http.Behavior`. Defaults to `ExStreamClient.Http`
   """
   require Logger
 
@@ -12,12 +21,10 @@ defmodule ExStreamClient.Operations.Devices do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.CreateDeviceRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec create_device(ExStreamClient.Model.CreateDeviceRequest.t()) ::
-          {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec create_device(ExStreamClient.Model.CreateDeviceRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def create_device(payload, opts \\ []) do
     client = get_client(opts)
@@ -50,7 +57,7 @@ defmodule ExStreamClient.Operations.Devices do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -62,22 +69,19 @@ defmodule ExStreamClient.Operations.Devices do
 
   ### Optional Arguments:
   - `user_id`
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec list_devices() :: {:ok, ExStreamClient.Model.ListDevicesResponse.t()} | {:error, any()}
-  @spec list_devices([{:client, module()} | {:user_id, String.t()}]) ::
-          {:ok, ExStreamClient.Model.ListDevicesResponse.t()} | {:error, any()}
+  @spec list_devices([
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.ListDevicesResponse.t()} | {:error, any()}
   def list_devices(opts \\ []) do
     client = get_client(opts)
-
-    request_opts =
-      [
-        url: "/api/v2/devices",
-        method: :get,
-        params:
-          Keyword.merge([], Keyword.take(opts, [:user_id]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-      ] ++ []
+    request_opts = [url: "/api/v2/devices", method: :get, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -106,7 +110,7 @@ defmodule ExStreamClient.Operations.Devices do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -120,11 +124,17 @@ defmodule ExStreamClient.Operations.Devices do
   - `id`
   ### Optional Arguments:
   - `user_id`
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec delete_device(String.t()) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec delete_device(String.t(), [{:client, module()} | {:user_id, String.t()}]) ::
-          {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  @spec delete_device(String.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:id, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_device(id, opts \\ []) do
     client = get_client(opts)
 
@@ -133,7 +143,7 @@ defmodule ExStreamClient.Operations.Devices do
         url: "/api/v2/devices",
         method: :delete,
         params:
-          Keyword.merge([id: id], Keyword.take(opts, [:user_id]))
+          Keyword.merge([id: id], Keyword.take(opts, []))
           |> Enum.reject(fn {_k, v} -> is_nil(v) end)
       ] ++ []
 
@@ -164,7 +174,7 @@ defmodule ExStreamClient.Operations.Devices do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -179,5 +189,9 @@ defmodule ExStreamClient.Operations.Devices do
     end
 
     client
+  end
+
+  defp get_request_opts(opts) do
+    Keyword.take(opts, [:api_key, :api_key_secret, :endpoint])
   end
 end

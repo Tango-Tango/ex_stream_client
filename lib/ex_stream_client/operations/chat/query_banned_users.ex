@@ -3,6 +3,15 @@ defmodule ExStreamClient.Operations.Chat.QueryBannedUsers do
   Modules for interacting with the `chat/query_banned_users` group of Stream APIs
 
   API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+
+
+  ### Shared options
+  All functions in this module accept the following optional parameters:
+
+   * `api_key` - API key to use. If not provided, the default key from config will be used
+   * `api_key_secret` - API key secret to use. If not provided, the default secret from config will be used
+   * `endpoint` - endpoint to use. If not provided, the default endpoint from config will be used
+   * `client` - HTTP client to use. Must implement `ExStreamClient.Http.Behavior`. Defaults to `ExStreamClient.Http`
   """
   require Logger
 
@@ -12,24 +21,20 @@ defmodule ExStreamClient.Operations.Chat.QueryBannedUsers do
 
   ### Optional Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.QueryBannedUsersPayload`
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec query_banned_users() ::
           {:ok, ExStreamClient.Model.QueryBannedUsersResponse.t()} | {:error, any()}
   @spec query_banned_users([
-          {:client, module()} | {:payload, ExStreamClient.Model.QueryBannedUsersPayload.t()}
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
         ]) :: {:ok, ExStreamClient.Model.QueryBannedUsersResponse.t()} | {:error, any()}
   def query_banned_users(opts \\ []) do
     client = get_client(opts)
-
-    request_opts =
-      [
-        url: "/api/v2/chat/query_banned_users",
-        method: :get,
-        params:
-          Keyword.merge([], Keyword.take(opts, [:payload]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-      ] ++ []
+    request_opts = [url: "/api/v2/chat/query_banned_users", method: :get, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -58,7 +63,7 @@ defmodule ExStreamClient.Operations.Chat.QueryBannedUsers do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -73,5 +78,9 @@ defmodule ExStreamClient.Operations.Chat.QueryBannedUsers do
     end
 
     client
+  end
+
+  defp get_request_opts(opts) do
+    Keyword.take(opts, [:api_key, :api_key_secret, :endpoint])
   end
 end

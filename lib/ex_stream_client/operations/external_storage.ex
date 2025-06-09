@@ -3,6 +3,15 @@ defmodule ExStreamClient.Operations.ExternalStorage do
   Modules for interacting with the `external_storage` group of Stream APIs
 
   API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+
+
+  ### Shared options
+  All functions in this module accept the following optional parameters:
+
+   * `api_key` - API key to use. If not provided, the default key from config will be used
+   * `api_key_secret` - API key secret to use. If not provided, the default secret from config will be used
+   * `endpoint` - endpoint to use. If not provided, the default endpoint from config will be used
+   * `client` - HTTP client to use. Must implement `ExStreamClient.Http.Behavior`. Defaults to `ExStreamClient.Http`
   """
   require Logger
 
@@ -12,12 +21,10 @@ defmodule ExStreamClient.Operations.ExternalStorage do
 
   ### Required Arguments:
   - `name`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec check_external_storage(String.t()) ::
-          {:ok, ExStreamClient.Model.CheckExternalStorageResponse.t()} | {:error, any()}
-  @spec check_external_storage(String.t(), client: module()) ::
           {:ok, ExStreamClient.Model.CheckExternalStorageResponse.t()} | {:error, any()}
   def check_external_storage(name, opts \\ []) do
     client = get_client(opts)
@@ -50,7 +57,7 @@ defmodule ExStreamClient.Operations.ExternalStorage do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -62,14 +69,11 @@ defmodule ExStreamClient.Operations.ExternalStorage do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.CreateExternalStorageRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec create_external_storage(ExStreamClient.Model.CreateExternalStorageRequest.t()) ::
           {:ok, ExStreamClient.Model.CreateExternalStorageResponse.t()} | {:error, any()}
-  @spec create_external_storage(ExStreamClient.Model.CreateExternalStorageRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.CreateExternalStorageResponse.t()} | {:error, any()}
   def create_external_storage(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/external_storage", method: :post, params: []] ++ [json: payload]
@@ -101,7 +105,7 @@ defmodule ExStreamClient.Operations.ExternalStorage do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -111,12 +115,10 @@ defmodule ExStreamClient.Operations.ExternalStorage do
   Lists external storage
 
 
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec list_external_storage() ::
-          {:ok, ExStreamClient.Model.ListExternalStorageResponse.t()} | {:error, any()}
-  @spec list_external_storage(client: module()) ::
           {:ok, ExStreamClient.Model.ListExternalStorageResponse.t()} | {:error, any()}
   def list_external_storage(opts \\ []) do
     client = get_client(opts)
@@ -149,7 +151,7 @@ defmodule ExStreamClient.Operations.ExternalStorage do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -162,14 +164,11 @@ defmodule ExStreamClient.Operations.ExternalStorage do
   ### Required Arguments:
   - `name`
   - `payload`: `Elixir.ExStreamClient.Model.UpdateExternalStorageRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec update_external_storage(String.t(), ExStreamClient.Model.UpdateExternalStorageRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateExternalStorageResponse.t()} | {:error, any()}
-  @spec update_external_storage(String.t(), ExStreamClient.Model.UpdateExternalStorageRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.UpdateExternalStorageResponse.t()} | {:error, any()}
   def update_external_storage(name, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -203,7 +202,7 @@ defmodule ExStreamClient.Operations.ExternalStorage do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -215,12 +214,10 @@ defmodule ExStreamClient.Operations.ExternalStorage do
 
   ### Required Arguments:
   - `name`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec delete_external_storage(String.t()) ::
-          {:ok, ExStreamClient.Model.DeleteExternalStorageResponse.t()} | {:error, any()}
-  @spec delete_external_storage(String.t(), client: module()) ::
           {:ok, ExStreamClient.Model.DeleteExternalStorageResponse.t()} | {:error, any()}
   def delete_external_storage(name, opts \\ []) do
     client = get_client(opts)
@@ -253,7 +250,7 @@ defmodule ExStreamClient.Operations.ExternalStorage do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -268,5 +265,9 @@ defmodule ExStreamClient.Operations.ExternalStorage do
     end
 
     client
+  end
+
+  defp get_request_opts(opts) do
+    Keyword.take(opts, [:api_key, :api_key_secret, :endpoint])
   end
 end

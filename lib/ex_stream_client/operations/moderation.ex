@@ -3,6 +3,15 @@ defmodule ExStreamClient.Operations.Moderation do
   Modules for interacting with the `moderation` group of Stream APIs
 
   API Reference: https://getstream.github.io/protocol/?urls.primaryName=Chat%20v2
+
+
+  ### Shared options
+  All functions in this module accept the following optional parameters:
+
+   * `api_key` - API key to use. If not provided, the default key from config will be used
+   * `api_key_secret` - API key secret to use. If not provided, the default secret from config will be used
+   * `endpoint` - endpoint to use. If not provided, the default endpoint from config will be used
+   * `client` - HTTP client to use. Must implement `ExStreamClient.Http.Behavior`. Defaults to `ExStreamClient.Http`
   """
   require Logger
 
@@ -12,12 +21,10 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.CustomCheckRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec custom_check(ExStreamClient.Model.CustomCheckRequest.t()) ::
-          {:ok, ExStreamClient.Model.CustomCheckResponse.t()} | {:error, any()}
-  @spec custom_check(ExStreamClient.Model.CustomCheckRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.CustomCheckResponse.t()} | {:error, any()}
   def custom_check(payload, opts \\ []) do
     client = get_client(opts)
@@ -52,7 +59,7 @@ defmodule ExStreamClient.Operations.Moderation do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -68,12 +75,18 @@ defmodule ExStreamClient.Operations.Moderation do
   ### Optional Arguments:
   - `channel_cid`
   - `created_by`
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec unban(String.t(), ExStreamClient.Model.UnbanRequest.t()) ::
           {:ok, ExStreamClient.Model.UnbanResponse.t()} | {:error, any()}
   @spec unban(String.t(), ExStreamClient.Model.UnbanRequest.t(), [
-          {:client, module()} | {:created_by, String.t()} | {:channel_cid, String.t()}
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:payload, ExStreamClient.Model.UnbanRequest.t()}
+          | {:target_user_id, String.t()}
         ]) :: {:ok, ExStreamClient.Model.UnbanResponse.t()} | {:error, any()}
   def unban(target_user_id, payload, opts \\ []) do
     client = get_client(opts)
@@ -83,10 +96,7 @@ defmodule ExStreamClient.Operations.Moderation do
         url: "/api/v2/moderation/unban",
         method: :post,
         params:
-          Keyword.merge(
-            [target_user_id: target_user_id],
-            Keyword.take(opts, [:channel_cid, :created_by])
-          )
+          Keyword.merge([target_user_id: target_user_id], Keyword.take(opts, []))
           |> Enum.reject(fn {_k, v} -> is_nil(v) end)
       ] ++ [json: payload]
 
@@ -117,7 +127,7 @@ defmodule ExStreamClient.Operations.Moderation do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -129,12 +139,10 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.SubmitActionRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec submit_action(ExStreamClient.Model.SubmitActionRequest.t()) ::
-          {:ok, ExStreamClient.Model.SubmitActionResponse.t()} | {:error, any()}
-  @spec submit_action(ExStreamClient.Model.SubmitActionRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.SubmitActionResponse.t()} | {:error, any()}
   def submit_action(payload, opts \\ []) do
     client = get_client(opts)
@@ -169,7 +177,7 @@ defmodule ExStreamClient.Operations.Moderation do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -181,12 +189,10 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.UnmuteRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec unmute(ExStreamClient.Model.UnmuteRequest.t()) ::
-          {:ok, ExStreamClient.Model.UnmuteResponse.t()} | {:error, any()}
-  @spec unmute(ExStreamClient.Model.UnmuteRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.UnmuteResponse.t()} | {:error, any()}
   def unmute(payload, opts \\ []) do
     client = get_client(opts)
@@ -221,7 +227,7 @@ defmodule ExStreamClient.Operations.Moderation do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -233,14 +239,11 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.QueryModerationConfigsRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec query_moderation_configs(ExStreamClient.Model.QueryModerationConfigsRequest.t()) ::
           {:ok, ExStreamClient.Model.QueryModerationConfigsResponse.t()} | {:error, any()}
-  @spec query_moderation_configs(ExStreamClient.Model.QueryModerationConfigsRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.QueryModerationConfigsResponse.t()} | {:error, any()}
   def query_moderation_configs(payload, opts \\ []) do
     client = get_client(opts)
 
@@ -274,7 +277,7 @@ defmodule ExStreamClient.Operations.Moderation do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -286,12 +289,10 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `id`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_review_queue_item(String.t()) ::
-          {:ok, ExStreamClient.Model.GetReviewQueueItemResponse.t()} | {:error, any()}
-  @spec get_review_queue_item(String.t(), client: module()) ::
           {:ok, ExStreamClient.Model.GetReviewQueueItemResponse.t()} | {:error, any()}
   def get_review_queue_item(id, opts \\ []) do
     client = get_client(opts)
@@ -324,7 +325,7 @@ defmodule ExStreamClient.Operations.Moderation do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -336,14 +337,11 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.BulkImageModerationRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec bulk_image_moderation(ExStreamClient.Model.BulkImageModerationRequest.t()) ::
           {:ok, ExStreamClient.Model.BulkImageModerationResponse.t()} | {:error, any()}
-  @spec bulk_image_moderation(ExStreamClient.Model.BulkImageModerationRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.BulkImageModerationResponse.t()} | {:error, any()}
   def bulk_image_moderation(payload, opts \\ []) do
     client = get_client(opts)
 
@@ -378,7 +376,7 @@ defmodule ExStreamClient.Operations.Moderation do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -390,14 +388,11 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.QueryModerationLogsRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec query_moderation_logs(ExStreamClient.Model.QueryModerationLogsRequest.t()) ::
           {:ok, ExStreamClient.Model.QueryModerationLogsResponse.t()} | {:error, any()}
-  @spec query_moderation_logs(ExStreamClient.Model.QueryModerationLogsRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.QueryModerationLogsResponse.t()} | {:error, any()}
   def query_moderation_logs(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/moderation/logs", method: :post, params: []] ++ [json: payload]
@@ -429,7 +424,7 @@ defmodule ExStreamClient.Operations.Moderation do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -441,14 +436,11 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.UpsertModerationTemplateRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec v2_upsert_template(ExStreamClient.Model.UpsertModerationTemplateRequest.t()) ::
           {:ok, ExStreamClient.Model.UpsertModerationTemplateResponse.t()} | {:error, any()}
-  @spec v2_upsert_template(ExStreamClient.Model.UpsertModerationTemplateRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.UpsertModerationTemplateResponse.t()} | {:error, any()}
   def v2_upsert_template(payload, opts \\ []) do
     client = get_client(opts)
 
@@ -483,7 +475,7 @@ defmodule ExStreamClient.Operations.Moderation do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -493,12 +485,10 @@ defmodule ExStreamClient.Operations.Moderation do
   Retrieve a list of feed moderation templates that define preset moderation rules and configurations. Limited to 100 templates per request.
 
 
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec v2_query_templates() ::
-          {:ok, ExStreamClient.Model.QueryFeedModerationTemplatesResponse.t()} | {:error, any()}
-  @spec v2_query_templates(client: module()) ::
           {:ok, ExStreamClient.Model.QueryFeedModerationTemplatesResponse.t()} | {:error, any()}
   def v2_query_templates(opts \\ []) do
     client = get_client(opts)
@@ -533,7 +523,7 @@ defmodule ExStreamClient.Operations.Moderation do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -543,12 +533,10 @@ defmodule ExStreamClient.Operations.Moderation do
   Delete a specific moderation template by its name
 
 
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec v2_delete_template() ::
-          {:ok, ExStreamClient.Model.DeleteModerationTemplateResponse.t()} | {:error, any()}
-  @spec v2_delete_template(client: module()) ::
           {:ok, ExStreamClient.Model.DeleteModerationTemplateResponse.t()} | {:error, any()}
   def v2_delete_template(opts \\ []) do
     client = get_client(opts)
@@ -583,7 +571,7 @@ defmodule ExStreamClient.Operations.Moderation do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -595,12 +583,10 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.MuteRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec mute(ExStreamClient.Model.MuteRequest.t()) ::
-          {:ok, ExStreamClient.Model.MuteResponse.t()} | {:error, any()}
-  @spec mute(ExStreamClient.Model.MuteRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.MuteResponse.t()} | {:error, any()}
   def mute(payload, opts \\ []) do
     client = get_client(opts)
@@ -633,7 +619,7 @@ defmodule ExStreamClient.Operations.Moderation do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -645,12 +631,10 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.BanRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec ban(ExStreamClient.Model.BanRequest.t()) ::
-          {:ok, ExStreamClient.Model.BanResponse.t()} | {:error, any()}
-  @spec ban(ExStreamClient.Model.BanRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.BanResponse.t()} | {:error, any()}
   def ban(payload, opts \\ []) do
     client = get_client(opts)
@@ -683,7 +667,7 @@ defmodule ExStreamClient.Operations.Moderation do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -695,12 +679,10 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.UpsertConfigRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec upsert_config(ExStreamClient.Model.UpsertConfigRequest.t()) ::
-          {:ok, ExStreamClient.Model.UpsertConfigResponse.t()} | {:error, any()}
-  @spec upsert_config(ExStreamClient.Model.UpsertConfigRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.UpsertConfigResponse.t()} | {:error, any()}
   def upsert_config(payload, opts \\ []) do
     client = get_client(opts)
@@ -735,7 +717,7 @@ defmodule ExStreamClient.Operations.Moderation do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -747,12 +729,10 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.QueryReviewQueueRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec query_review_queue(ExStreamClient.Model.QueryReviewQueueRequest.t()) ::
-          {:ok, ExStreamClient.Model.QueryReviewQueueResponse.t()} | {:error, any()}
-  @spec query_review_queue(ExStreamClient.Model.QueryReviewQueueRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.QueryReviewQueueResponse.t()} | {:error, any()}
   def query_review_queue(payload, opts \\ []) do
     client = get_client(opts)
@@ -787,7 +767,7 @@ defmodule ExStreamClient.Operations.Moderation do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -801,23 +781,21 @@ defmodule ExStreamClient.Operations.Moderation do
   - `key`
   ### Optional Arguments:
   - `team`
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_config(String.t()) ::
           {:ok, ExStreamClient.Model.GetConfigResponse.t()} | {:error, any()}
-  @spec get_config(String.t(), [{:client, module()} | {:team, String.t()}]) ::
-          {:ok, ExStreamClient.Model.GetConfigResponse.t()} | {:error, any()}
+  @spec get_config(String.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:key, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.GetConfigResponse.t()} | {:error, any()}
   def get_config(key, opts \\ []) do
     client = get_client(opts)
-
-    request_opts =
-      [
-        url: "/api/v2/moderation/config/#{key}",
-        method: :get,
-        params:
-          Keyword.merge([], Keyword.take(opts, [:team]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-      ] ++ []
+    request_opts = [url: "/api/v2/moderation/config/#{key}", method: :get, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -846,7 +824,7 @@ defmodule ExStreamClient.Operations.Moderation do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -860,23 +838,21 @@ defmodule ExStreamClient.Operations.Moderation do
   - `key`
   ### Optional Arguments:
   - `team`
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec delete_config(String.t()) ::
           {:ok, ExStreamClient.Model.DeleteModerationConfigResponse.t()} | {:error, any()}
-  @spec delete_config(String.t(), [{:client, module()} | {:team, String.t()}]) ::
-          {:ok, ExStreamClient.Model.DeleteModerationConfigResponse.t()} | {:error, any()}
+  @spec delete_config(String.t(), [
+          {:client, module()}
+          | {:endpoint, String.t()}
+          | {:api_key, String.t()}
+          | {:api_key_secret, String.t()}
+          | {:key, String.t()}
+        ]) :: {:ok, ExStreamClient.Model.DeleteModerationConfigResponse.t()} | {:error, any()}
   def delete_config(key, opts \\ []) do
     client = get_client(opts)
-
-    request_opts =
-      [
-        url: "/api/v2/moderation/config/#{key}",
-        method: :delete,
-        params:
-          Keyword.merge([], Keyword.take(opts, [:team]))
-          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
-      ] ++ []
+    request_opts = [url: "/api/v2/moderation/config/#{key}", method: :delete, params: []] ++ []
 
     r =
       Req.new(request_opts)
@@ -905,7 +881,7 @@ defmodule ExStreamClient.Operations.Moderation do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -917,14 +893,11 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.QueryModerationFlagsRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec query_moderation_flags(ExStreamClient.Model.QueryModerationFlagsRequest.t()) ::
           {:ok, ExStreamClient.Model.QueryModerationFlagsResponse.t()} | {:error, any()}
-  @spec query_moderation_flags(ExStreamClient.Model.QueryModerationFlagsRequest.t(),
-          client: module()
-        ) :: {:ok, ExStreamClient.Model.QueryModerationFlagsResponse.t()} | {:error, any()}
   def query_moderation_flags(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/moderation/flags", method: :post, params: []] ++ [json: payload]
@@ -956,7 +929,7 @@ defmodule ExStreamClient.Operations.Moderation do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -968,12 +941,10 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.FlagRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec flag(ExStreamClient.Model.FlagRequest.t()) ::
-          {:ok, ExStreamClient.Model.FlagResponse.t()} | {:error, any()}
-  @spec flag(ExStreamClient.Model.FlagRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.FlagResponse.t()} | {:error, any()}
   def flag(payload, opts \\ []) do
     client = get_client(opts)
@@ -1006,7 +977,7 @@ defmodule ExStreamClient.Operations.Moderation do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -1018,12 +989,10 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.CheckRequest`
-  ### Optional Arguments:
-  - `client`: HTTP client to use. Must implement `ExStreamClient.Http.Behavior`(e.g., `ExStreamClient.Http`)
+
+  All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec check(ExStreamClient.Model.CheckRequest.t()) ::
-          {:ok, ExStreamClient.Model.CheckResponse.t()} | {:error, any()}
-  @spec check(ExStreamClient.Model.CheckRequest.t(), client: module()) ::
           {:ok, ExStreamClient.Model.CheckResponse.t()} | {:error, any()}
   def check(payload, opts \\ []) do
     client = get_client(opts)
@@ -1056,7 +1025,7 @@ defmodule ExStreamClient.Operations.Moderation do
         end
       )
 
-    case client.request(r, opts) do
+    case client.request(r, get_request_opts(opts)) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -1071,5 +1040,9 @@ defmodule ExStreamClient.Operations.Moderation do
     end
 
     client
+  end
+
+  defp get_request_opts(opts) do
+    Keyword.take(opts, [:api_key, :api_key_secret, :endpoint])
   end
 end

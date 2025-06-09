@@ -101,6 +101,14 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
                 description: "HTTP client to use. Must implement `ExStreamClient.Http.Behavior`",
                 required?: false,
                 example: "ExStreamClient.Http"
+              },
+              %{
+                in: "opts",
+                name: "req_opts",
+                type: "keyword",
+                description: "all of these options will be forwarded to req. See `Req.new/1` for available options",
+                required?: false,
+                example: "[plug: MyTest.Plug]"
               }
             ])
 
@@ -288,6 +296,8 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
                     params: unquote(query_params_ast)
                   ] ++ unquote(body_params)
 
+                request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
                 r =
                   Req.new(request_opts)
                   |> Req.Request.append_response_steps(
@@ -334,6 +344,7 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
           " * `api_key_secret` - API key secret to use. If not provided, the default secret from config will be used",
           " * `endpoint` - endpoint to use. If not provided, the default endpoint from config will be used",
           " * `client` - HTTP client to use. Must implement `ExStreamClient.Http.Behavior`. Defaults to `ExStreamClient.Http`",
+          " * `req_opts` - all of these options will be forwarded to req. See `Req.new/1` for available options",
           ""
         ]
         |> Enum.join("\n")

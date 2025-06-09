@@ -12,6 +12,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
    * `api_key_secret` - API key secret to use. If not provided, the default secret from config will be used
    * `endpoint` - endpoint to use. If not provided, the default endpoint from config will be used
    * `client` - HTTP client to use. Must implement `ExStreamClient.Http.Behavior`. Defaults to `ExStreamClient.Http`
+   * `req_opts` - all of these options will be forwarded to req. See `Req.new/1` for available options
   """
   require Logger
 
@@ -38,7 +39,8 @@ defmodule ExStreamClient.Operations.Chat.Channels do
           String.t(),
           ExStreamClient.Model.UpdateMemberPartialRequest.t(),
           [
-            {:client, module()}
+            {:req_opts, keyword()}
+            | {:client, module()}
             | {:endpoint, String.t()}
             | {:api_key, String.t()}
             | {:api_key_secret, String.t()}
@@ -53,6 +55,8 @@ defmodule ExStreamClient.Operations.Chat.Channels do
     request_opts =
       [url: "/api/v2/chat/channels/#{type}/#{id}/member", method: :patch, params: []] ++
         [json: payload]
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -107,6 +111,8 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       [url: "/api/v2/chat/channels/#{type}/#{id}/unread", method: :post, params: []] ++
         [json: payload]
 
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
@@ -160,6 +166,8 @@ defmodule ExStreamClient.Operations.Chat.Channels do
 
     request_opts =
       [url: "/api/v2/chat/channels/read", method: :post, params: []] ++ [json: payload]
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -217,6 +225,8 @@ defmodule ExStreamClient.Operations.Chat.Channels do
     request_opts =
       [url: "/api/v2/chat/channels/#{type}/#{id}/hide", method: :post, params: []] ++
         [json: payload]
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -281,6 +291,8 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       [url: "/api/v2/chat/channels/#{type}/#{id}/query", method: :post, params: []] ++
         [json: payload]
 
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
@@ -328,6 +340,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   def query_channels(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/chat/channels", method: :post, params: []] ++ [json: payload]
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -388,6 +401,8 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       [url: "/api/v2/chat/channels/#{type}/#{id}/message", method: :post, params: []] ++
         [json: payload]
 
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
@@ -444,6 +459,8 @@ defmodule ExStreamClient.Operations.Chat.Channels do
     request_opts =
       [url: "/api/v2/chat/channels/#{type}/#{id}/truncate", method: :post, params: []] ++
         [json: payload]
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -502,6 +519,8 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       [url: "/api/v2/chat/channels/#{type}/#{id}/show", method: :post, params: []] ++
         [json: payload]
 
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
@@ -554,6 +573,8 @@ defmodule ExStreamClient.Operations.Chat.Channels do
     request_opts =
       [url: "/api/v2/chat/channels/#{type}/#{id}/messages", method: :get, params: [ids: ids]] ++
         []
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -608,6 +629,8 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       [url: "/api/v2/chat/channels/#{type}/#{id}/event", method: :post, params: []] ++
         [json: payload]
 
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
@@ -657,7 +680,8 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   @spec get_draft(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.GetDraftResponse.t()} | {:error, any()}
   @spec get_draft(String.t(), String.t(), [
-          {:client, module()}
+          {:req_opts, keyword()}
+          | {:client, module()}
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
@@ -669,6 +693,8 @@ defmodule ExStreamClient.Operations.Chat.Channels do
 
     request_opts =
       [url: "/api/v2/chat/channels/#{type}/#{id}/draft", method: :get, params: []] ++ []
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -722,7 +748,8 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   @spec delete_draft(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   @spec delete_draft(String.t(), String.t(), [
-          {:client, module()}
+          {:req_opts, keyword()}
+          | {:client, module()}
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
@@ -734,6 +761,8 @@ defmodule ExStreamClient.Operations.Chat.Channels do
 
     request_opts =
       [url: "/api/v2/chat/channels/#{type}/#{id}/draft", method: :delete, params: []] ++ []
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -788,6 +817,8 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       [url: "/api/v2/chat/channels/#{type}/#{id}/file", method: :post, params: []] ++
         [json: payload]
 
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
@@ -836,7 +867,8 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   @spec delete_file(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   @spec delete_file(String.t(), String.t(), [
-          {:client, module()}
+          {:req_opts, keyword()}
+          | {:client, module()}
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
@@ -848,6 +880,8 @@ defmodule ExStreamClient.Operations.Chat.Channels do
 
     request_opts =
       [url: "/api/v2/chat/channels/#{type}/#{id}/file", method: :delete, params: []] ++ []
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -906,6 +940,8 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       [url: "/api/v2/chat/channels/#{type}/#{id}/read", method: :post, params: []] ++
         [json: payload]
 
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
@@ -959,6 +995,8 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       [url: "/api/v2/chat/channels/#{type}/#{id}/image", method: :post, params: []] ++
         [json: payload]
 
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
@@ -1007,7 +1045,8 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   @spec delete_image(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   @spec delete_image(String.t(), String.t(), [
-          {:client, module()}
+          {:req_opts, keyword()}
+          | {:client, module()}
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
@@ -1019,6 +1058,8 @@ defmodule ExStreamClient.Operations.Chat.Channels do
 
     request_opts =
       [url: "/api/v2/chat/channels/#{type}/#{id}/image", method: :delete, params: []] ++ []
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -1079,6 +1120,8 @@ defmodule ExStreamClient.Operations.Chat.Channels do
 
     request_opts =
       [url: "/api/v2/chat/channels/#{type}/query", method: :post, params: []] ++ [json: payload]
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -1144,6 +1187,8 @@ defmodule ExStreamClient.Operations.Chat.Channels do
     request_opts =
       [url: "/api/v2/chat/channels/#{type}/#{id}", method: :post, params: []] ++ [json: payload]
 
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
@@ -1203,6 +1248,8 @@ defmodule ExStreamClient.Operations.Chat.Channels do
     request_opts =
       [url: "/api/v2/chat/channels/#{type}/#{id}", method: :patch, params: []] ++ [json: payload]
 
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
@@ -1255,7 +1302,8 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   @spec delete_channel(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.DeleteChannelResponse.t()} | {:error, any()}
   @spec delete_channel(String.t(), String.t(), [
-          {:client, module()}
+          {:req_opts, keyword()}
+          | {:client, module()}
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
@@ -1265,6 +1313,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   def delete_channel(type, id, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/chat/channels/#{type}/#{id}", method: :delete, params: []] ++ []
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -1319,6 +1368,8 @@ defmodule ExStreamClient.Operations.Chat.Channels do
 
     request_opts =
       [url: "/api/v2/chat/channels/delete", method: :post, params: []] ++ [json: payload]
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)

@@ -12,6 +12,7 @@ defmodule ExStreamClient.Operations.Blocklists do
    * `api_key_secret` - API key secret to use. If not provided, the default secret from config will be used
    * `endpoint` - endpoint to use. If not provided, the default endpoint from config will be used
    * `client` - HTTP client to use. Must implement `ExStreamClient.Http.Behavior`. Defaults to `ExStreamClient.Http`
+   * `req_opts` - all of these options will be forwarded to req. See `Req.new/1` for available options
   """
   require Logger
 
@@ -29,6 +30,7 @@ defmodule ExStreamClient.Operations.Blocklists do
   def create_block_list(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/blocklists", method: :post, params: []] ++ [json: payload]
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -75,7 +77,8 @@ defmodule ExStreamClient.Operations.Blocklists do
   @spec list_block_lists() ::
           {:ok, ExStreamClient.Model.ListBlockListResponse.t()} | {:error, any()}
   @spec list_block_lists([
-          {:client, module()}
+          {:req_opts, keyword()}
+          | {:client, module()}
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
@@ -83,6 +86,7 @@ defmodule ExStreamClient.Operations.Blocklists do
   def list_block_lists(opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/blocklists", method: :get, params: []] ++ []
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -135,6 +139,8 @@ defmodule ExStreamClient.Operations.Blocklists do
     request_opts =
       [url: "/api/v2/blocklists/#{name}", method: :put, params: []] ++ [json: payload]
 
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
@@ -182,7 +188,8 @@ defmodule ExStreamClient.Operations.Blocklists do
   @spec get_block_list(String.t()) ::
           {:ok, ExStreamClient.Model.GetBlockListResponse.t()} | {:error, any()}
   @spec get_block_list(String.t(), [
-          {:client, module()}
+          {:req_opts, keyword()}
+          | {:client, module()}
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
@@ -191,6 +198,7 @@ defmodule ExStreamClient.Operations.Blocklists do
   def get_block_list(name, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/blocklists/#{name}", method: :get, params: []] ++ []
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -239,7 +247,8 @@ defmodule ExStreamClient.Operations.Blocklists do
   @spec delete_block_list(String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   @spec delete_block_list(String.t(), [
-          {:client, module()}
+          {:req_opts, keyword()}
+          | {:client, module()}
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
@@ -248,6 +257,7 @@ defmodule ExStreamClient.Operations.Blocklists do
   def delete_block_list(name, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/blocklists/#{name}", method: :delete, params: []] ++ []
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)

@@ -12,6 +12,7 @@ defmodule ExStreamClient.Operations.Users do
    * `api_key_secret` - API key secret to use. If not provided, the default secret from config will be used
    * `endpoint` - endpoint to use. If not provided, the default endpoint from config will be used
    * `client` - HTTP client to use. Must implement `ExStreamClient.Http.Behavior`. Defaults to `ExStreamClient.Http`
+   * `req_opts` - all of these options will be forwarded to req. See `Req.new/1` for available options
   """
   require Logger
 
@@ -35,6 +36,8 @@ defmodule ExStreamClient.Operations.Users do
 
     request_opts =
       [url: "/api/v2/users/#{user_id}/reactivate", method: :post, params: []] ++ [json: payload]
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -86,6 +89,7 @@ defmodule ExStreamClient.Operations.Users do
   def update_users(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/users", method: :post, params: []] ++ [json: payload]
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -139,6 +143,7 @@ defmodule ExStreamClient.Operations.Users do
   def update_users_partial(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/users", method: :patch, params: []] ++ [json: payload]
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -184,7 +189,8 @@ defmodule ExStreamClient.Operations.Users do
   """
   @spec query_users() :: {:ok, ExStreamClient.Model.QueryUsersResponse.t()} | {:error, any()}
   @spec query_users([
-          {:client, module()}
+          {:req_opts, keyword()}
+          | {:client, module()}
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
@@ -192,6 +198,7 @@ defmodule ExStreamClient.Operations.Users do
   def query_users(opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/users", method: :get, params: []] ++ []
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -244,6 +251,7 @@ defmodule ExStreamClient.Operations.Users do
   def delete_users(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/users/delete", method: :post, params: []] ++ [json: payload]
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -296,6 +304,7 @@ defmodule ExStreamClient.Operations.Users do
   def reactivate_users(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/users/reactivate", method: :post, params: []] ++ [json: payload]
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -344,6 +353,7 @@ defmodule ExStreamClient.Operations.Users do
   def export_user(user_id, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/users/#{user_id}/export", method: :get, params: []] ++ []
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -395,6 +405,7 @@ defmodule ExStreamClient.Operations.Users do
   def deactivate_users(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/users/deactivate", method: :post, params: []] ++ [json: payload]
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -443,6 +454,7 @@ defmodule ExStreamClient.Operations.Users do
   def restore_users(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/users/restore", method: :post, params: []] ++ [json: payload]
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -491,6 +503,7 @@ defmodule ExStreamClient.Operations.Users do
   def unblock_users(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/users/unblock", method: :post, params: []] ++ [json: payload]
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -539,6 +552,7 @@ defmodule ExStreamClient.Operations.Users do
   def block_users(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/users/block", method: :post, params: []] ++ [json: payload]
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -585,7 +599,8 @@ defmodule ExStreamClient.Operations.Users do
   @spec get_blocked_users() ::
           {:ok, ExStreamClient.Model.GetBlockedUsersResponse.t()} | {:error, any()}
   @spec get_blocked_users([
-          {:client, module()}
+          {:req_opts, keyword()}
+          | {:client, module()}
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
@@ -593,6 +608,7 @@ defmodule ExStreamClient.Operations.Users do
   def get_blocked_users(opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/users/block", method: :get, params: []] ++ []
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -647,6 +663,8 @@ defmodule ExStreamClient.Operations.Users do
 
     request_opts =
       [url: "/api/v2/users/#{user_id}/deactivate", method: :post, params: []] ++ [json: payload]
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)

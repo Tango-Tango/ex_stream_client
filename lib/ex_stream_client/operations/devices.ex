@@ -12,6 +12,7 @@ defmodule ExStreamClient.Operations.Devices do
    * `api_key_secret` - API key secret to use. If not provided, the default secret from config will be used
    * `endpoint` - endpoint to use. If not provided, the default endpoint from config will be used
    * `client` - HTTP client to use. Must implement `ExStreamClient.Http.Behavior`. Defaults to `ExStreamClient.Http`
+   * `req_opts` - all of these options will be forwarded to req. See `Req.new/1` for available options
   """
   require Logger
 
@@ -29,6 +30,7 @@ defmodule ExStreamClient.Operations.Devices do
   def create_device(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/devices", method: :post, params: []] ++ [json: payload]
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -74,7 +76,8 @@ defmodule ExStreamClient.Operations.Devices do
   """
   @spec list_devices() :: {:ok, ExStreamClient.Model.ListDevicesResponse.t()} | {:error, any()}
   @spec list_devices([
-          {:client, module()}
+          {:req_opts, keyword()}
+          | {:client, module()}
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
@@ -82,6 +85,7 @@ defmodule ExStreamClient.Operations.Devices do
   def list_devices(opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/devices", method: :get, params: []] ++ []
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -129,7 +133,8 @@ defmodule ExStreamClient.Operations.Devices do
   """
   @spec delete_device(String.t()) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   @spec delete_device(String.t(), [
-          {:client, module()}
+          {:req_opts, keyword()}
+          | {:client, module()}
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
@@ -146,6 +151,8 @@ defmodule ExStreamClient.Operations.Devices do
           Keyword.merge([id: id], Keyword.take(opts, []))
           |> Enum.reject(fn {_k, v} -> is_nil(v) end)
       ] ++ []
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)

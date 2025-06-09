@@ -12,6 +12,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
    * `api_key_secret` - API key secret to use. If not provided, the default secret from config will be used
    * `endpoint` - endpoint to use. If not provided, the default endpoint from config will be used
    * `client` - HTTP client to use. Must implement `ExStreamClient.Http.Behavior`. Defaults to `ExStreamClient.Http`
+   * `req_opts` - all of these options will be forwarded to req. See `Req.new/1` for available options
   """
   require Logger
 
@@ -30,7 +31,8 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   @spec query_poll_votes(String.t(), ExStreamClient.Model.QueryPollVotesRequest.t()) ::
           {:ok, ExStreamClient.Model.PollVotesResponse.t()} | {:error, any()}
   @spec query_poll_votes(String.t(), ExStreamClient.Model.QueryPollVotesRequest.t(), [
-          {:client, module()}
+          {:req_opts, keyword()}
+          | {:client, module()}
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
@@ -42,6 +44,8 @@ defmodule ExStreamClient.Operations.Chat.Polls do
 
     request_opts =
       [url: "/api/v2/chat/polls/#{poll_id}/votes", method: :post, params: []] ++ [json: payload]
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -94,6 +98,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   def update_poll(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/chat/polls", method: :put, params: []] ++ [json: payload]
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -142,6 +147,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   def create_poll(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/chat/polls", method: :post, params: []] ++ [json: payload]
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -197,6 +203,8 @@ defmodule ExStreamClient.Operations.Chat.Polls do
     request_opts =
       [url: "/api/v2/chat/polls/#{poll_id}/options", method: :put, params: []] ++ [json: payload]
 
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
@@ -250,6 +258,8 @@ defmodule ExStreamClient.Operations.Chat.Polls do
 
     request_opts =
       [url: "/api/v2/chat/polls/#{poll_id}/options", method: :post, params: []] ++ [json: payload]
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -305,6 +315,8 @@ defmodule ExStreamClient.Operations.Chat.Polls do
     request_opts =
       [url: "/api/v2/chat/polls/#{poll_id}", method: :patch, params: []] ++ [json: payload]
 
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
@@ -351,7 +363,8 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   """
   @spec get_poll(String.t()) :: {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
   @spec get_poll(String.t(), [
-          {:client, module()}
+          {:req_opts, keyword()}
+          | {:client, module()}
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
@@ -360,6 +373,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   def get_poll(poll_id, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/chat/polls/#{poll_id}", method: :get, params: []] ++ []
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -410,7 +424,8 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   """
   @spec delete_poll(String.t()) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   @spec delete_poll(String.t(), [
-          {:client, module()}
+          {:req_opts, keyword()}
+          | {:client, module()}
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
@@ -419,6 +434,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   def delete_poll(poll_id, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/chat/polls/#{poll_id}", method: :delete, params: []] ++ []
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -467,7 +483,8 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   @spec query_polls(ExStreamClient.Model.QueryPollsRequest.t()) ::
           {:ok, ExStreamClient.Model.QueryPollsResponse.t()} | {:error, any()}
   @spec query_polls(ExStreamClient.Model.QueryPollsRequest.t(), [
-          {:client, module()}
+          {:req_opts, keyword()}
+          | {:client, module()}
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
@@ -476,6 +493,7 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   def query_polls(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/chat/polls/query", method: :post, params: []] ++ [json: payload]
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -525,7 +543,8 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   @spec get_poll_option(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
   @spec get_poll_option(String.t(), String.t(), [
-          {:client, module()}
+          {:req_opts, keyword()}
+          | {:client, module()}
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
@@ -537,6 +556,8 @@ defmodule ExStreamClient.Operations.Chat.Polls do
 
     request_opts =
       [url: "/api/v2/chat/polls/#{poll_id}/options/#{option_id}", method: :get, params: []] ++ []
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -589,7 +610,8 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   @spec delete_poll_option(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   @spec delete_poll_option(String.t(), String.t(), [
-          {:client, module()}
+          {:req_opts, keyword()}
+          | {:client, module()}
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
@@ -602,6 +624,8 @@ defmodule ExStreamClient.Operations.Chat.Polls do
     request_opts =
       [url: "/api/v2/chat/polls/#{poll_id}/options/#{option_id}", method: :delete, params: []] ++
         []
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)

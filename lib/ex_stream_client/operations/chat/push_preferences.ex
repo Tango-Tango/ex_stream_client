@@ -12,6 +12,7 @@ defmodule ExStreamClient.Operations.Chat.PushPreferences do
    * `api_key_secret` - API key secret to use. If not provided, the default secret from config will be used
    * `endpoint` - endpoint to use. If not provided, the default endpoint from config will be used
    * `client` - HTTP client to use. Must implement `ExStreamClient.Http.Behavior`. Defaults to `ExStreamClient.Http`
+   * `req_opts` - all of these options will be forwarded to req. See `Req.new/1` for available options
   """
   require Logger
 
@@ -32,6 +33,8 @@ defmodule ExStreamClient.Operations.Chat.PushPreferences do
 
     request_opts =
       [url: "/api/v2/chat/push_preferences", method: :post, params: []] ++ [json: payload]
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)

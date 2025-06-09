@@ -12,6 +12,7 @@ defmodule ExStreamClient.Operations.Chat.Segments do
    * `api_key_secret` - API key secret to use. If not provided, the default secret from config will be used
    * `endpoint` - endpoint to use. If not provided, the default endpoint from config will be used
    * `client` - HTTP client to use. Must implement `ExStreamClient.Http.Behavior`. Defaults to `ExStreamClient.Http`
+   * `req_opts` - all of these options will be forwarded to req. See `Req.new/1` for available options
   """
   require Logger
 
@@ -29,6 +30,7 @@ defmodule ExStreamClient.Operations.Chat.Segments do
   def get_segment(id, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/chat/segments/#{id}", method: :get, params: []] ++ []
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -76,6 +78,7 @@ defmodule ExStreamClient.Operations.Chat.Segments do
   def delete_segment(id, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/chat/segments/#{id}", method: :delete, params: []] ++ []
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -129,6 +132,8 @@ defmodule ExStreamClient.Operations.Chat.Segments do
       [url: "/api/v2/chat/segments/#{id}/targets/query", method: :post, params: []] ++
         [json: payload]
 
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
@@ -178,6 +183,8 @@ defmodule ExStreamClient.Operations.Chat.Segments do
 
     request_opts =
       [url: "/api/v2/chat/segments/query", method: :post, params: []] ++ [json: payload]
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -231,6 +238,8 @@ defmodule ExStreamClient.Operations.Chat.Segments do
       [url: "/api/v2/chat/segments/#{id}/deletetargets", method: :post, params: []] ++
         [json: payload]
 
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
@@ -281,6 +290,8 @@ defmodule ExStreamClient.Operations.Chat.Segments do
 
     request_opts =
       [url: "/api/v2/chat/segments/#{id}/target/#{target_id}", method: :get, params: []] ++ []
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)

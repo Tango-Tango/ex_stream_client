@@ -12,6 +12,7 @@ defmodule ExStreamClient.Operations.Moderation do
    * `api_key_secret` - API key secret to use. If not provided, the default secret from config will be used
    * `endpoint` - endpoint to use. If not provided, the default endpoint from config will be used
    * `client` - HTTP client to use. Must implement `ExStreamClient.Http.Behavior`. Defaults to `ExStreamClient.Http`
+   * `req_opts` - all of these options will be forwarded to req. See `Req.new/1` for available options
   """
   require Logger
 
@@ -31,6 +32,8 @@ defmodule ExStreamClient.Operations.Moderation do
 
     request_opts =
       [url: "/api/v2/moderation/custom_check", method: :post, params: []] ++ [json: payload]
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -81,7 +84,8 @@ defmodule ExStreamClient.Operations.Moderation do
   @spec unban(String.t(), ExStreamClient.Model.UnbanRequest.t()) ::
           {:ok, ExStreamClient.Model.UnbanResponse.t()} | {:error, any()}
   @spec unban(String.t(), ExStreamClient.Model.UnbanRequest.t(), [
-          {:client, module()}
+          {:req_opts, keyword()}
+          | {:client, module()}
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
@@ -99,6 +103,8 @@ defmodule ExStreamClient.Operations.Moderation do
           Keyword.merge([target_user_id: target_user_id], Keyword.take(opts, []))
           |> Enum.reject(fn {_k, v} -> is_nil(v) end)
       ] ++ [json: payload]
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -150,6 +156,8 @@ defmodule ExStreamClient.Operations.Moderation do
     request_opts =
       [url: "/api/v2/moderation/submit_action", method: :post, params: []] ++ [json: payload]
 
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
@@ -199,6 +207,8 @@ defmodule ExStreamClient.Operations.Moderation do
 
     request_opts =
       [url: "/api/v2/moderation/unmute", method: :post, params: []] ++ [json: payload]
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -250,6 +260,8 @@ defmodule ExStreamClient.Operations.Moderation do
     request_opts =
       [url: "/api/v2/moderation/configs", method: :post, params: []] ++ [json: payload]
 
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
@@ -297,6 +309,7 @@ defmodule ExStreamClient.Operations.Moderation do
   def get_review_queue_item(id, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/moderation/review_queue/#{id}", method: :get, params: []] ++ []
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -349,6 +362,8 @@ defmodule ExStreamClient.Operations.Moderation do
       [url: "/api/v2/moderation/bulk_image_moderation", method: :post, params: []] ++
         [json: payload]
 
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
@@ -396,6 +411,7 @@ defmodule ExStreamClient.Operations.Moderation do
   def query_moderation_logs(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/moderation/logs", method: :post, params: []] ++ [json: payload]
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -448,6 +464,8 @@ defmodule ExStreamClient.Operations.Moderation do
       [url: "/api/v2/moderation/feeds_moderation_template", method: :post, params: []] ++
         [json: payload]
 
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
@@ -495,6 +513,8 @@ defmodule ExStreamClient.Operations.Moderation do
 
     request_opts =
       [url: "/api/v2/moderation/feeds_moderation_template", method: :get, params: []] ++ []
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -544,6 +564,8 @@ defmodule ExStreamClient.Operations.Moderation do
     request_opts =
       [url: "/api/v2/moderation/feeds_moderation_template", method: :delete, params: []] ++ []
 
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
@@ -591,6 +613,7 @@ defmodule ExStreamClient.Operations.Moderation do
   def mute(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/moderation/mute", method: :post, params: []] ++ [json: payload]
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -639,6 +662,7 @@ defmodule ExStreamClient.Operations.Moderation do
   def ban(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/moderation/ban", method: :post, params: []] ++ [json: payload]
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -690,6 +714,8 @@ defmodule ExStreamClient.Operations.Moderation do
     request_opts =
       [url: "/api/v2/moderation/config", method: :post, params: []] ++ [json: payload]
 
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
@@ -740,6 +766,8 @@ defmodule ExStreamClient.Operations.Moderation do
     request_opts =
       [url: "/api/v2/moderation/review_queue", method: :post, params: []] ++ [json: payload]
 
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
     r =
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
@@ -787,7 +815,8 @@ defmodule ExStreamClient.Operations.Moderation do
   @spec get_config(String.t()) ::
           {:ok, ExStreamClient.Model.GetConfigResponse.t()} | {:error, any()}
   @spec get_config(String.t(), [
-          {:client, module()}
+          {:req_opts, keyword()}
+          | {:client, module()}
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
@@ -796,6 +825,7 @@ defmodule ExStreamClient.Operations.Moderation do
   def get_config(key, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/moderation/config/#{key}", method: :get, params: []] ++ []
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -844,7 +874,8 @@ defmodule ExStreamClient.Operations.Moderation do
   @spec delete_config(String.t()) ::
           {:ok, ExStreamClient.Model.DeleteModerationConfigResponse.t()} | {:error, any()}
   @spec delete_config(String.t(), [
-          {:client, module()}
+          {:req_opts, keyword()}
+          | {:client, module()}
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
@@ -853,6 +884,7 @@ defmodule ExStreamClient.Operations.Moderation do
   def delete_config(key, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/moderation/config/#{key}", method: :delete, params: []] ++ []
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -901,6 +933,7 @@ defmodule ExStreamClient.Operations.Moderation do
   def query_moderation_flags(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/moderation/flags", method: :post, params: []] ++ [json: payload]
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -949,6 +982,7 @@ defmodule ExStreamClient.Operations.Moderation do
   def flag(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/moderation/flag", method: :post, params: []] ++ [json: payload]
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)
@@ -997,6 +1031,7 @@ defmodule ExStreamClient.Operations.Moderation do
   def check(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/moderation/check", method: :post, params: []] ++ [json: payload]
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
       Req.new(request_opts)

@@ -43,6 +43,7 @@ defmodule ExStreamClient.Http do
     |> encode_query_structs()
     |> decode_error_json()
     |> log_request()
+    |> log_response()
     |> Req.request()
   end
 
@@ -65,8 +66,31 @@ defmodule ExStreamClient.Http do
       request
       |> Req.Request.append_request_steps(
         debug_url: fn request ->
-          IO.inspect("Requesting #{URI.to_string(request.url)}")
+          if ExStreamClient.Config.log_enabled?(:request, :url) do
+            Logger.log(
+              ExStreamClient.Config.log_level(),
+              "Requesting #{URI.to_string(request.url)}"
+            )
+          end
+
+          if ExStreamClient.Config.log_enabled?(:request, :body) and request.body do
+            Logger.log(ExStreamClient.Config.log_level(), "Request body: #{request.body}")
+          end
+
           request
+        end
+      )
+
+  defp log_response(request),
+    do:
+      request
+      |> Req.Request.append_response_steps(
+        debug_response: fn {request, response} ->
+          if ExStreamClient.Config.log_enabled?(:response, :status) do
+            Logger.log(ExStreamClient.Config.log_level(), "Response status: #{response.status}")
+          end
+
+          {request, response}
         end
       )
 

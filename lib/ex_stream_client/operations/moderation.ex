@@ -89,8 +89,8 @@ defmodule ExStreamClient.Operations.Moderation do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
-          | {:payload, ExStreamClient.Model.UnbanRequest.t()}
-          | {:target_user_id, String.t()}
+          | {:created_by, String.t()}
+          | {:channel_cid, String.t()}
         ]) :: {:ok, ExStreamClient.Model.UnbanResponse.t()} | {:error, any()}
   def unban(target_user_id, payload, opts \\ []) do
     client = get_client(opts)
@@ -100,7 +100,10 @@ defmodule ExStreamClient.Operations.Moderation do
         url: "/api/v2/moderation/unban",
         method: :post,
         params:
-          Keyword.merge([target_user_id: target_user_id], Keyword.take(opts, []))
+          Keyword.merge(
+            [target_user_id: target_user_id],
+            Keyword.take(opts, [:channel_cid, :created_by])
+          )
           |> Enum.reject(fn {_k, v} -> is_nil(v) end)
       ] ++ [json: payload]
 
@@ -820,11 +823,20 @@ defmodule ExStreamClient.Operations.Moderation do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
-          | {:key, String.t()}
+          | {:team, String.t()}
         ]) :: {:ok, ExStreamClient.Model.GetConfigResponse.t()} | {:error, any()}
   def get_config(key, opts \\ []) do
     client = get_client(opts)
-    request_opts = [url: "/api/v2/moderation/config/#{key}", method: :get, params: []] ++ []
+
+    request_opts =
+      [
+        url: "/api/v2/moderation/config/#{key}",
+        method: :get,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:team]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
+
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
@@ -879,11 +891,20 @@ defmodule ExStreamClient.Operations.Moderation do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
-          | {:key, String.t()}
+          | {:team, String.t()}
         ]) :: {:ok, ExStreamClient.Model.DeleteModerationConfigResponse.t()} | {:error, any()}
   def delete_config(key, opts \\ []) do
     client = get_client(opts)
-    request_opts = [url: "/api/v2/moderation/config/#{key}", method: :delete, params: []] ++ []
+
+    request_opts =
+      [
+        url: "/api/v2/moderation/config/#{key}",
+        method: :delete,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:team]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
+
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =

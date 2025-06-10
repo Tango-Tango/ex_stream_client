@@ -33,10 +33,20 @@ defmodule ExStreamClient.Operations.Chat.Moderation do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
+          | {:payload, ExStreamClient.Model.QueryMessageFlagsPayload.t()}
         ]) :: {:ok, ExStreamClient.Model.QueryMessageFlagsResponse.t()} | {:error, any()}
   def query_message_flags(opts \\ []) do
     client = get_client(opts)
-    request_opts = [url: "/api/v2/chat/moderation/flags/message", method: :get, params: []] ++ []
+
+    request_opts =
+      [
+        url: "/api/v2/chat/moderation/flags/message",
+        method: :get,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:payload]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
+
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =

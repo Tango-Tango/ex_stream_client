@@ -32,10 +32,20 @@ defmodule ExStreamClient.Operations.Chat.Members do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
+          | {:payload, ExStreamClient.Model.QueryMembersPayload.t()}
         ]) :: {:ok, ExStreamClient.Model.MembersResponse.t()} | {:error, any()}
   def query_members(opts \\ []) do
     client = get_client(opts)
-    request_opts = [url: "/api/v2/chat/members", method: :get, params: []] ++ []
+
+    request_opts =
+      [
+        url: "/api/v2/chat/members",
+        method: :get,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:payload]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
+
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =

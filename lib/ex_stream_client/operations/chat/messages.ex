@@ -40,9 +40,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
-          | {:vote_id, String.t()}
-          | {:poll_id, String.t()}
-          | {:message_id, String.t()}
+          | {:user_id, String.t()}
         ]) :: {:ok, ExStreamClient.Model.PollVoteResponse.t()} | {:error, any()}
   def remove_poll_vote(message_id, poll_id, vote_id, opts \\ []) do
     client = get_client(opts)
@@ -51,7 +49,9 @@ defmodule ExStreamClient.Operations.Chat.Messages do
       [
         url: "/api/v2/chat/messages/#{message_id}/polls/#{poll_id}/vote/#{vote_id}",
         method: :delete,
-        params: []
+        params:
+          Keyword.merge([], Keyword.take(opts, [:user_id]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
       ] ++ []
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
@@ -112,14 +112,19 @@ defmodule ExStreamClient.Operations.Chat.Messages do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
-          | {:type, String.t()}
-          | {:id, String.t()}
+          | {:user_id, String.t()}
         ]) :: {:ok, ExStreamClient.Model.DeleteReactionResponse.t()} | {:error, any()}
   def delete_reaction(id, type, opts \\ []) do
     client = get_client(opts)
 
     request_opts =
-      [url: "/api/v2/chat/messages/#{id}/reaction/#{type}", method: :delete, params: []] ++ []
+      [
+        url: "/api/v2/chat/messages/#{id}/reaction/#{type}",
+        method: :delete,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:user_id]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
@@ -456,11 +461,21 @@ defmodule ExStreamClient.Operations.Chat.Messages do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
-          | {:id, String.t()}
+          | {:offset, integer()}
+          | {:limit, integer()}
         ]) :: {:ok, ExStreamClient.Model.GetReactionsResponse.t()} | {:error, any()}
   def get_reactions(id, opts \\ []) do
     client = get_client(opts)
-    request_opts = [url: "/api/v2/chat/messages/#{id}/reactions", method: :get, params: []] ++ []
+
+    request_opts =
+      [
+        url: "/api/v2/chat/messages/#{id}/reactions",
+        method: :get,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:limit, :offset]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
+
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
@@ -527,13 +542,48 @@ defmodule ExStreamClient.Operations.Chat.Messages do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
-          | {:parent_id, String.t()}
+          | {:created_at_around, float()}
+          | {:id_around, String.t()}
+          | {:created_at_before, float()}
+          | {:created_at_before_or_equal, float()}
+          | {:created_at_after, float()}
+          | {:created_at_after_or_equal, float()}
+          | {:id_lt, String.t()}
+          | {:id_lte, String.t()}
+          | {:id_gt, String.t()}
+          | {:id_gte, String.t()}
+          | {:offset, integer()}
+          | {:limit, integer()}
+          | {:sort, list()}
         ]) :: {:ok, ExStreamClient.Model.GetRepliesResponse.t()} | {:error, any()}
   def get_replies(parent_id, opts \\ []) do
     client = get_client(opts)
 
     request_opts =
-      [url: "/api/v2/chat/messages/#{parent_id}/replies", method: :get, params: []] ++ []
+      [
+        url: "/api/v2/chat/messages/#{parent_id}/replies",
+        method: :get,
+        params:
+          Keyword.merge(
+            [],
+            Keyword.take(opts, [
+              :sort,
+              :limit,
+              :offset,
+              :id_gte,
+              :id_gt,
+              :id_lte,
+              :id_lt,
+              :created_at_after_or_equal,
+              :created_at_after,
+              :created_at_before_or_equal,
+              :created_at_before,
+              :id_around,
+              :created_at_around
+            ])
+          )
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
@@ -876,11 +926,20 @@ defmodule ExStreamClient.Operations.Chat.Messages do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
-          | {:id, String.t()}
+          | {:show_deleted_message, boolean()}
         ]) :: {:ok, ExStreamClient.Model.GetMessageResponse.t()} | {:error, any()}
   def get_message(id, opts \\ []) do
     client = get_client(opts)
-    request_opts = [url: "/api/v2/chat/messages/#{id}", method: :get, params: []] ++ []
+
+    request_opts =
+      [
+        url: "/api/v2/chat/messages/#{id}",
+        method: :get,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:show_deleted_message]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
+
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
@@ -940,11 +999,21 @@ defmodule ExStreamClient.Operations.Chat.Messages do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
-          | {:id, String.t()}
+          | {:deleted_by, String.t()}
+          | {:hard, boolean()}
         ]) :: {:ok, ExStreamClient.Model.DeleteMessageResponse.t()} | {:error, any()}
   def delete_message(id, opts \\ []) do
     client = get_client(opts)
-    request_opts = [url: "/api/v2/chat/messages/#{id}", method: :delete, params: []] ++ []
+
+    request_opts =
+      [
+        url: "/api/v2/chat/messages/#{id}",
+        method: :delete,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:hard, :deleted_by]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
+
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =

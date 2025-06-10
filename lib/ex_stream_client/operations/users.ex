@@ -194,10 +194,20 @@ defmodule ExStreamClient.Operations.Users do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
+          | {:payload, ExStreamClient.Model.QueryUsersPayload.t()}
         ]) :: {:ok, ExStreamClient.Model.QueryUsersResponse.t()} | {:error, any()}
   def query_users(opts \\ []) do
     client = get_client(opts)
-    request_opts = [url: "/api/v2/users", method: :get, params: []] ++ []
+
+    request_opts =
+      [
+        url: "/api/v2/users",
+        method: :get,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:payload]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
+
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
@@ -604,10 +614,20 @@ defmodule ExStreamClient.Operations.Users do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
+          | {:user_id, String.t()}
         ]) :: {:ok, ExStreamClient.Model.GetBlockedUsersResponse.t()} | {:error, any()}
   def get_blocked_users(opts \\ []) do
     client = get_client(opts)
-    request_opts = [url: "/api/v2/users/block", method: :get, params: []] ++ []
+
+    request_opts =
+      [
+        url: "/api/v2/users/block",
+        method: :get,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:user_id]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
+
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =

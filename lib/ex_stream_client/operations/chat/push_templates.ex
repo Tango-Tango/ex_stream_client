@@ -87,7 +87,7 @@ defmodule ExStreamClient.Operations.Chat.PushTemplates do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
-          | {:push_provider_type, String.t()}
+          | {:push_provider_name, String.t()}
         ]) :: {:ok, ExStreamClient.Model.GetPushTemplatesResponse.t()} | {:error, any()}
   def get_push_templates(push_provider_type, opts \\ []) do
     client = get_client(opts)
@@ -97,7 +97,10 @@ defmodule ExStreamClient.Operations.Chat.PushTemplates do
         url: "/api/v2/chat/push_templates",
         method: :get,
         params:
-          Keyword.merge([push_provider_type: push_provider_type], Keyword.take(opts, []))
+          Keyword.merge(
+            [push_provider_type: push_provider_type],
+            Keyword.take(opts, [:push_provider_name])
+          )
           |> Enum.reject(fn {_k, v} -> is_nil(v) end)
       ] ++ []
 

@@ -94,11 +94,22 @@ defmodule ExStreamClient.Operations.Chat.Threads do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
-          | {:message_id, String.t()}
+          | {:member_limit, integer()}
+          | {:participant_limit, integer()}
+          | {:reply_limit, integer()}
         ]) :: {:ok, ExStreamClient.Model.GetThreadResponse.t()} | {:error, any()}
   def get_thread(message_id, opts \\ []) do
     client = get_client(opts)
-    request_opts = [url: "/api/v2/chat/threads/#{message_id}", method: :get, params: []] ++ []
+
+    request_opts =
+      [
+        url: "/api/v2/chat/threads/#{message_id}",
+        method: :get,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:reply_limit, :participant_limit, :member_limit]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
+
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =

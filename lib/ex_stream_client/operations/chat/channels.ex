@@ -44,17 +44,20 @@ defmodule ExStreamClient.Operations.Chat.Channels do
             | {:endpoint, String.t()}
             | {:api_key, String.t()}
             | {:api_key_secret, String.t()}
-            | {:payload, ExStreamClient.Model.UpdateMemberPartialRequest.t()}
-            | {:id, String.t()}
-            | {:type, String.t()}
+            | {:user_id, String.t()}
           ]
         ) :: {:ok, ExStreamClient.Model.UpdateMemberPartialResponse.t()} | {:error, any()}
   def update_member_partial(type, id, payload, opts \\ []) do
     client = get_client(opts)
 
     request_opts =
-      [url: "/api/v2/chat/channels/#{type}/#{id}/member", method: :patch, params: []] ++
-        [json: payload]
+      [
+        url: "/api/v2/chat/channels/#{type}/#{id}/member",
+        method: :patch,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:user_id]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ [json: payload]
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
@@ -685,14 +688,20 @@ defmodule ExStreamClient.Operations.Chat.Channels do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
-          | {:id, String.t()}
-          | {:type, String.t()}
+          | {:user_id, String.t()}
+          | {:parent_id, String.t()}
         ]) :: {:ok, ExStreamClient.Model.GetDraftResponse.t()} | {:error, any()}
   def get_draft(type, id, opts \\ []) do
     client = get_client(opts)
 
     request_opts =
-      [url: "/api/v2/chat/channels/#{type}/#{id}/draft", method: :get, params: []] ++ []
+      [
+        url: "/api/v2/chat/channels/#{type}/#{id}/draft",
+        method: :get,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:parent_id, :user_id]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
@@ -753,14 +762,20 @@ defmodule ExStreamClient.Operations.Chat.Channels do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
-          | {:id, String.t()}
-          | {:type, String.t()}
+          | {:user_id, String.t()}
+          | {:parent_id, String.t()}
         ]) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_draft(type, id, opts \\ []) do
     client = get_client(opts)
 
     request_opts =
-      [url: "/api/v2/chat/channels/#{type}/#{id}/draft", method: :delete, params: []] ++ []
+      [
+        url: "/api/v2/chat/channels/#{type}/#{id}/draft",
+        method: :delete,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:parent_id, :user_id]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
@@ -872,14 +887,19 @@ defmodule ExStreamClient.Operations.Chat.Channels do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
-          | {:id, String.t()}
-          | {:type, String.t()}
+          | {:url, String.t()}
         ]) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_file(type, id, opts \\ []) do
     client = get_client(opts)
 
     request_opts =
-      [url: "/api/v2/chat/channels/#{type}/#{id}/file", method: :delete, params: []] ++ []
+      [
+        url: "/api/v2/chat/channels/#{type}/#{id}/file",
+        method: :delete,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:url]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
@@ -1050,14 +1070,19 @@ defmodule ExStreamClient.Operations.Chat.Channels do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
-          | {:id, String.t()}
-          | {:type, String.t()}
+          | {:url, String.t()}
         ]) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_image(type, id, opts \\ []) do
     client = get_client(opts)
 
     request_opts =
-      [url: "/api/v2/chat/channels/#{type}/#{id}/image", method: :delete, params: []] ++ []
+      [
+        url: "/api/v2/chat/channels/#{type}/#{id}/image",
+        method: :delete,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:url]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
@@ -1307,12 +1332,20 @@ defmodule ExStreamClient.Operations.Chat.Channels do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
-          | {:id, String.t()}
-          | {:type, String.t()}
+          | {:hard_delete, boolean()}
         ]) :: {:ok, ExStreamClient.Model.DeleteChannelResponse.t()} | {:error, any()}
   def delete_channel(type, id, opts \\ []) do
     client = get_client(opts)
-    request_opts = [url: "/api/v2/chat/channels/#{type}/#{id}", method: :delete, params: []] ++ []
+
+    request_opts =
+      [
+        url: "/api/v2/chat/channels/#{type}/#{id}",
+        method: :delete,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:hard_delete]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
+
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =

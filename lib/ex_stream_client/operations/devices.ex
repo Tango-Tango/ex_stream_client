@@ -81,10 +81,20 @@ defmodule ExStreamClient.Operations.Devices do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
+          | {:user_id, String.t()}
         ]) :: {:ok, ExStreamClient.Model.ListDevicesResponse.t()} | {:error, any()}
   def list_devices(opts \\ []) do
     client = get_client(opts)
-    request_opts = [url: "/api/v2/devices", method: :get, params: []] ++ []
+
+    request_opts =
+      [
+        url: "/api/v2/devices",
+        method: :get,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:user_id]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
+
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
@@ -138,7 +148,7 @@ defmodule ExStreamClient.Operations.Devices do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
-          | {:id, String.t()}
+          | {:user_id, String.t()}
         ]) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_device(id, opts \\ []) do
     client = get_client(opts)
@@ -148,7 +158,7 @@ defmodule ExStreamClient.Operations.Devices do
         url: "/api/v2/devices",
         method: :delete,
         params:
-          Keyword.merge([id: id], Keyword.take(opts, []))
+          Keyword.merge([id: id], Keyword.take(opts, [:user_id]))
           |> Enum.reject(fn {_k, v} -> is_nil(v) end)
       ] ++ []
 

@@ -142,11 +142,22 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
-          | {:id, String.t()}
+          | {:limit, integer()}
+          | {:next, String.t()}
+          | {:prev, String.t()}
         ]) :: {:ok, ExStreamClient.Model.GetCampaignResponse.t()} | {:error, any()}
   def get_campaign(id, opts \\ []) do
     client = get_client(opts)
-    request_opts = [url: "/api/v2/chat/campaigns/#{id}", method: :get, params: []] ++ []
+
+    request_opts =
+      [
+        url: "/api/v2/chat/campaigns/#{id}",
+        method: :get,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:prev, :next, :limit]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
+
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =

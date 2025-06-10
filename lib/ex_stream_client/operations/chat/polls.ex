@@ -36,14 +36,19 @@ defmodule ExStreamClient.Operations.Chat.Polls do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
-          | {:payload, ExStreamClient.Model.QueryPollVotesRequest.t()}
-          | {:poll_id, String.t()}
+          | {:user_id, String.t()}
         ]) :: {:ok, ExStreamClient.Model.PollVotesResponse.t()} | {:error, any()}
   def query_poll_votes(poll_id, payload, opts \\ []) do
     client = get_client(opts)
 
     request_opts =
-      [url: "/api/v2/chat/polls/#{poll_id}/votes", method: :post, params: []] ++ [json: payload]
+      [
+        url: "/api/v2/chat/polls/#{poll_id}/votes",
+        method: :post,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:user_id]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ [json: payload]
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
@@ -368,11 +373,20 @@ defmodule ExStreamClient.Operations.Chat.Polls do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
-          | {:poll_id, String.t()}
+          | {:user_id, String.t()}
         ]) :: {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
   def get_poll(poll_id, opts \\ []) do
     client = get_client(opts)
-    request_opts = [url: "/api/v2/chat/polls/#{poll_id}", method: :get, params: []] ++ []
+
+    request_opts =
+      [
+        url: "/api/v2/chat/polls/#{poll_id}",
+        method: :get,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:user_id]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
+
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
@@ -429,11 +443,20 @@ defmodule ExStreamClient.Operations.Chat.Polls do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
-          | {:poll_id, String.t()}
+          | {:user_id, String.t()}
         ]) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_poll(poll_id, opts \\ []) do
     client = get_client(opts)
-    request_opts = [url: "/api/v2/chat/polls/#{poll_id}", method: :delete, params: []] ++ []
+
+    request_opts =
+      [
+        url: "/api/v2/chat/polls/#{poll_id}",
+        method: :delete,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:user_id]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
+
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
@@ -488,11 +511,20 @@ defmodule ExStreamClient.Operations.Chat.Polls do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
-          | {:payload, ExStreamClient.Model.QueryPollsRequest.t()}
+          | {:user_id, String.t()}
         ]) :: {:ok, ExStreamClient.Model.QueryPollsResponse.t()} | {:error, any()}
   def query_polls(payload, opts \\ []) do
     client = get_client(opts)
-    request_opts = [url: "/api/v2/chat/polls/query", method: :post, params: []] ++ [json: payload]
+
+    request_opts =
+      [
+        url: "/api/v2/chat/polls/query",
+        method: :post,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:user_id]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ [json: payload]
+
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
@@ -548,14 +580,19 @@ defmodule ExStreamClient.Operations.Chat.Polls do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
-          | {:option_id, String.t()}
-          | {:poll_id, String.t()}
+          | {:user_id, String.t()}
         ]) :: {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
   def get_poll_option(poll_id, option_id, opts \\ []) do
     client = get_client(opts)
 
     request_opts =
-      [url: "/api/v2/chat/polls/#{poll_id}/options/#{option_id}", method: :get, params: []] ++ []
+      [
+        url: "/api/v2/chat/polls/#{poll_id}/options/#{option_id}",
+        method: :get,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:user_id]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
@@ -615,15 +652,19 @@ defmodule ExStreamClient.Operations.Chat.Polls do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
-          | {:option_id, String.t()}
-          | {:poll_id, String.t()}
+          | {:user_id, String.t()}
         ]) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_poll_option(poll_id, option_id, opts \\ []) do
     client = get_client(opts)
 
     request_opts =
-      [url: "/api/v2/chat/polls/#{poll_id}/options/#{option_id}", method: :delete, params: []] ++
-        []
+      [
+        url: "/api/v2/chat/polls/#{poll_id}/options/#{option_id}",
+        method: :delete,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:user_id]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 

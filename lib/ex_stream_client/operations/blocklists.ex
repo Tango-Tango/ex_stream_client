@@ -82,10 +82,20 @@ defmodule ExStreamClient.Operations.Blocklists do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
+          | {:team, String.t()}
         ]) :: {:ok, ExStreamClient.Model.ListBlockListResponse.t()} | {:error, any()}
   def list_block_lists(opts \\ []) do
     client = get_client(opts)
-    request_opts = [url: "/api/v2/blocklists", method: :get, params: []] ++ []
+
+    request_opts =
+      [
+        url: "/api/v2/blocklists",
+        method: :get,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:team]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
+
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
@@ -193,11 +203,20 @@ defmodule ExStreamClient.Operations.Blocklists do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
-          | {:name, String.t()}
+          | {:team, String.t()}
         ]) :: {:ok, ExStreamClient.Model.GetBlockListResponse.t()} | {:error, any()}
   def get_block_list(name, opts \\ []) do
     client = get_client(opts)
-    request_opts = [url: "/api/v2/blocklists/#{name}", method: :get, params: []] ++ []
+
+    request_opts =
+      [
+        url: "/api/v2/blocklists/#{name}",
+        method: :get,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:team]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
+
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =
@@ -252,11 +271,20 @@ defmodule ExStreamClient.Operations.Blocklists do
           | {:endpoint, String.t()}
           | {:api_key, String.t()}
           | {:api_key_secret, String.t()}
-          | {:name, String.t()}
+          | {:team, String.t()}
         ]) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_block_list(name, opts \\ []) do
     client = get_client(opts)
-    request_opts = [url: "/api/v2/blocklists/#{name}", method: :delete, params: []] ++ []
+
+    request_opts =
+      [
+        url: "/api/v2/blocklists/#{name}",
+        method: :delete,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:team]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
+
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     r =

@@ -66,7 +66,25 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
             build_arg_docstring(merged_optional_args |> Enum.sort_by(& &1.name))
 
           merged_optional_args =
-            Enum.concat(merged_optional_args, [
+            [
+              %{
+                in: "opts",
+                name: "req_opts",
+                type: "keyword",
+                description:
+                  "all of these options will be forwarded to req. See `Req.new/1` for available options",
+                required?: false,
+                example: "[plug: MyTest.Plug]"
+              },
+              %{
+                in: "opts",
+                name: "endpoint",
+                type: "string",
+                description:
+                  "Endpoint to use. If not provided, the default endpoint from config will be used.",
+                required?: false,
+                example: "ExStreamClient.Config.endpoint()"
+              },
               %{
                 in: "opts",
                 name: "api_key_secret",
@@ -87,31 +105,13 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
               },
               %{
                 in: "opts",
-                name: "endpoint",
-                type: "string",
-                description:
-                  "Endpoint to use. If not provided, the default endpoint from config will be used.",
-                required?: false,
-                example: "ExStreamClient.Config.endpoint()"
-              },
-              %{
-                in: "opts",
                 name: "client",
                 type: "module",
                 description: "HTTP client to use. Must implement `ExStreamClient.Http.Behavior`",
                 required?: false,
                 example: "ExStreamClient.Http"
-              },
-              %{
-                in: "opts",
-                name: "req_opts",
-                type: "keyword",
-                description:
-                  "all of these options will be forwarded to req. See `Req.new/1` for available options",
-                required?: false,
-                example: "[plug: MyTest.Plug]"
               }
-            ])
+            ] ++ merged_optional_args
 
           # convert non-optional args into [arg1, arg2, arg3] representation
           arg_names =
@@ -161,23 +161,11 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
               e -> [e]
             end
 
-          required_spec_ast =
+          spec_ast =
             quote do
               # fx without opts
-              @spec unquote(name)(unquote_splicing(spec)) ::
+              @spec unquote(name)(unquote_splicing(spec), unquote(optional_args)) ::
                       unquote(response_spec) | {:error, any()}
-            end
-
-          optional_spec_ast =
-            if has_optional_args? do
-              quote do
-                # fx with opts
-                @spec unquote(name)(unquote_splicing(spec), unquote(optional_args)) ::
-                        unquote(response_spec) | {:error, any()}
-              end
-            else
-              quote do
-              end
             end
 
           description_str = if(description == "", do: summary, else: description)
@@ -188,12 +176,11 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
                      [format_events_as_code(description_str), ""]
                      |> maybe_append(merged_required_args != [], "### Required Arguments:")
                      |> maybe_append(merged_required_args != [], "#{required_args_docstring}")
-                     |> maybe_append(has_optional_args?, "### Optional Arguments:")
+                     |> maybe_append(true, "### Optional Arguments:")
                      |> maybe_append(has_optional_args?, "#{optional_args_docstring}")
-                     |> maybe_append(true, "")
                      |> maybe_append(
                        true,
-                       "All options from [Shared Options](#module-shared-options) are supported."
+                       "- All options from [Shared Options](#module-shared-options) are supported."
                      )
                      |> maybe_append(true, "")
                      |> Enum.join("\n")
@@ -303,19 +290,11 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
                   Req.new(request_opts)
                   |> Req.Request.append_response_steps(
                     decode: fn {request, response} ->
-                      response_type = if response.status in 200..299, do: :ok, else: :error
-
                       response_handlers = %{
                         unquote_splicing(response_handlers)
                       }
 
-                      parsed =
-                        case Map.get(response_handlers, response.status) do
-                          nil -> {:error, response.body}
-                          mod -> {response_type, mod.decode(response.body)}
-                        end
-
-                      {request, %{response | body: parsed}}
+                      {request, %{response | body: decode_response(response, response_handlers)}}
                     end
                   )
 
@@ -328,8 +307,7 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
 
           []
           |> maybe_append(true, doc_ast)
-          |> maybe_append(true, required_spec_ast)
-          |> maybe_append(has_optional_args?, optional_spec_ast)
+          |> maybe_append(true, spec_ast)
           |> maybe_append(true, method_impl_ast)
         end)
 
@@ -367,6 +345,16 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
 
               client
             end
+
+            defp decode_response(response, response_handlers) do
+              case Map.get(response_handlers, response.status) do
+                nil -> {:error, response.body}
+                mod -> {get_response_type(response), mod.decode(response.body)}
+              end
+            end
+
+            defp get_response_type(response),
+              do: if(response.status in 200..299, do: :ok, else: :error)
 
             defp get_request_opts(opts) do
               Keyword.take(

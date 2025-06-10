@@ -25,4 +25,8 @@ ex_stream_client-*.tar
 # Temporary files, for example, from tests.
 /tmp/
 
+# ignore macos files
+.DS_Store
+
+# Ignore local config
 /config/dev.secret.exs

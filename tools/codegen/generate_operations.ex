@@ -66,7 +66,7 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
             build_arg_docstring(merged_optional_args |> Enum.sort_by(& &1.name))
 
           merged_optional_args =
-            Enum.concat(merged_required_args, [
+            Enum.concat(merged_optional_args, [
               %{
                 in: "opts",
                 name: "api_key_secret",
@@ -106,7 +106,8 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
                 in: "opts",
                 name: "req_opts",
                 type: "keyword",
-                description: "all of these options will be forwarded to req. See `Req.new/1` for available options",
+                description:
+                  "all of these options will be forwarded to req. See `Req.new/1` for available options",
                 required?: false,
                 example: "[plug: MyTest.Plug]"
               }

@@ -65,54 +65,6 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
           optional_args_docstring =
             build_arg_docstring(merged_optional_args |> Enum.sort_by(& &1.name))
 
-          merged_optional_args =
-            [
-              %{
-                in: "opts",
-                name: "req_opts",
-                type: "keyword",
-                description:
-                  "all of these options will be forwarded to req. See `Req.new/1` for available options",
-                required?: false,
-                example: "[plug: MyTest.Plug]"
-              },
-              %{
-                in: "opts",
-                name: "endpoint",
-                type: "string",
-                description:
-                  "Endpoint to use. If not provided, the default endpoint from config will be used.",
-                required?: false,
-                example: "ExStreamClient.Config.endpoint()"
-              },
-              %{
-                in: "opts",
-                name: "api_key_secret",
-                type: "string",
-                description:
-                  "API key secret to use. If not provided, the default secret from config will be used.",
-                required?: false,
-                example: "ExStreamClient.Config.api_key_secret()"
-              },
-              %{
-                in: "opts",
-                name: "api_key",
-                type: "string",
-                description:
-                  "API key to use. If not provided, the default key from config will be used.",
-                required?: false,
-                example: "ExStreamClient.Config.api_key()"
-              },
-              %{
-                in: "opts",
-                name: "client",
-                type: "module",
-                description: "HTTP client to use. Must implement `ExStreamClient.Http.Behavior`",
-                required?: false,
-                example: "ExStreamClient.Http"
-              }
-            ] ++ merged_optional_args
-
           # convert non-optional args into [arg1, arg2, arg3] representation
           arg_names =
             merged_required_args
@@ -159,6 +111,17 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
             |> case do
               [] -> []
               e -> [e]
+            end
+
+          optional_args =
+            if Enum.empty?(optional_args) do
+              quote do
+                shared_opts
+              end
+            else
+              quote do
+                [unquote_splicing(optional_args) | shared_opts]
+              end
             end
 
           spec_ast =
@@ -328,11 +291,69 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
         ]
         |> Enum.join("\n")
 
+      shared_optional_args = [
+        %{
+          in: "opts",
+          name: "api_key",
+          type: "string",
+          description:
+            "API key to use. If not provided, the default key from config will be used.",
+          required?: false,
+          example: "ExStreamClient.Config.api_key()"
+        },
+        %{
+          in: "opts",
+          name: "api_key_secret",
+          type: "string",
+          description:
+            "API key secret to use. If not provided, the default secret from config will be used.",
+          required?: false,
+          example: "ExStreamClient.Config.api_key_secret()"
+        },
+        %{
+          in: "opts",
+          name: "client",
+          type: "module",
+          description: "HTTP client to use. Must implement `ExStreamClient.Http.Behavior`",
+          required?: false,
+          example: "ExStreamClient.Http"
+        },
+        %{
+          in: "opts",
+          name: "endpoint",
+          type: "string",
+          description:
+            "Endpoint to use. If not provided, the default endpoint from config will be used.",
+          required?: false,
+          example: "ExStreamClient.Config.endpoint()"
+        },
+        %{
+          in: "opts",
+          name: "req_opts",
+          type: "keyword",
+          description:
+            "all of these options will be forwarded to req. See `Req.new/1` for available options",
+          required?: false,
+          example: "[plug: MyTest.Plug]"
+        }
+      ]
+
+      shared_optional_args_ast =
+        shared_optional_args
+        |> Enum.map(fn arg ->
+          quote do
+            {unquote(String.to_atom(arg.name)), unquote(Codegen.type_to_spec(arg.type))}
+          end
+        end)
+
       mod_ast =
         quote do
           defmodule unquote(modname) do
             @moduledoc unquote(as_heredoc(moduledoc_string))
             require Logger
+
+            @type shared_opts :: unquote(shared_optional_args_ast)
+
             unquote_splicing(function_asts |> List.flatten())
 
             defp get_client(opts) do

@@ -16,16 +16,25 @@ defmodule ExStreamClient.Operations.Moderation do
   """
   require Logger
 
+  @type shared_opts :: [
+          api_key: String.t(),
+          api_key_secret: String.t(),
+          client: module(),
+          endpoint: String.t(),
+          req_opts: keyword()
+        ]
   @doc ~S"""
   Custom check, add your own AI model reports to the review queue
 
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.CustomCheckRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec custom_check(ExStreamClient.Model.CustomCheckRequest.t()) ::
+          {:ok, ExStreamClient.Model.CustomCheckResponse.t()} | {:error, any()}
+  @spec custom_check(ExStreamClient.Model.CustomCheckRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.CustomCheckResponse.t()} | {:error, any()}
   def custom_check(payload, opts \\ []) do
     client = get_client(opts)
@@ -39,26 +48,13 @@ defmodule ExStreamClient.Operations.Moderation do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.CustomCheckResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -78,19 +74,12 @@ defmodule ExStreamClient.Operations.Moderation do
   ### Optional Arguments:
   - `channel_cid`
   - `created_by`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec unban(String.t(), ExStreamClient.Model.UnbanRequest.t()) ::
           {:ok, ExStreamClient.Model.UnbanResponse.t()} | {:error, any()}
   @spec unban(String.t(), ExStreamClient.Model.UnbanRequest.t(), [
-          {:req_opts, keyword()}
-          | {:client, module()}
-          | {:endpoint, String.t()}
-          | {:api_key, String.t()}
-          | {:api_key_secret, String.t()}
-          | {:created_by, String.t()}
-          | {:channel_cid, String.t()}
+          ({:created_by, String.t()} | {:channel_cid, String.t()}) | shared_opts
         ]) :: {:ok, ExStreamClient.Model.UnbanResponse.t()} | {:error, any()}
   def unban(target_user_id, payload, opts \\ []) do
     client = get_client(opts)
@@ -113,26 +102,13 @@ defmodule ExStreamClient.Operations.Moderation do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.UnbanResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -148,10 +124,12 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.SubmitActionRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec submit_action(ExStreamClient.Model.SubmitActionRequest.t()) ::
+          {:ok, ExStreamClient.Model.SubmitActionResponse.t()} | {:error, any()}
+  @spec submit_action(ExStreamClient.Model.SubmitActionRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.SubmitActionResponse.t()} | {:error, any()}
   def submit_action(payload, opts \\ []) do
     client = get_client(opts)
@@ -165,26 +143,13 @@ defmodule ExStreamClient.Operations.Moderation do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.SubmitActionResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -200,10 +165,12 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.UnmuteRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec unmute(ExStreamClient.Model.UnmuteRequest.t()) ::
+          {:ok, ExStreamClient.Model.UnmuteResponse.t()} | {:error, any()}
+  @spec unmute(ExStreamClient.Model.UnmuteRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.UnmuteResponse.t()} | {:error, any()}
   def unmute(payload, opts \\ []) do
     client = get_client(opts)
@@ -217,26 +184,13 @@ defmodule ExStreamClient.Operations.Moderation do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.UnmuteResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -252,11 +206,15 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.QueryModerationConfigsRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec query_moderation_configs(ExStreamClient.Model.QueryModerationConfigsRequest.t()) ::
           {:ok, ExStreamClient.Model.QueryModerationConfigsResponse.t()} | {:error, any()}
+  @spec query_moderation_configs(
+          ExStreamClient.Model.QueryModerationConfigsRequest.t(),
+          shared_opts
+        ) :: {:ok, ExStreamClient.Model.QueryModerationConfigsResponse.t()} | {:error, any()}
   def query_moderation_configs(payload, opts \\ []) do
     client = get_client(opts)
 
@@ -269,26 +227,13 @@ defmodule ExStreamClient.Operations.Moderation do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.QueryModerationConfigsResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -304,10 +249,12 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `id`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_review_queue_item(String.t()) ::
+          {:ok, ExStreamClient.Model.GetReviewQueueItemResponse.t()} | {:error, any()}
+  @spec get_review_queue_item(String.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.GetReviewQueueItemResponse.t()} | {:error, any()}
   def get_review_queue_item(id, opts \\ []) do
     client = get_client(opts)
@@ -318,26 +265,13 @@ defmodule ExStreamClient.Operations.Moderation do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.GetReviewQueueItemResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -353,10 +287,12 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.BulkImageModerationRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec bulk_image_moderation(ExStreamClient.Model.BulkImageModerationRequest.t()) ::
+          {:ok, ExStreamClient.Model.BulkImageModerationResponse.t()} | {:error, any()}
+  @spec bulk_image_moderation(ExStreamClient.Model.BulkImageModerationRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.BulkImageModerationResponse.t()} | {:error, any()}
   def bulk_image_moderation(payload, opts \\ []) do
     client = get_client(opts)
@@ -371,26 +307,13 @@ defmodule ExStreamClient.Operations.Moderation do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.BulkImageModerationResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -406,10 +329,12 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.QueryModerationLogsRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec query_moderation_logs(ExStreamClient.Model.QueryModerationLogsRequest.t()) ::
+          {:ok, ExStreamClient.Model.QueryModerationLogsResponse.t()} | {:error, any()}
+  @spec query_moderation_logs(ExStreamClient.Model.QueryModerationLogsRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.QueryModerationLogsResponse.t()} | {:error, any()}
   def query_moderation_logs(payload, opts \\ []) do
     client = get_client(opts)
@@ -420,26 +345,13 @@ defmodule ExStreamClient.Operations.Moderation do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.QueryModerationLogsResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -455,10 +367,12 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.UpsertModerationTemplateRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec v2_upsert_template(ExStreamClient.Model.UpsertModerationTemplateRequest.t()) ::
+          {:ok, ExStreamClient.Model.UpsertModerationTemplateResponse.t()} | {:error, any()}
+  @spec v2_upsert_template(ExStreamClient.Model.UpsertModerationTemplateRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.UpsertModerationTemplateResponse.t()} | {:error, any()}
   def v2_upsert_template(payload, opts \\ []) do
     client = get_client(opts)
@@ -473,26 +387,13 @@ defmodule ExStreamClient.Operations.Moderation do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.UpsertModerationTemplateResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -506,10 +407,12 @@ defmodule ExStreamClient.Operations.Moderation do
   Retrieve a list of feed moderation templates that define preset moderation rules and configurations. Limited to 100 templates per request.
 
 
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec v2_query_templates() ::
+          {:ok, ExStreamClient.Model.QueryFeedModerationTemplatesResponse.t()} | {:error, any()}
+  @spec v2_query_templates(shared_opts) ::
           {:ok, ExStreamClient.Model.QueryFeedModerationTemplatesResponse.t()} | {:error, any()}
   def v2_query_templates(opts \\ []) do
     client = get_client(opts)
@@ -523,26 +426,13 @@ defmodule ExStreamClient.Operations.Moderation do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.QueryFeedModerationTemplatesResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -556,10 +446,12 @@ defmodule ExStreamClient.Operations.Moderation do
   Delete a specific moderation template by its name
 
 
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec v2_delete_template() ::
+          {:ok, ExStreamClient.Model.DeleteModerationTemplateResponse.t()} | {:error, any()}
+  @spec v2_delete_template(shared_opts) ::
           {:ok, ExStreamClient.Model.DeleteModerationTemplateResponse.t()} | {:error, any()}
   def v2_delete_template(opts \\ []) do
     client = get_client(opts)
@@ -573,26 +465,13 @@ defmodule ExStreamClient.Operations.Moderation do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.DeleteModerationTemplateResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -608,10 +487,12 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.MuteRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec mute(ExStreamClient.Model.MuteRequest.t()) ::
+          {:ok, ExStreamClient.Model.MuteResponse.t()} | {:error, any()}
+  @spec mute(ExStreamClient.Model.MuteRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.MuteResponse.t()} | {:error, any()}
   def mute(payload, opts \\ []) do
     client = get_client(opts)
@@ -622,26 +503,13 @@ defmodule ExStreamClient.Operations.Moderation do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.MuteResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -657,10 +525,12 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.BanRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec ban(ExStreamClient.Model.BanRequest.t()) ::
+          {:ok, ExStreamClient.Model.BanResponse.t()} | {:error, any()}
+  @spec ban(ExStreamClient.Model.BanRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.BanResponse.t()} | {:error, any()}
   def ban(payload, opts \\ []) do
     client = get_client(opts)
@@ -671,26 +541,13 @@ defmodule ExStreamClient.Operations.Moderation do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.BanResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -706,10 +563,12 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.UpsertConfigRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec upsert_config(ExStreamClient.Model.UpsertConfigRequest.t()) ::
+          {:ok, ExStreamClient.Model.UpsertConfigResponse.t()} | {:error, any()}
+  @spec upsert_config(ExStreamClient.Model.UpsertConfigRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.UpsertConfigResponse.t()} | {:error, any()}
   def upsert_config(payload, opts \\ []) do
     client = get_client(opts)
@@ -723,26 +582,13 @@ defmodule ExStreamClient.Operations.Moderation do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.UpsertConfigResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -758,10 +604,12 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.QueryReviewQueueRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec query_review_queue(ExStreamClient.Model.QueryReviewQueueRequest.t()) ::
+          {:ok, ExStreamClient.Model.QueryReviewQueueResponse.t()} | {:error, any()}
+  @spec query_review_queue(ExStreamClient.Model.QueryReviewQueueRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.QueryReviewQueueResponse.t()} | {:error, any()}
   def query_review_queue(payload, opts \\ []) do
     client = get_client(opts)
@@ -775,26 +623,13 @@ defmodule ExStreamClient.Operations.Moderation do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.QueryReviewQueueResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -812,19 +647,12 @@ defmodule ExStreamClient.Operations.Moderation do
   - `key`
   ### Optional Arguments:
   - `team`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_config(String.t()) ::
           {:ok, ExStreamClient.Model.GetConfigResponse.t()} | {:error, any()}
-  @spec get_config(String.t(), [
-          {:req_opts, keyword()}
-          | {:client, module()}
-          | {:endpoint, String.t()}
-          | {:api_key, String.t()}
-          | {:api_key_secret, String.t()}
-          | {:team, String.t()}
-        ]) :: {:ok, ExStreamClient.Model.GetConfigResponse.t()} | {:error, any()}
+  @spec get_config(String.t(), [{:team, String.t()} | shared_opts]) ::
+          {:ok, ExStreamClient.Model.GetConfigResponse.t()} | {:error, any()}
   def get_config(key, opts \\ []) do
     client = get_client(opts)
 
@@ -843,26 +671,13 @@ defmodule ExStreamClient.Operations.Moderation do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.GetConfigResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -880,19 +695,12 @@ defmodule ExStreamClient.Operations.Moderation do
   - `key`
   ### Optional Arguments:
   - `team`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec delete_config(String.t()) ::
           {:ok, ExStreamClient.Model.DeleteModerationConfigResponse.t()} | {:error, any()}
-  @spec delete_config(String.t(), [
-          {:req_opts, keyword()}
-          | {:client, module()}
-          | {:endpoint, String.t()}
-          | {:api_key, String.t()}
-          | {:api_key_secret, String.t()}
-          | {:team, String.t()}
-        ]) :: {:ok, ExStreamClient.Model.DeleteModerationConfigResponse.t()} | {:error, any()}
+  @spec delete_config(String.t(), [{:team, String.t()} | shared_opts]) ::
+          {:ok, ExStreamClient.Model.DeleteModerationConfigResponse.t()} | {:error, any()}
   def delete_config(key, opts \\ []) do
     client = get_client(opts)
 
@@ -911,26 +719,13 @@ defmodule ExStreamClient.Operations.Moderation do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.DeleteModerationConfigResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -946,10 +741,12 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.QueryModerationFlagsRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec query_moderation_flags(ExStreamClient.Model.QueryModerationFlagsRequest.t()) ::
+          {:ok, ExStreamClient.Model.QueryModerationFlagsResponse.t()} | {:error, any()}
+  @spec query_moderation_flags(ExStreamClient.Model.QueryModerationFlagsRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.QueryModerationFlagsResponse.t()} | {:error, any()}
   def query_moderation_flags(payload, opts \\ []) do
     client = get_client(opts)
@@ -960,26 +757,13 @@ defmodule ExStreamClient.Operations.Moderation do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.QueryModerationFlagsResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -995,10 +779,12 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.FlagRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec flag(ExStreamClient.Model.FlagRequest.t()) ::
+          {:ok, ExStreamClient.Model.FlagResponse.t()} | {:error, any()}
+  @spec flag(ExStreamClient.Model.FlagRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.FlagResponse.t()} | {:error, any()}
   def flag(payload, opts \\ []) do
     client = get_client(opts)
@@ -1009,26 +795,13 @@ defmodule ExStreamClient.Operations.Moderation do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.FlagResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -1044,10 +817,12 @@ defmodule ExStreamClient.Operations.Moderation do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.CheckRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec check(ExStreamClient.Model.CheckRequest.t()) ::
+          {:ok, ExStreamClient.Model.CheckResponse.t()} | {:error, any()}
+  @spec check(ExStreamClient.Model.CheckRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.CheckResponse.t()} | {:error, any()}
   def check(payload, opts \\ []) do
     client = get_client(opts)
@@ -1058,26 +833,13 @@ defmodule ExStreamClient.Operations.Moderation do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.CheckResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -1096,6 +858,21 @@ defmodule ExStreamClient.Operations.Moderation do
     end
 
     client
+  end
+
+  defp decode_response(response, response_handlers) do
+    case Map.get(response_handlers, response.status) do
+      nil -> {:error, response.body}
+      mod -> {get_response_type(response), mod.decode(response.body)}
+    end
+  end
+
+  defp get_response_type(response) do
+    if response.status in 200..299 do
+      :ok
+    else
+      :error
+    end
   end
 
   defp get_request_opts(opts) do

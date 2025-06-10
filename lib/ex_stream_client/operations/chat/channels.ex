@@ -16,6 +16,13 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   """
   require Logger
 
+  @type shared_opts :: [
+          api_key: String.t(),
+          api_key_secret: String.t(),
+          client: module(),
+          endpoint: String.t(),
+          req_opts: keyword()
+        ]
   @doc ~S"""
 
 
@@ -26,8 +33,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `payload`: `Elixir.ExStreamClient.Model.UpdateMemberPartialRequest`
   ### Optional Arguments:
   - `user_id`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec update_member_partial(
           String.t(),
@@ -38,14 +44,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
           String.t(),
           String.t(),
           ExStreamClient.Model.UpdateMemberPartialRequest.t(),
-          [
-            {:req_opts, keyword()}
-            | {:client, module()}
-            | {:endpoint, String.t()}
-            | {:api_key, String.t()}
-            | {:api_key_secret, String.t()}
-            | {:user_id, String.t()}
-          ]
+          [{:user_id, String.t()} | shared_opts]
         ) :: {:ok, ExStreamClient.Model.UpdateMemberPartialResponse.t()} | {:error, any()}
   def update_member_partial(type, id, payload, opts \\ []) do
     client = get_client(opts)
@@ -65,26 +64,13 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.UpdateMemberPartialResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -102,11 +88,17 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `type`
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.MarkUnreadRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec mark_unread(String.t(), String.t(), ExStreamClient.Model.MarkUnreadRequest.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  @spec mark_unread(
+          String.t(),
+          String.t(),
+          ExStreamClient.Model.MarkUnreadRequest.t(),
+          shared_opts
+        ) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def mark_unread(type, id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -120,26 +112,13 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.Response,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -159,10 +138,12 @@ defmodule ExStreamClient.Operations.Chat.Channels do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.MarkChannelsReadRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec mark_channels_read(ExStreamClient.Model.MarkChannelsReadRequest.t()) ::
+          {:ok, ExStreamClient.Model.MarkReadResponse.t()} | {:error, any()}
+  @spec mark_channels_read(ExStreamClient.Model.MarkChannelsReadRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.MarkReadResponse.t()} | {:error, any()}
   def mark_channels_read(payload, opts \\ []) do
     client = get_client(opts)
@@ -176,26 +157,13 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.MarkReadResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -217,11 +185,17 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `type`
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.HideChannelRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec hide_channel(String.t(), String.t(), ExStreamClient.Model.HideChannelRequest.t()) ::
           {:ok, ExStreamClient.Model.HideChannelResponse.t()} | {:error, any()}
+  @spec hide_channel(
+          String.t(),
+          String.t(),
+          ExStreamClient.Model.HideChannelRequest.t(),
+          shared_opts
+        ) :: {:ok, ExStreamClient.Model.HideChannelResponse.t()} | {:error, any()}
   def hide_channel(type, id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -235,26 +209,13 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.HideChannelResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -279,13 +240,19 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `type`
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.ChannelGetOrCreateRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_or_create_channel(
           String.t(),
           String.t(),
           ExStreamClient.Model.ChannelGetOrCreateRequest.t()
+        ) :: {:ok, ExStreamClient.Model.ChannelStateResponse.t()} | {:error, any()}
+  @spec get_or_create_channel(
+          String.t(),
+          String.t(),
+          ExStreamClient.Model.ChannelGetOrCreateRequest.t(),
+          shared_opts
         ) :: {:ok, ExStreamClient.Model.ChannelStateResponse.t()} | {:error, any()}
   def get_or_create_channel(type, id, payload, opts \\ []) do
     client = get_client(opts)
@@ -300,26 +267,13 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.ChannelStateResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -335,10 +289,12 @@ defmodule ExStreamClient.Operations.Chat.Channels do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.QueryChannelsRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec query_channels(ExStreamClient.Model.QueryChannelsRequest.t()) ::
+          {:ok, ExStreamClient.Model.QueryChannelsResponse.t()} | {:error, any()}
+  @spec query_channels(ExStreamClient.Model.QueryChannelsRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.QueryChannelsResponse.t()} | {:error, any()}
   def query_channels(payload, opts \\ []) do
     client = get_client(opts)
@@ -349,26 +305,13 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.QueryChannelsResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -392,11 +335,17 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `type`
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.SendMessageRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec send_message(String.t(), String.t(), ExStreamClient.Model.SendMessageRequest.t()) ::
           {:ok, ExStreamClient.Model.SendMessageResponse.t()} | {:error, any()}
+  @spec send_message(
+          String.t(),
+          String.t(),
+          ExStreamClient.Model.SendMessageRequest.t(),
+          shared_opts
+        ) :: {:ok, ExStreamClient.Model.SendMessageResponse.t()} | {:error, any()}
   def send_message(type, id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -410,26 +359,13 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.SendMessageResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -451,11 +387,17 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `type`
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.TruncateChannelRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec truncate_channel(String.t(), String.t(), ExStreamClient.Model.TruncateChannelRequest.t()) ::
           {:ok, ExStreamClient.Model.TruncateChannelResponse.t()} | {:error, any()}
+  @spec truncate_channel(
+          String.t(),
+          String.t(),
+          ExStreamClient.Model.TruncateChannelRequest.t(),
+          shared_opts
+        ) :: {:ok, ExStreamClient.Model.TruncateChannelResponse.t()} | {:error, any()}
   def truncate_channel(type, id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -469,26 +411,13 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.TruncateChannelResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -510,11 +439,17 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `type`
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.ShowChannelRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec show_channel(String.t(), String.t(), ExStreamClient.Model.ShowChannelRequest.t()) ::
           {:ok, ExStreamClient.Model.ShowChannelResponse.t()} | {:error, any()}
+  @spec show_channel(
+          String.t(),
+          String.t(),
+          ExStreamClient.Model.ShowChannelRequest.t(),
+          shared_opts
+        ) :: {:ok, ExStreamClient.Model.ShowChannelResponse.t()} | {:error, any()}
   def show_channel(type, id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -528,26 +463,13 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.ShowChannelResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -565,10 +487,12 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `type`
   - `id`
   - `ids`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_many_messages(String.t(), String.t(), list()) ::
+          {:ok, ExStreamClient.Model.GetManyMessagesResponse.t()} | {:error, any()}
+  @spec get_many_messages(String.t(), String.t(), list(), shared_opts) ::
           {:ok, ExStreamClient.Model.GetManyMessagesResponse.t()} | {:error, any()}
   def get_many_messages(type, id, ids, opts \\ []) do
     client = get_client(opts)
@@ -583,26 +507,13 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.GetManyMessagesResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -620,10 +531,12 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `type`
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.SendEventRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec send_event(String.t(), String.t(), ExStreamClient.Model.SendEventRequest.t()) ::
+          {:ok, ExStreamClient.Model.EventResponse.t()} | {:error, any()}
+  @spec send_event(String.t(), String.t(), ExStreamClient.Model.SendEventRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.EventResponse.t()} | {:error, any()}
   def send_event(type, id, payload, opts \\ []) do
     client = get_client(opts)
@@ -638,26 +551,13 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.EventResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -677,19 +577,12 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   ### Optional Arguments:
   - `parent_id`
   - `user_id`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_draft(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.GetDraftResponse.t()} | {:error, any()}
   @spec get_draft(String.t(), String.t(), [
-          {:req_opts, keyword()}
-          | {:client, module()}
-          | {:endpoint, String.t()}
-          | {:api_key, String.t()}
-          | {:api_key_secret, String.t()}
-          | {:user_id, String.t()}
-          | {:parent_id, String.t()}
+          ({:user_id, String.t()} | {:parent_id, String.t()}) | shared_opts
         ]) :: {:ok, ExStreamClient.Model.GetDraftResponse.t()} | {:error, any()}
   def get_draft(type, id, opts \\ []) do
     client = get_client(opts)
@@ -709,26 +602,13 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.GetDraftResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -751,19 +631,12 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   ### Optional Arguments:
   - `parent_id`
   - `user_id`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec delete_draft(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   @spec delete_draft(String.t(), String.t(), [
-          {:req_opts, keyword()}
-          | {:client, module()}
-          | {:endpoint, String.t()}
-          | {:api_key, String.t()}
-          | {:api_key_secret, String.t()}
-          | {:user_id, String.t()}
-          | {:parent_id, String.t()}
+          ({:user_id, String.t()} | {:parent_id, String.t()}) | shared_opts
         ]) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_draft(type, id, opts \\ []) do
     client = get_client(opts)
@@ -783,26 +656,13 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.Response,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -820,11 +680,17 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `type`
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.FileUploadRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec upload_file(String.t(), String.t(), ExStreamClient.Model.FileUploadRequest.t()) ::
           {:ok, ExStreamClient.Model.FileUploadResponse.t()} | {:error, any()}
+  @spec upload_file(
+          String.t(),
+          String.t(),
+          ExStreamClient.Model.FileUploadRequest.t(),
+          shared_opts
+        ) :: {:ok, ExStreamClient.Model.FileUploadResponse.t()} | {:error, any()}
   def upload_file(type, id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -838,26 +704,13 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.FileUploadResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -876,19 +729,12 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `id`
   ### Optional Arguments:
   - `url`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec delete_file(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec delete_file(String.t(), String.t(), [
-          {:req_opts, keyword()}
-          | {:client, module()}
-          | {:endpoint, String.t()}
-          | {:api_key, String.t()}
-          | {:api_key_secret, String.t()}
-          | {:url, String.t()}
-        ]) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  @spec delete_file(String.t(), String.t(), [{:url, String.t()} | shared_opts]) ::
+          {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_file(type, id, opts \\ []) do
     client = get_client(opts)
 
@@ -907,26 +753,13 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.Response,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -948,10 +781,12 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `type`
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.MarkReadRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec mark_read(String.t(), String.t(), ExStreamClient.Model.MarkReadRequest.t()) ::
+          {:ok, ExStreamClient.Model.MarkReadResponse.t()} | {:error, any()}
+  @spec mark_read(String.t(), String.t(), ExStreamClient.Model.MarkReadRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.MarkReadResponse.t()} | {:error, any()}
   def mark_read(type, id, payload, opts \\ []) do
     client = get_client(opts)
@@ -966,26 +801,13 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.MarkReadResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -1003,11 +825,17 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `type`
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.ImageUploadRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec upload_image(String.t(), String.t(), ExStreamClient.Model.ImageUploadRequest.t()) ::
           {:ok, ExStreamClient.Model.ImageUploadResponse.t()} | {:error, any()}
+  @spec upload_image(
+          String.t(),
+          String.t(),
+          ExStreamClient.Model.ImageUploadRequest.t(),
+          shared_opts
+        ) :: {:ok, ExStreamClient.Model.ImageUploadResponse.t()} | {:error, any()}
   def upload_image(type, id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -1021,26 +849,13 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.ImageUploadResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -1059,19 +874,12 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `id`
   ### Optional Arguments:
   - `url`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec delete_image(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec delete_image(String.t(), String.t(), [
-          {:req_opts, keyword()}
-          | {:client, module()}
-          | {:endpoint, String.t()}
-          | {:api_key, String.t()}
-          | {:api_key_secret, String.t()}
-          | {:url, String.t()}
-        ]) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  @spec delete_image(String.t(), String.t(), [{:url, String.t()} | shared_opts]) ::
+          {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_image(type, id, opts \\ []) do
     client = get_client(opts)
 
@@ -1090,26 +898,13 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.Response,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -1133,12 +928,17 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   ### Required Arguments:
   - `type`
   - `payload`: `Elixir.ExStreamClient.Model.ChannelGetOrCreateRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_or_create_distinct_channel(
           String.t(),
           ExStreamClient.Model.ChannelGetOrCreateRequest.t()
+        ) :: {:ok, ExStreamClient.Model.ChannelStateResponse.t()} | {:error, any()}
+  @spec get_or_create_distinct_channel(
+          String.t(),
+          ExStreamClient.Model.ChannelGetOrCreateRequest.t(),
+          shared_opts
         ) :: {:ok, ExStreamClient.Model.ChannelStateResponse.t()} | {:error, any()}
   def get_or_create_distinct_channel(type, payload, opts \\ []) do
     client = get_client(opts)
@@ -1152,26 +952,13 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.ChannelStateResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -1201,11 +988,17 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `type`
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.UpdateChannelRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec update_channel(String.t(), String.t(), ExStreamClient.Model.UpdateChannelRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateChannelResponse.t()} | {:error, any()}
+  @spec update_channel(
+          String.t(),
+          String.t(),
+          ExStreamClient.Model.UpdateChannelRequest.t(),
+          shared_opts
+        ) :: {:ok, ExStreamClient.Model.UpdateChannelResponse.t()} | {:error, any()}
   def update_channel(type, id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -1218,26 +1011,13 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.UpdateChannelResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -1259,13 +1039,19 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `type`
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.UpdateChannelPartialRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec update_channel_partial(
           String.t(),
           String.t(),
           ExStreamClient.Model.UpdateChannelPartialRequest.t()
+        ) :: {:ok, ExStreamClient.Model.UpdateChannelPartialResponse.t()} | {:error, any()}
+  @spec update_channel_partial(
+          String.t(),
+          String.t(),
+          ExStreamClient.Model.UpdateChannelPartialRequest.t(),
+          shared_opts
         ) :: {:ok, ExStreamClient.Model.UpdateChannelPartialResponse.t()} | {:error, any()}
   def update_channel_partial(type, id, payload, opts \\ []) do
     client = get_client(opts)
@@ -1279,26 +1065,13 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.UpdateChannelPartialResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -1321,19 +1094,12 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `id`
   ### Optional Arguments:
   - `hard_delete`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec delete_channel(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.DeleteChannelResponse.t()} | {:error, any()}
-  @spec delete_channel(String.t(), String.t(), [
-          {:req_opts, keyword()}
-          | {:client, module()}
-          | {:endpoint, String.t()}
-          | {:api_key, String.t()}
-          | {:api_key_secret, String.t()}
-          | {:hard_delete, boolean()}
-        ]) :: {:ok, ExStreamClient.Model.DeleteChannelResponse.t()} | {:error, any()}
+  @spec delete_channel(String.t(), String.t(), [{:hard_delete, boolean()} | shared_opts]) ::
+          {:ok, ExStreamClient.Model.DeleteChannelResponse.t()} | {:error, any()}
   def delete_channel(type, id, opts \\ []) do
     client = get_client(opts)
 
@@ -1352,26 +1118,13 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.DeleteChannelResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -1391,10 +1144,12 @@ defmodule ExStreamClient.Operations.Chat.Channels do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.DeleteChannelsRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec delete_channels(ExStreamClient.Model.DeleteChannelsRequest.t()) ::
+          {:ok, ExStreamClient.Model.DeleteChannelsResponse.t()} | {:error, any()}
+  @spec delete_channels(ExStreamClient.Model.DeleteChannelsRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.DeleteChannelsResponse.t()} | {:error, any()}
   def delete_channels(payload, opts \\ []) do
     client = get_client(opts)
@@ -1408,26 +1163,13 @@ defmodule ExStreamClient.Operations.Chat.Channels do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.DeleteChannelsResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -1446,6 +1188,21 @@ defmodule ExStreamClient.Operations.Chat.Channels do
     end
 
     client
+  end
+
+  defp decode_response(response, response_handlers) do
+    case Map.get(response_handlers, response.status) do
+      nil -> {:error, response.body}
+      mod -> {get_response_type(response), mod.decode(response.body)}
+    end
+  end
+
+  defp get_response_type(response) do
+    if response.status in 200..299 do
+      :ok
+    else
+      :error
+    end
   end
 
   defp get_request_opts(opts) do

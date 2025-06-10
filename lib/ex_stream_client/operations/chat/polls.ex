@@ -16,6 +16,13 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   """
   require Logger
 
+  @type shared_opts :: [
+          api_key: String.t(),
+          api_key_secret: String.t(),
+          client: module(),
+          endpoint: String.t(),
+          req_opts: keyword()
+        ]
   @doc ~S"""
   Queries votes
 
@@ -25,18 +32,12 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   - `payload`: `Elixir.ExStreamClient.Model.QueryPollVotesRequest`
   ### Optional Arguments:
   - `user_id`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec query_poll_votes(String.t(), ExStreamClient.Model.QueryPollVotesRequest.t()) ::
           {:ok, ExStreamClient.Model.PollVotesResponse.t()} | {:error, any()}
   @spec query_poll_votes(String.t(), ExStreamClient.Model.QueryPollVotesRequest.t(), [
-          {:req_opts, keyword()}
-          | {:client, module()}
-          | {:endpoint, String.t()}
-          | {:api_key, String.t()}
-          | {:api_key_secret, String.t()}
-          | {:user_id, String.t()}
+          {:user_id, String.t()} | shared_opts
         ]) :: {:ok, ExStreamClient.Model.PollVotesResponse.t()} | {:error, any()}
   def query_poll_votes(poll_id, payload, opts \\ []) do
     client = get_client(opts)
@@ -56,26 +57,13 @@ defmodule ExStreamClient.Operations.Chat.Polls do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.PollVotesResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -95,10 +83,12 @@ defmodule ExStreamClient.Operations.Chat.Polls do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.UpdatePollRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec update_poll(ExStreamClient.Model.UpdatePollRequest.t()) ::
+          {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
+  @spec update_poll(ExStreamClient.Model.UpdatePollRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
   def update_poll(payload, opts \\ []) do
     client = get_client(opts)
@@ -109,26 +99,13 @@ defmodule ExStreamClient.Operations.Chat.Polls do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.PollResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -144,10 +121,12 @@ defmodule ExStreamClient.Operations.Chat.Polls do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.CreatePollRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec create_poll(ExStreamClient.Model.CreatePollRequest.t()) ::
+          {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
+  @spec create_poll(ExStreamClient.Model.CreatePollRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
   def create_poll(payload, opts \\ []) do
     client = get_client(opts)
@@ -158,26 +137,13 @@ defmodule ExStreamClient.Operations.Chat.Polls do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.PollResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -197,11 +163,16 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   ### Required Arguments:
   - `poll_id`
   - `payload`: `Elixir.ExStreamClient.Model.UpdatePollOptionRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec update_poll_option(String.t(), ExStreamClient.Model.UpdatePollOptionRequest.t()) ::
           {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
+  @spec update_poll_option(
+          String.t(),
+          ExStreamClient.Model.UpdatePollOptionRequest.t(),
+          shared_opts
+        ) :: {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
   def update_poll_option(poll_id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -214,26 +185,13 @@ defmodule ExStreamClient.Operations.Chat.Polls do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.PollOptionResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -253,11 +211,16 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   ### Required Arguments:
   - `poll_id`
   - `payload`: `Elixir.ExStreamClient.Model.CreatePollOptionRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec create_poll_option(String.t(), ExStreamClient.Model.CreatePollOptionRequest.t()) ::
           {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
+  @spec create_poll_option(
+          String.t(),
+          ExStreamClient.Model.CreatePollOptionRequest.t(),
+          shared_opts
+        ) :: {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
   def create_poll_option(poll_id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -270,26 +233,13 @@ defmodule ExStreamClient.Operations.Chat.Polls do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.PollOptionResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -309,11 +259,16 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   ### Required Arguments:
   - `poll_id`
   - `payload`: `Elixir.ExStreamClient.Model.UpdatePollPartialRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec update_poll_partial(String.t(), ExStreamClient.Model.UpdatePollPartialRequest.t()) ::
           {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
+  @spec update_poll_partial(
+          String.t(),
+          ExStreamClient.Model.UpdatePollPartialRequest.t(),
+          shared_opts
+        ) :: {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
   def update_poll_partial(poll_id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -326,26 +281,13 @@ defmodule ExStreamClient.Operations.Chat.Polls do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.PollResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -363,18 +305,11 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   - `poll_id`
   ### Optional Arguments:
   - `user_id`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_poll(String.t()) :: {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
-  @spec get_poll(String.t(), [
-          {:req_opts, keyword()}
-          | {:client, module()}
-          | {:endpoint, String.t()}
-          | {:api_key, String.t()}
-          | {:api_key_secret, String.t()}
-          | {:user_id, String.t()}
-        ]) :: {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
+  @spec get_poll(String.t(), [{:user_id, String.t()} | shared_opts]) ::
+          {:ok, ExStreamClient.Model.PollResponse.t()} | {:error, any()}
   def get_poll(poll_id, opts \\ []) do
     client = get_client(opts)
 
@@ -393,26 +328,13 @@ defmodule ExStreamClient.Operations.Chat.Polls do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.PollResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -433,18 +355,11 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   - `poll_id`
   ### Optional Arguments:
   - `user_id`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec delete_poll(String.t()) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec delete_poll(String.t(), [
-          {:req_opts, keyword()}
-          | {:client, module()}
-          | {:endpoint, String.t()}
-          | {:api_key, String.t()}
-          | {:api_key_secret, String.t()}
-          | {:user_id, String.t()}
-        ]) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  @spec delete_poll(String.t(), [{:user_id, String.t()} | shared_opts]) ::
+          {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_poll(poll_id, opts \\ []) do
     client = get_client(opts)
 
@@ -463,26 +378,13 @@ defmodule ExStreamClient.Operations.Chat.Polls do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.Response,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -500,18 +402,12 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   - `payload`: `Elixir.ExStreamClient.Model.QueryPollsRequest`
   ### Optional Arguments:
   - `user_id`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec query_polls(ExStreamClient.Model.QueryPollsRequest.t()) ::
           {:ok, ExStreamClient.Model.QueryPollsResponse.t()} | {:error, any()}
   @spec query_polls(ExStreamClient.Model.QueryPollsRequest.t(), [
-          {:req_opts, keyword()}
-          | {:client, module()}
-          | {:endpoint, String.t()}
-          | {:api_key, String.t()}
-          | {:api_key_secret, String.t()}
-          | {:user_id, String.t()}
+          {:user_id, String.t()} | shared_opts
         ]) :: {:ok, ExStreamClient.Model.QueryPollsResponse.t()} | {:error, any()}
   def query_polls(payload, opts \\ []) do
     client = get_client(opts)
@@ -531,26 +427,13 @@ defmodule ExStreamClient.Operations.Chat.Polls do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.QueryPollsResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -569,19 +452,12 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   - `option_id`
   ### Optional Arguments:
   - `user_id`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_poll_option(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
-  @spec get_poll_option(String.t(), String.t(), [
-          {:req_opts, keyword()}
-          | {:client, module()}
-          | {:endpoint, String.t()}
-          | {:api_key, String.t()}
-          | {:api_key_secret, String.t()}
-          | {:user_id, String.t()}
-        ]) :: {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
+  @spec get_poll_option(String.t(), String.t(), [{:user_id, String.t()} | shared_opts]) ::
+          {:ok, ExStreamClient.Model.PollOptionResponse.t()} | {:error, any()}
   def get_poll_option(poll_id, option_id, opts \\ []) do
     client = get_client(opts)
 
@@ -600,26 +476,13 @@ defmodule ExStreamClient.Operations.Chat.Polls do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.PollOptionResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -641,19 +504,12 @@ defmodule ExStreamClient.Operations.Chat.Polls do
   - `option_id`
   ### Optional Arguments:
   - `user_id`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec delete_poll_option(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec delete_poll_option(String.t(), String.t(), [
-          {:req_opts, keyword()}
-          | {:client, module()}
-          | {:endpoint, String.t()}
-          | {:api_key, String.t()}
-          | {:api_key_secret, String.t()}
-          | {:user_id, String.t()}
-        ]) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  @spec delete_poll_option(String.t(), String.t(), [{:user_id, String.t()} | shared_opts]) ::
+          {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_poll_option(poll_id, option_id, opts \\ []) do
     client = get_client(opts)
 
@@ -672,26 +528,13 @@ defmodule ExStreamClient.Operations.Chat.Polls do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.Response,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -710,6 +553,21 @@ defmodule ExStreamClient.Operations.Chat.Polls do
     end
 
     client
+  end
+
+  defp decode_response(response, response_handlers) do
+    case Map.get(response_handlers, response.status) do
+      nil -> {:error, response.body}
+      mod -> {get_response_type(response), mod.decode(response.body)}
+    end
+  end
+
+  defp get_response_type(response) do
+    if response.status in 200..299 do
+      :ok
+    else
+      :error
+    end
   end
 
   defp get_request_opts(opts) do

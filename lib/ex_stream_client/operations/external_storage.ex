@@ -16,16 +16,25 @@ defmodule ExStreamClient.Operations.ExternalStorage do
   """
   require Logger
 
+  @type shared_opts :: [
+          api_key: String.t(),
+          api_key_secret: String.t(),
+          client: module(),
+          endpoint: String.t(),
+          req_opts: keyword()
+        ]
   @doc ~S"""
 
 
 
   ### Required Arguments:
   - `name`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec check_external_storage(String.t()) ::
+          {:ok, ExStreamClient.Model.CheckExternalStorageResponse.t()} | {:error, any()}
+  @spec check_external_storage(String.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.CheckExternalStorageResponse.t()} | {:error, any()}
   def check_external_storage(name, opts \\ []) do
     client = get_client(opts)
@@ -36,26 +45,13 @@ defmodule ExStreamClient.Operations.ExternalStorage do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.CheckExternalStorageResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -71,11 +67,15 @@ defmodule ExStreamClient.Operations.ExternalStorage do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.CreateExternalStorageRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec create_external_storage(ExStreamClient.Model.CreateExternalStorageRequest.t()) ::
           {:ok, ExStreamClient.Model.CreateExternalStorageResponse.t()} | {:error, any()}
+  @spec create_external_storage(
+          ExStreamClient.Model.CreateExternalStorageRequest.t(),
+          shared_opts
+        ) :: {:ok, ExStreamClient.Model.CreateExternalStorageResponse.t()} | {:error, any()}
   def create_external_storage(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/external_storage", method: :post, params: []] ++ [json: payload]
@@ -85,26 +85,13 @@ defmodule ExStreamClient.Operations.ExternalStorage do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.CreateExternalStorageResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -118,10 +105,12 @@ defmodule ExStreamClient.Operations.ExternalStorage do
   Lists external storage
 
 
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec list_external_storage() ::
+          {:ok, ExStreamClient.Model.ListExternalStorageResponse.t()} | {:error, any()}
+  @spec list_external_storage(shared_opts) ::
           {:ok, ExStreamClient.Model.ListExternalStorageResponse.t()} | {:error, any()}
   def list_external_storage(opts \\ []) do
     client = get_client(opts)
@@ -132,26 +121,13 @@ defmodule ExStreamClient.Operations.ExternalStorage do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.ListExternalStorageResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -168,11 +144,16 @@ defmodule ExStreamClient.Operations.ExternalStorage do
   ### Required Arguments:
   - `name`
   - `payload`: `Elixir.ExStreamClient.Model.UpdateExternalStorageRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec update_external_storage(String.t(), ExStreamClient.Model.UpdateExternalStorageRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateExternalStorageResponse.t()} | {:error, any()}
+  @spec update_external_storage(
+          String.t(),
+          ExStreamClient.Model.UpdateExternalStorageRequest.t(),
+          shared_opts
+        ) :: {:ok, ExStreamClient.Model.UpdateExternalStorageResponse.t()} | {:error, any()}
   def update_external_storage(name, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -185,26 +166,13 @@ defmodule ExStreamClient.Operations.ExternalStorage do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.UpdateExternalStorageResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -220,10 +188,12 @@ defmodule ExStreamClient.Operations.ExternalStorage do
 
   ### Required Arguments:
   - `name`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec delete_external_storage(String.t()) ::
+          {:ok, ExStreamClient.Model.DeleteExternalStorageResponse.t()} | {:error, any()}
+  @spec delete_external_storage(String.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.DeleteExternalStorageResponse.t()} | {:error, any()}
   def delete_external_storage(name, opts \\ []) do
     client = get_client(opts)
@@ -234,26 +204,13 @@ defmodule ExStreamClient.Operations.ExternalStorage do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.DeleteExternalStorageResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -272,6 +229,21 @@ defmodule ExStreamClient.Operations.ExternalStorage do
     end
 
     client
+  end
+
+  defp decode_response(response, response_handlers) do
+    case Map.get(response_handlers, response.status) do
+      nil -> {:error, response.body}
+      mod -> {get_response_type(response), mod.decode(response.body)}
+    end
+  end
+
+  defp get_response_type(response) do
+    if response.status in 200..299 do
+      :ok
+    else
+      :error
+    end
   end
 
   defp get_request_opts(opts) do

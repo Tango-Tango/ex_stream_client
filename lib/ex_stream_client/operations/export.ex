@@ -16,16 +16,25 @@ defmodule ExStreamClient.Operations.Export do
   """
   require Logger
 
+  @type shared_opts :: [
+          api_key: String.t(),
+          api_key_secret: String.t(),
+          client: module(),
+          endpoint: String.t(),
+          req_opts: keyword()
+        ]
   @doc ~S"""
   Exports user profile, reactions and messages for list of given users
 
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.ExportUsersRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec export_users(ExStreamClient.Model.ExportUsersRequest.t()) ::
+          {:ok, ExStreamClient.Model.ExportUsersResponse.t()} | {:error, any()}
+  @spec export_users(ExStreamClient.Model.ExportUsersRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.ExportUsersResponse.t()} | {:error, any()}
   def export_users(payload, opts \\ []) do
     client = get_client(opts)
@@ -36,26 +45,13 @@ defmodule ExStreamClient.Operations.Export do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.ExportUsersResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -74,6 +70,21 @@ defmodule ExStreamClient.Operations.Export do
     end
 
     client
+  end
+
+  defp decode_response(response, response_handlers) do
+    case Map.get(response_handlers, response.status) do
+      nil -> {:error, response.body}
+      mod -> {get_response_type(response), mod.decode(response.body)}
+    end
+  end
+
+  defp get_response_type(response) do
+    if response.status in 200..299 do
+      :ok
+    else
+      :error
+    end
   end
 
   defp get_request_opts(opts) do

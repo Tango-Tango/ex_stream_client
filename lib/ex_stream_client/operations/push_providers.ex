@@ -16,6 +16,13 @@ defmodule ExStreamClient.Operations.PushProviders do
   """
   require Logger
 
+  @type shared_opts :: [
+          api_key: String.t(),
+          api_key_secret: String.t(),
+          client: module(),
+          endpoint: String.t(),
+          req_opts: keyword()
+        ]
   @doc ~S"""
   Delete a push provider from v2 with multi bundle/package support. v1 isn't supported in this endpoint
 
@@ -23,10 +30,12 @@ defmodule ExStreamClient.Operations.PushProviders do
   ### Required Arguments:
   - `type`
   - `name`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec delete_push_provider(String.t(), String.t()) ::
+          {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  @spec delete_push_provider(String.t(), String.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_push_provider(type, name, opts \\ []) do
     client = get_client(opts)
@@ -40,26 +49,13 @@ defmodule ExStreamClient.Operations.PushProviders do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.Response,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -75,10 +71,12 @@ defmodule ExStreamClient.Operations.PushProviders do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.UpsertPushProviderRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec upsert_push_provider(ExStreamClient.Model.UpsertPushProviderRequest.t()) ::
+          {:ok, ExStreamClient.Model.UpsertPushProviderResponse.t()} | {:error, any()}
+  @spec upsert_push_provider(ExStreamClient.Model.UpsertPushProviderRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.UpsertPushProviderResponse.t()} | {:error, any()}
   def upsert_push_provider(payload, opts \\ []) do
     client = get_client(opts)
@@ -89,26 +87,13 @@ defmodule ExStreamClient.Operations.PushProviders do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.UpsertPushProviderResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -122,10 +107,12 @@ defmodule ExStreamClient.Operations.PushProviders do
   List details of all push providers.
 
 
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec list_push_providers() ::
+          {:ok, ExStreamClient.Model.ListPushProvidersResponse.t()} | {:error, any()}
+  @spec list_push_providers(shared_opts) ::
           {:ok, ExStreamClient.Model.ListPushProvidersResponse.t()} | {:error, any()}
   def list_push_providers(opts \\ []) do
     client = get_client(opts)
@@ -136,26 +123,13 @@ defmodule ExStreamClient.Operations.PushProviders do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.ListPushProvidersResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -174,6 +148,21 @@ defmodule ExStreamClient.Operations.PushProviders do
     end
 
     client
+  end
+
+  defp decode_response(response, response_handlers) do
+    case Map.get(response_handlers, response.status) do
+      nil -> {:error, response.body}
+      mod -> {get_response_type(response), mod.decode(response.body)}
+    end
+  end
+
+  defp get_response_type(response) do
+    if response.status in 200..299 do
+      :ok
+    else
+      :error
+    end
   end
 
   defp get_request_opts(opts) do

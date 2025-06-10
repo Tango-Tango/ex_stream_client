@@ -16,6 +16,13 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
   """
   require Logger
 
+  @type shared_opts :: [
+          api_key: String.t(),
+          api_key_secret: String.t(),
+          client: module(),
+          endpoint: String.t(),
+          req_opts: keyword()
+        ]
   @doc ~S"""
   Updates channel type
 
@@ -23,11 +30,16 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
   ### Required Arguments:
   - `name`
   - `payload`: `Elixir.ExStreamClient.Model.UpdateChannelTypeRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec update_channel_type(String.t(), ExStreamClient.Model.UpdateChannelTypeRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateChannelTypeResponse.t()} | {:error, any()}
+  @spec update_channel_type(
+          String.t(),
+          ExStreamClient.Model.UpdateChannelTypeRequest.t(),
+          shared_opts
+        ) :: {:ok, ExStreamClient.Model.UpdateChannelTypeResponse.t()} | {:error, any()}
   def update_channel_type(name, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -40,26 +52,13 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.UpdateChannelTypeResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -75,10 +74,12 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
 
   ### Required Arguments:
   - `name`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_channel_type(String.t()) ::
+          {:ok, ExStreamClient.Model.GetChannelTypeResponse.t()} | {:error, any()}
+  @spec get_channel_type(String.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.GetChannelTypeResponse.t()} | {:error, any()}
   def get_channel_type(name, opts \\ []) do
     client = get_client(opts)
@@ -89,26 +90,13 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.GetChannelTypeResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -124,10 +112,12 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
 
   ### Required Arguments:
   - `name`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec delete_channel_type(String.t()) ::
+          {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  @spec delete_channel_type(String.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_channel_type(name, opts \\ []) do
     client = get_client(opts)
@@ -138,26 +128,13 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.Response,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -173,10 +150,12 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.CreateChannelTypeRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec create_channel_type(ExStreamClient.Model.CreateChannelTypeRequest.t()) ::
+          {:ok, ExStreamClient.Model.CreateChannelTypeResponse.t()} | {:error, any()}
+  @spec create_channel_type(ExStreamClient.Model.CreateChannelTypeRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.CreateChannelTypeResponse.t()} | {:error, any()}
   def create_channel_type(payload, opts \\ []) do
     client = get_client(opts)
@@ -190,26 +169,13 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.CreateChannelTypeResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -223,10 +189,12 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
   Lists all available channel types
 
 
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec list_channel_types() ::
+          {:ok, ExStreamClient.Model.ListChannelTypesResponse.t()} | {:error, any()}
+  @spec list_channel_types(shared_opts) ::
           {:ok, ExStreamClient.Model.ListChannelTypesResponse.t()} | {:error, any()}
   def list_channel_types(opts \\ []) do
     client = get_client(opts)
@@ -237,26 +205,13 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.ListChannelTypesResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -275,6 +230,21 @@ defmodule ExStreamClient.Operations.Chat.Channeltypes do
     end
 
     client
+  end
+
+  defp decode_response(response, response_handlers) do
+    case Map.get(response_handlers, response.status) do
+      nil -> {:error, response.body}
+      mod -> {get_response_type(response), mod.decode(response.body)}
+    end
+  end
+
+  defp get_response_type(response) do
+    if response.status in 200..299 do
+      :ok
+    else
+      :error
+    end
   end
 
   defp get_request_opts(opts) do

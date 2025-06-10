@@ -124,9 +124,16 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
               end
             end
 
-          spec_ast =
+          required_spec_ast =
             quote do
               # fx without opts
+              @spec unquote(name)(unquote_splicing(spec)) ::
+                      unquote(response_spec) | {:error, any()}
+            end
+
+          optional_spec_ast =
+            quote do
+              # fx with opts
               @spec unquote(name)(unquote_splicing(spec), unquote(optional_args)) ::
                       unquote(response_spec) | {:error, any()}
             end
@@ -268,10 +275,12 @@ defmodule ExStreamClient.Tools.Codegen.GenerateOperations do
               end
             end
 
-          []
-          |> maybe_append(true, doc_ast)
-          |> maybe_append(true, spec_ast)
-          |> maybe_append(true, method_impl_ast)
+          [
+            doc_ast,
+            required_spec_ast,
+            optional_spec_ast,
+            method_impl_ast
+          ]
         end)
 
       moduledoc_string =

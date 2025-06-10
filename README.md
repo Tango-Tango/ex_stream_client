@@ -38,6 +38,27 @@ config :ex_stream_client,
   endpoint: "https://your-custom-endpoint.com"
 ```
 
+## Logging
+
+The client supports logging of requests and responses. You can enable it by configuring the `log` option in your `config.exs` file:
+
+```elixir
+config :ex_stream_client,
+  log: [
+    level: :info,
+    request: [:url, :body],
+    response: [:status]
+  ]
+```
+
+The `level` key sets the log level for all log messages. The `request` and `response` keys are lists of touchpoints to log. The available touchpoints are:
+
+- `:url` - logs the request URL
+- `:body` - logs the request body, if found
+- `:status` - logs the response status
+
+By default, all touchpoints are disabled, so nothing will be logged.
+
 ## Acknowledgements
 
 This project includes code adapted from [ex_openai](https://github.com/dvcrn/ex_openai),

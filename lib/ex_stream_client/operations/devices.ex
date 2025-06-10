@@ -16,16 +16,25 @@ defmodule ExStreamClient.Operations.Devices do
   """
   require Logger
 
+  @type shared_opts :: [
+          api_key: String.t(),
+          api_key_secret: String.t(),
+          client: module(),
+          endpoint: String.t(),
+          req_opts: keyword()
+        ]
   @doc ~S"""
   Adds a new device to a user, if the same device already exists the call will have no effect
 
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.CreateDeviceRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec create_device(ExStreamClient.Model.CreateDeviceRequest.t()) ::
+          {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  @spec create_device(ExStreamClient.Model.CreateDeviceRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def create_device(payload, opts \\ []) do
     client = get_client(opts)
@@ -36,26 +45,13 @@ defmodule ExStreamClient.Operations.Devices do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.Response,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -71,18 +67,11 @@ defmodule ExStreamClient.Operations.Devices do
 
   ### Optional Arguments:
   - `user_id`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec list_devices() :: {:ok, ExStreamClient.Model.ListDevicesResponse.t()} | {:error, any()}
-  @spec list_devices([
-          {:req_opts, keyword()}
-          | {:client, module()}
-          | {:endpoint, String.t()}
-          | {:api_key, String.t()}
-          | {:api_key_secret, String.t()}
-          | {:user_id, String.t()}
-        ]) :: {:ok, ExStreamClient.Model.ListDevicesResponse.t()} | {:error, any()}
+  @spec list_devices([{:user_id, String.t()} | shared_opts]) ::
+          {:ok, ExStreamClient.Model.ListDevicesResponse.t()} | {:error, any()}
   def list_devices(opts \\ []) do
     client = get_client(opts)
 
@@ -101,26 +90,13 @@ defmodule ExStreamClient.Operations.Devices do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.ListDevicesResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -138,18 +114,11 @@ defmodule ExStreamClient.Operations.Devices do
   - `id`
   ### Optional Arguments:
   - `user_id`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec delete_device(String.t()) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec delete_device(String.t(), [
-          {:req_opts, keyword()}
-          | {:client, module()}
-          | {:endpoint, String.t()}
-          | {:api_key, String.t()}
-          | {:api_key_secret, String.t()}
-          | {:user_id, String.t()}
-        ]) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  @spec delete_device(String.t(), [{:user_id, String.t()} | shared_opts]) ::
+          {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_device(id, opts \\ []) do
     client = get_client(opts)
 
@@ -168,26 +137,13 @@ defmodule ExStreamClient.Operations.Devices do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.Response,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -206,6 +162,21 @@ defmodule ExStreamClient.Operations.Devices do
     end
 
     client
+  end
+
+  defp decode_response(response, response_handlers) do
+    case Map.get(response_handlers, response.status) do
+      nil -> {:error, response.body}
+      mod -> {get_response_type(response), mod.decode(response.body)}
+    end
+  end
+
+  defp get_response_type(response) do
+    if response.status in 200..299 do
+      :ok
+    else
+      :error
+    end
   end
 
   defp get_request_opts(opts) do

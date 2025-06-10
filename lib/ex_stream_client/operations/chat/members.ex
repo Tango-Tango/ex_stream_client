@@ -16,24 +16,24 @@ defmodule ExStreamClient.Operations.Chat.Members do
   """
   require Logger
 
+  @type shared_opts :: [
+          api_key: String.t(),
+          api_key_secret: String.t(),
+          client: module(),
+          endpoint: String.t(),
+          req_opts: keyword()
+        ]
   @doc ~S"""
   Find and filter channel members
 
 
   ### Optional Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.QueryMembersPayload`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec query_members() :: {:ok, ExStreamClient.Model.MembersResponse.t()} | {:error, any()}
-  @spec query_members([
-          {:req_opts, keyword()}
-          | {:client, module()}
-          | {:endpoint, String.t()}
-          | {:api_key, String.t()}
-          | {:api_key_secret, String.t()}
-          | {:payload, ExStreamClient.Model.QueryMembersPayload.t()}
-        ]) :: {:ok, ExStreamClient.Model.MembersResponse.t()} | {:error, any()}
+  @spec query_members([{:payload, ExStreamClient.Model.QueryMembersPayload.t()} | shared_opts]) ::
+          {:ok, ExStreamClient.Model.MembersResponse.t()} | {:error, any()}
   def query_members(opts \\ []) do
     client = get_client(opts)
 
@@ -52,26 +52,13 @@ defmodule ExStreamClient.Operations.Chat.Members do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.MembersResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -90,6 +77,21 @@ defmodule ExStreamClient.Operations.Chat.Members do
     end
 
     client
+  end
+
+  defp decode_response(response, response_handlers) do
+    case Map.get(response_handlers, response.status) do
+      nil -> {:error, response.body}
+      mod -> {get_response_type(response), mod.decode(response.body)}
+    end
+  end
+
+  defp get_response_type(response) do
+    if response.status in 200..299 do
+      :ok
+    else
+      :error
+    end
   end
 
   defp get_request_opts(opts) do

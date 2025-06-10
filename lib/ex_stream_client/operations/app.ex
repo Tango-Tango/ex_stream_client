@@ -16,16 +16,25 @@ defmodule ExStreamClient.Operations.App do
   """
   require Logger
 
+  @type shared_opts :: [
+          api_key: String.t(),
+          api_key_secret: String.t(),
+          client: module(),
+          endpoint: String.t(),
+          req_opts: keyword()
+        ]
   @doc ~S"""
   This Method updates one or more application settings
 
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.UpdateAppRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec update_app(ExStreamClient.Model.UpdateAppRequest.t()) ::
+          {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  @spec update_app(ExStreamClient.Model.UpdateAppRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def update_app(payload, opts \\ []) do
     client = get_client(opts)
@@ -36,26 +45,13 @@ defmodule ExStreamClient.Operations.App do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.Response,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -69,10 +65,12 @@ defmodule ExStreamClient.Operations.App do
   This Method returns the application settings
 
 
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_app() :: {:ok, ExStreamClient.Model.GetApplicationResponse.t()} | {:error, any()}
+  @spec get_app(shared_opts) ::
+          {:ok, ExStreamClient.Model.GetApplicationResponse.t()} | {:error, any()}
   def get_app(opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/app", method: :get, params: []] ++ []
@@ -82,26 +80,13 @@ defmodule ExStreamClient.Operations.App do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.GetApplicationResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -120,6 +105,21 @@ defmodule ExStreamClient.Operations.App do
     end
 
     client
+  end
+
+  defp decode_response(response, response_handlers) do
+    case Map.get(response_handlers, response.status) do
+      nil -> {:error, response.body}
+      mod -> {get_response_type(response), mod.decode(response.body)}
+    end
+  end
+
+  defp get_response_type(response) do
+    if response.status in 200..299 do
+      :ok
+    else
+      :error
+    end
   end
 
   defp get_request_opts(opts) do

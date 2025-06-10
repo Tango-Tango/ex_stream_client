@@ -16,6 +16,13 @@ defmodule ExStreamClient.Operations.Users do
   """
   require Logger
 
+  @type shared_opts :: [
+          api_key: String.t(),
+          api_key_secret: String.t(),
+          client: module(),
+          endpoint: String.t(),
+          req_opts: keyword()
+        ]
   @doc ~S"""
   Activates user who's been deactivated previously
 
@@ -26,10 +33,12 @@ defmodule ExStreamClient.Operations.Users do
   ### Required Arguments:
   - `user_id`
   - `payload`: `Elixir.ExStreamClient.Model.ReactivateUserRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec reactivate_user(String.t(), ExStreamClient.Model.ReactivateUserRequest.t()) ::
+          {:ok, ExStreamClient.Model.ReactivateUserResponse.t()} | {:error, any()}
+  @spec reactivate_user(String.t(), ExStreamClient.Model.ReactivateUserRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.ReactivateUserResponse.t()} | {:error, any()}
   def reactivate_user(user_id, payload, opts \\ []) do
     client = get_client(opts)
@@ -43,26 +52,13 @@ defmodule ExStreamClient.Operations.Users do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.ReactivateUserResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -81,10 +77,12 @@ defmodule ExStreamClient.Operations.Users do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.UpdateUsersRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec update_users(ExStreamClient.Model.UpdateUsersRequest.t()) ::
+          {:ok, ExStreamClient.Model.UpdateUsersResponse.t()} | {:error, any()}
+  @spec update_users(ExStreamClient.Model.UpdateUsersRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.UpdateUsersResponse.t()} | {:error, any()}
   def update_users(payload, opts \\ []) do
     client = get_client(opts)
@@ -95,26 +93,13 @@ defmodule ExStreamClient.Operations.Users do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.UpdateUsersResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -135,10 +120,12 @@ defmodule ExStreamClient.Operations.Users do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.UpdateUsersPartialRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec update_users_partial(ExStreamClient.Model.UpdateUsersPartialRequest.t()) ::
+          {:ok, ExStreamClient.Model.UpdateUsersResponse.t()} | {:error, any()}
+  @spec update_users_partial(ExStreamClient.Model.UpdateUsersPartialRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.UpdateUsersResponse.t()} | {:error, any()}
   def update_users_partial(payload, opts \\ []) do
     client = get_client(opts)
@@ -149,26 +136,13 @@ defmodule ExStreamClient.Operations.Users do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.UpdateUsersResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -184,18 +158,11 @@ defmodule ExStreamClient.Operations.Users do
 
   ### Optional Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.QueryUsersPayload`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec query_users() :: {:ok, ExStreamClient.Model.QueryUsersResponse.t()} | {:error, any()}
-  @spec query_users([
-          {:req_opts, keyword()}
-          | {:client, module()}
-          | {:endpoint, String.t()}
-          | {:api_key, String.t()}
-          | {:api_key_secret, String.t()}
-          | {:payload, ExStreamClient.Model.QueryUsersPayload.t()}
-        ]) :: {:ok, ExStreamClient.Model.QueryUsersResponse.t()} | {:error, any()}
+  @spec query_users([{:payload, ExStreamClient.Model.QueryUsersPayload.t()} | shared_opts]) ::
+          {:ok, ExStreamClient.Model.QueryUsersResponse.t()} | {:error, any()}
   def query_users(opts \\ []) do
     client = get_client(opts)
 
@@ -214,26 +181,13 @@ defmodule ExStreamClient.Operations.Users do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.QueryUsersResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -253,10 +207,12 @@ defmodule ExStreamClient.Operations.Users do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.DeleteUsersRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec delete_users(ExStreamClient.Model.DeleteUsersRequest.t()) ::
+          {:ok, ExStreamClient.Model.DeleteUsersResponse.t()} | {:error, any()}
+  @spec delete_users(ExStreamClient.Model.DeleteUsersRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.DeleteUsersResponse.t()} | {:error, any()}
   def delete_users(payload, opts \\ []) do
     client = get_client(opts)
@@ -267,26 +223,13 @@ defmodule ExStreamClient.Operations.Users do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.DeleteUsersResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -306,10 +249,12 @@ defmodule ExStreamClient.Operations.Users do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.ReactivateUsersRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec reactivate_users(ExStreamClient.Model.ReactivateUsersRequest.t()) ::
+          {:ok, ExStreamClient.Model.ReactivateUsersResponse.t()} | {:error, any()}
+  @spec reactivate_users(ExStreamClient.Model.ReactivateUsersRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.ReactivateUsersResponse.t()} | {:error, any()}
   def reactivate_users(payload, opts \\ []) do
     client = get_client(opts)
@@ -320,26 +265,13 @@ defmodule ExStreamClient.Operations.Users do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.ReactivateUsersResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -355,10 +287,12 @@ defmodule ExStreamClient.Operations.Users do
 
   ### Required Arguments:
   - `user_id`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec export_user(String.t()) ::
+          {:ok, ExStreamClient.Model.ExportUserResponse.t()} | {:error, any()}
+  @spec export_user(String.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.ExportUserResponse.t()} | {:error, any()}
   def export_user(user_id, opts \\ []) do
     client = get_client(opts)
@@ -369,26 +303,13 @@ defmodule ExStreamClient.Operations.Users do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.ExportUserResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -407,10 +328,12 @@ defmodule ExStreamClient.Operations.Users do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.DeactivateUsersRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec deactivate_users(ExStreamClient.Model.DeactivateUsersRequest.t()) ::
+          {:ok, ExStreamClient.Model.DeactivateUsersResponse.t()} | {:error, any()}
+  @spec deactivate_users(ExStreamClient.Model.DeactivateUsersRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.DeactivateUsersResponse.t()} | {:error, any()}
   def deactivate_users(payload, opts \\ []) do
     client = get_client(opts)
@@ -421,26 +344,13 @@ defmodule ExStreamClient.Operations.Users do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.DeactivateUsersResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -456,10 +366,12 @@ defmodule ExStreamClient.Operations.Users do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.RestoreUsersRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec restore_users(ExStreamClient.Model.RestoreUsersRequest.t()) ::
+          {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  @spec restore_users(ExStreamClient.Model.RestoreUsersRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def restore_users(payload, opts \\ []) do
     client = get_client(opts)
@@ -470,26 +382,13 @@ defmodule ExStreamClient.Operations.Users do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.Response,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -505,10 +404,12 @@ defmodule ExStreamClient.Operations.Users do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.UnblockUsersRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec unblock_users(ExStreamClient.Model.UnblockUsersRequest.t()) ::
+          {:ok, ExStreamClient.Model.UnblockUsersResponse.t()} | {:error, any()}
+  @spec unblock_users(ExStreamClient.Model.UnblockUsersRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.UnblockUsersResponse.t()} | {:error, any()}
   def unblock_users(payload, opts \\ []) do
     client = get_client(opts)
@@ -519,26 +420,13 @@ defmodule ExStreamClient.Operations.Users do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.UnblockUsersResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -554,10 +442,12 @@ defmodule ExStreamClient.Operations.Users do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.BlockUsersRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec block_users(ExStreamClient.Model.BlockUsersRequest.t()) ::
+          {:ok, ExStreamClient.Model.BlockUsersResponse.t()} | {:error, any()}
+  @spec block_users(ExStreamClient.Model.BlockUsersRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.BlockUsersResponse.t()} | {:error, any()}
   def block_users(payload, opts \\ []) do
     client = get_client(opts)
@@ -568,26 +458,13 @@ defmodule ExStreamClient.Operations.Users do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.BlockUsersResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -603,19 +480,12 @@ defmodule ExStreamClient.Operations.Users do
 
   ### Optional Arguments:
   - `user_id`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_blocked_users() ::
           {:ok, ExStreamClient.Model.GetBlockedUsersResponse.t()} | {:error, any()}
-  @spec get_blocked_users([
-          {:req_opts, keyword()}
-          | {:client, module()}
-          | {:endpoint, String.t()}
-          | {:api_key, String.t()}
-          | {:api_key_secret, String.t()}
-          | {:user_id, String.t()}
-        ]) :: {:ok, ExStreamClient.Model.GetBlockedUsersResponse.t()} | {:error, any()}
+  @spec get_blocked_users([{:user_id, String.t()} | shared_opts]) ::
+          {:ok, ExStreamClient.Model.GetBlockedUsersResponse.t()} | {:error, any()}
   def get_blocked_users(opts \\ []) do
     client = get_client(opts)
 
@@ -634,26 +504,13 @@ defmodule ExStreamClient.Operations.Users do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.GetBlockedUsersResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -673,10 +530,12 @@ defmodule ExStreamClient.Operations.Users do
   ### Required Arguments:
   - `user_id`
   - `payload`: `Elixir.ExStreamClient.Model.DeactivateUserRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec deactivate_user(String.t(), ExStreamClient.Model.DeactivateUserRequest.t()) ::
+          {:ok, ExStreamClient.Model.DeactivateUserResponse.t()} | {:error, any()}
+  @spec deactivate_user(String.t(), ExStreamClient.Model.DeactivateUserRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.DeactivateUserResponse.t()} | {:error, any()}
   def deactivate_user(user_id, payload, opts \\ []) do
     client = get_client(opts)
@@ -690,26 +549,13 @@ defmodule ExStreamClient.Operations.Users do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.DeactivateUserResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -728,6 +574,21 @@ defmodule ExStreamClient.Operations.Users do
     end
 
     client
+  end
+
+  defp decode_response(response, response_handlers) do
+    case Map.get(response_handlers, response.status) do
+      nil -> {:error, response.body}
+      mod -> {get_response_type(response), mod.decode(response.body)}
+    end
+  end
+
+  defp get_response_type(response) do
+    if response.status in 200..299 do
+      :ok
+    else
+      :error
+    end
   end
 
   defp get_request_opts(opts) do

@@ -16,6 +16,13 @@ defmodule ExStreamClient.Operations.Chat.Threads do
   """
   require Logger
 
+  @type shared_opts :: [
+          api_key: String.t(),
+          api_key_secret: String.t(),
+          client: module(),
+          endpoint: String.t(),
+          req_opts: keyword()
+        ]
   @doc ~S"""
   Updates certain fields of the thread
 
@@ -27,11 +34,16 @@ defmodule ExStreamClient.Operations.Chat.Threads do
   ### Required Arguments:
   - `message_id`
   - `payload`: `Elixir.ExStreamClient.Model.UpdateThreadPartialRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec update_thread_partial(String.t(), ExStreamClient.Model.UpdateThreadPartialRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateThreadPartialResponse.t()} | {:error, any()}
+  @spec update_thread_partial(
+          String.t(),
+          ExStreamClient.Model.UpdateThreadPartialRequest.t(),
+          shared_opts
+        ) :: {:ok, ExStreamClient.Model.UpdateThreadPartialResponse.t()} | {:error, any()}
   def update_thread_partial(message_id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -44,26 +56,13 @@ defmodule ExStreamClient.Operations.Chat.Threads do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.UpdateThreadPartialResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -83,20 +82,15 @@ defmodule ExStreamClient.Operations.Chat.Threads do
   - `member_limit`
   - `participant_limit`
   - `reply_limit`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_thread(String.t()) ::
           {:ok, ExStreamClient.Model.GetThreadResponse.t()} | {:error, any()}
   @spec get_thread(String.t(), [
-          {:req_opts, keyword()}
-          | {:client, module()}
-          | {:endpoint, String.t()}
-          | {:api_key, String.t()}
-          | {:api_key_secret, String.t()}
-          | {:member_limit, integer()}
-          | {:participant_limit, integer()}
-          | {:reply_limit, integer()}
+          ({:member_limit, integer()}
+           | {:participant_limit, integer()}
+           | {:reply_limit, integer()})
+          | shared_opts
         ]) :: {:ok, ExStreamClient.Model.GetThreadResponse.t()} | {:error, any()}
   def get_thread(message_id, opts \\ []) do
     client = get_client(opts)
@@ -116,26 +110,13 @@ defmodule ExStreamClient.Operations.Chat.Threads do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.GetThreadResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -151,10 +132,12 @@ defmodule ExStreamClient.Operations.Chat.Threads do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.QueryThreadsRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec query_threads(ExStreamClient.Model.QueryThreadsRequest.t()) ::
+          {:ok, ExStreamClient.Model.QueryThreadsResponse.t()} | {:error, any()}
+  @spec query_threads(ExStreamClient.Model.QueryThreadsRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.QueryThreadsResponse.t()} | {:error, any()}
   def query_threads(payload, opts \\ []) do
     client = get_client(opts)
@@ -165,26 +148,13 @@ defmodule ExStreamClient.Operations.Chat.Threads do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.QueryThreadsResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -203,6 +173,21 @@ defmodule ExStreamClient.Operations.Chat.Threads do
     end
 
     client
+  end
+
+  defp decode_response(response, response_handlers) do
+    case Map.get(response_handlers, response.status) do
+      nil -> {:error, response.body}
+      mod -> {get_response_type(response), mod.decode(response.body)}
+    end
+  end
+
+  defp get_response_type(response) do
+    if response.status in 200..299 do
+      :ok
+    else
+      :error
+    end
   end
 
   defp get_request_opts(opts) do

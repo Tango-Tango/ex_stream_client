@@ -16,16 +16,25 @@ defmodule ExStreamClient.Operations.Blocklists do
   """
   require Logger
 
+  @type shared_opts :: [
+          api_key: String.t(),
+          api_key_secret: String.t(),
+          client: module(),
+          endpoint: String.t(),
+          req_opts: keyword()
+        ]
   @doc ~S"""
   Creates a new application blocklist, once created the blocklist can be used by any channel type
 
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.CreateBlockListRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec create_block_list(ExStreamClient.Model.CreateBlockListRequest.t()) ::
+          {:ok, ExStreamClient.Model.CreateBlockListResponse.t()} | {:error, any()}
+  @spec create_block_list(ExStreamClient.Model.CreateBlockListRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.CreateBlockListResponse.t()} | {:error, any()}
   def create_block_list(payload, opts \\ []) do
     client = get_client(opts)
@@ -36,26 +45,13 @@ defmodule ExStreamClient.Operations.Blocklists do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.CreateBlockListResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -71,19 +67,12 @@ defmodule ExStreamClient.Operations.Blocklists do
 
   ### Optional Arguments:
   - `team`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec list_block_lists() ::
           {:ok, ExStreamClient.Model.ListBlockListResponse.t()} | {:error, any()}
-  @spec list_block_lists([
-          {:req_opts, keyword()}
-          | {:client, module()}
-          | {:endpoint, String.t()}
-          | {:api_key, String.t()}
-          | {:api_key_secret, String.t()}
-          | {:team, String.t()}
-        ]) :: {:ok, ExStreamClient.Model.ListBlockListResponse.t()} | {:error, any()}
+  @spec list_block_lists([{:team, String.t()} | shared_opts]) ::
+          {:ok, ExStreamClient.Model.ListBlockListResponse.t()} | {:error, any()}
   def list_block_lists(opts \\ []) do
     client = get_client(opts)
 
@@ -102,26 +91,13 @@ defmodule ExStreamClient.Operations.Blocklists do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.ListBlockListResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -138,11 +114,16 @@ defmodule ExStreamClient.Operations.Blocklists do
   ### Required Arguments:
   - `name`
   - `payload`: `Elixir.ExStreamClient.Model.UpdateBlockListRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec update_block_list(String.t(), ExStreamClient.Model.UpdateBlockListRequest.t()) ::
           {:ok, ExStreamClient.Model.UpdateBlockListResponse.t()} | {:error, any()}
+  @spec update_block_list(
+          String.t(),
+          ExStreamClient.Model.UpdateBlockListRequest.t(),
+          shared_opts
+        ) :: {:ok, ExStreamClient.Model.UpdateBlockListResponse.t()} | {:error, any()}
   def update_block_list(name, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -155,26 +136,13 @@ defmodule ExStreamClient.Operations.Blocklists do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.UpdateBlockListResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -192,19 +160,12 @@ defmodule ExStreamClient.Operations.Blocklists do
   - `name`
   ### Optional Arguments:
   - `team`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_block_list(String.t()) ::
           {:ok, ExStreamClient.Model.GetBlockListResponse.t()} | {:error, any()}
-  @spec get_block_list(String.t(), [
-          {:req_opts, keyword()}
-          | {:client, module()}
-          | {:endpoint, String.t()}
-          | {:api_key, String.t()}
-          | {:api_key_secret, String.t()}
-          | {:team, String.t()}
-        ]) :: {:ok, ExStreamClient.Model.GetBlockListResponse.t()} | {:error, any()}
+  @spec get_block_list(String.t(), [{:team, String.t()} | shared_opts]) ::
+          {:ok, ExStreamClient.Model.GetBlockListResponse.t()} | {:error, any()}
   def get_block_list(name, opts \\ []) do
     client = get_client(opts)
 
@@ -223,26 +184,13 @@ defmodule ExStreamClient.Operations.Blocklists do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.GetBlockListResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -260,19 +208,12 @@ defmodule ExStreamClient.Operations.Blocklists do
   - `name`
   ### Optional Arguments:
   - `team`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec delete_block_list(String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec delete_block_list(String.t(), [
-          {:req_opts, keyword()}
-          | {:client, module()}
-          | {:endpoint, String.t()}
-          | {:api_key, String.t()}
-          | {:api_key_secret, String.t()}
-          | {:team, String.t()}
-        ]) :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  @spec delete_block_list(String.t(), [{:team, String.t()} | shared_opts]) ::
+          {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
   def delete_block_list(name, opts \\ []) do
     client = get_client(opts)
 
@@ -291,26 +232,13 @@ defmodule ExStreamClient.Operations.Blocklists do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.Response,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -329,6 +257,21 @@ defmodule ExStreamClient.Operations.Blocklists do
     end
 
     client
+  end
+
+  defp decode_response(response, response_handlers) do
+    case Map.get(response_handlers, response.status) do
+      nil -> {:error, response.body}
+      mod -> {get_response_type(response), mod.decode(response.body)}
+    end
+  end
+
+  defp get_response_type(response) do
+    if response.status in 200..299 do
+      :ok
+    else
+      :error
+    end
   end
 
   defp get_request_opts(opts) do

@@ -16,6 +16,13 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
   """
   require Logger
 
+  @type shared_opts :: [
+          api_key: String.t(),
+          api_key_secret: String.t(),
+          client: module(),
+          endpoint: String.t(),
+          req_opts: keyword()
+        ]
   @doc ~S"""
   Stops a campaign
 
@@ -23,10 +30,12 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
   ### Required Arguments:
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.StopCampaignRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec schedule_campaign(String.t(), ExStreamClient.Model.StopCampaignRequest.t()) ::
+          {:ok, ExStreamClient.Model.CampaignResponse.t()} | {:error, any()}
+  @spec schedule_campaign(String.t(), ExStreamClient.Model.StopCampaignRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.CampaignResponse.t()} | {:error, any()}
   def schedule_campaign(id, payload, opts \\ []) do
     client = get_client(opts)
@@ -40,26 +49,13 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.CampaignResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -75,10 +71,12 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.QueryCampaignsRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec query_campaigns(ExStreamClient.Model.QueryCampaignsRequest.t()) ::
+          {:ok, ExStreamClient.Model.QueryCampaignsResponse.t()} | {:error, any()}
+  @spec query_campaigns(ExStreamClient.Model.QueryCampaignsRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.QueryCampaignsResponse.t()} | {:error, any()}
   def query_campaigns(payload, opts \\ []) do
     client = get_client(opts)
@@ -92,26 +90,13 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.QueryCampaignsResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -131,20 +116,12 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
   - `limit`
   - `next`
   - `prev`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_campaign(String.t()) ::
           {:ok, ExStreamClient.Model.GetCampaignResponse.t()} | {:error, any()}
   @spec get_campaign(String.t(), [
-          {:req_opts, keyword()}
-          | {:client, module()}
-          | {:endpoint, String.t()}
-          | {:api_key, String.t()}
-          | {:api_key_secret, String.t()}
-          | {:limit, integer()}
-          | {:next, String.t()}
-          | {:prev, String.t()}
+          ({:limit, integer()} | {:next, String.t()} | {:prev, String.t()}) | shared_opts
         ]) :: {:ok, ExStreamClient.Model.GetCampaignResponse.t()} | {:error, any()}
   def get_campaign(id, opts \\ []) do
     client = get_client(opts)
@@ -164,26 +141,13 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.GetCampaignResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -200,10 +164,12 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
   ### Required Arguments:
   - `id`
   - `payload`: `Elixir.ExStreamClient.Model.StartCampaignRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec start_campaign(String.t(), ExStreamClient.Model.StartCampaignRequest.t()) ::
+          {:ok, ExStreamClient.Model.StartCampaignResponse.t()} | {:error, any()}
+  @spec start_campaign(String.t(), ExStreamClient.Model.StartCampaignRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.StartCampaignResponse.t()} | {:error, any()}
   def start_campaign(id, payload, opts \\ []) do
     client = get_client(opts)
@@ -217,26 +183,13 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.StartCampaignResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -255,6 +208,21 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
     end
 
     client
+  end
+
+  defp decode_response(response, response_handlers) do
+    case Map.get(response_handlers, response.status) do
+      nil -> {:error, response.body}
+      mod -> {get_response_type(response), mod.decode(response.body)}
+    end
+  end
+
+  defp get_response_type(response) do
+    if response.status in 200..299 do
+      :ok
+    else
+      :error
+    end
   end
 
   defp get_request_opts(opts) do

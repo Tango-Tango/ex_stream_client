@@ -16,16 +16,25 @@ defmodule ExStreamClient.Operations.Chat.PushTemplates do
   """
   require Logger
 
+  @type shared_opts :: [
+          api_key: String.t(),
+          api_key_secret: String.t(),
+          client: module(),
+          endpoint: String.t(),
+          req_opts: keyword()
+        ]
   @doc ~S"""
   Create or update a push notification template for a specific event type and push provider
 
 
   ### Required Arguments:
   - `payload`: `Elixir.ExStreamClient.Model.UpsertPushTemplateRequest`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec upsert_push_template(ExStreamClient.Model.UpsertPushTemplateRequest.t()) ::
+          {:ok, ExStreamClient.Model.UpsertPushTemplateResponse.t()} | {:error, any()}
+  @spec upsert_push_template(ExStreamClient.Model.UpsertPushTemplateRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.UpsertPushTemplateResponse.t()} | {:error, any()}
   def upsert_push_template(payload, opts \\ []) do
     client = get_client(opts)
@@ -39,26 +48,13 @@ defmodule ExStreamClient.Operations.Chat.PushTemplates do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             201 => ExStreamClient.Model.UpsertPushTemplateResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -76,19 +72,12 @@ defmodule ExStreamClient.Operations.Chat.PushTemplates do
   - `push_provider_type`
   ### Optional Arguments:
   - `push_provider_name`
-
-  All options from [Shared Options](#module-shared-options) are supported.
+  - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_push_templates(String.t()) ::
           {:ok, ExStreamClient.Model.GetPushTemplatesResponse.t()} | {:error, any()}
-  @spec get_push_templates(String.t(), [
-          {:req_opts, keyword()}
-          | {:client, module()}
-          | {:endpoint, String.t()}
-          | {:api_key, String.t()}
-          | {:api_key_secret, String.t()}
-          | {:push_provider_name, String.t()}
-        ]) :: {:ok, ExStreamClient.Model.GetPushTemplatesResponse.t()} | {:error, any()}
+  @spec get_push_templates(String.t(), [{:push_provider_name, String.t()} | shared_opts]) ::
+          {:ok, ExStreamClient.Model.GetPushTemplatesResponse.t()} | {:error, any()}
   def get_push_templates(push_provider_type, opts \\ []) do
     client = get_client(opts)
 
@@ -110,26 +99,13 @@ defmodule ExStreamClient.Operations.Chat.PushTemplates do
       Req.new(request_opts)
       |> Req.Request.append_response_steps(
         decode: fn {request, response} ->
-          response_type =
-            if response.status in 200..299 do
-              :ok
-            else
-              :error
-            end
-
           response_handlers = %{
             200 => ExStreamClient.Model.GetPushTemplatesResponse,
             400 => ExStreamClient.Model.APIError,
             429 => ExStreamClient.Model.APIError
           }
 
-          parsed =
-            case Map.get(response_handlers, response.status) do
-              nil -> {:error, response.body}
-              mod -> {response_type, mod.decode(response.body)}
-            end
-
-          {request, %{response | body: parsed}}
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
 
@@ -148,6 +124,21 @@ defmodule ExStreamClient.Operations.Chat.PushTemplates do
     end
 
     client
+  end
+
+  defp decode_response(response, response_handlers) do
+    case Map.get(response_handlers, response.status) do
+      nil -> {:error, response.body}
+      mod -> {get_response_type(response), mod.decode(response.body)}
+    end
+  end
+
+  defp get_response_type(response) do
+    if response.status in 200..299 do
+      :ok
+    else
+      :error
+    end
   end
 
   defp get_request_opts(opts) do

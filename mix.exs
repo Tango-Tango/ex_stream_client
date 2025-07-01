@@ -1,7 +1,7 @@
 defmodule ExStreamClient.MixProject do
   use Mix.Project
 
-  @version "0.1.8"
+  @version "0.1.9"
   @source_url "https://github.com/Tango-Tango/ex_stream_client"
 
   def project do

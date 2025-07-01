@@ -4,7 +4,7 @@ defmodule ExStreamClient.Model.CheckSNSResponse do
   use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :status]
   defstruct [:data, :duration, :error, :status]
-  @nested_components status: :atom
+  @nested_components status: :enum
   def nested_components do
     @nested_components
   end

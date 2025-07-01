@@ -18,7 +18,7 @@ defmodule ExStreamClient.Model.VideoSettings do
     :target_resolution
   ]
 
-  @nested_components camera_facing: :atom,
+  @nested_components camera_facing: :enum,
                      target_resolution: ExStreamClient.Model.TargetResolution
   def nested_components do
     @nested_components

@@ -18,7 +18,7 @@ defmodule ExStreamClient.Model.SubmitActionRequest do
     :user_id
   ]
 
-  @nested_components action_type: :atom,
+  @nested_components action_type: :enum,
                      ban: ExStreamClient.Model.BanActionRequest,
                      custom: ExStreamClient.Model.CustomActionRequest,
                      delete_activity: ExStreamClient.Model.DeleteActivityRequest,

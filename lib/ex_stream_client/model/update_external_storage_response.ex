@@ -4,7 +4,7 @@ defmodule ExStreamClient.Model.UpdateExternalStorageResponse do
   use ExStreamClient.TypeInterner
   @enforce_keys [:bucket, :duration, :name, :path, :type]
   defstruct [:bucket, :duration, :name, :path, :type]
-  @nested_components type: :atom
+  @nested_components type: :enum
   def nested_components do
     @nested_components
   end

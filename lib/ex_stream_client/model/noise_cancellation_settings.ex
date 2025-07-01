@@ -4,7 +4,7 @@ defmodule ExStreamClient.Model.NoiseCancellationSettings do
   use ExStreamClient.TypeInterner
   @enforce_keys [:mode]
   defstruct [:mode]
-  @nested_components mode: :atom
+  @nested_components mode: :enum
   def nested_components do
     @nested_components
   end

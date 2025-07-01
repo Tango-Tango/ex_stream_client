@@ -4,7 +4,7 @@ defmodule ExStreamClient.Model.UpsertPushTemplateRequest do
   use ExStreamClient.TypeInterner
   @enforce_keys [:event_type, :push_provider_type]
   defstruct [:enable_push, :event_type, :push_provider_name, :push_provider_type, :template]
-  @nested_components event_type: :atom, push_provider_type: :atom
+  @nested_components event_type: :enum, push_provider_type: :enum
   def nested_components do
     @nested_components
   end

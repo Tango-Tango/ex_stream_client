@@ -7,7 +7,7 @@ defmodule ExStreamClient.Model.UpdateExternalStorageRequest do
 
   @nested_components aws_s3: ExStreamClient.Model.S3Request,
                      azure_blob: ExStreamClient.Model.AzureRequest,
-                     storage_type: :atom
+                     storage_type: :enum
   def nested_components do
     @nested_components
   end

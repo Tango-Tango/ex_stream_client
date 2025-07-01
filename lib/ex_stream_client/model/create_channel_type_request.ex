@@ -33,11 +33,11 @@ defmodule ExStreamClient.Model.CreateChannelTypeRequest do
     :url_enrichment
   ]
 
-  @nested_components automod: :atom,
-                     automod_behavior: :atom,
-                     blocklist_behavior: :atom,
+  @nested_components automod: :enum,
+                     automod_behavior: :enum,
+                     blocklist_behavior: :enum,
                      blocklists: ExStreamClient.Model.BlockListOptions,
-                     message_retention: :atom,
+                     message_retention: :enum,
                      permissions: ExStreamClient.Model.PolicyRequest
   def nested_components do
     @nested_components

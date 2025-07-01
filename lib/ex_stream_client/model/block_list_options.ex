@@ -4,7 +4,7 @@ defmodule ExStreamClient.Model.BlockListOptions do
   use ExStreamClient.TypeInterner
   @enforce_keys [:behavior, :blocklist]
   defstruct [:behavior, :blocklist]
-  @nested_components behavior: :atom
+  @nested_components behavior: :enum
   def nested_components do
     @nested_components
   end

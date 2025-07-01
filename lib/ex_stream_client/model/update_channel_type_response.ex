@@ -69,10 +69,10 @@ defmodule ExStreamClient.Model.UpdateChannelTypeResponse do
     :url_enrichment
   ]
 
-  @nested_components automod: :atom,
-                     automod_behavior: :atom,
+  @nested_components automod: :enum,
+                     automod_behavior: :enum,
                      automod_thresholds: ExStreamClient.Model.Thresholds,
-                     blocklist_behavior: :atom,
+                     blocklist_behavior: :enum,
                      blocklists: ExStreamClient.Model.BlockListOptions,
                      permissions: ExStreamClient.Model.PolicyRequest
   def nested_components do

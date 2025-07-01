@@ -4,7 +4,7 @@ defmodule ExStreamClient.Model.AWSRekognitionRule do
   use ExStreamClient.TypeInterner
   @enforce_keys [:action, :label, :min_confidence]
   defstruct [:action, :label, :min_confidence]
-  @nested_components action: :atom
+  @nested_components action: :enum
   def nested_components do
     @nested_components
   end

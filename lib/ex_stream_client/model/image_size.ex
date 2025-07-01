@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.ImageSize do
   use ExStreamClient.JSON
   use ExStreamClient.TypeInterner
   defstruct [:crop, :height, :resize, :width]
-  @nested_components crop: :atom, resize: :atom
+  @nested_components crop: :enum, resize: :enum
   def nested_components do
     @nested_components
   end

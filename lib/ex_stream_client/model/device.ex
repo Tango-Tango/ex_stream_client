@@ -14,7 +14,7 @@ defmodule ExStreamClient.Model.Device do
     :voip
   ]
 
-  @nested_components push_provider: :atom
+  @nested_components push_provider: :enum
   def nested_components do
     @nested_components
   end

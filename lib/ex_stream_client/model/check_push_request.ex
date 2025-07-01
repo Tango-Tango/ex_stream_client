@@ -15,7 +15,7 @@ defmodule ExStreamClient.Model.CheckPushRequest do
     :user_id
   ]
 
-  @nested_components push_provider_type: :atom, user: ExStreamClient.Model.UserRequest
+  @nested_components push_provider_type: :enum, user: ExStreamClient.Model.UserRequest
   def nested_components do
     @nested_components
   end

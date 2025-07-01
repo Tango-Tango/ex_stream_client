@@ -4,7 +4,7 @@ defmodule ExStreamClient.Model.TranscriptionSettings do
   use ExStreamClient.TypeInterner
   @enforce_keys [:closed_caption_mode, :language, :languages, :mode]
   defstruct [:closed_caption_mode, :language, :languages, :mode]
-  @nested_components closed_caption_mode: :atom, language: :atom, mode: :atom
+  @nested_components closed_caption_mode: :enum, language: :enum, mode: :enum
   def nested_components do
     @nested_components
   end

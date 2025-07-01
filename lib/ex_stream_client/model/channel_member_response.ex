@@ -34,7 +34,7 @@ defmodule ExStreamClient.Model.ChannelMemberResponse do
     :user_id
   ]
 
-  @nested_components role: :atom, user: ExStreamClient.Model.UserResponse
+  @nested_components role: :enum, user: ExStreamClient.Model.UserResponse
   def nested_components do
     @nested_components
   end

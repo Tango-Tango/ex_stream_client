@@ -4,7 +4,7 @@ defmodule ExStreamClient.Model.BlockListRule do
   use ExStreamClient.TypeInterner
   @enforce_keys [:action, :name, :team]
   defstruct [:action, :name, :team]
-  @nested_components action: :atom
+  @nested_components action: :enum
   def nested_components do
     @nested_components
   end

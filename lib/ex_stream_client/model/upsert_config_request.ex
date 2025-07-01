@@ -20,7 +20,8 @@ defmodule ExStreamClient.Model.UpsertConfigRequest do
     :team,
     :user,
     :user_id,
-    :velocity_filter_config
+    :velocity_filter_config,
+    :video_call_rule_config
   ]
 
   @nested_components ai_image_config: ExStreamClient.Model.AIImageConfig,
@@ -37,7 +38,8 @@ defmodule ExStreamClient.Model.UpsertConfigRequest do
                      google_vision_config: ExStreamClient.Model.GoogleVisionConfig,
                      rule_builder_config: ExStreamClient.Model.RuleBuilderConfig,
                      user: ExStreamClient.Model.UserRequest,
-                     velocity_filter_config: ExStreamClient.Model.VelocityFilterConfig
+                     velocity_filter_config: ExStreamClient.Model.VelocityFilterConfig,
+                     video_call_rule_config: ExStreamClient.Model.VideoCallRuleConfig
   def nested_components do
     @nested_components
   end
@@ -61,6 +63,7 @@ defmodule ExStreamClient.Model.UpsertConfigRequest do
           team: String.t() | nil,
           user: ExStreamClient.Model.UserRequest.t() | nil,
           user_id: String.t() | nil,
-          velocity_filter_config: ExStreamClient.Model.VelocityFilterConfig.t() | nil
+          velocity_filter_config: ExStreamClient.Model.VelocityFilterConfig.t() | nil,
+          video_call_rule_config: ExStreamClient.Model.VideoCallRuleConfig.t() | nil
         }
 end

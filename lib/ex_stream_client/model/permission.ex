@@ -16,7 +16,7 @@ defmodule ExStreamClient.Model.Permission do
     :tags
   ]
 
-  @nested_components level: :atom
+  @nested_components level: :enum
   def nested_components do
     @nested_components
   end

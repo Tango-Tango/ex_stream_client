@@ -17,7 +17,7 @@ defmodule ExStreamClient.Model.ConfigOverrides do
     :url_enrichment
   ]
 
-  @nested_components blocklist_behavior: :atom
+  @nested_components blocklist_behavior: :enum
   def nested_components do
     @nested_components
   end

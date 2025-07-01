@@ -4,7 +4,7 @@ defmodule ExStreamClient.Model.PolicyRequest do
   use ExStreamClient.TypeInterner
   @enforce_keys [:action, :name, :owner, :priority, :resources, :roles]
   defstruct [:action, :name, :owner, :priority, :resources, :roles]
-  @nested_components action: :atom
+  @nested_components action: :enum
   def nested_components do
     @nested_components
   end

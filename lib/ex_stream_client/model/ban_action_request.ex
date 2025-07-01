@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.BanActionRequest do
   use ExStreamClient.JSON
   use ExStreamClient.TypeInterner
   defstruct [:channel_ban_only, :delete_messages, :ip_ban, :reason, :shadow, :timeout]
-  @nested_components delete_messages: :atom
+  @nested_components delete_messages: :enum
   def nested_components do
     @nested_components
   end

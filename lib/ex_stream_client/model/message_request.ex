@@ -26,7 +26,7 @@ defmodule ExStreamClient.Model.MessageRequest do
   ]
 
   @nested_components attachments: ExStreamClient.Model.Attachment,
-                     type: :atom,
+                     type: :enum,
                      user: ExStreamClient.Model.UserRequest
   def nested_components do
     @nested_components

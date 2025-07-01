@@ -4,7 +4,7 @@ defmodule ExStreamClient.Model.CreateImportRequest do
   use ExStreamClient.TypeInterner
   @enforce_keys [:mode, :path]
   defstruct [:mode, :path]
-  @nested_components mode: :atom
+  @nested_components mode: :enum
   def nested_components do
     @nested_components
   end

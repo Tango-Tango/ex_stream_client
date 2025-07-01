@@ -80,7 +80,7 @@ defmodule ExStreamClient.Model.MessageResponse do
                      quoted_message: ExStreamClient.Model.MessageResponse,
                      reaction_groups: {:map, ExStreamClient.Model.ReactionGroupResponse},
                      thread_participants: ExStreamClient.Model.UserResponse,
-                     type: :atom,
+                     type: :enum,
                      user: ExStreamClient.Model.UserResponse
   def nested_components do
     @nested_components

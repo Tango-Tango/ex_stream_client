@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.AsyncModerationCallbackConfig do
   use ExStreamClient.JSON
   use ExStreamClient.TypeInterner
   defstruct [:mode, :server_url]
-  @nested_components mode: :atom
+  @nested_components mode: :enum
   def nested_components do
     @nested_components
   end

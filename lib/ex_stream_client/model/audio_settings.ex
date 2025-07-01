@@ -21,7 +21,7 @@ defmodule ExStreamClient.Model.AudioSettings do
     :speaker_default_on
   ]
 
-  @nested_components default_device: :atom,
+  @nested_components default_device: :enum,
                      noise_cancellation: ExStreamClient.Model.NoiseCancellationSettings
   def nested_components do
     @nested_components

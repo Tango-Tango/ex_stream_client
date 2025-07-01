@@ -4,7 +4,7 @@ defmodule ExStreamClient.Model.FrameRecordingSettingsResponse do
   use ExStreamClient.TypeInterner
   @enforce_keys [:capture_interval_in_seconds, :mode]
   defstruct [:capture_interval_in_seconds, :mode, :quality]
-  @nested_components mode: :atom
+  @nested_components mode: :enum
   def nested_components do
     @nested_components
   end

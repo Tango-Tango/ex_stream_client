@@ -71,7 +71,7 @@ defmodule ExStreamClient.Tools.Codegen.GenerateModel do
                 {name, {:map, {:array, Codegen.string_to_component(comp)}}}
 
               {:enum, _} ->
-                {name, :atom}
+                {name, :enum}
 
               _ ->
                 {nil, nil}

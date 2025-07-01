@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.PushPreferenceInput do
   use ExStreamClient.JSON
   use ExStreamClient.TypeInterner
   defstruct [:channel_cid, :chat_level, :disabled_until, :remove_disable, :user_id]
-  @nested_components chat_level: :atom
+  @nested_components chat_level: :enum
   def nested_components do
     @nested_components
   end

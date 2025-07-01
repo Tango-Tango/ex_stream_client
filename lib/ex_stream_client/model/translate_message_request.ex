@@ -4,7 +4,7 @@ defmodule ExStreamClient.Model.TranslateMessageRequest do
   use ExStreamClient.TypeInterner
   @enforce_keys [:language]
   defstruct [:language]
-  @nested_components language: :atom
+  @nested_components language: :enum
   def nested_components do
     @nested_components
   end

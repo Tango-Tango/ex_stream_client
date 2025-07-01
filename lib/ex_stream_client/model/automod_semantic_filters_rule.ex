@@ -4,7 +4,7 @@ defmodule ExStreamClient.Model.AutomodSemanticFiltersRule do
   use ExStreamClient.TypeInterner
   @enforce_keys [:action, :name, :threshold]
   defstruct [:action, :name, :threshold]
-  @nested_components action: :atom
+  @nested_components action: :enum
   def nested_components do
     @nested_components
   end

@@ -16,7 +16,7 @@ defmodule ExStreamClient.Model.APNConfig do
     :team_id
   ]
 
-  @nested_components auth_type: :atom
+  @nested_components auth_type: :enum
   def nested_components do
     @nested_components
   end

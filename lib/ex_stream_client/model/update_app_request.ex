@@ -17,6 +17,7 @@ defmodule ExStreamClient.Model.UpdateAppRequest do
     :disable_auth_checks,
     :disable_permissions_checks,
     :enforce_unique_usernames,
+    :event_hooks,
     :feeds_moderation_enabled,
     :feeds_v2_region,
     :file_upload_config,
@@ -53,14 +54,15 @@ defmodule ExStreamClient.Model.UpdateAppRequest do
   @nested_components apn_config: ExStreamClient.Model.APNConfig,
                      async_moderation_config: ExStreamClient.Model.AsyncModerationConfiguration,
                      datadog_info: ExStreamClient.Model.DataDogInfo,
-                     enforce_unique_usernames: :atom,
+                     enforce_unique_usernames: :enum,
+                     event_hooks: ExStreamClient.Model.EventHook,
                      file_upload_config: ExStreamClient.Model.FileUploadConfig,
                      firebase_config: ExStreamClient.Model.FirebaseConfig,
                      huawei_config: ExStreamClient.Model.HuaweiConfig,
                      image_upload_config: ExStreamClient.Model.FileUploadConfig,
                      moderation_dashboard_preferences:
                        ExStreamClient.Model.ModerationDashboardPreferences,
-                     permission_version: :atom,
+                     permission_version: :enum,
                      push_config: ExStreamClient.Model.PushConfig,
                      xiaomi_config: ExStreamClient.Model.XiaomiConfig
   def nested_components do
@@ -81,6 +83,7 @@ defmodule ExStreamClient.Model.UpdateAppRequest do
           disable_auth_checks: boolean() | nil,
           disable_permissions_checks: boolean() | nil,
           enforce_unique_usernames: (:team | :app | :no) | nil,
+          event_hooks: [ExStreamClient.Model.EventHook.t()] | nil,
           feeds_moderation_enabled: boolean() | nil,
           feeds_v2_region: String.t() | nil,
           file_upload_config: ExStreamClient.Model.FileUploadConfig.t() | nil,

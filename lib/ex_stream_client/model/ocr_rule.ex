@@ -4,7 +4,7 @@ defmodule ExStreamClient.Model.OCRRule do
   use ExStreamClient.TypeInterner
   @enforce_keys [:action, :label]
   defstruct [:action, :label]
-  @nested_components action: :atom
+  @nested_components action: :enum
   def nested_components do
     @nested_components
   end

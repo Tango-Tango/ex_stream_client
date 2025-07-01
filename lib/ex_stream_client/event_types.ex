@@ -1,64 +1,4 @@
 defmodule ExStreamClient.Model.EventType do
-  @values [
-    :any,
-    :health_check,
-    :typing_start,
-    :typing_stop,
-    :message_new,
-    :notification_message_new,
-    :notification_mark_read,
-    :notification_mark_unread,
-    :message_deleted,
-    :reaction_new,
-    :reaction_deleted,
-    :reaction_updated,
-    :message_updated,
-    :user_watching_start,
-    :user_watching_stop,
-    :message_read,
-    :channel_deleted,
-    :notification_channel_deleted,
-    :channel_truncated,
-    :notification_channel_truncated,
-    :notification_added_to_channel,
-    :notification_removed_from_channel,
-    :channel_updated,
-    :user_updated,
-    :member_added,
-    :member_removed,
-    :member_updated,
-    :user_banned,
-    :user_unbanned,
-    :channel_hidden,
-    :channel_visible,
-    :connection_changed,
-    :connection_recovered,
-    :notification_invite_accepted,
-    :notification_invited,
-    :notification_mutes_updated,
-    :ai_indicator_update,
-    :ai_indicator_stop,
-    :ai_indicator_clear,
-    :poll_updated,
-    :poll_answer_casted,
-    :poll_vote_casted,
-    :poll_vote_changed,
-    :poll_vote_removed,
-    :poll_answer_removed,
-    :poll_closed,
-    :poll_deleted,
-    :thread_updated,
-    :notification_thread_message_new,
-    :draft_updated,
-    :draft_deleted,
-    :reminder_created,
-    :reminder_updated,
-    :reminder_deleted,
-    :notification_reminder_due
-  ]
-
-  @type t :: unquote(Enum.reduce(@values, &{:|, [], [&1, &2]}))
-
   @lookup %{
     "*" => :any,
     "health.check" => :health_check,
@@ -117,11 +57,19 @@ defmodule ExStreamClient.Model.EventType do
     "notification.reminder_due" => :notification_reminder_due
   }
 
-  @reverse_lookup Map.new(@lookup, fn {k, v} -> {v, k} end)
+  @type t :: unquote(Enum.reduce(Map.values(@lookup), &{:|, [], [&1, &2]}))
 
   @spec from_string(String.t()) :: t | nil
-  def from_string(event) when is_binary(event), do: Map.get(@lookup, event)
+  for {k, v} <- @lookup do
+    def from_string(unquote(k)), do: unquote(v)
+  end
+
+  def from_string(event) when is_binary(event), do: nil
 
   @spec to_string(t) :: String.t() | nil
-  def to_string(event) when is_atom(event), do: Map.get(@reverse_lookup, event)
+  for {k, v} <- @lookup do
+    def to_string(unquote(v)), do: unquote(k)
+  end
+
+  def to_string(event) when is_atom(event), do: nil
 end

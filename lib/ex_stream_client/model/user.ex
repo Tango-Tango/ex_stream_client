@@ -6,6 +6,8 @@ defmodule ExStreamClient.Model.User do
   defstruct [
     :ban_expires,
     :banned,
+    :channel_last_read_at,
+    :channel_unread_count,
     :created_at,
     :custom,
     :deactivated_at,
@@ -21,6 +23,7 @@ defmodule ExStreamClient.Model.User do
     :role,
     :teams,
     :teams_role,
+    :unread_thread_messages,
     :updated_at
   ]
 
@@ -32,6 +35,8 @@ defmodule ExStreamClient.Model.User do
   @type t :: %__MODULE__{
           ban_expires: float() | nil,
           banned: boolean(),
+          channel_last_read_at: String.t() | nil,
+          channel_unread_count: integer() | nil,
           created_at: float() | nil,
           custom: %{optional(String.t()) => any()},
           deactivated_at: float() | nil,
@@ -47,6 +52,7 @@ defmodule ExStreamClient.Model.User do
           role: String.t(),
           teams: [String.t()] | nil,
           teams_role: %{optional(String.t()) => String.t()},
+          unread_thread_messages: integer() | nil,
           updated_at: float() | nil
         }
 end

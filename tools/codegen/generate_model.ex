@@ -76,6 +76,9 @@ defmodule ExStreamClient.Tools.Codegen.GenerateModel do
               {:enum, _} ->
                 {name, :enum}
 
+              :datetime ->
+                {name, :datetime}
+
               _ ->
                 {nil, nil}
             end

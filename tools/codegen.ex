@@ -159,6 +159,7 @@ defmodule ExStreamClient.Tools.Codegen do
   @spec parse_type(%{required(String.t()) => String.t(), required(String.t()) => String.t()}) ::
           String.t()
   def parse_type(%{"type" => "string", "format" => "binary"}), do: "bitstring"
+  def parse_type(%{"type" => "number", "format" => "date-time"}), do: :datetime
 
   @spec parse_type(%{required(String.t()) => any(), required(String.t()) => String.t()} | map()) ::
           parsed_type
@@ -853,7 +854,6 @@ defmodule ExStreamClient.Tools.Codegen do
   def type_to_spec("string"), do: quote(do: String.t())
   def type_to_spec("keyword"), do: quote(do: keyword())
   def type_to_spec("bitstring"), do: quote(do: bitstring() | {String.t(), bitstring()})
-  # TODO: handle these types here better
   def type_to_spec("array"), do: quote(do: list())
   def type_to_spec("object"), do: quote(do: map())
   def type_to_spec("oneOf"), do: quote(do: any())
@@ -861,6 +861,8 @@ defmodule ExStreamClient.Tools.Codegen do
   def type_to_spec("anyOf"), do: quote(do: any())
   def type_to_spec("any"), do: quote(do: any())
   def type_to_spec("module"), do: quote(do: module())
+
+  def type_to_spec(:datetime), do: quote(do: DateTime.t() | integer() | String.t())
 
   def type_to_spec({:oneOf, {:enum, keys}}) do
     keys

@@ -73,6 +73,22 @@ defmodule ExStreamClient.JSON do
         decode(val)
       end
 
+      # Handles enums, where value is intended as a datetime but value is ISO8601 string
+      defp transform(val, :datetime) when is_binary(val) do
+        case DateTime.from_iso8601(val) do
+          {:ok, datetime} -> datetime
+          _ -> val
+        end
+      end
+
+      # Handles enums, where value is intended as a datetime but value is a unix timestamp
+      defp transform(val, :datetime) when is_integer(val) do
+        case DateTime.from_unix(val, :nanoseconds) do
+          {:ok, datetime} -> datetime
+          _ -> val
+        end
+      end
+
       # Handles components, where value is a map and the module is the struct to decode to
       # i.e. blocklists: ExStreamClient.Model.BlockListOptions in ChannelConfig
       defp transform(val, mod) when is_list(val) and is_atom(mod) do

@@ -10,6 +10,7 @@ defmodule ExStreamClient.Tools.Codegen.GenerateModel do
   @doc "Generates model for the given specification"
   def run(%{components: components, functions: _functions}) do
     Logger.info("Generating model for specification")
+    overrides = ExStreamClient.Tools.Spec.Overrides.model_overrides()
 
     components =
       components
@@ -21,6 +22,8 @@ defmodule ExStreamClient.Tools.Codegen.GenerateModel do
       end)
 
     Enum.each(components, fn {name, component} ->
+      component = apply_model_overrides(name, component, overrides)
+
       required_field_keys =
         component.required_props
         |> Enum.map(&(&1.name |> Macro.underscore() |> String.to_atom()))
@@ -186,4 +189,24 @@ defmodule ExStreamClient.Tools.Codegen.GenerateModel do
 
   defp is_enum({:enum, _}), do: true
   defp is_enum(_), do: false
+
+  defp apply_model_overrides(name, component, overrides) do
+    case Map.get(overrides, name |> Module.split() |> List.last(), nil) do
+      nil -> component
+      override_config -> apply_override(component, override_config)
+    end
+  end
+
+  defp apply_override(component, override_config) do
+    component
+    |> apply_additional_fields(override_config)
+  end
+
+  defp apply_additional_fields(component, %{additional_fields: additional_fields}) do
+    {required, optional} = Enum.split_with(additional_fields, & &1.required)
+
+    component
+    |> Map.update(:required_props, required, &(&1 ++ required))
+    |> Map.update(:optional_props, optional, &(&1 ++ optional))
+  end
 end

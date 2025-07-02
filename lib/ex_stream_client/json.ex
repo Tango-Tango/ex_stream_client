@@ -76,7 +76,7 @@ defmodule ExStreamClient.JSON do
       # Handles enums, where value is intended as a datetime but value is ISO8601 string
       defp transform(val, :datetime) when is_binary(val) do
         case DateTime.from_iso8601(val) do
-          {:ok, datetime} -> datetime
+          {:ok, datetime, _} -> datetime
           _ -> val
         end
       end

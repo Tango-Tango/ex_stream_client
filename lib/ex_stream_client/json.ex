@@ -83,7 +83,7 @@ defmodule ExStreamClient.JSON do
 
       # Handles enums, where value is intended as a datetime but value is a unix timestamp
       defp transform(val, :datetime) when is_integer(val) do
-        case DateTime.from_unix(val, :nanoseconds) do
+        case DateTime.from_unix(val, :nanosecond) do
           {:ok, datetime} -> datetime
           _ -> val
         end

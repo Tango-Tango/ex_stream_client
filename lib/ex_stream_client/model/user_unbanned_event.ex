@@ -4,7 +4,7 @@ defmodule ExStreamClient.Model.UserUnbannedEvent do
   use ExStreamClient.TypeInterner
   @enforce_keys [:channel_id, :channel_type, :cid, :created_at, :shadow, :type]
   defstruct [:channel_id, :channel_type, :cid, :created_at, :shadow, :team, :type, :user]
-  @nested_components user: ExStreamClient.Model.User
+  @nested_components created_at: :datetime, user: ExStreamClient.Model.User
   def nested_components do
     @nested_components
   end
@@ -13,7 +13,7 @@ defmodule ExStreamClient.Model.UserUnbannedEvent do
           channel_id: String.t(),
           channel_type: String.t(),
           cid: String.t(),
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           shadow: boolean(),
           team: String.t() | nil,
           type: String.t(),

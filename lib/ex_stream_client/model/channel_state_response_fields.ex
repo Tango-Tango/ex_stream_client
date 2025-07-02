@@ -22,6 +22,7 @@ defmodule ExStreamClient.Model.ChannelStateResponseFields do
 
   @nested_components channel: ExStreamClient.Model.ChannelResponse,
                      draft: ExStreamClient.Model.DraftResponse,
+                     hide_messages_before: :datetime,
                      members: ExStreamClient.Model.ChannelMember,
                      membership: ExStreamClient.Model.ChannelMember,
                      messages: ExStreamClient.Model.MessageResponse,
@@ -39,7 +40,7 @@ defmodule ExStreamClient.Model.ChannelStateResponseFields do
           channel: ExStreamClient.Model.ChannelResponse.t() | nil,
           draft: ExStreamClient.Model.DraftResponse.t() | nil,
           hidden: boolean() | nil,
-          hide_messages_before: float() | nil,
+          hide_messages_before: (DateTime.t() | integer() | String.t()) | nil,
           members: [ExStreamClient.Model.ChannelMember.t()],
           membership: ExStreamClient.Model.ChannelMember.t() | nil,
           messages: [ExStreamClient.Model.MessageResponse.t()],

@@ -22,7 +22,7 @@ defmodule ExStreamClient.Model.CampaignStatsResponse do
     :stats_users_sent
   ]
 
-  @nested_components []
+  @nested_components stats_completed_at: :datetime, stats_started_at: :datetime
   def nested_components do
     @nested_components
   end
@@ -30,9 +30,9 @@ defmodule ExStreamClient.Model.CampaignStatsResponse do
   @type t :: %__MODULE__{
           progress: float(),
           stats_channels_created: integer(),
-          stats_completed_at: float(),
+          stats_completed_at: DateTime.t() | integer() | String.t(),
           stats_messages_sent: integer(),
-          stats_started_at: float(),
+          stats_started_at: DateTime.t() | integer() | String.t(),
           stats_users_read: integer(),
           stats_users_sent: integer()
         }

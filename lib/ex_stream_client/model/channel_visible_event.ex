@@ -4,7 +4,7 @@ defmodule ExStreamClient.Model.ChannelVisibleEvent do
   use ExStreamClient.TypeInterner
   @enforce_keys [:channel_id, :channel_type, :cid, :created_at, :type]
   defstruct [:channel_id, :channel_type, :cid, :created_at, :type, :user]
-  @nested_components user: ExStreamClient.Model.User
+  @nested_components created_at: :datetime, user: ExStreamClient.Model.User
   def nested_components do
     @nested_components
   end
@@ -13,7 +13,7 @@ defmodule ExStreamClient.Model.ChannelVisibleEvent do
           channel_id: String.t(),
           channel_type: String.t(),
           cid: String.t(),
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           type: String.t(),
           user: ExStreamClient.Model.User.t() | nil
         }

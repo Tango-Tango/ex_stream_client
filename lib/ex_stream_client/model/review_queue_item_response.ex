@@ -57,13 +57,17 @@ defmodule ExStreamClient.Model.ReviewQueueItemResponse do
                      assigned_to: ExStreamClient.Model.UserResponse,
                      bans: ExStreamClient.Model.Ban,
                      call: ExStreamClient.Model.CallResponse,
+                     completed_at: :datetime,
+                     created_at: :datetime,
                      entity_creator: ExStreamClient.Model.EntityCreatorResponse,
                      feeds_v2_activity: ExStreamClient.Model.EnrichedActivity,
                      feeds_v2_reaction: ExStreamClient.Model.Reaction,
                      flags: ExStreamClient.Model.FlagResponse,
                      message: ExStreamClient.Model.MessageResponse,
                      moderation_payload: ExStreamClient.Model.ModerationPayload,
-                     reaction: ExStreamClient.Model.Reaction
+                     reaction: ExStreamClient.Model.Reaction,
+                     reviewed_at: :datetime,
+                     updated_at: :datetime
   def nested_components do
     @nested_components
   end
@@ -75,9 +79,9 @@ defmodule ExStreamClient.Model.ReviewQueueItemResponse do
           assigned_to: ExStreamClient.Model.UserResponse.t() | nil,
           bans: [ExStreamClient.Model.Ban.t()],
           call: ExStreamClient.Model.CallResponse.t() | nil,
-          completed_at: float() | nil,
+          completed_at: (DateTime.t() | integer() | String.t()) | nil,
           config_key: String.t() | nil,
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           entity_creator: ExStreamClient.Model.EntityCreatorResponse.t() | nil,
           entity_creator_id: String.t() | nil,
           entity_id: String.t(),
@@ -92,11 +96,11 @@ defmodule ExStreamClient.Model.ReviewQueueItemResponse do
           moderation_payload: ExStreamClient.Model.ModerationPayload.t() | nil,
           reaction: ExStreamClient.Model.Reaction.t() | nil,
           recommended_action: String.t(),
-          reviewed_at: float() | nil,
+          reviewed_at: (DateTime.t() | integer() | String.t()) | nil,
           reviewed_by: String.t(),
           severity: integer(),
           status: String.t(),
           teams: [String.t()] | nil,
-          updated_at: float()
+          updated_at: DateTime.t() | integer() | String.t()
         }
 end

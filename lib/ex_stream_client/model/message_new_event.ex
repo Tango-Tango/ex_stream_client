@@ -23,6 +23,7 @@ defmodule ExStreamClient.Model.MessageNewEvent do
   ]
 
   @nested_components channel: ExStreamClient.Model.Channel,
+                     created_at: :datetime,
                      members: ExStreamClient.Model.ChannelMember,
                      message: ExStreamClient.Model.Message,
                      thread_participants: ExStreamClient.Model.User,
@@ -39,7 +40,7 @@ defmodule ExStreamClient.Model.MessageNewEvent do
           channel_member_count: integer() | nil,
           channel_type: String.t(),
           cid: String.t(),
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           members: [ExStreamClient.Model.ChannelMember.t()] | nil,
           message: ExStreamClient.Model.Message.t() | nil,
           message_id: String.t() | nil,

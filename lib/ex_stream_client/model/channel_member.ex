@@ -34,29 +34,38 @@ defmodule ExStreamClient.Model.ChannelMember do
     :user_id
   ]
 
-  @nested_components role: :enum, user: ExStreamClient.Model.UserResponse
+  @nested_components archived_at: :datetime,
+                     ban_expires: :datetime,
+                     created_at: :datetime,
+                     deleted_at: :datetime,
+                     invite_accepted_at: :datetime,
+                     invite_rejected_at: :datetime,
+                     pinned_at: :datetime,
+                     role: :enum,
+                     updated_at: :datetime,
+                     user: ExStreamClient.Model.UserResponse
   def nested_components do
     @nested_components
   end
 
   @type t :: %__MODULE__{
-          archived_at: float() | nil,
-          ban_expires: float() | nil,
+          archived_at: (DateTime.t() | integer() | String.t()) | nil,
+          ban_expires: (DateTime.t() | integer() | String.t()) | nil,
           banned: boolean(),
           channel_role: String.t(),
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           custom: %{optional(String.t()) => any()},
-          deleted_at: float() | nil,
-          invite_accepted_at: float() | nil,
-          invite_rejected_at: float() | nil,
+          deleted_at: (DateTime.t() | integer() | String.t()) | nil,
+          invite_accepted_at: (DateTime.t() | integer() | String.t()) | nil,
+          invite_rejected_at: (DateTime.t() | integer() | String.t()) | nil,
           invited: boolean() | nil,
           is_moderator: boolean() | nil,
           notifications_muted: boolean(),
-          pinned_at: float() | nil,
+          pinned_at: (DateTime.t() | integer() | String.t()) | nil,
           role: (:owner | :admin | :moderator | :member) | nil,
           shadow_banned: boolean(),
           status: String.t() | nil,
-          updated_at: float(),
+          updated_at: DateTime.t() | integer() | String.t(),
           user: ExStreamClient.Model.UserResponse.t() | nil,
           user_id: String.t() | nil
         }

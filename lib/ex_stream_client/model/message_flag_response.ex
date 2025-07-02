@@ -20,19 +20,24 @@ defmodule ExStreamClient.Model.MessageFlagResponse do
     :user
   ]
 
-  @nested_components details: ExStreamClient.Model.FlagDetails,
+  @nested_components approved_at: :datetime,
+                     created_at: :datetime,
+                     details: ExStreamClient.Model.FlagDetails,
                      message: ExStreamClient.Model.Message,
                      moderation_feedback: ExStreamClient.Model.FlagFeedback,
                      moderation_result: ExStreamClient.Model.MessageModerationResult,
+                     rejected_at: :datetime,
+                     reviewed_at: :datetime,
                      reviewed_by: ExStreamClient.Model.UserResponse,
+                     updated_at: :datetime,
                      user: ExStreamClient.Model.UserResponse
   def nested_components do
     @nested_components
   end
 
   @type t :: %__MODULE__{
-          approved_at: float() | nil,
-          created_at: float(),
+          approved_at: (DateTime.t() | integer() | String.t()) | nil,
+          created_at: DateTime.t() | integer() | String.t(),
           created_by_automod: boolean(),
           custom: %{optional(String.t()) => any()} | nil,
           details: ExStreamClient.Model.FlagDetails.t() | nil,
@@ -40,10 +45,10 @@ defmodule ExStreamClient.Model.MessageFlagResponse do
           moderation_feedback: ExStreamClient.Model.FlagFeedback.t() | nil,
           moderation_result: ExStreamClient.Model.MessageModerationResult.t() | nil,
           reason: String.t() | nil,
-          rejected_at: float() | nil,
-          reviewed_at: float() | nil,
+          rejected_at: (DateTime.t() | integer() | String.t()) | nil,
+          reviewed_at: (DateTime.t() | integer() | String.t()) | nil,
           reviewed_by: ExStreamClient.Model.UserResponse.t() | nil,
-          updated_at: float(),
+          updated_at: DateTime.t() | integer() | String.t(),
           user: ExStreamClient.Model.UserResponse.t() | nil
         }
 end

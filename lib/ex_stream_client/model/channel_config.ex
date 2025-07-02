@@ -67,7 +67,9 @@ defmodule ExStreamClient.Model.ChannelConfig do
                      automod_behavior: :enum,
                      automod_thresholds: ExStreamClient.Model.Thresholds,
                      blocklist_behavior: :enum,
-                     blocklists: ExStreamClient.Model.BlockListOptions
+                     blocklists: ExStreamClient.Model.BlockListOptions,
+                     created_at: :datetime,
+                     updated_at: :datetime
   def nested_components do
     @nested_components
   end
@@ -82,7 +84,7 @@ defmodule ExStreamClient.Model.ChannelConfig do
           blocklists: [ExStreamClient.Model.BlockListOptions.t()] | nil,
           commands: [String.t()],
           connect_events: boolean(),
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           custom_events: boolean(),
           mark_messages_pending: boolean(),
           max_message_length: integer(),
@@ -101,7 +103,7 @@ defmodule ExStreamClient.Model.ChannelConfig do
           search: boolean(),
           skip_last_msg_update_for_system_msgs: boolean(),
           typing_events: boolean(),
-          updated_at: float(),
+          updated_at: DateTime.t() | integer() | String.t(),
           uploads: boolean(),
           url_enrichment: boolean()
         }

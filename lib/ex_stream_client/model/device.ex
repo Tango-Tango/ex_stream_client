@@ -14,13 +14,13 @@ defmodule ExStreamClient.Model.Device do
     :voip
   ]
 
-  @nested_components push_provider: :enum
+  @nested_components created_at: :datetime, push_provider: :enum
   def nested_components do
     @nested_components
   end
 
   @type t :: %__MODULE__{
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           disabled: boolean() | nil,
           disabled_reason: String.t() | nil,
           id: String.t(),

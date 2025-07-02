@@ -34,7 +34,7 @@ defmodule ExStreamClient.Model.PushProviderResponse do
     :xiaomi_package_name
   ]
 
-  @nested_components []
+  @nested_components created_at: :datetime, disabled_at: :datetime, updated_at: :datetime
   def nested_components do
     @nested_components
   end
@@ -51,9 +51,9 @@ defmodule ExStreamClient.Model.PushProviderResponse do
           apn_supports_voip_notifications: boolean() | nil,
           apn_team_id: String.t() | nil,
           apn_topic: String.t() | nil,
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           description: String.t() | nil,
-          disabled_at: float() | nil,
+          disabled_at: (DateTime.t() | integer() | String.t()) | nil,
           disabled_reason: String.t() | nil,
           firebase_apn_template: String.t() | nil,
           firebase_credentials: String.t() | nil,
@@ -65,7 +65,7 @@ defmodule ExStreamClient.Model.PushProviderResponse do
           huawei_app_secret: String.t() | nil,
           name: String.t(),
           type: String.t(),
-          updated_at: float(),
+          updated_at: DateTime.t() | integer() | String.t(),
           xiaomi_app_secret: String.t() | nil,
           xiaomi_package_name: String.t() | nil
         }

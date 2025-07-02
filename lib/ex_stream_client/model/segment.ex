@@ -28,7 +28,7 @@ defmodule ExStreamClient.Model.Segment do
     :updated_at
   ]
 
-  @nested_components []
+  @nested_components created_at: :datetime, deleted_at: :datetime, updated_at: :datetime
   def nested_components do
     @nested_components
   end
@@ -36,8 +36,8 @@ defmodule ExStreamClient.Model.Segment do
   @type t :: %__MODULE__{
           all_sender_channels: boolean(),
           all_users: boolean(),
-          created_at: float(),
-          deleted_at: float() | nil,
+          created_at: DateTime.t() | integer() | String.t(),
+          deleted_at: (DateTime.t() | integer() | String.t()) | nil,
           description: String.t() | nil,
           filter: %{optional(String.t()) => any()} | nil,
           id: String.t(),
@@ -45,6 +45,6 @@ defmodule ExStreamClient.Model.Segment do
           size: integer(),
           task_id: String.t() | nil,
           type: String.t(),
-          updated_at: float()
+          updated_at: DateTime.t() | integer() | String.t()
         }
 end

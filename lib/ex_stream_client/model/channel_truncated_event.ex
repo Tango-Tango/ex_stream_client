@@ -13,7 +13,7 @@ defmodule ExStreamClient.Model.ChannelTruncatedEvent do
     :type
   ]
 
-  @nested_components channel: ExStreamClient.Model.ChannelResponse
+  @nested_components channel: ExStreamClient.Model.ChannelResponse, created_at: :datetime
   def nested_components do
     @nested_components
   end
@@ -24,7 +24,7 @@ defmodule ExStreamClient.Model.ChannelTruncatedEvent do
           channel_member_count: integer(),
           channel_type: String.t(),
           cid: String.t(),
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           type: String.t()
         }
 end

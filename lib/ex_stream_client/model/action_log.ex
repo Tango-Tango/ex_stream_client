@@ -27,7 +27,8 @@ defmodule ExStreamClient.Model.ActionLog do
     :user
   ]
 
-  @nested_components review_queue_item: ExStreamClient.Model.ReviewQueueItem,
+  @nested_components created_at: :datetime,
+                     review_queue_item: ExStreamClient.Model.ReviewQueueItem,
                      target_user: ExStreamClient.Model.User,
                      user: ExStreamClient.Model.User
   def nested_components do
@@ -35,7 +36,7 @@ defmodule ExStreamClient.Model.ActionLog do
   end
 
   @type t :: %__MODULE__{
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           custom: %{optional(String.t()) => any()},
           id: String.t(),
           reason: String.t(),

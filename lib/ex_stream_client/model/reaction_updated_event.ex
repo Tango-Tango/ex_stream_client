@@ -15,7 +15,8 @@ defmodule ExStreamClient.Model.ReactionUpdatedEvent do
     :user
   ]
 
-  @nested_components message: ExStreamClient.Model.Message,
+  @nested_components created_at: :datetime,
+                     message: ExStreamClient.Model.Message,
                      reaction: ExStreamClient.Model.Reaction,
                      user: ExStreamClient.Model.User
   def nested_components do
@@ -26,7 +27,7 @@ defmodule ExStreamClient.Model.ReactionUpdatedEvent do
           channel_id: String.t(),
           channel_type: String.t(),
           cid: String.t(),
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           message: ExStreamClient.Model.Message.t(),
           reaction: ExStreamClient.Model.Reaction.t(),
           team: String.t() | nil,

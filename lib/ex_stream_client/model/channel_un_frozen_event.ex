@@ -4,7 +4,7 @@ defmodule ExStreamClient.Model.ChannelUnFrozenEvent do
   use ExStreamClient.TypeInterner
   @enforce_keys [:channel_id, :channel_type, :cid, :created_at, :type]
   defstruct [:channel_id, :channel_type, :cid, :created_at, :type]
-  @nested_components []
+  @nested_components created_at: :datetime
   def nested_components do
     @nested_components
   end
@@ -13,7 +13,7 @@ defmodule ExStreamClient.Model.ChannelUnFrozenEvent do
           channel_id: String.t(),
           channel_type: String.t(),
           cid: String.t(),
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           type: String.t()
         }
 end

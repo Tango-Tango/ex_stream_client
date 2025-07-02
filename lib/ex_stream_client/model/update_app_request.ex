@@ -64,6 +64,7 @@ defmodule ExStreamClient.Model.UpdateAppRequest do
                        ExStreamClient.Model.ModerationDashboardPreferences,
                      permission_version: :enum,
                      push_config: ExStreamClient.Model.PushConfig,
+                     revoke_tokens_issued_before: :datetime,
                      xiaomi_config: ExStreamClient.Model.XiaomiConfig
   def nested_components do
     @nested_components
@@ -105,7 +106,7 @@ defmodule ExStreamClient.Model.UpdateAppRequest do
           push_config: ExStreamClient.Model.PushConfig.t() | nil,
           reminders_interval: integer() | nil,
           reminders_max_members: integer() | nil,
-          revoke_tokens_issued_before: float() | nil,
+          revoke_tokens_issued_before: (DateTime.t() | integer() | String.t()) | nil,
           sns_key: String.t() | nil,
           sns_secret: String.t() | nil,
           sns_topic_arn: String.t() | nil,

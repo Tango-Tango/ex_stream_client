@@ -15,19 +15,19 @@ defmodule ExStreamClient.Model.PollVote do
     :user_id
   ]
 
-  @nested_components user: ExStreamClient.Model.User
+  @nested_components created_at: :datetime, updated_at: :datetime, user: ExStreamClient.Model.User
   def nested_components do
     @nested_components
   end
 
   @type t :: %__MODULE__{
           answer_text: String.t() | nil,
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           id: String.t(),
           is_answer: boolean() | nil,
           option_id: String.t(),
           poll_id: String.t(),
-          updated_at: float(),
+          updated_at: DateTime.t() | integer() | String.t(),
           user: ExStreamClient.Model.User.t() | nil,
           user_id: String.t() | nil
         }

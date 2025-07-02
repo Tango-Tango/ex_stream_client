@@ -17,7 +17,10 @@ defmodule ExStreamClient.Model.UserBannedEvent do
     :user
   ]
 
-  @nested_components created_by: ExStreamClient.Model.User, user: ExStreamClient.Model.User
+  @nested_components created_at: :datetime,
+                     created_by: ExStreamClient.Model.User,
+                     expiration: :datetime,
+                     user: ExStreamClient.Model.User
   def nested_components do
     @nested_components
   end
@@ -26,9 +29,9 @@ defmodule ExStreamClient.Model.UserBannedEvent do
           channel_id: String.t(),
           channel_type: String.t(),
           cid: String.t(),
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           created_by: ExStreamClient.Model.User.t(),
-          expiration: float() | nil,
+          expiration: (DateTime.t() | integer() | String.t()) | nil,
           reason: String.t() | nil,
           shadow: boolean(),
           team: String.t() | nil,

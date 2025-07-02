@@ -7,6 +7,8 @@ defmodule ExStreamClient.Model.BanResponse do
 
   @nested_components banned_by: ExStreamClient.Model.UserResponse,
                      channel: ExStreamClient.Model.ChannelResponse,
+                     created_at: :datetime,
+                     expires: :datetime,
                      user: ExStreamClient.Model.UserResponse
   def nested_components do
     @nested_components
@@ -15,8 +17,8 @@ defmodule ExStreamClient.Model.BanResponse do
   @type t :: %__MODULE__{
           banned_by: ExStreamClient.Model.UserResponse.t() | nil,
           channel: ExStreamClient.Model.ChannelResponse.t() | nil,
-          created_at: float(),
-          expires: float() | nil,
+          created_at: DateTime.t() | integer() | String.t(),
+          expires: (DateTime.t() | integer() | String.t()) | nil,
           reason: String.t() | nil,
           shadow: boolean() | nil,
           user: ExStreamClient.Model.UserResponse.t() | nil

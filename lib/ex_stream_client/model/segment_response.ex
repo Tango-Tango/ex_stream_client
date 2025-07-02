@@ -30,7 +30,7 @@ defmodule ExStreamClient.Model.SegmentResponse do
     :updated_at
   ]
 
-  @nested_components []
+  @nested_components created_at: :datetime, deleted_at: :datetime, updated_at: :datetime
   def nested_components do
     @nested_components
   end
@@ -38,14 +38,14 @@ defmodule ExStreamClient.Model.SegmentResponse do
   @type t :: %__MODULE__{
           all_sender_channels: boolean(),
           all_users: boolean(),
-          created_at: float(),
-          deleted_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
+          deleted_at: DateTime.t() | integer() | String.t(),
           description: String.t(),
           filter: %{optional(String.t()) => any()},
           id: String.t(),
           name: String.t(),
           size: integer(),
           type: String.t(),
-          updated_at: float()
+          updated_at: DateTime.t() | integer() | String.t()
         }
 end

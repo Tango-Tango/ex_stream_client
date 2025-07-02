@@ -41,10 +41,14 @@ defmodule ExStreamClient.Model.Channel do
 
   @nested_components config: ExStreamClient.Model.ChannelConfig,
                      config_overrides: ExStreamClient.Model.ConfigOverrides,
+                     created_at: :datetime,
                      created_by: ExStreamClient.Model.User,
+                     deleted_at: :datetime,
                      invites: ExStreamClient.Model.ChannelMember,
+                     last_message_at: :datetime,
                      members: ExStreamClient.Model.ChannelMember,
-                     truncated_by: ExStreamClient.Model.User
+                     truncated_by: ExStreamClient.Model.User,
+                     updated_at: :datetime
   def nested_components do
     @nested_components
   end
@@ -56,21 +60,21 @@ defmodule ExStreamClient.Model.Channel do
           config: ExStreamClient.Model.ChannelConfig.t() | nil,
           config_overrides: ExStreamClient.Model.ConfigOverrides.t() | nil,
           cooldown: integer() | nil,
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           created_by: ExStreamClient.Model.User.t() | nil,
           custom: %{optional(String.t()) => any()},
-          deleted_at: float() | nil,
+          deleted_at: (DateTime.t() | integer() | String.t()) | nil,
           disabled: boolean(),
           frozen: boolean(),
           id: String.t(),
           invites: [ExStreamClient.Model.ChannelMember.t()] | nil,
           last_campaigns: String.t() | nil,
-          last_message_at: float() | nil,
+          last_message_at: (DateTime.t() | integer() | String.t()) | nil,
           member_count: integer() | nil,
           members: [ExStreamClient.Model.ChannelMember.t()] | nil,
           team: String.t() | nil,
           truncated_by: ExStreamClient.Model.User.t() | nil,
           type: String.t(),
-          updated_at: float()
+          updated_at: DateTime.t() | integer() | String.t()
         }
 end

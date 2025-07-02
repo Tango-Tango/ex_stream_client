@@ -48,10 +48,14 @@ defmodule ExStreamClient.Model.CampaignResponse do
   ]
 
   @nested_components channel_template: ExStreamClient.Model.CampaignChannelTemplate,
+                     created_at: :datetime,
                      message_template: ExStreamClient.Model.CampaignMessageTemplate,
+                     scheduled_for: :datetime,
                      segments: ExStreamClient.Model.Segment,
                      sender: ExStreamClient.Model.UserResponse,
                      stats: ExStreamClient.Model.CampaignStatsResponse,
+                     stop_at: :datetime,
+                     updated_at: :datetime,
                      users: ExStreamClient.Model.UserResponse
   def nested_components do
     @nested_components
@@ -60,12 +64,12 @@ defmodule ExStreamClient.Model.CampaignResponse do
   @type t :: %__MODULE__{
           channel_template: ExStreamClient.Model.CampaignChannelTemplate.t() | nil,
           create_channels: boolean(),
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           description: String.t(),
           id: String.t(),
           message_template: ExStreamClient.Model.CampaignMessageTemplate.t() | nil,
           name: String.t(),
-          scheduled_for: float() | nil,
+          scheduled_for: (DateTime.t() | integer() | String.t()) | nil,
           segment_ids: [String.t()],
           segments: [ExStreamClient.Model.Segment.t()],
           sender: ExStreamClient.Model.UserResponse.t() | nil,
@@ -76,8 +80,8 @@ defmodule ExStreamClient.Model.CampaignResponse do
           skip_webhook: boolean(),
           stats: ExStreamClient.Model.CampaignStatsResponse.t(),
           status: String.t(),
-          stop_at: float() | nil,
-          updated_at: float(),
+          stop_at: (DateTime.t() | integer() | String.t()) | nil,
+          updated_at: DateTime.t() | integer() | String.t(),
           user_ids: [String.t()],
           users: [ExStreamClient.Model.UserResponse.t()]
         }

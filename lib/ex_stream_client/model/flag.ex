@@ -22,15 +22,17 @@ defmodule ExStreamClient.Model.Flag do
     :user
   ]
 
-  @nested_components moderation_payload: ExStreamClient.Model.ModerationPayload,
+  @nested_components created_at: :datetime,
+                     moderation_payload: ExStreamClient.Model.ModerationPayload,
                      review_queue_item: ExStreamClient.Model.ReviewQueueItem,
+                     updated_at: :datetime,
                      user: ExStreamClient.Model.User
   def nested_components do
     @nested_components
   end
 
   @type t :: %__MODULE__{
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           custom: %{optional(String.t()) => any()} | nil,
           entity_creator_id: String.t() | nil,
           entity_id: String.t(),
@@ -44,7 +46,7 @@ defmodule ExStreamClient.Model.Flag do
           review_queue_item: ExStreamClient.Model.ReviewQueueItem.t() | nil,
           review_queue_item_id: String.t() | nil,
           type: String.t() | nil,
-          updated_at: float(),
+          updated_at: DateTime.t() | integer() | String.t(),
           user: ExStreamClient.Model.User.t() | nil
         }
 end

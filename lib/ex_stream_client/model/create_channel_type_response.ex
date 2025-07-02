@@ -74,7 +74,9 @@ defmodule ExStreamClient.Model.CreateChannelTypeResponse do
                      automod_thresholds: ExStreamClient.Model.Thresholds,
                      blocklist_behavior: :enum,
                      blocklists: ExStreamClient.Model.BlockListOptions,
-                     permissions: ExStreamClient.Model.PolicyRequest
+                     created_at: :datetime,
+                     permissions: ExStreamClient.Model.PolicyRequest,
+                     updated_at: :datetime
   def nested_components do
     @nested_components
   end
@@ -89,7 +91,7 @@ defmodule ExStreamClient.Model.CreateChannelTypeResponse do
           blocklists: [ExStreamClient.Model.BlockListOptions.t()] | nil,
           commands: [String.t()],
           connect_events: boolean(),
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           custom_events: boolean(),
           duration: String.t(),
           grants: %{optional(String.t()) => [String.t()]},
@@ -111,7 +113,7 @@ defmodule ExStreamClient.Model.CreateChannelTypeResponse do
           search: boolean(),
           skip_last_msg_update_for_system_msgs: boolean(),
           typing_events: boolean(),
-          updated_at: float(),
+          updated_at: DateTime.t() | integer() | String.t(),
           uploads: boolean(),
           url_enrichment: boolean()
         }

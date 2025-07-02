@@ -19,13 +19,13 @@ defmodule ExStreamClient.Model.UserDeletedEvent do
     :user
   ]
 
-  @nested_components user: ExStreamClient.Model.User
+  @nested_components created_at: :datetime, user: ExStreamClient.Model.User
   def nested_components do
     @nested_components
   end
 
   @type t :: %__MODULE__{
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           delete_conversation_channels: boolean(),
           hard_delete: boolean(),
           mark_messages_deleted: boolean(),

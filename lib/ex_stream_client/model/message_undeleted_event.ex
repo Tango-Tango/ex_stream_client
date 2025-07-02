@@ -15,7 +15,8 @@ defmodule ExStreamClient.Model.MessageUndeletedEvent do
     :user
   ]
 
-  @nested_components message: ExStreamClient.Model.Message,
+  @nested_components created_at: :datetime,
+                     message: ExStreamClient.Model.Message,
                      thread_participants: ExStreamClient.Model.User,
                      user: ExStreamClient.Model.User
   def nested_components do
@@ -26,7 +27,7 @@ defmodule ExStreamClient.Model.MessageUndeletedEvent do
           channel_id: String.t(),
           channel_type: String.t(),
           cid: String.t(),
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           message: ExStreamClient.Model.Message.t() | nil,
           team: String.t() | nil,
           thread_participants: [ExStreamClient.Model.User.t()] | nil,

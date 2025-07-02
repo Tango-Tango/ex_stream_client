@@ -25,13 +25,13 @@ defmodule ExStreamClient.Model.EventHook do
     :webhook_url
   ]
 
-  @nested_components []
+  @nested_components created_at: :datetime, updated_at: :datetime
   def nested_components do
     @nested_components
   end
 
   @type t :: %__MODULE__{
-          created_at: float() | nil,
+          created_at: (DateTime.t() | integer() | String.t()) | nil,
           enabled: boolean() | nil,
           event_types: [String.t()] | nil,
           hook_type: String.t() | nil,
@@ -48,7 +48,7 @@ defmodule ExStreamClient.Model.EventHook do
           sqs_region: String.t() | nil,
           sqs_role_arn: String.t() | nil,
           sqs_secret: String.t() | nil,
-          updated_at: float() | nil,
+          updated_at: (DateTime.t() | integer() | String.t()) | nil,
           webhook_url: String.t() | nil
         }
 end

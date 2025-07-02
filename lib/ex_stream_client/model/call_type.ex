@@ -14,20 +14,22 @@ defmodule ExStreamClient.Model.CallType do
     :updated_at
   ]
 
-  @nested_components notification_settings: ExStreamClient.Model.NotificationSettings,
-                     settings: ExStreamClient.Model.CallSettings
+  @nested_components created_at: :datetime,
+                     notification_settings: ExStreamClient.Model.NotificationSettings,
+                     settings: ExStreamClient.Model.CallSettings,
+                     updated_at: :datetime
   def nested_components do
     @nested_components
   end
 
   @type t :: %__MODULE__{
           app_pk: integer(),
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           external_storage: String.t(),
           name: String.t(),
           notification_settings: ExStreamClient.Model.NotificationSettings.t() | nil,
           pk: integer(),
           settings: ExStreamClient.Model.CallSettings.t() | nil,
-          updated_at: float()
+          updated_at: DateTime.t() | integer() | String.t()
         }
 end

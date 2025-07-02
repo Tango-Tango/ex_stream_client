@@ -22,7 +22,7 @@ defmodule ExStreamClient.Model.MessageHistoryEntryResponse do
     :text
   ]
 
-  @nested_components attachments: ExStreamClient.Model.Attachment
+  @nested_components attachments: ExStreamClient.Model.Attachment, message_updated_at: :datetime
   def nested_components do
     @nested_components
   end
@@ -32,7 +32,7 @@ defmodule ExStreamClient.Model.MessageHistoryEntryResponse do
           custom: %{optional(String.t()) => any()},
           is_deleted: boolean(),
           message_id: String.t(),
-          message_updated_at: float(),
+          message_updated_at: DateTime.t() | integer() | String.t(),
           message_updated_by_id: String.t(),
           text: String.t()
         }

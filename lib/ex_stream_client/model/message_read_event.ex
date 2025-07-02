@@ -16,7 +16,9 @@ defmodule ExStreamClient.Model.MessageReadEvent do
     :user
   ]
 
-  @nested_components thread: ExStreamClient.Model.ThreadResponse,
+  @nested_components channel_last_message_at: :datetime,
+                     created_at: :datetime,
+                     thread: ExStreamClient.Model.ThreadResponse,
                      user: ExStreamClient.Model.UserResponseCommonFields
   def nested_components do
     @nested_components
@@ -24,10 +26,10 @@ defmodule ExStreamClient.Model.MessageReadEvent do
 
   @type t :: %__MODULE__{
           channel_id: String.t(),
-          channel_last_message_at: float() | nil,
+          channel_last_message_at: (DateTime.t() | integer() | String.t()) | nil,
           channel_type: String.t(),
           cid: String.t(),
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           last_read_message_id: String.t() | nil,
           team: String.t() | nil,
           thread: ExStreamClient.Model.ThreadResponse.t() | nil,

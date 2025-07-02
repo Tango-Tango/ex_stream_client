@@ -4,15 +4,18 @@ defmodule ExStreamClient.Model.UserUpdatedEvent do
   use ExStreamClient.TypeInterner
   @enforce_keys [:created_at, :custom, :type, :user]
   defstruct [:created_at, :custom, :received_at, :type, :user]
-  @nested_components user: ExStreamClient.Model.UserResponsePrivacyFields
+
+  @nested_components created_at: :datetime,
+                     received_at: :datetime,
+                     user: ExStreamClient.Model.UserResponsePrivacyFields
   def nested_components do
     @nested_components
   end
 
   @type t :: %__MODULE__{
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           custom: %{optional(String.t()) => any()},
-          received_at: float() | nil,
+          received_at: (DateTime.t() | integer() | String.t()) | nil,
           type: String.t(),
           user: ExStreamClient.Model.UserResponsePrivacyFields.t()
         }

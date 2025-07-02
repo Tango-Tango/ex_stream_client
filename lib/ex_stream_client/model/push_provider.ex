@@ -33,7 +33,10 @@ defmodule ExStreamClient.Model.PushProvider do
     :xiaomi_package_name
   ]
 
-  @nested_components push_templates: ExStreamClient.Model.PushTemplate
+  @nested_components created_at: :datetime,
+                     disabled_at: :datetime,
+                     push_templates: ExStreamClient.Model.PushTemplate,
+                     updated_at: :datetime
   def nested_components do
     @nested_components
   end
@@ -48,9 +51,9 @@ defmodule ExStreamClient.Model.PushProvider do
           apn_p12_cert: String.t() | nil,
           apn_team_id: String.t() | nil,
           apn_topic: String.t() | nil,
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           description: String.t() | nil,
-          disabled_at: float() | nil,
+          disabled_at: (DateTime.t() | integer() | String.t()) | nil,
           disabled_reason: String.t() | nil,
           firebase_apn_template: String.t() | nil,
           firebase_credentials: String.t() | nil,
@@ -63,7 +66,7 @@ defmodule ExStreamClient.Model.PushProvider do
           name: String.t(),
           push_templates: [ExStreamClient.Model.PushTemplate.t()] | nil,
           type: String.t(),
-          updated_at: float(),
+          updated_at: DateTime.t() | integer() | String.t(),
           xiaomi_app_secret: String.t() | nil,
           xiaomi_package_name: String.t() | nil
         }

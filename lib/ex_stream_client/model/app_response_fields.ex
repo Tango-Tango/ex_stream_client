@@ -103,7 +103,8 @@ defmodule ExStreamClient.Model.AppResponseFields do
                      moderation_dashboard_preferences:
                        ExStreamClient.Model.ModerationDashboardPreferences,
                      policies: {:map, {:array, ExStreamClient.Model.Policy}},
-                     push_notifications: ExStreamClient.Model.PushNotificationFields
+                     push_notifications: ExStreamClient.Model.PushNotificationFields,
+                     revoke_tokens_issued_before: :datetime
   def nested_components do
     @nested_components
   end
@@ -142,7 +143,7 @@ defmodule ExStreamClient.Model.AppResponseFields do
           policies: %{optional(String.t()) => [ExStreamClient.Model.Policy.t()]},
           push_notifications: ExStreamClient.Model.PushNotificationFields.t(),
           reminders_interval: integer(),
-          revoke_tokens_issued_before: float() | nil,
+          revoke_tokens_issued_before: (DateTime.t() | integer() | String.t()) | nil,
           sns_key: String.t(),
           sns_secret: String.t(),
           sns_topic_arn: String.t(),

@@ -72,6 +72,7 @@ defmodule ExStreamClient.Model.ReviewQueueItem do
                      assigned_to: ExStreamClient.Model.User,
                      bans: ExStreamClient.Model.Ban,
                      call: ExStreamClient.Model.Call,
+                     created_at: :datetime,
                      entity_creator: ExStreamClient.Model.EntityCreator,
                      feeds_v2_activity: ExStreamClient.Model.EnrichedActivity,
                      feeds_v2_reaction: ExStreamClient.Model.Reaction,
@@ -79,7 +80,8 @@ defmodule ExStreamClient.Model.ReviewQueueItem do
                      message: ExStreamClient.Model.Message,
                      moderation_payload: ExStreamClient.Model.ModerationPayload,
                      reaction: ExStreamClient.Model.Reaction,
-                     reviewed_at: ExStreamClient.Model.NullTime
+                     reviewed_at: ExStreamClient.Model.NullTime,
+                     updated_at: :datetime
   def nested_components do
     @nested_components
   end
@@ -95,7 +97,7 @@ defmodule ExStreamClient.Model.ReviewQueueItem do
           completed_at: any(),
           config_key: String.t(),
           content_changed: boolean(),
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           entity_creator: ExStreamClient.Model.EntityCreator.t() | nil,
           entity_id: String.t(),
           entity_type: String.t(),
@@ -118,6 +120,6 @@ defmodule ExStreamClient.Model.ReviewQueueItem do
           severity: integer(),
           status: String.t(),
           teams: [String.t()],
-          updated_at: float()
+          updated_at: DateTime.t() | integer() | String.t()
         }
 end

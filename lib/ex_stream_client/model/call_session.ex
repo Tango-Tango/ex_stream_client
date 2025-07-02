@@ -44,32 +44,40 @@ defmodule ExStreamClient.Model.CallSession do
   ]
 
   @nested_components active_sf_us: ExStreamClient.Model.SFUIDLastSeen,
-                     participants: ExStreamClient.Model.CallParticipant
+                     created_at: :datetime,
+                     deleted_at: :datetime,
+                     ended_at: :datetime,
+                     live_ended_at: :datetime,
+                     live_started_at: :datetime,
+                     participants: ExStreamClient.Model.CallParticipant,
+                     ring_at: :datetime,
+                     started_at: :datetime,
+                     timer_ends_at: :datetime
   def nested_components do
     @nested_components
   end
 
   @type t :: %__MODULE__{
-          accepted_by: %{optional(String.t()) => float()},
+          accepted_by: %{optional(String.t()) => DateTime.t() | integer() | String.t()},
           active_sf_us: [ExStreamClient.Model.SFUIDLastSeen.t()],
           anonymous_participant_count: integer(),
           app_pk: integer(),
           call_id: String.t(),
           call_type: String.t(),
-          created_at: float(),
-          deleted_at: float() | nil,
-          ended_at: float() | nil,
-          live_ended_at: float() | nil,
-          live_started_at: float() | nil,
-          missed_by: %{optional(String.t()) => float()},
+          created_at: DateTime.t() | integer() | String.t(),
+          deleted_at: (DateTime.t() | integer() | String.t()) | nil,
+          ended_at: (DateTime.t() | integer() | String.t()) | nil,
+          live_ended_at: (DateTime.t() | integer() | String.t()) | nil,
+          live_started_at: (DateTime.t() | integer() | String.t()) | nil,
+          missed_by: %{optional(String.t()) => DateTime.t() | integer() | String.t()},
           participants: [ExStreamClient.Model.CallParticipant.t()],
           participants_count_by_role: %{optional(String.t()) => integer()},
-          rejected_by: %{optional(String.t()) => float()},
-          ring_at: float() | nil,
+          rejected_by: %{optional(String.t()) => DateTime.t() | integer() | String.t()},
+          ring_at: (DateTime.t() | integer() | String.t()) | nil,
           session_id: String.t(),
           sfui_ds: [String.t()],
-          started_at: float() | nil,
-          timer_ends_at: float() | nil,
+          started_at: (DateTime.t() | integer() | String.t()) | nil,
+          timer_ends_at: (DateTime.t() | integer() | String.t()) | nil,
           user_permission_overrides: %{
             optional(String.t()) => %{optional(String.t()) => boolean()}
           }

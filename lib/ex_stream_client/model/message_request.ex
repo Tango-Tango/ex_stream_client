@@ -26,6 +26,7 @@ defmodule ExStreamClient.Model.MessageRequest do
   ]
 
   @nested_components attachments: ExStreamClient.Model.Attachment,
+                     pin_expires: :datetime,
                      type: :enum,
                      user: ExStreamClient.Model.UserRequest
   def nested_components do
@@ -40,7 +41,7 @@ defmodule ExStreamClient.Model.MessageRequest do
           mentioned_users: [String.t()] | nil,
           mml: String.t() | nil,
           parent_id: String.t() | nil,
-          pin_expires: float() | nil,
+          pin_expires: (DateTime.t() | integer() | String.t()) | nil,
           pinned: boolean() | nil,
           pinned_at: String.t() | nil,
           poll_id: String.t() | nil,

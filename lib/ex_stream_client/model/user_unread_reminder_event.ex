@@ -6,6 +6,7 @@ defmodule ExStreamClient.Model.UserUnreadReminderEvent do
   defstruct [:channels, :created_at, :type, :user]
 
   @nested_components channels: {:map, ExStreamClient.Model.ChannelMessages},
+                     created_at: :datetime,
                      user: ExStreamClient.Model.User
   def nested_components do
     @nested_components
@@ -13,7 +14,7 @@ defmodule ExStreamClient.Model.UserUnreadReminderEvent do
 
   @type t :: %__MODULE__{
           channels: %{optional(String.t()) => ExStreamClient.Model.ChannelMessages.t()},
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           type: String.t(),
           user: ExStreamClient.Model.User.t() | nil
         }

@@ -54,10 +54,16 @@ defmodule ExStreamClient.Model.OwnUserResponse do
   ]
 
   @nested_components channel_mutes: ExStreamClient.Model.ChannelMute,
+                     created_at: :datetime,
+                     deactivated_at: :datetime,
+                     deleted_at: :datetime,
                      devices: ExStreamClient.Model.DeviceResponse,
+                     last_active: :datetime,
                      mutes: ExStreamClient.Model.UserMuteResponse,
                      privacy_settings: ExStreamClient.Model.PrivacySettingsResponse,
-                     push_preferences: ExStreamClient.Model.PushPreferences
+                     push_preferences: ExStreamClient.Model.PushPreferences,
+                     revoke_tokens_issued_before: :datetime,
+                     updated_at: :datetime
   def nested_components do
     @nested_components
   end
@@ -66,23 +72,23 @@ defmodule ExStreamClient.Model.OwnUserResponse do
           banned: boolean(),
           blocked_user_ids: [String.t()] | nil,
           channel_mutes: [ExStreamClient.Model.ChannelMute.t()],
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           custom: %{optional(String.t()) => any()},
-          deactivated_at: float() | nil,
-          deleted_at: float() | nil,
+          deactivated_at: (DateTime.t() | integer() | String.t()) | nil,
+          deleted_at: (DateTime.t() | integer() | String.t()) | nil,
           devices: [ExStreamClient.Model.DeviceResponse.t()],
           id: String.t(),
           image: String.t() | nil,
           invisible: boolean(),
           language: String.t(),
-          last_active: float() | nil,
+          last_active: (DateTime.t() | integer() | String.t()) | nil,
           latest_hidden_channels: [String.t()] | nil,
           mutes: [ExStreamClient.Model.UserMuteResponse.t()],
           name: String.t() | nil,
           online: boolean(),
           privacy_settings: ExStreamClient.Model.PrivacySettingsResponse.t() | nil,
           push_preferences: ExStreamClient.Model.PushPreferences.t() | nil,
-          revoke_tokens_issued_before: float() | nil,
+          revoke_tokens_issued_before: (DateTime.t() | integer() | String.t()) | nil,
           role: String.t(),
           teams: [String.t()],
           teams_role: %{optional(String.t()) => String.t()} | nil,
@@ -90,6 +96,6 @@ defmodule ExStreamClient.Model.OwnUserResponse do
           unread_channels: integer(),
           unread_count: integer(),
           unread_threads: integer(),
-          updated_at: float()
+          updated_at: DateTime.t() | integer() | String.t()
         }
 end

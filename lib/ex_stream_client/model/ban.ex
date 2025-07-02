@@ -6,7 +6,9 @@ defmodule ExStreamClient.Model.Ban do
   defstruct [:channel, :created_at, :created_by, :expires, :reason, :shadow, :target]
 
   @nested_components channel: ExStreamClient.Model.Channel,
+                     created_at: :datetime,
                      created_by: ExStreamClient.Model.User,
+                     expires: :datetime,
                      target: ExStreamClient.Model.User
   def nested_components do
     @nested_components
@@ -14,9 +16,9 @@ defmodule ExStreamClient.Model.Ban do
 
   @type t :: %__MODULE__{
           channel: ExStreamClient.Model.Channel.t() | nil,
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           created_by: ExStreamClient.Model.User.t() | nil,
-          expires: float() | nil,
+          expires: (DateTime.t() | integer() | String.t()) | nil,
           reason: String.t() | nil,
           shadow: boolean(),
           target: ExStreamClient.Model.User.t() | nil

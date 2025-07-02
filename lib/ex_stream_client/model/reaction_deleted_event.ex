@@ -16,7 +16,8 @@ defmodule ExStreamClient.Model.ReactionDeletedEvent do
     :user
   ]
 
-  @nested_components message: ExStreamClient.Model.Message,
+  @nested_components created_at: :datetime,
+                     message: ExStreamClient.Model.Message,
                      reaction: ExStreamClient.Model.Reaction,
                      thread_participants: ExStreamClient.Model.User,
                      user: ExStreamClient.Model.User
@@ -28,7 +29,7 @@ defmodule ExStreamClient.Model.ReactionDeletedEvent do
           channel_id: String.t(),
           channel_type: String.t(),
           cid: String.t(),
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           message: ExStreamClient.Model.Message.t() | nil,
           reaction: ExStreamClient.Model.Reaction.t() | nil,
           team: String.t() | nil,

@@ -33,10 +33,17 @@ defmodule ExStreamClient.Model.ChannelResponse do
   ]
 
   @nested_components config: ExStreamClient.Model.ChannelConfigWithInfo,
+                     created_at: :datetime,
                      created_by: ExStreamClient.Model.UserResponse,
+                     deleted_at: :datetime,
+                     hide_messages_before: :datetime,
+                     last_message_at: :datetime,
                      members: ExStreamClient.Model.ChannelMember,
+                     mute_expires_at: :datetime,
                      own_capabilities: ExStreamClient.Model.ChannelOwnCapability,
-                     truncated_by: ExStreamClient.Model.UserResponse
+                     truncated_at: :datetime,
+                     truncated_by: ExStreamClient.Model.UserResponse,
+                     updated_at: :datetime
   def nested_components do
     @nested_components
   end
@@ -48,25 +55,25 @@ defmodule ExStreamClient.Model.ChannelResponse do
           cid: String.t(),
           config: ExStreamClient.Model.ChannelConfigWithInfo.t() | nil,
           cooldown: integer() | nil,
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           created_by: ExStreamClient.Model.UserResponse.t() | nil,
           custom: %{optional(String.t()) => any()},
-          deleted_at: float() | nil,
+          deleted_at: (DateTime.t() | integer() | String.t()) | nil,
           disabled: boolean(),
           frozen: boolean(),
           hidden: boolean() | nil,
-          hide_messages_before: float() | nil,
+          hide_messages_before: (DateTime.t() | integer() | String.t()) | nil,
           id: String.t(),
-          last_message_at: float() | nil,
+          last_message_at: (DateTime.t() | integer() | String.t()) | nil,
           member_count: integer() | nil,
           members: [ExStreamClient.Model.ChannelMember.t()] | nil,
-          mute_expires_at: float() | nil,
+          mute_expires_at: (DateTime.t() | integer() | String.t()) | nil,
           muted: boolean() | nil,
           own_capabilities: [ExStreamClient.Model.ChannelOwnCapability.t()] | nil,
           team: String.t() | nil,
-          truncated_at: float() | nil,
+          truncated_at: (DateTime.t() | integer() | String.t()) | nil,
           truncated_by: ExStreamClient.Model.UserResponse.t() | nil,
           type: String.t(),
-          updated_at: float()
+          updated_at: DateTime.t() | integer() | String.t()
         }
 end

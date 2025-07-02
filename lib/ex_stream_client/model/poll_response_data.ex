@@ -47,12 +47,14 @@ defmodule ExStreamClient.Model.PollResponseData do
     :voting_visibility
   ]
 
-  @nested_components created_by: ExStreamClient.Model.UserResponse,
+  @nested_components created_at: :datetime,
+                     created_by: ExStreamClient.Model.UserResponse,
                      latest_answers: ExStreamClient.Model.PollVoteResponseData,
                      latest_votes_by_option:
                        {:map, {:array, ExStreamClient.Model.PollVoteResponseData}},
                      options: ExStreamClient.Model.PollOptionResponseData,
-                     own_votes: ExStreamClient.Model.PollVoteResponseData
+                     own_votes: ExStreamClient.Model.PollVoteResponseData,
+                     updated_at: :datetime
   def nested_components do
     @nested_components
   end
@@ -61,7 +63,7 @@ defmodule ExStreamClient.Model.PollResponseData do
           allow_answers: boolean(),
           allow_user_suggested_options: boolean(),
           answers_count: integer(),
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           created_by: ExStreamClient.Model.UserResponse.t() | nil,
           created_by_id: String.t(),
           custom: %{optional(String.t()) => any()},
@@ -77,7 +79,7 @@ defmodule ExStreamClient.Model.PollResponseData do
           name: String.t(),
           options: [ExStreamClient.Model.PollOptionResponseData.t()],
           own_votes: [ExStreamClient.Model.PollVoteResponseData.t()],
-          updated_at: float(),
+          updated_at: DateTime.t() | integer() | String.t(),
           vote_count: integer(),
           vote_counts_by_option: %{optional(String.t()) => integer()},
           voting_visibility: String.t()

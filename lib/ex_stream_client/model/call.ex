@@ -59,13 +59,20 @@ defmodule ExStreamClient.Model.Call do
 
   @nested_components blocked_users: ExStreamClient.Model.User,
                      call_type: ExStreamClient.Model.CallType,
+                     created_at: :datetime,
                      created_by: ExStreamClient.Model.User,
+                     deleted_at: :datetime,
+                     egress_updated_at: :datetime,
                      egresses: ExStreamClient.Model.CallEgress,
+                     ended_at: :datetime,
+                     last_heartbeat_at: :datetime,
                      member_lookup: ExStreamClient.Model.MemberLookup,
                      members: ExStreamClient.Model.CallMember,
                      session: ExStreamClient.Model.CallSession,
                      settings: ExStreamClient.Model.CallSettings,
-                     settings_overrides: ExStreamClient.Model.CallSettings
+                     settings_overrides: ExStreamClient.Model.CallSettings,
+                     starts_at: :datetime,
+                     updated_at: :datetime
   def nested_components do
     @nested_components
   end
@@ -78,18 +85,18 @@ defmodule ExStreamClient.Model.Call do
           call_type: ExStreamClient.Model.CallType.t() | nil,
           channel_cid: String.t(),
           cid: String.t(),
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           created_by: ExStreamClient.Model.User.t() | nil,
           created_by_user_id: String.t(),
           current_session_id: String.t(),
           custom: %{optional(String.t()) => any()},
-          deleted_at: float() | nil,
-          egress_updated_at: float() | nil,
+          deleted_at: (DateTime.t() | integer() | String.t()) | nil,
+          egress_updated_at: (DateTime.t() | integer() | String.t()) | nil,
           egresses: [ExStreamClient.Model.CallEgress.t()],
-          ended_at: float() | nil,
+          ended_at: (DateTime.t() | integer() | String.t()) | nil,
           id: String.t(),
           join_ahead_time_seconds: integer() | nil,
-          last_heartbeat_at: float() | nil,
+          last_heartbeat_at: (DateTime.t() | integer() | String.t()) | nil,
           last_session_id: String.t(),
           member_count: integer() | nil,
           member_lookup: ExStreamClient.Model.MemberLookup.t() | nil,
@@ -97,10 +104,10 @@ defmodule ExStreamClient.Model.Call do
           session: ExStreamClient.Model.CallSession.t() | nil,
           settings: ExStreamClient.Model.CallSettings.t() | nil,
           settings_overrides: ExStreamClient.Model.CallSettings.t() | nil,
-          starts_at: float() | nil,
+          starts_at: (DateTime.t() | integer() | String.t()) | nil,
           team: String.t(),
           thumbnail_url: String.t(),
           type: String.t(),
-          updated_at: float()
+          updated_at: DateTime.t() | integer() | String.t()
         }
 end

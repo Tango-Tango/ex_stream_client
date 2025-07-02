@@ -14,18 +14,21 @@ defmodule ExStreamClient.Model.AsyncExportErrorEvent do
     :type
   ]
 
-  @nested_components []
+  @nested_components created_at: :datetime,
+                     finished_at: :datetime,
+                     received_at: :datetime,
+                     started_at: :datetime
   def nested_components do
     @nested_components
   end
 
   @type t :: %__MODULE__{
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           custom: %{optional(String.t()) => any()},
           error: String.t(),
-          finished_at: float(),
-          received_at: float() | nil,
-          started_at: float(),
+          finished_at: DateTime.t() | integer() | String.t(),
+          received_at: (DateTime.t() | integer() | String.t()) | nil,
+          started_at: DateTime.t() | integer() | String.t(),
           task_id: String.t(),
           type: String.t()
         }

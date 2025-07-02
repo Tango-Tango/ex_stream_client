@@ -70,15 +70,21 @@ defmodule ExStreamClient.Model.Message do
   ]
 
   @nested_components attachments: ExStreamClient.Model.Attachment,
+                     created_at: :datetime,
+                     deleted_at: :datetime,
                      latest_reactions: ExStreamClient.Model.Reaction,
                      mentioned_users: ExStreamClient.Model.User,
+                     message_text_updated_at: :datetime,
                      moderation: ExStreamClient.Model.ModerationV2Response,
                      own_reactions: ExStreamClient.Model.Reaction,
+                     pin_expires: :datetime,
+                     pinned_at: :datetime,
                      pinned_by: ExStreamClient.Model.User,
                      poll: ExStreamClient.Model.Poll,
                      quoted_message: ExStreamClient.Model.Message,
                      reaction_groups: {:map, ExStreamClient.Model.ReactionGroupResponse},
                      thread_participants: ExStreamClient.Model.User,
+                     updated_at: :datetime,
                      user: ExStreamClient.Model.User
   def nested_components do
     @nested_components
@@ -89,9 +95,9 @@ defmodule ExStreamClient.Model.Message do
           before_message_send_failed: boolean() | nil,
           cid: String.t(),
           command: String.t() | nil,
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           custom: %{optional(String.t()) => any()},
-          deleted_at: float() | nil,
+          deleted_at: (DateTime.t() | integer() | String.t()) | nil,
           deleted_reply_count: integer(),
           html: String.t(),
           i18n: %{optional(String.t()) => String.t()} | nil,
@@ -99,14 +105,14 @@ defmodule ExStreamClient.Model.Message do
           image_labels: %{optional(String.t()) => [String.t()]} | nil,
           latest_reactions: [ExStreamClient.Model.Reaction.t()],
           mentioned_users: [ExStreamClient.Model.User.t()],
-          message_text_updated_at: float() | nil,
+          message_text_updated_at: (DateTime.t() | integer() | String.t()) | nil,
           mml: String.t() | nil,
           moderation: ExStreamClient.Model.ModerationV2Response.t() | nil,
           own_reactions: [ExStreamClient.Model.Reaction.t()],
           parent_id: String.t() | nil,
-          pin_expires: float() | nil,
+          pin_expires: (DateTime.t() | integer() | String.t()) | nil,
           pinned: boolean(),
-          pinned_at: float() | nil,
+          pinned_at: (DateTime.t() | integer() | String.t()) | nil,
           pinned_by: ExStreamClient.Model.User.t() | nil,
           poll: ExStreamClient.Model.Poll.t() | nil,
           poll_id: String.t() | nil,
@@ -125,7 +131,7 @@ defmodule ExStreamClient.Model.Message do
           text: String.t(),
           thread_participants: [ExStreamClient.Model.User.t()] | nil,
           type: String.t(),
-          updated_at: float(),
+          updated_at: DateTime.t() | integer() | String.t(),
           user: ExStreamClient.Model.User.t() | nil
         }
 end

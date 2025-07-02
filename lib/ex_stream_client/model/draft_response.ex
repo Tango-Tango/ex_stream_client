@@ -14,6 +14,7 @@ defmodule ExStreamClient.Model.DraftResponse do
   ]
 
   @nested_components channel: ExStreamClient.Model.ChannelResponse,
+                     created_at: :datetime,
                      message: ExStreamClient.Model.DraftPayloadResponse,
                      parent_message: ExStreamClient.Model.MessageResponse,
                      quoted_message: ExStreamClient.Model.MessageResponse
@@ -24,7 +25,7 @@ defmodule ExStreamClient.Model.DraftResponse do
   @type t :: %__MODULE__{
           channel: ExStreamClient.Model.ChannelResponse.t() | nil,
           channel_cid: String.t(),
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           message: ExStreamClient.Model.DraftPayloadResponse.t(),
           parent_id: String.t() | nil,
           parent_message: ExStreamClient.Model.MessageResponse.t() | nil,

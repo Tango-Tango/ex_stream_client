@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.ChannelExport do
   use ExStreamClient.JSON
   use ExStreamClient.TypeInterner
   defstruct [:cid, :id, :messages_since, :messages_until, :type]
-  @nested_components []
+  @nested_components messages_since: :datetime, messages_until: :datetime
   def nested_components do
     @nested_components
   end
@@ -11,8 +11,8 @@ defmodule ExStreamClient.Model.ChannelExport do
   @type t :: %__MODULE__{
           cid: String.t() | nil,
           id: String.t() | nil,
-          messages_since: float() | nil,
-          messages_until: float() | nil,
+          messages_since: (DateTime.t() | integer() | String.t()) | nil,
+          messages_until: (DateTime.t() | integer() | String.t()) | nil,
           type: String.t() | nil
         }
 end

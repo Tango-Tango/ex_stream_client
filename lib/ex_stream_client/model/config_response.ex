@@ -29,6 +29,8 @@ defmodule ExStreamClient.Model.ConfigResponse do
                        ExStreamClient.Model.AutomodSemanticFiltersConfig,
                      automod_toxicity_config: ExStreamClient.Model.AutomodToxicityConfig,
                      block_list_config: ExStreamClient.Model.BlockListConfig,
+                     created_at: :datetime,
+                     updated_at: :datetime,
                      velocity_filter_config: ExStreamClient.Model.VelocityFilterConfig,
                      video_call_rule_config: ExStreamClient.Model.VideoCallRuleConfig
   def nested_components do
@@ -46,10 +48,10 @@ defmodule ExStreamClient.Model.ConfigResponse do
             ExStreamClient.Model.AutomodSemanticFiltersConfig.t() | nil,
           automod_toxicity_config: ExStreamClient.Model.AutomodToxicityConfig.t() | nil,
           block_list_config: ExStreamClient.Model.BlockListConfig.t() | nil,
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           key: String.t(),
           team: String.t(),
-          updated_at: float(),
+          updated_at: DateTime.t() | integer() | String.t(),
           velocity_filter_config: ExStreamClient.Model.VelocityFilterConfig.t() | nil,
           video_call_rule_config: ExStreamClient.Model.VideoCallRuleConfig.t() | nil
         }

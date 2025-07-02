@@ -5,7 +5,8 @@ defmodule ExStreamClient.Model.MessageFlaggedEvent do
   @enforce_keys [:cid, :created_at, :type]
   defstruct [:cid, :created_at, :flag, :message, :thread_participants, :type, :user]
 
-  @nested_components flag: ExStreamClient.Model.Flag,
+  @nested_components created_at: :datetime,
+                     flag: ExStreamClient.Model.Flag,
                      message: ExStreamClient.Model.Message,
                      thread_participants: ExStreamClient.Model.User,
                      user: ExStreamClient.Model.User
@@ -15,7 +16,7 @@ defmodule ExStreamClient.Model.MessageFlaggedEvent do
 
   @type t :: %__MODULE__{
           cid: String.t(),
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           flag: ExStreamClient.Model.Flag.t() | nil,
           message: ExStreamClient.Model.Message.t() | nil,
           thread_participants: [ExStreamClient.Model.User.t()] | nil,

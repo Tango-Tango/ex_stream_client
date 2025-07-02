@@ -28,7 +28,10 @@ defmodule ExStreamClient.Model.CallEgress do
     :updated_at
   ]
 
-  @nested_components config: ExStreamClient.Model.EgressTaskConfig
+  @nested_components config: ExStreamClient.Model.EgressTaskConfig,
+                     started_at: :datetime,
+                     stopped_at: :datetime,
+                     updated_at: :datetime
   def nested_components do
     @nested_components
   end
@@ -41,9 +44,9 @@ defmodule ExStreamClient.Model.CallEgress do
           egress_id: String.t(),
           egress_type: String.t(),
           instance_ip: String.t(),
-          started_at: float(),
+          started_at: DateTime.t() | integer() | String.t(),
           state: String.t(),
-          stopped_at: float() | nil,
-          updated_at: float()
+          stopped_at: (DateTime.t() | integer() | String.t()) | nil,
+          updated_at: DateTime.t() | integer() | String.t()
         }
 end

@@ -14,13 +14,13 @@ defmodule ExStreamClient.Model.DeviceResponse do
     :voip
   ]
 
-  @nested_components []
+  @nested_components created_at: :datetime
   def nested_components do
     @nested_components
   end
 
   @type t :: %__MODULE__{
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           disabled: boolean() | nil,
           disabled_reason: String.t() | nil,
           id: String.t(),

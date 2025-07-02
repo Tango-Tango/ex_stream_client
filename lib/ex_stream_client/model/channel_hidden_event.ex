@@ -25,6 +25,7 @@ defmodule ExStreamClient.Model.ChannelHiddenEvent do
   ]
 
   @nested_components channel: ExStreamClient.Model.ChannelResponse,
+                     created_at: :datetime,
                      user: ExStreamClient.Model.User
   def nested_components do
     @nested_components
@@ -37,7 +38,7 @@ defmodule ExStreamClient.Model.ChannelHiddenEvent do
           channel_type: String.t(),
           cid: String.t(),
           clear_history: boolean(),
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           type: String.t(),
           user: ExStreamClient.Model.User.t() | nil
         }

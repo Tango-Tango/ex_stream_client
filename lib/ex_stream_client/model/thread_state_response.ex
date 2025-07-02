@@ -36,12 +36,16 @@ defmodule ExStreamClient.Model.ThreadStateResponse do
   ]
 
   @nested_components channel: ExStreamClient.Model.ChannelResponse,
+                     created_at: :datetime,
                      created_by: ExStreamClient.Model.UserResponse,
+                     deleted_at: :datetime,
                      draft: ExStreamClient.Model.DraftResponse,
+                     last_message_at: :datetime,
                      latest_replies: ExStreamClient.Model.MessageResponse,
                      parent_message: ExStreamClient.Model.MessageResponse,
                      read: ExStreamClient.Model.ReadStateResponse,
-                     thread_participants: ExStreamClient.Model.ThreadParticipant
+                     thread_participants: ExStreamClient.Model.ThreadParticipant,
+                     updated_at: :datetime
   def nested_components do
     @nested_components
   end
@@ -50,13 +54,13 @@ defmodule ExStreamClient.Model.ThreadStateResponse do
           active_participant_count: integer() | nil,
           channel: ExStreamClient.Model.ChannelResponse.t() | nil,
           channel_cid: String.t(),
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           created_by: ExStreamClient.Model.UserResponse.t() | nil,
           created_by_user_id: String.t(),
           custom: %{optional(String.t()) => any()},
-          deleted_at: float() | nil,
+          deleted_at: (DateTime.t() | integer() | String.t()) | nil,
           draft: ExStreamClient.Model.DraftResponse.t() | nil,
-          last_message_at: float() | nil,
+          last_message_at: (DateTime.t() | integer() | String.t()) | nil,
           latest_replies: [ExStreamClient.Model.MessageResponse.t()],
           parent_message: ExStreamClient.Model.MessageResponse.t() | nil,
           parent_message_id: String.t(),
@@ -65,6 +69,6 @@ defmodule ExStreamClient.Model.ThreadStateResponse do
           reply_count: integer() | nil,
           thread_participants: [ExStreamClient.Model.ThreadParticipant.t()] | nil,
           title: String.t(),
-          updated_at: float()
+          updated_at: DateTime.t() | integer() | String.t()
         }
 end

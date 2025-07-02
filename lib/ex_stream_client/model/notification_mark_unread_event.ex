@@ -40,6 +40,8 @@ defmodule ExStreamClient.Model.NotificationMarkUnreadEvent do
   ]
 
   @nested_components channel: ExStreamClient.Model.ChannelResponse,
+                     created_at: :datetime,
+                     last_read_at: :datetime,
                      user: ExStreamClient.Model.User
   def nested_components do
     @nested_components
@@ -51,9 +53,9 @@ defmodule ExStreamClient.Model.NotificationMarkUnreadEvent do
           channel_member_count: integer(),
           channel_type: String.t(),
           cid: String.t(),
-          created_at: float(),
+          created_at: DateTime.t() | integer() | String.t(),
           first_unread_message_id: String.t(),
-          last_read_at: float(),
+          last_read_at: DateTime.t() | integer() | String.t(),
           last_read_message_id: String.t() | nil,
           team: String.t() | nil,
           thread_id: String.t() | nil,

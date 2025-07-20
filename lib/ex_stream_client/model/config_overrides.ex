@@ -12,9 +12,11 @@ defmodule ExStreamClient.Model.ConfigOverrides do
     :quotes,
     :reactions,
     :replies,
+    :shared_locations,
     :typing_events,
     :uploads,
-    :url_enrichment
+    :url_enrichment,
+    :user_message_reminders
   ]
 
   @nested_components blocklist_behavior: :enum
@@ -31,8 +33,10 @@ defmodule ExStreamClient.Model.ConfigOverrides do
           quotes: boolean() | nil,
           reactions: boolean() | nil,
           replies: boolean() | nil,
+          shared_locations: boolean() | nil,
           typing_events: boolean() | nil,
           uploads: boolean() | nil,
-          url_enrichment: boolean() | nil
+          url_enrichment: boolean() | nil,
+          user_message_reminders: boolean() | nil
         }
 end

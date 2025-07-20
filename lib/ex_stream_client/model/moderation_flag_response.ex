@@ -22,7 +22,7 @@ defmodule ExStreamClient.Model.ModerationFlagResponse do
   ]
 
   @nested_components moderation_payload: ExStreamClient.Model.ModerationPayload,
-                     review_queue_item: ExStreamClient.Model.ReviewQueueItem,
+                     review_queue_item: ExStreamClient.Model.ReviewQueueItemResponse,
                      user: ExStreamClient.Model.UserResponse
   def nested_components do
     @nested_components
@@ -39,7 +39,7 @@ defmodule ExStreamClient.Model.ModerationFlagResponse do
           moderation_payload: ExStreamClient.Model.ModerationPayload.t() | nil,
           reason: String.t() | nil,
           result: [%{optional(String.t()) => any()}] | nil,
-          review_queue_item: ExStreamClient.Model.ReviewQueueItem.t() | nil,
+          review_queue_item: ExStreamClient.Model.ReviewQueueItemResponse.t() | nil,
           review_queue_item_id: String.t() | nil,
           type: String.t(),
           updated_at: String.t(),

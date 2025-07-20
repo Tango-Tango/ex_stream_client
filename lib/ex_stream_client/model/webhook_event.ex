@@ -25,6 +25,7 @@ defmodule ExStreamClient.Model.WebhookEvent do
           | ExStreamClient.Model.ReactionUpdatedEvent.t()
           | ExStreamClient.Model.ReactionNewEvent.t()
           | ExStreamClient.Model.ReactionDeletedEvent.t()
+          | ExStreamClient.Model.PendingMessageEvent.t()
           | ExStreamClient.Model.NotificationMarkUnreadEvent.t()
           | ExStreamClient.Model.ModerationMarkReviewedEvent.t()
           | ExStreamClient.Model.ModerationFlaggedEvent.t()

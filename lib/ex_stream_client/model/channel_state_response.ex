@@ -4,6 +4,7 @@ defmodule ExStreamClient.Model.ChannelStateResponse do
   use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :members, :messages, :pinned_messages, :threads]
   defstruct [
+    :active_live_locations,
     :channel,
     :draft,
     :duration,
@@ -21,7 +22,8 @@ defmodule ExStreamClient.Model.ChannelStateResponse do
     :watchers
   ]
 
-  @nested_components channel: ExStreamClient.Model.ChannelResponse,
+  @nested_components active_live_locations: ExStreamClient.Model.SharedLocationResponseData,
+                     channel: ExStreamClient.Model.ChannelResponse,
                      draft: ExStreamClient.Model.DraftResponse,
                      hide_messages_before: :datetime,
                      members: ExStreamClient.Model.ChannelMember,
@@ -38,6 +40,7 @@ defmodule ExStreamClient.Model.ChannelStateResponse do
   end
 
   @type t :: %__MODULE__{
+          active_live_locations: [ExStreamClient.Model.SharedLocationResponseData.t()] | nil,
           channel: ExStreamClient.Model.ChannelResponse.t() | nil,
           draft: ExStreamClient.Model.DraftResponse.t() | nil,
           duration: String.t(),

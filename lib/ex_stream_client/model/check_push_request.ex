@@ -5,6 +5,7 @@ defmodule ExStreamClient.Model.CheckPushRequest do
 
   defstruct [
     :apn_template,
+    :event_type,
     :firebase_data_template,
     :firebase_template,
     :message_id,
@@ -15,13 +16,22 @@ defmodule ExStreamClient.Model.CheckPushRequest do
     :user_id
   ]
 
-  @nested_components push_provider_type: :enum, user: ExStreamClient.Model.UserRequest
+  @nested_components event_type: :enum,
+                     push_provider_type: :enum,
+                     user: ExStreamClient.Model.UserRequest
   def nested_components do
     @nested_components
   end
 
   @type t :: %__MODULE__{
           apn_template: String.t() | nil,
+          event_type:
+            (:"notification.reminder_due"
+             | :"reaction.updated"
+             | :"reaction.new"
+             | :"message.updated"
+             | :"message.new")
+            | nil,
           firebase_data_template: String.t() | nil,
           firebase_template: String.t() | nil,
           message_id: String.t() | nil,

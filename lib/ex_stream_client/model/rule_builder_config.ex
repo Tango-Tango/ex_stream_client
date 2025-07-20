@@ -2,7 +2,8 @@ defmodule ExStreamClient.Model.RuleBuilderConfig do
   @moduledoc "Schema representing a RuleBuilderConfig"
   use ExStreamClient.JSON
   use ExStreamClient.TypeInterner
-  defstruct [:async, :enabled, :rules]
+  @enforce_keys [:rules]
+  defstruct [:async, :rules]
   @nested_components rules: ExStreamClient.Model.RuleBuilderRule
   def nested_components do
     @nested_components
@@ -10,7 +11,6 @@ defmodule ExStreamClient.Model.RuleBuilderConfig do
 
   @type t :: %__MODULE__{
           async: boolean() | nil,
-          enabled: boolean() | nil,
-          rules: [ExStreamClient.Model.RuleBuilderRule.t()] | nil
+          rules: [ExStreamClient.Model.RuleBuilderRule.t()]
         }
 end

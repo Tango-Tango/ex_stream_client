@@ -11,7 +11,8 @@ defmodule ExStreamClient.Model.UpsertPushTemplateRequest do
 
   @type t :: %__MODULE__{
           enable_push: boolean() | nil,
-          event_type: :"reaction.new" | :"message.updated" | :"message.new",
+          event_type:
+            :"notification.reminder_due" | :"reaction.new" | :"message.updated" | :"message.new",
           push_provider_name: String.t() | nil,
           push_provider_type: :apn | :firebase,
           template: String.t() | nil

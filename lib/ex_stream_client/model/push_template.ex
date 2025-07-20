@@ -12,7 +12,8 @@ defmodule ExStreamClient.Model.PushTemplate do
   @type t :: %__MODULE__{
           created_at: DateTime.t() | integer() | String.t(),
           enable_push: boolean(),
-          event_type: :"reaction.new" | :"message.updated" | :"message.new",
+          event_type:
+            :"notification.reminder_due" | :"reaction.new" | :"message.updated" | :"message.new",
           template: String.t() | nil,
           updated_at: DateTime.t() | integer() | String.t()
         }

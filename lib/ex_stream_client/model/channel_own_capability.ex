@@ -18,6 +18,7 @@ defmodule ExStreamClient.Model.ChannelOwnCapability do
           | :"typing-events"
           | :"slow-mode"
           | :"skip-slow-mode"
+          | :"share-location"
           | :"set-channel-cooldown"
           | :"send-typing-events"
           | :"send-restricted-visibility-message"

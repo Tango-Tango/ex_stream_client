@@ -36,6 +36,7 @@ defmodule ExStreamClient.Model.SubmitActionRequest do
           action_type:
             :end_call
             | :kick_user
+            | :unmask
             | :shadow_block
             | :unblock
             | :delete_user

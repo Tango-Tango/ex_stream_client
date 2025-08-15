@@ -22,6 +22,10 @@ defmodule ExStreamClient.Model.WebhookEvent do
           | ExStreamClient.Model.ThreadUpdatedEvent.t()
           | ExStreamClient.Model.ReviewQueueItemUpdatedEvent.t()
           | ExStreamClient.Model.ReviewQueueItemNewEvent.t()
+          | ExStreamClient.Model.ReminderUpdatedEvent.t()
+          | ExStreamClient.Model.ReminderNotificationEvent.t()
+          | ExStreamClient.Model.ReminderDeletedEvent.t()
+          | ExStreamClient.Model.ReminderCreatedEvent.t()
           | ExStreamClient.Model.ReactionUpdatedEvent.t()
           | ExStreamClient.Model.ReactionNewEvent.t()
           | ExStreamClient.Model.ReactionDeletedEvent.t()
@@ -64,4 +68,5 @@ defmodule ExStreamClient.Model.WebhookEvent do
           | ExStreamClient.Model.AsyncExportChannelsEvent.t()
           | ExStreamClient.Model.AsyncBulkImageModerationEvent.t()
           | ExStreamClient.Model.AnyEvent.t()
+          | ExStreamClient.Model.ActivityMarkedEvent.t()
 end

@@ -8,7 +8,6 @@ defmodule ExStreamClient.Model.UnreadCountsResponse do
     :channels,
     :threads,
     :total_unread_count,
-    :total_unread_count_by_team,
     :total_unread_threads_count
   ]
   defstruct [
@@ -32,7 +31,7 @@ defmodule ExStreamClient.Model.UnreadCountsResponse do
           channels: [ExStreamClient.Model.UnreadCountsChannel.t()],
           threads: [ExStreamClient.Model.UnreadCountsThread.t()],
           total_unread_count: integer(),
-          total_unread_count_by_team: %{optional(String.t()) => integer()},
+          total_unread_count_by_team: %{optional(String.t()) => integer()} | nil,
           total_unread_threads_count: integer()
         }
 end

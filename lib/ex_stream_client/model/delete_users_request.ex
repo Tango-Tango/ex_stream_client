@@ -6,6 +6,7 @@ defmodule ExStreamClient.Model.DeleteUsersRequest do
   defstruct [
     :calls,
     :conversations,
+    :files,
     :messages,
     :new_call_owner_id,
     :new_channel_owner_id,
@@ -21,6 +22,7 @@ defmodule ExStreamClient.Model.DeleteUsersRequest do
   @type t :: %__MODULE__{
           calls: (:hard | :soft) | nil,
           conversations: (:hard | :soft) | nil,
+          files: boolean() | nil,
           messages: (:hard | :pruning | :soft) | nil,
           new_call_owner_id: String.t() | nil,
           new_channel_owner_id: String.t() | nil,

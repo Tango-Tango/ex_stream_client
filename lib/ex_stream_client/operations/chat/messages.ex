@@ -27,6 +27,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   Delete a vote from a poll
 
   ### Sends events:
+  - `feeds.poll.vote_removed`
   - `poll.vote_removed`
 
 
@@ -38,12 +39,12 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   - `user_id`
   - All options from [Shared Options](#module-shared-options) are supported.
   """
-  @spec remove_poll_vote(String.t(), String.t(), String.t()) ::
+  @spec delete_poll_vote(String.t(), String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.PollVoteResponse.t()} | {:error, any()}
-  @spec remove_poll_vote(String.t(), String.t(), String.t(), [
+  @spec delete_poll_vote(String.t(), String.t(), String.t(), [
           {:user_id, String.t()} | shared_opts
         ]) :: {:ok, ExStreamClient.Model.PollVoteResponse.t()} | {:error, any()}
-  def remove_poll_vote(message_id, poll_id, vote_id, opts \\ []) do
+  def delete_poll_vote(message_id, poll_id, vote_id, opts \\ []) do
     client = get_client(opts)
 
     request_opts =
@@ -409,7 +410,12 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   Cast a vote on a poll
 
   ### Sends events:
+  - `feeds.poll.vote_casted`
+  - `feeds.poll.vote_changed`
+  - `feeds.poll.vote_removed`
   - `poll.vote_casted`
+  - `poll.vote_changed`
+  - `poll.vote_removed`
 
 
   ### Required Arguments:

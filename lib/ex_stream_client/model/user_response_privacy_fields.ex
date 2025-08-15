@@ -16,6 +16,7 @@ defmodule ExStreamClient.Model.UserResponsePrivacyFields do
     :updated_at
   ]
   defstruct [
+    :avg_response_time,
     :banned,
     :blocked_user_ids,
     :created_at,
@@ -49,6 +50,7 @@ defmodule ExStreamClient.Model.UserResponsePrivacyFields do
   end
 
   @type t :: %__MODULE__{
+          avg_response_time: integer() | nil,
           banned: boolean(),
           blocked_user_ids: [String.t()],
           created_at: DateTime.t() | integer() | String.t(),

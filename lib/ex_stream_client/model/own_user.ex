@@ -22,6 +22,7 @@ defmodule ExStreamClient.Model.OwnUser do
     :updated_at
   ]
   defstruct [
+    :avg_response_time,
     :banned,
     :blocked_user_ids,
     :channel_mutes,
@@ -67,6 +68,7 @@ defmodule ExStreamClient.Model.OwnUser do
   end
 
   @type t :: %__MODULE__{
+          avg_response_time: integer() | nil,
           banned: boolean(),
           blocked_user_ids: [String.t()] | nil,
           channel_mutes: [ExStreamClient.Model.ChannelMute.t()],

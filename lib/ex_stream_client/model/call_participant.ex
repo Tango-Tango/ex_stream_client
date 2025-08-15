@@ -4,6 +4,7 @@ defmodule ExStreamClient.Model.CallParticipant do
   use ExStreamClient.TypeInterner
   @enforce_keys [:banned, :custom, :id, :joined_at, :online, :role, :teams_role, :user_session_id]
   defstruct [
+    :avg_response_time,
     :ban_expires,
     :banned,
     :created_at,
@@ -41,6 +42,7 @@ defmodule ExStreamClient.Model.CallParticipant do
   end
 
   @type t :: %__MODULE__{
+          avg_response_time: integer() | nil,
           ban_expires: (DateTime.t() | integer() | String.t()) | nil,
           banned: boolean(),
           created_at: (DateTime.t() | integer() | String.t()) | nil,

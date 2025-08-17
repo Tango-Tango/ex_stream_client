@@ -25,11 +25,13 @@ defmodule ExStreamClient.Model.ChannelTypeConfig do
     :reminders,
     :replies,
     :search,
+    :shared_locations,
     :skip_last_msg_update_for_system_msgs,
     :typing_events,
     :updated_at,
     :uploads,
-    :url_enrichment
+    :url_enrichment,
+    :user_message_reminders
   ]
   defstruct [
     :allowed_flag_reasons,
@@ -60,11 +62,13 @@ defmodule ExStreamClient.Model.ChannelTypeConfig do
     :reminders,
     :replies,
     :search,
+    :shared_locations,
     :skip_last_msg_update_for_system_msgs,
     :typing_events,
     :updated_at,
     :uploads,
-    :url_enrichment
+    :url_enrichment,
+    :user_message_reminders
   ]
 
   @nested_components automod: :enum,
@@ -109,10 +113,12 @@ defmodule ExStreamClient.Model.ChannelTypeConfig do
           reminders: boolean(),
           replies: boolean(),
           search: boolean(),
+          shared_locations: boolean(),
           skip_last_msg_update_for_system_msgs: boolean(),
           typing_events: boolean(),
           updated_at: DateTime.t() | integer() | String.t(),
           uploads: boolean(),
-          url_enrichment: boolean()
+          url_enrichment: boolean(),
+          user_message_reminders: boolean()
         }
 end

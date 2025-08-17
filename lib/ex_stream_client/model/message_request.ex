@@ -17,6 +17,7 @@ defmodule ExStreamClient.Model.MessageRequest do
     :poll_id,
     :quoted_message_id,
     :restricted_visibility,
+    :shared_location,
     :show_in_channel,
     :silent,
     :text,
@@ -27,6 +28,7 @@ defmodule ExStreamClient.Model.MessageRequest do
 
   @nested_components attachments: ExStreamClient.Model.Attachment,
                      pin_expires: :datetime,
+                     shared_location: ExStreamClient.Model.SharedLocation,
                      type: :enum,
                      user: ExStreamClient.Model.UserRequest
   def nested_components do
@@ -47,6 +49,7 @@ defmodule ExStreamClient.Model.MessageRequest do
           poll_id: String.t() | nil,
           quoted_message_id: String.t() | nil,
           restricted_visibility: [String.t()] | nil,
+          shared_location: ExStreamClient.Model.SharedLocation.t() | nil,
           show_in_channel: boolean() | nil,
           silent: boolean() | nil,
           text: String.t() | nil,

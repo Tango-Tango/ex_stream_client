@@ -15,6 +15,7 @@ defmodule ExStreamClient.Model.Channel do
     :updated_at
   ]
   defstruct [
+    :active_live_locations,
     :auto_translation_enabled,
     :auto_translation_language,
     :cid,
@@ -39,7 +40,8 @@ defmodule ExStreamClient.Model.Channel do
     :updated_at
   ]
 
-  @nested_components config: ExStreamClient.Model.ChannelConfig,
+  @nested_components active_live_locations: ExStreamClient.Model.SharedLocation,
+                     config: ExStreamClient.Model.ChannelConfig,
                      config_overrides: ExStreamClient.Model.ConfigOverrides,
                      created_at: :datetime,
                      created_by: ExStreamClient.Model.User,
@@ -54,6 +56,7 @@ defmodule ExStreamClient.Model.Channel do
   end
 
   @type t :: %__MODULE__{
+          active_live_locations: [ExStreamClient.Model.SharedLocation.t()] | nil,
           auto_translation_enabled: boolean() | nil,
           auto_translation_language: String.t(),
           cid: String.t(),

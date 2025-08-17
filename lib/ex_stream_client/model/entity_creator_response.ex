@@ -21,6 +21,7 @@ defmodule ExStreamClient.Model.EntityCreatorResponse do
     :updated_at
   ]
   defstruct [
+    :avg_response_time,
     :ban_count,
     :ban_expires,
     :banned,
@@ -64,6 +65,7 @@ defmodule ExStreamClient.Model.EntityCreatorResponse do
   end
 
   @type t :: %__MODULE__{
+          avg_response_time: integer() | nil,
           ban_count: integer(),
           ban_expires: (DateTime.t() | integer() | String.t()) | nil,
           banned: boolean(),

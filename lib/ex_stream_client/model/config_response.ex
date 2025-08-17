@@ -14,6 +14,7 @@ defmodule ExStreamClient.Model.ConfigResponse do
     :block_list_config,
     :created_at,
     :key,
+    :rule_builder_config,
     :team,
     :updated_at,
     :velocity_filter_config,
@@ -30,6 +31,7 @@ defmodule ExStreamClient.Model.ConfigResponse do
                      automod_toxicity_config: ExStreamClient.Model.AutomodToxicityConfig,
                      block_list_config: ExStreamClient.Model.BlockListConfig,
                      created_at: :datetime,
+                     rule_builder_config: ExStreamClient.Model.RuleBuilderConfig,
                      updated_at: :datetime,
                      velocity_filter_config: ExStreamClient.Model.VelocityFilterConfig,
                      video_call_rule_config: ExStreamClient.Model.VideoCallRuleConfig
@@ -50,6 +52,7 @@ defmodule ExStreamClient.Model.ConfigResponse do
           block_list_config: ExStreamClient.Model.BlockListConfig.t() | nil,
           created_at: DateTime.t() | integer() | String.t(),
           key: String.t(),
+          rule_builder_config: ExStreamClient.Model.RuleBuilderConfig.t() | nil,
           team: String.t(),
           updated_at: DateTime.t() | integer() | String.t(),
           velocity_filter_config: ExStreamClient.Model.VelocityFilterConfig.t() | nil,

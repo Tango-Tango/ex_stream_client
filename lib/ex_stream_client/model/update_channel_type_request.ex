@@ -29,10 +29,12 @@ defmodule ExStreamClient.Model.UpdateChannelTypeRequest do
     :reminders,
     :replies,
     :search,
+    :shared_locations,
     :skip_last_msg_update_for_system_msgs,
     :typing_events,
     :uploads,
-    :url_enrichment
+    :url_enrichment,
+    :user_message_reminders
   ]
 
   @nested_components automod: :enum,
@@ -71,9 +73,11 @@ defmodule ExStreamClient.Model.UpdateChannelTypeRequest do
           reminders: boolean() | nil,
           replies: boolean() | nil,
           search: boolean() | nil,
+          shared_locations: boolean() | nil,
           skip_last_msg_update_for_system_msgs: boolean() | nil,
           typing_events: boolean() | nil,
           uploads: boolean() | nil,
-          url_enrichment: boolean() | nil
+          url_enrichment: boolean() | nil,
+          user_message_reminders: boolean() | nil
         }
 end

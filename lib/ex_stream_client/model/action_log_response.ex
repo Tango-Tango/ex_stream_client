@@ -17,7 +17,7 @@ defmodule ExStreamClient.Model.ActionLogResponse do
   ]
 
   @nested_components created_at: :datetime,
-                     review_queue_item: ExStreamClient.Model.ReviewQueueItem,
+                     review_queue_item: ExStreamClient.Model.ReviewQueueItemResponse,
                      target_user: ExStreamClient.Model.UserResponse,
                      user: ExStreamClient.Model.UserResponse
   def nested_components do
@@ -29,7 +29,7 @@ defmodule ExStreamClient.Model.ActionLogResponse do
           custom: %{optional(String.t()) => any()},
           id: String.t(),
           reason: String.t(),
-          review_queue_item: ExStreamClient.Model.ReviewQueueItem.t() | nil,
+          review_queue_item: ExStreamClient.Model.ReviewQueueItemResponse.t() | nil,
           target_user: ExStreamClient.Model.UserResponse.t() | nil,
           target_user_id: String.t(),
           type: String.t(),

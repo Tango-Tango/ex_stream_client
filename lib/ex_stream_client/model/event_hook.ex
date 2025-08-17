@@ -4,6 +4,7 @@ defmodule ExStreamClient.Model.EventHook do
   use ExStreamClient.TypeInterner
 
   defstruct [
+    :callback,
     :created_at,
     :enabled,
     :event_types,
@@ -21,16 +22,20 @@ defmodule ExStreamClient.Model.EventHook do
     :sqs_region,
     :sqs_role_arn,
     :sqs_secret,
+    :timeout_ms,
     :updated_at,
     :webhook_url
   ]
 
-  @nested_components created_at: :datetime, updated_at: :datetime
+  @nested_components callback: ExStreamClient.Model.AsyncModerationCallbackConfig,
+                     created_at: :datetime,
+                     updated_at: :datetime
   def nested_components do
     @nested_components
   end
 
   @type t :: %__MODULE__{
+          callback: ExStreamClient.Model.AsyncModerationCallbackConfig.t() | nil,
           created_at: (DateTime.t() | integer() | String.t()) | nil,
           enabled: boolean() | nil,
           event_types: [String.t()] | nil,
@@ -48,6 +53,7 @@ defmodule ExStreamClient.Model.EventHook do
           sqs_region: String.t() | nil,
           sqs_role_arn: String.t() | nil,
           sqs_secret: String.t() | nil,
+          timeout_ms: integer() | nil,
           updated_at: (DateTime.t() | integer() | String.t()) | nil,
           webhook_url: String.t() | nil
         }

@@ -10,7 +10,8 @@ defmodule ExStreamClient.Model.BlockListRule do
   end
 
   @type t :: %__MODULE__{
-          action: :bounce_remove | :bounce_flag | :bounce | :remove | :shadow | :flag,
+          action:
+            :bounce_remove | :bounce_flag | :bounce | :remove | :shadow | :mask_flag | :flag,
           name: String.t(),
           team: String.t()
         }

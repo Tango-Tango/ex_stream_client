@@ -23,6 +23,7 @@ defmodule ExStreamClient.Model.OwnUserResponse do
     :updated_at
   ]
   defstruct [
+    :avg_response_time,
     :banned,
     :blocked_user_ids,
     :channel_mutes,
@@ -47,6 +48,7 @@ defmodule ExStreamClient.Model.OwnUserResponse do
     :teams,
     :teams_role,
     :total_unread_count,
+    :total_unread_count_by_team,
     :unread_channels,
     :unread_count,
     :unread_threads,
@@ -69,6 +71,7 @@ defmodule ExStreamClient.Model.OwnUserResponse do
   end
 
   @type t :: %__MODULE__{
+          avg_response_time: integer() | nil,
           banned: boolean(),
           blocked_user_ids: [String.t()] | nil,
           channel_mutes: [ExStreamClient.Model.ChannelMute.t()],
@@ -93,6 +96,7 @@ defmodule ExStreamClient.Model.OwnUserResponse do
           teams: [String.t()],
           teams_role: %{optional(String.t()) => String.t()} | nil,
           total_unread_count: integer(),
+          total_unread_count_by_team: %{optional(String.t()) => integer()} | nil,
           unread_channels: integer(),
           unread_count: integer(),
           unread_threads: integer(),

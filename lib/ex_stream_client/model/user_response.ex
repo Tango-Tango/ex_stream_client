@@ -18,6 +18,7 @@ defmodule ExStreamClient.Model.UserResponse do
     :updated_at
   ]
   defstruct [
+    :avg_response_time,
     :ban_expires,
     :banned,
     :blocked_user_ids,
@@ -58,6 +59,7 @@ defmodule ExStreamClient.Model.UserResponse do
   end
 
   @type t :: %__MODULE__{
+          avg_response_time: integer() | nil,
           ban_expires: (DateTime.t() | integer() | String.t()) | nil,
           banned: boolean(),
           blocked_user_ids: [String.t()],

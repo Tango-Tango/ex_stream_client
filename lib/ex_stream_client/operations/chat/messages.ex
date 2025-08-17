@@ -27,6 +27,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   Delete a vote from a poll
 
   ### Sends events:
+  - `feeds.poll.vote_removed`
   - `poll.vote_removed`
 
 
@@ -38,12 +39,12 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   - `user_id`
   - All options from [Shared Options](#module-shared-options) are supported.
   """
-  @spec remove_poll_vote(String.t(), String.t(), String.t()) ::
+  @spec delete_poll_vote(String.t(), String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.PollVoteResponse.t()} | {:error, any()}
-  @spec remove_poll_vote(String.t(), String.t(), String.t(), [
+  @spec delete_poll_vote(String.t(), String.t(), String.t(), [
           {:user_id, String.t()} | shared_opts
         ]) :: {:ok, ExStreamClient.Model.PollVoteResponse.t()} | {:error, any()}
-  def remove_poll_vote(message_id, poll_id, vote_id, opts \\ []) do
+  def delete_poll_vote(message_id, poll_id, vote_id, opts \\ []) do
     client = get_client(opts)
 
     request_opts =
@@ -222,6 +223,149 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   end
 
   @doc ~S"""
+  Creates a new reminder
+
+  ### Sends events:
+  - `reminder.created`
+
+
+  ### Required Arguments:
+  - `message_id`
+  - `payload`: `Elixir.ExStreamClient.Model.CreateReminderRequest`
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
+  """
+  @spec create_reminder(String.t(), ExStreamClient.Model.CreateReminderRequest.t()) ::
+          {:ok, ExStreamClient.Model.ReminderResponseData.t()} | {:error, any()}
+  @spec create_reminder(String.t(), ExStreamClient.Model.CreateReminderRequest.t(), shared_opts) ::
+          {:ok, ExStreamClient.Model.ReminderResponseData.t()} | {:error, any()}
+  def create_reminder(message_id, payload, opts \\ []) do
+    client = get_client(opts)
+
+    request_opts =
+      [url: "/api/v2/chat/messages/#{message_id}/reminders", method: :post, params: []] ++
+        [json: payload]
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
+    r =
+      Req.new(request_opts)
+      |> Req.Request.append_response_steps(
+        decode: fn {request, response} ->
+          response_handlers = %{
+            201 => ExStreamClient.Model.ReminderResponseData,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
+
+          {request, %{response | body: decode_response(response, response_handlers)}}
+        end
+      )
+
+    case client.request(r, get_request_opts(opts)) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
+  end
+
+  @doc ~S"""
+  Updates an existing reminder
+
+  ### Sends events:
+  - `reminder.updated`
+
+
+  ### Required Arguments:
+  - `message_id`
+  - `payload`: `Elixir.ExStreamClient.Model.UpdateReminderRequest`
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
+  """
+  @spec update_reminder(String.t(), ExStreamClient.Model.UpdateReminderRequest.t()) ::
+          {:ok, ExStreamClient.Model.UpdateReminderResponse.t()} | {:error, any()}
+  @spec update_reminder(String.t(), ExStreamClient.Model.UpdateReminderRequest.t(), shared_opts) ::
+          {:ok, ExStreamClient.Model.UpdateReminderResponse.t()} | {:error, any()}
+  def update_reminder(message_id, payload, opts \\ []) do
+    client = get_client(opts)
+
+    request_opts =
+      [url: "/api/v2/chat/messages/#{message_id}/reminders", method: :patch, params: []] ++
+        [json: payload]
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
+    r =
+      Req.new(request_opts)
+      |> Req.Request.append_response_steps(
+        decode: fn {request, response} ->
+          response_handlers = %{
+            200 => ExStreamClient.Model.UpdateReminderResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
+
+          {request, %{response | body: decode_response(response, response_handlers)}}
+        end
+      )
+
+    case client.request(r, get_request_opts(opts)) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
+  end
+
+  @doc ~S"""
+  Deletes a user's created reminder
+
+  ### Sends events:
+  - `reminder.deleted`
+
+
+  ### Required Arguments:
+  - `message_id`
+  ### Optional Arguments:
+  - `user_id`
+  - All options from [Shared Options](#module-shared-options) are supported.
+  """
+  @spec delete_reminder(String.t()) ::
+          {:ok, ExStreamClient.Model.DeleteReminderResponse.t()} | {:error, any()}
+  @spec delete_reminder(String.t(), [{:user_id, String.t()} | shared_opts]) ::
+          {:ok, ExStreamClient.Model.DeleteReminderResponse.t()} | {:error, any()}
+  def delete_reminder(message_id, opts \\ []) do
+    client = get_client(opts)
+
+    request_opts =
+      [
+        url: "/api/v2/chat/messages/#{message_id}/reminders",
+        method: :delete,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:user_id]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
+    r =
+      Req.new(request_opts)
+      |> Req.Request.append_response_steps(
+        decode: fn {request, response} ->
+          response_handlers = %{
+            200 => ExStreamClient.Model.DeleteReminderResponse,
+            400 => ExStreamClient.Model.APIError,
+            429 => ExStreamClient.Model.APIError
+          }
+
+          {request, %{response | body: decode_response(response, response_handlers)}}
+        end
+      )
+
+    case client.request(r, get_request_opts(opts)) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
+  end
+
+  @doc ~S"""
   Queries history for one message
 
 
@@ -266,7 +410,12 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   Cast a vote on a poll
 
   ### Sends events:
+  - `feeds.poll.vote_casted`
+  - `feeds.poll.vote_changed`
+  - `feeds.poll.vote_removed`
   - `poll.vote_casted`
+  - `poll.vote_changed`
+  - `poll.vote_removed`
 
 
   ### Required Arguments:

@@ -6,6 +6,7 @@ defmodule ExStreamClient.Model.CheckPushResponse do
   defstruct [
     :device_errors,
     :duration,
+    :event_type,
     :general_errors,
     :rendered_apn_template,
     :rendered_firebase_template,
@@ -22,6 +23,7 @@ defmodule ExStreamClient.Model.CheckPushResponse do
           device_errors:
             %{optional(String.t()) => ExStreamClient.Model.DeviceErrorInfo.t()} | nil,
           duration: String.t(),
+          event_type: String.t() | nil,
           general_errors: [String.t()] | nil,
           rendered_apn_template: String.t() | nil,
           rendered_firebase_template: String.t() | nil,

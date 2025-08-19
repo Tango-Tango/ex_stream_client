@@ -22,6 +22,7 @@ defmodule ExStreamClient.Http do
     url = Keyword.get(opts, :endpoint, ExStreamClient.Config.endpoint())
     api_key = Keyword.get(opts, :api_key, ExStreamClient.Config.api_key())
     api_key_secret = Keyword.get(opts, :api_key_secret, ExStreamClient.Config.api_key_secret())
+    response_handlers = Keyword.get(opts, :response_handlers, %{})
 
     token =
       case ExStreamClient.Token.Server.get(api_key, api_key_secret) do
@@ -41,7 +42,7 @@ defmodule ExStreamClient.Http do
     )
     |> Req.Request.put_headers(@static_headers)
     |> encode_query_structs()
-    |> decode_error_json()
+    |> decode_error_json(response_handlers)
     |> log_request()
     |> log_response()
     |> Req.request()
@@ -94,10 +95,10 @@ defmodule ExStreamClient.Http do
         end
       )
 
-  defp decode_error_json(request),
+  defp decode_error_json(request, response_handlers),
     do:
       request
-      |> Req.Request.prepend_response_steps(
+      |> Req.Request.append_response_steps(
         decode_error_json: fn {request, response} ->
           if response.status in 400..599 and is_binary(response.body) do
             case Jason.decode(response.body, keys: :strings) do
@@ -107,6 +108,24 @@ defmodule ExStreamClient.Http do
           else
             {request, response}
           end
+        end,
+        decode: fn {request, response} ->
+          {request, %{response | body: decode_response(response, response_handlers)}}
         end
       )
+
+  defp decode_response(response, response_handlers) do
+    case Map.get(response_handlers, response.status) do
+      nil -> {:error, response.body}
+      mod -> {get_response_type(response), mod.decode(response.body)}
+    end
+  end
+
+  defp get_response_type(response) do
+    if response.status in 200..299 do
+      :ok
+    else
+      :error
+    end
+  end
 end

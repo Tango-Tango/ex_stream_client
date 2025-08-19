@@ -44,21 +44,16 @@ defmodule ExStreamClient.Operations.Moderation do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.CustomCheckResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      201 => ExStreamClient.Model.CustomCheckResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -98,21 +93,16 @@ defmodule ExStreamClient.Operations.Moderation do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.UnbanResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      201 => ExStreamClient.Model.UnbanResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -139,21 +129,16 @@ defmodule ExStreamClient.Operations.Moderation do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.SubmitActionResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      201 => ExStreamClient.Model.SubmitActionResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -180,21 +165,16 @@ defmodule ExStreamClient.Operations.Moderation do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.UnmuteResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      201 => ExStreamClient.Model.UnmuteResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -223,21 +203,16 @@ defmodule ExStreamClient.Operations.Moderation do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.QueryModerationConfigsResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      201 => ExStreamClient.Model.QueryModerationConfigsResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -261,21 +236,16 @@ defmodule ExStreamClient.Operations.Moderation do
     request_opts = [url: "/api/v2/moderation/review_queue/#{id}", method: :get, params: []] ++ []
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            200 => ExStreamClient.Model.GetReviewQueueItemResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      200 => ExStreamClient.Model.GetReviewQueueItemResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -303,21 +273,16 @@ defmodule ExStreamClient.Operations.Moderation do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.BulkImageModerationResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      201 => ExStreamClient.Model.BulkImageModerationResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -341,21 +306,16 @@ defmodule ExStreamClient.Operations.Moderation do
     request_opts = [url: "/api/v2/moderation/logs", method: :post, params: []] ++ [json: payload]
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.QueryModerationLogsResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      201 => ExStreamClient.Model.QueryModerationLogsResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -383,21 +343,16 @@ defmodule ExStreamClient.Operations.Moderation do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.UpsertModerationTemplateResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      201 => ExStreamClient.Model.UpsertModerationTemplateResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -422,21 +377,16 @@ defmodule ExStreamClient.Operations.Moderation do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            200 => ExStreamClient.Model.QueryFeedModerationTemplatesResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      200 => ExStreamClient.Model.QueryFeedModerationTemplatesResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -461,21 +411,16 @@ defmodule ExStreamClient.Operations.Moderation do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            200 => ExStreamClient.Model.DeleteModerationTemplateResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      200 => ExStreamClient.Model.DeleteModerationTemplateResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -499,21 +444,16 @@ defmodule ExStreamClient.Operations.Moderation do
     request_opts = [url: "/api/v2/moderation/mute", method: :post, params: []] ++ [json: payload]
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.MuteResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      201 => ExStreamClient.Model.MuteResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -537,21 +477,16 @@ defmodule ExStreamClient.Operations.Moderation do
     request_opts = [url: "/api/v2/moderation/ban", method: :post, params: []] ++ [json: payload]
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.BanResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      201 => ExStreamClient.Model.BanResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -578,21 +513,16 @@ defmodule ExStreamClient.Operations.Moderation do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.UpsertConfigResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      201 => ExStreamClient.Model.UpsertConfigResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -619,21 +549,16 @@ defmodule ExStreamClient.Operations.Moderation do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.QueryReviewQueueResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      201 => ExStreamClient.Model.QueryReviewQueueResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -667,21 +592,16 @@ defmodule ExStreamClient.Operations.Moderation do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            200 => ExStreamClient.Model.GetConfigResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      200 => ExStreamClient.Model.GetConfigResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -715,21 +635,16 @@ defmodule ExStreamClient.Operations.Moderation do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            200 => ExStreamClient.Model.DeleteModerationConfigResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      200 => ExStreamClient.Model.DeleteModerationConfigResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -753,21 +668,16 @@ defmodule ExStreamClient.Operations.Moderation do
     request_opts = [url: "/api/v2/moderation/flags", method: :post, params: []] ++ [json: payload]
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.QueryModerationFlagsResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      201 => ExStreamClient.Model.QueryModerationFlagsResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -791,21 +701,16 @@ defmodule ExStreamClient.Operations.Moderation do
     request_opts = [url: "/api/v2/moderation/flag", method: :post, params: []] ++ [json: payload]
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.FlagResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      201 => ExStreamClient.Model.FlagResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -829,21 +734,16 @@ defmodule ExStreamClient.Operations.Moderation do
     request_opts = [url: "/api/v2/moderation/check", method: :post, params: []] ++ [json: payload]
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.CheckResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      201 => ExStreamClient.Model.CheckResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -858,21 +758,6 @@ defmodule ExStreamClient.Operations.Moderation do
     end
 
     client
-  end
-
-  defp decode_response(response, response_handlers) do
-    case Map.get(response_handlers, response.status) do
-      nil -> {:error, response.body}
-      mod -> {get_response_type(response), mod.decode(response.body)}
-    end
-  end
-
-  defp get_response_type(response) do
-    if response.status in 200..299 do
-      :ok
-    else
-      :error
-    end
   end
 
   defp get_request_opts(opts) do

@@ -58,21 +58,16 @@ defmodule ExStreamClient.Operations.Chat.Messages do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            200 => ExStreamClient.Model.PollVoteResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      200 => ExStreamClient.Model.PollVoteResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -110,21 +105,16 @@ defmodule ExStreamClient.Operations.Chat.Messages do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            200 => ExStreamClient.Model.DeleteReactionResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      200 => ExStreamClient.Model.DeleteReactionResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -156,21 +146,16 @@ defmodule ExStreamClient.Operations.Chat.Messages do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.SendReactionResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      201 => ExStreamClient.Model.SendReactionResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -202,21 +187,16 @@ defmodule ExStreamClient.Operations.Chat.Messages do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.MessageResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      201 => ExStreamClient.Model.MessageResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -248,21 +228,16 @@ defmodule ExStreamClient.Operations.Chat.Messages do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.ReminderResponseData,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      201 => ExStreamClient.Model.ReminderResponseData,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -294,21 +269,16 @@ defmodule ExStreamClient.Operations.Chat.Messages do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            200 => ExStreamClient.Model.UpdateReminderResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      200 => ExStreamClient.Model.UpdateReminderResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -345,21 +315,16 @@ defmodule ExStreamClient.Operations.Chat.Messages do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            200 => ExStreamClient.Model.DeleteReminderResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      200 => ExStreamClient.Model.DeleteReminderResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -386,21 +351,16 @@ defmodule ExStreamClient.Operations.Chat.Messages do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.QueryMessageHistoryResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      201 => ExStreamClient.Model.QueryMessageHistoryResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -445,21 +405,16 @@ defmodule ExStreamClient.Operations.Chat.Messages do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.PollVoteResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      201 => ExStreamClient.Model.PollVoteResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -487,21 +442,16 @@ defmodule ExStreamClient.Operations.Chat.Messages do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.QueryReactionsResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      201 => ExStreamClient.Model.QueryReactionsResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -536,21 +486,16 @@ defmodule ExStreamClient.Operations.Chat.Messages do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            200 => ExStreamClient.Model.GetReactionsResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      200 => ExStreamClient.Model.GetReactionsResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -627,21 +572,16 @@ defmodule ExStreamClient.Operations.Chat.Messages do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            200 => ExStreamClient.Model.GetRepliesResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      200 => ExStreamClient.Model.GetRepliesResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -673,21 +613,16 @@ defmodule ExStreamClient.Operations.Chat.Messages do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.UpdateMessageResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      201 => ExStreamClient.Model.UpdateMessageResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -722,21 +657,16 @@ defmodule ExStreamClient.Operations.Chat.Messages do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.MessageResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      201 => ExStreamClient.Model.MessageResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -770,21 +700,16 @@ defmodule ExStreamClient.Operations.Chat.Messages do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.MessageResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      201 => ExStreamClient.Model.MessageResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -819,21 +744,16 @@ defmodule ExStreamClient.Operations.Chat.Messages do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.UpdateMessagePartialResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      201 => ExStreamClient.Model.UpdateMessagePartialResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -865,21 +785,16 @@ defmodule ExStreamClient.Operations.Chat.Messages do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.UpdateMessageResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      201 => ExStreamClient.Model.UpdateMessageResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -913,21 +828,16 @@ defmodule ExStreamClient.Operations.Chat.Messages do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            200 => ExStreamClient.Model.GetMessageResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      200 => ExStreamClient.Model.GetMessageResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -967,21 +877,16 @@ defmodule ExStreamClient.Operations.Chat.Messages do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            200 => ExStreamClient.Model.DeleteMessageResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      200 => ExStreamClient.Model.DeleteMessageResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -996,21 +901,6 @@ defmodule ExStreamClient.Operations.Chat.Messages do
     end
 
     client
-  end
-
-  defp decode_response(response, response_handlers) do
-    case Map.get(response_handlers, response.status) do
-      nil -> {:error, response.body}
-      mod -> {get_response_type(response), mod.decode(response.body)}
-    end
-  end
-
-  defp get_response_type(response) do
-    if response.status in 200..299 do
-      :ok
-    else
-      :error
-    end
   end
 
   defp get_request_opts(opts) do

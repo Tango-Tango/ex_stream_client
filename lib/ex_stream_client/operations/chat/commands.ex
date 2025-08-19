@@ -41,21 +41,16 @@ defmodule ExStreamClient.Operations.Chat.Commands do
     request_opts = [url: "/api/v2/chat/commands", method: :post, params: []] ++ [json: payload]
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.CreateCommandResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      201 => ExStreamClient.Model.CreateCommandResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -76,21 +71,16 @@ defmodule ExStreamClient.Operations.Chat.Commands do
     request_opts = [url: "/api/v2/chat/commands", method: :get, params: []] ++ []
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            200 => ExStreamClient.Model.ListCommandsResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      200 => ExStreamClient.Model.ListCommandsResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -118,21 +108,16 @@ defmodule ExStreamClient.Operations.Chat.Commands do
 
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            201 => ExStreamClient.Model.UpdateCommandResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      201 => ExStreamClient.Model.UpdateCommandResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -156,21 +141,16 @@ defmodule ExStreamClient.Operations.Chat.Commands do
     request_opts = [url: "/api/v2/chat/commands/#{name}", method: :get, params: []] ++ []
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            200 => ExStreamClient.Model.GetCommandResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      200 => ExStreamClient.Model.GetCommandResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -194,21 +174,16 @@ defmodule ExStreamClient.Operations.Chat.Commands do
     request_opts = [url: "/api/v2/chat/commands/#{name}", method: :delete, params: []] ++ []
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
-    r =
-      Req.new(request_opts)
-      |> Req.Request.append_response_steps(
-        decode: fn {request, response} ->
-          response_handlers = %{
-            200 => ExStreamClient.Model.DeleteCommandResponse,
-            400 => ExStreamClient.Model.APIError,
-            429 => ExStreamClient.Model.APIError
-          }
+    response_handlers = %{
+      200 => ExStreamClient.Model.DeleteCommandResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
 
-          {request, %{response | body: decode_response(response, response_handlers)}}
-        end
-      )
-
-    case client.request(r, get_request_opts(opts)) do
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
       {:ok, response} -> response.body
       {:error, error} -> {:error, error}
     end
@@ -223,21 +198,6 @@ defmodule ExStreamClient.Operations.Chat.Commands do
     end
 
     client
-  end
-
-  defp decode_response(response, response_handlers) do
-    case Map.get(response_handlers, response.status) do
-      nil -> {:error, response.body}
-      mod -> {get_response_type(response), mod.decode(response.body)}
-    end
-  end
-
-  defp get_response_type(response) do
-    if response.status in 200..299 do
-      :ok
-    else
-      :error
-    end
   end
 
   defp get_request_opts(opts) do

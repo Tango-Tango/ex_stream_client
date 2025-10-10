@@ -25,7 +25,13 @@ defmodule ExStreamClient.Http do
     response_handlers = Keyword.get(opts, :response_handlers, %{})
 
     token =
-      case ExStreamClient.Token.Server.get(api_key, api_key_secret) do
+      case Keyword.get(opts, :authenticate_as_user) do
+        nil -> ExStreamClient.Token.Server.get(api_key, api_key_secret)
+        user_id -> ExStreamClient.Token.User.get(user_id, nil, api_key_secret)
+      end
+
+    token =
+      case token do
         {:ok, token} ->
           token
 

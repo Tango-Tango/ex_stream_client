@@ -9,6 +9,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   All functions in this module accept the following optional parameters:
 
    * `api_key` - API key to use. If not provided, the default key from config will be used
+   * `authenticate_as_user` - User id to authenticate. If not provided, the server key will be used
    * `api_key_secret` - API key secret to use. If not provided, the default secret from config will be used
    * `endpoint` - endpoint to use. If not provided, the default endpoint from config will be used
    * `client` - HTTP client to use. Must implement `ExStreamClient.Http.Behavior`. Defaults to `ExStreamClient.Http`
@@ -19,6 +20,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   @type shared_opts :: [
           api_key: String.t(),
           api_key_secret: String.t(),
+          authenticate_as_user: String.t(),
           client: module(),
           endpoint: String.t(),
           req_opts: keyword()
@@ -1076,6 +1078,6 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   end
 
   defp get_request_opts(opts) do
-    Keyword.take(opts, [:api_key, :api_key_secret, :endpoint])
+    Keyword.take(opts, [:api_key, :api_key_secret, :authenticate_as_user, :endpoint])
   end
 end

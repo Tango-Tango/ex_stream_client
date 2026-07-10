@@ -2,7 +2,6 @@ defmodule ExStreamClient.Model.AITextConfig do
   @moduledoc "Schema representing a AITextConfig"
   use ExStreamClient.JSON
   use ExStreamClient.TypeInterner
-  @enforce_keys [:enabled, :profile, :rules, :severity_rules]
   defstruct [:async, :enabled, :profile, :rules, :severity_rules]
 
   @nested_components rules: ExStreamClient.Model.BodyguardRule,
@@ -13,9 +12,9 @@ defmodule ExStreamClient.Model.AITextConfig do
 
   @type t :: %__MODULE__{
           async: boolean() | nil,
-          enabled: boolean(),
-          profile: String.t(),
-          rules: [ExStreamClient.Model.BodyguardRule.t()],
-          severity_rules: [ExStreamClient.Model.BodyguardSeverityRule.t()]
+          enabled: boolean() | nil,
+          profile: String.t() | nil,
+          rules: [ExStreamClient.Model.BodyguardRule.t()] | nil,
+          severity_rules: [ExStreamClient.Model.BodyguardSeverityRule.t()] | nil
         }
 end

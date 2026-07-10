@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.QueryModerationFlagsRequest do
   use ExStreamClient.JSON
   use ExStreamClient.TypeInterner
   defstruct [:filter, :limit, :next, :prev, :sort]
-  @nested_components sort: ExStreamClient.Model.SortParam
+  @nested_components sort: ExStreamClient.Model.SortParamRequest
   def nested_components do
     @nested_components
   end
@@ -13,6 +13,6 @@ defmodule ExStreamClient.Model.QueryModerationFlagsRequest do
           limit: integer() | nil,
           next: String.t() | nil,
           prev: String.t() | nil,
-          sort: [ExStreamClient.Model.SortParam.t()] | nil
+          sort: [ExStreamClient.Model.SortParamRequest.t()] | nil
         }
 end

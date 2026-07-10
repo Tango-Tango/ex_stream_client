@@ -4,13 +4,13 @@ defmodule ExStreamClient.Model.UpsertModerationTemplateRequest do
   use ExStreamClient.TypeInterner
   @enforce_keys [:config, :name]
   defstruct [:config, :name]
-  @nested_components config: ExStreamClient.Model.FeedsModerationTemplateConfig
+  @nested_components config: ExStreamClient.Model.FeedsModerationTemplateConfigPayload
   def nested_components do
     @nested_components
   end
 
   @type t :: %__MODULE__{
-          config: ExStreamClient.Model.FeedsModerationTemplateConfig.t(),
+          config: ExStreamClient.Model.FeedsModerationTemplateConfigPayload.t(),
           name: String.t()
         }
 end

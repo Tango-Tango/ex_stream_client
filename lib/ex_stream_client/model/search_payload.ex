@@ -5,6 +5,8 @@ defmodule ExStreamClient.Model.SearchPayload do
   @enforce_keys [:filter_conditions]
   defstruct [
     :filter_conditions,
+    :force_default_search,
+    :force_sql_v2_backend,
     :limit,
     :message_filter_conditions,
     :message_options,
@@ -22,6 +24,8 @@ defmodule ExStreamClient.Model.SearchPayload do
 
   @type t :: %__MODULE__{
           filter_conditions: %{optional(String.t()) => any()},
+          force_default_search: boolean() | nil,
+          force_sql_v2_backend: boolean() | nil,
           limit: integer() | nil,
           message_filter_conditions: %{optional(String.t()) => any()} | nil,
           message_options: ExStreamClient.Model.MessageOptions.t() | nil,

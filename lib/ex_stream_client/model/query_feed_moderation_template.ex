@@ -5,7 +5,7 @@ defmodule ExStreamClient.Model.QueryFeedModerationTemplate do
   @enforce_keys [:created_at, :name, :updated_at]
   defstruct [:config, :created_at, :name, :updated_at]
 
-  @nested_components config: ExStreamClient.Model.FeedsModerationTemplateConfig,
+  @nested_components config: ExStreamClient.Model.FeedsModerationTemplateConfigPayload,
                      created_at: :datetime,
                      updated_at: :datetime
   def nested_components do
@@ -13,7 +13,7 @@ defmodule ExStreamClient.Model.QueryFeedModerationTemplate do
   end
 
   @type t :: %__MODULE__{
-          config: ExStreamClient.Model.FeedsModerationTemplateConfig.t() | nil,
+          config: ExStreamClient.Model.FeedsModerationTemplateConfigPayload.t() | nil,
           created_at: DateTime.t() | integer() | String.t(),
           name: String.t(),
           updated_at: DateTime.t() | integer() | String.t()

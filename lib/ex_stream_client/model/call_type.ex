@@ -2,14 +2,14 @@ defmodule ExStreamClient.Model.CallType do
   @moduledoc "Schema representing a CallType"
   use ExStreamClient.JSON
   use ExStreamClient.TypeInterner
-  @enforce_keys [:app_pk, :created_at, :external_storage, :name, :pk, :updated_at]
+  @enforce_keys [:app, :created_at, :id, :name, :recording_external_storage, :updated_at]
   defstruct [
-    :app_pk,
+    :app,
     :created_at,
-    :external_storage,
+    :id,
     :name,
     :notification_settings,
-    :pk,
+    :recording_external_storage,
     :settings,
     :updated_at
   ]
@@ -23,12 +23,12 @@ defmodule ExStreamClient.Model.CallType do
   end
 
   @type t :: %__MODULE__{
-          app_pk: integer(),
+          app: integer(),
           created_at: DateTime.t() | integer() | String.t(),
-          external_storage: String.t(),
+          id: integer(),
           name: String.t(),
           notification_settings: ExStreamClient.Model.NotificationSettings.t() | nil,
-          pk: integer(),
+          recording_external_storage: String.t(),
           settings: ExStreamClient.Model.CallSettings.t() | nil,
           updated_at: DateTime.t() | integer() | String.t()
         }

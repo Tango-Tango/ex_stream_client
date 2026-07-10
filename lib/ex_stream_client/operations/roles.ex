@@ -89,6 +89,60 @@ defmodule ExStreamClient.Operations.Roles do
   end
 
   @doc ~S"""
+  Searches mentionable roles (user-assignable + channel-assignable, built-in and custom) by name prefix for autocomplete
+
+
+  ### Required Arguments:
+  - `query`
+  ### Optional Arguments:
+  - `include_global_roles`
+  - `limit`
+  - `name_gt`
+  - `role_type`
+  - All options from [Shared Options](#module-shared-options) are supported.
+  """
+  @spec search_roles(String.t()) ::
+          {:ok, ExStreamClient.Model.SearchRolesResponse.t()} | {:error, any()}
+  @spec search_roles(String.t(), [
+          ({:include_global_roles, boolean()}
+           | {:role_type, String.t()}
+           | {:name_gt, String.t()}
+           | {:limit, integer()})
+          | shared_opts
+        ]) :: {:ok, ExStreamClient.Model.SearchRolesResponse.t()} | {:error, any()}
+  def search_roles(query, opts \\ []) do
+    client = get_client(opts)
+
+    request_opts =
+      [
+        url: "/api/v2/roles/search",
+        method: :get,
+        params:
+          Keyword.merge(
+            [query: query],
+            Keyword.take(opts, [:limit, :name_gt, :role_type, :include_global_roles])
+          )
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
+    response_handlers = %{
+      200 => ExStreamClient.Model.SearchRolesResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
+  end
+
+  @doc ~S"""
   Deletes custom role
 
 

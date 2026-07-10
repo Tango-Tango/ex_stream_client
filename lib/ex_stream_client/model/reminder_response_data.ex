@@ -17,10 +17,10 @@ defmodule ExStreamClient.Model.ReminderResponseData do
 
   @nested_components channel: ExStreamClient.Model.ChannelResponse,
                      created_at: :datetime,
-                     message: ExStreamClient.Model.Message,
+                     message: ExStreamClient.Model.MessageResponse,
                      remind_at: :datetime,
                      updated_at: :datetime,
-                     user: ExStreamClient.Model.User
+                     user: ExStreamClient.Model.UserResponse
   def nested_components do
     @nested_components
   end
@@ -29,11 +29,11 @@ defmodule ExStreamClient.Model.ReminderResponseData do
           channel: ExStreamClient.Model.ChannelResponse.t() | nil,
           channel_cid: String.t(),
           created_at: DateTime.t() | integer() | String.t(),
-          message: ExStreamClient.Model.Message.t() | nil,
+          message: ExStreamClient.Model.MessageResponse.t() | nil,
           message_id: String.t(),
           remind_at: (DateTime.t() | integer() | String.t()) | nil,
           updated_at: DateTime.t() | integer() | String.t(),
-          user: ExStreamClient.Model.User.t() | nil,
+          user: ExStreamClient.Model.UserResponse.t() | nil,
           user_id: String.t()
         }
 end

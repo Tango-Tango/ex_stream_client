@@ -168,7 +168,6 @@ defmodule ExStreamClient.Operations.Chat.Messages do
 
   ### Sends events:
   - `message.new`
-  - `message.new`
 
 
   ### Required Arguments:
@@ -178,9 +177,9 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec run_message_action(String.t(), ExStreamClient.Model.MessageActionRequest.t()) ::
-          {:ok, ExStreamClient.Model.MessageResponse.t()} | {:error, any()}
+          {:ok, ExStreamClient.Model.MessageActionResponse.t()} | {:error, any()}
   @spec run_message_action(String.t(), ExStreamClient.Model.MessageActionRequest.t(), shared_opts) ::
-          {:ok, ExStreamClient.Model.MessageResponse.t()} | {:error, any()}
+          {:ok, ExStreamClient.Model.MessageActionResponse.t()} | {:error, any()}
   def run_message_action(id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -190,7 +189,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     response_handlers = %{
-      201 => ExStreamClient.Model.MessageResponse,
+      201 => ExStreamClient.Model.MessageActionResponse,
       400 => ExStreamClient.Model.APIError,
       429 => ExStreamClient.Model.APIError
     }
@@ -504,41 +503,73 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   end
 
   @doc ~S"""
+  Updates message fields without storing in database, only sends update event
+
+  ### Sends events:
+  - `message.updated`
+
+
+  ### Required Arguments:
+  - `id`
+  - `payload`: `Elixir.ExStreamClient.Model.UpdateMessagePartialRequest`
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
+  """
+  @spec ephemeral_message_update(String.t(), ExStreamClient.Model.UpdateMessagePartialRequest.t()) ::
+          {:ok, ExStreamClient.Model.UpdateMessagePartialResponse.t()} | {:error, any()}
+  @spec ephemeral_message_update(
+          String.t(),
+          ExStreamClient.Model.UpdateMessagePartialRequest.t(),
+          shared_opts
+        ) :: {:ok, ExStreamClient.Model.UpdateMessagePartialResponse.t()} | {:error, any()}
+  def ephemeral_message_update(id, payload, opts \\ []) do
+    client = get_client(opts)
+
+    request_opts =
+      [url: "/api/v2/chat/messages/#{id}/ephemeral", method: :patch, params: []] ++
+        [json: payload]
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
+    response_handlers = %{
+      200 => ExStreamClient.Model.UpdateMessagePartialResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
+  end
+
+  @doc ~S"""
   Returns replies (thread) of the message
 
 
   ### Required Arguments:
   - `parent_id`
   ### Optional Arguments:
-  - `created_at_after`
-  - `created_at_after_or_equal`
-  - `created_at_around`
-  - `created_at_before`
-  - `created_at_before_or_equal`
   - `id_around`
   - `id_gt`
   - `id_gte`
   - `id_lt`
   - `id_lte`
   - `limit`
-  - `offset`
   - `sort`
   - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec get_replies(String.t()) ::
           {:ok, ExStreamClient.Model.GetRepliesResponse.t()} | {:error, any()}
   @spec get_replies(String.t(), [
-          ({:created_at_around, float()}
-           | {:id_around, String.t()}
-           | {:created_at_before, float()}
-           | {:created_at_before_or_equal, float()}
-           | {:created_at_after, float()}
-           | {:created_at_after_or_equal, float()}
+          ({:id_around, String.t()}
            | {:id_lt, String.t()}
            | {:id_lte, String.t()}
            | {:id_gt, String.t()}
            | {:id_gte, String.t()}
-           | {:offset, integer()}
            | {:limit, integer()}
            | {:sort, list()})
           | shared_opts
@@ -553,21 +584,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
         params:
           Keyword.merge(
             [],
-            Keyword.take(opts, [
-              :sort,
-              :limit,
-              :offset,
-              :id_gte,
-              :id_gt,
-              :id_lte,
-              :id_lt,
-              :created_at_after_or_equal,
-              :created_at_after,
-              :created_at_before_or_equal,
-              :created_at_before,
-              :id_around,
-              :created_at_around
-            ])
+            Keyword.take(opts, [:sort, :limit, :id_gte, :id_gt, :id_lte, :id_lt, :id_around])
           )
           |> Enum.reject(fn {_k, v} -> is_nil(v) end)
       ] ++ []
@@ -594,19 +611,18 @@ defmodule ExStreamClient.Operations.Chat.Messages do
 
   ### Sends events:
   - `message.undeleted`
-  - `message.undeleted`
 
 
   ### Required Arguments:
   - `id`
-  - `payload`: `Elixir.ExStreamClient.Model.UpdateMessageRequest`
+  - `payload`: `Elixir.ExStreamClient.Model.UndeleteMessageRequest`
   ### Optional Arguments:
   - All options from [Shared Options](#module-shared-options) are supported.
   """
-  @spec undelete_message(String.t(), ExStreamClient.Model.UpdateMessageRequest.t()) ::
-          {:ok, ExStreamClient.Model.UpdateMessageResponse.t()} | {:error, any()}
-  @spec undelete_message(String.t(), ExStreamClient.Model.UpdateMessageRequest.t(), shared_opts) ::
-          {:ok, ExStreamClient.Model.UpdateMessageResponse.t()} | {:error, any()}
+  @spec undelete_message(String.t(), ExStreamClient.Model.UndeleteMessageRequest.t()) ::
+          {:ok, ExStreamClient.Model.UndeleteMessageResponse.t()} | {:error, any()}
+  @spec undelete_message(String.t(), ExStreamClient.Model.UndeleteMessageRequest.t(), shared_opts) ::
+          {:ok, ExStreamClient.Model.UndeleteMessageResponse.t()} | {:error, any()}
   def undelete_message(id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -616,7 +632,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     response_handlers = %{
-      201 => ExStreamClient.Model.UpdateMessageResponse,
+      201 => ExStreamClient.Model.UndeleteMessageResponse,
       400 => ExStreamClient.Model.APIError,
       429 => ExStreamClient.Model.APIError
     }
@@ -635,7 +651,6 @@ defmodule ExStreamClient.Operations.Chat.Messages do
 
   ### Sends events:
   - `message.updated`
-  - `message.updated`
 
 
   ### Required Arguments:
@@ -645,12 +660,12 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec translate_message(String.t(), ExStreamClient.Model.TranslateMessageRequest.t()) ::
-          {:ok, ExStreamClient.Model.MessageResponse.t()} | {:error, any()}
+          {:ok, ExStreamClient.Model.MessageActionResponse.t()} | {:error, any()}
   @spec translate_message(
           String.t(),
           ExStreamClient.Model.TranslateMessageRequest.t(),
           shared_opts
-        ) :: {:ok, ExStreamClient.Model.MessageResponse.t()} | {:error, any()}
+        ) :: {:ok, ExStreamClient.Model.MessageActionResponse.t()} | {:error, any()}
   def translate_message(id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -660,7 +675,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     response_handlers = %{
-      201 => ExStreamClient.Model.MessageResponse,
+      201 => ExStreamClient.Model.MessageActionResponse,
       400 => ExStreamClient.Model.APIError,
       429 => ExStreamClient.Model.APIError
     }
@@ -680,8 +695,6 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   ### Sends events:
   - `message.new`
   - `message.updated`
-  - `message.new`
-  - `message.updated`
 
 
   ### Required Arguments:
@@ -691,9 +704,9 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec commit_message(String.t(), ExStreamClient.Model.CommitMessageRequest.t()) ::
-          {:ok, ExStreamClient.Model.MessageResponse.t()} | {:error, any()}
+          {:ok, ExStreamClient.Model.MessageActionResponse.t()} | {:error, any()}
   @spec commit_message(String.t(), ExStreamClient.Model.CommitMessageRequest.t(), shared_opts) ::
-          {:ok, ExStreamClient.Model.MessageResponse.t()} | {:error, any()}
+          {:ok, ExStreamClient.Model.MessageActionResponse.t()} | {:error, any()}
   def commit_message(id, payload, opts \\ []) do
     client = get_client(opts)
 
@@ -703,7 +716,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     response_handlers = %{
-      201 => ExStreamClient.Model.MessageResponse,
+      201 => ExStreamClient.Model.MessageActionResponse,
       400 => ExStreamClient.Model.APIError,
       429 => ExStreamClient.Model.APIError
     }
@@ -721,7 +734,6 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   Updates certain fields of the message
 
   ### Sends events:
-  - `message.updated`
   - `message.updated`
 
 
@@ -765,7 +777,6 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   Updates message with new data
 
   ### Sends events:
-  - `message.updated`
   - `message.updated`
 
 
@@ -850,12 +861,12 @@ defmodule ExStreamClient.Operations.Chat.Messages do
 
   ### Sends events:
   - `message.deleted`
-  - `message.deleted`
 
 
   ### Required Arguments:
   - `id`
   ### Optional Arguments:
+  - `delete_for_me`
   - `deleted_by`
   - `hard`
   - All options from [Shared Options](#module-shared-options) are supported.
@@ -863,7 +874,8 @@ defmodule ExStreamClient.Operations.Chat.Messages do
   @spec delete_message(String.t()) ::
           {:ok, ExStreamClient.Model.DeleteMessageResponse.t()} | {:error, any()}
   @spec delete_message(String.t(), [
-          ({:deleted_by, String.t()} | {:hard, boolean()}) | shared_opts
+          ({:delete_for_me, boolean()} | {:deleted_by, String.t()} | {:hard, boolean()})
+          | shared_opts
         ]) :: {:ok, ExStreamClient.Model.DeleteMessageResponse.t()} | {:error, any()}
   def delete_message(id, opts \\ []) do
     client = get_client(opts)
@@ -873,7 +885,7 @@ defmodule ExStreamClient.Operations.Chat.Messages do
         url: "/api/v2/chat/messages/#{id}",
         method: :delete,
         params:
-          Keyword.merge([], Keyword.take(opts, [:hard, :deleted_by]))
+          Keyword.merge([], Keyword.take(opts, [:hard, :deleted_by, :delete_for_me]))
           |> Enum.reject(fn {_k, v} -> is_nil(v) end)
       ] ++ []
 

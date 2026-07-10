@@ -2,18 +2,25 @@ defmodule ExStreamClient.Model.UserMutedEvent do
   @moduledoc "Schema representing a UserMutedEvent"
   use ExStreamClient.JSON
   use ExStreamClient.TypeInterner
-  @enforce_keys [:created_at, :type]
-  defstruct [:created_at, :target_user, :target_users, :type, :user]
-  @nested_components created_at: :datetime, user: ExStreamClient.Model.User
+  @enforce_keys [:created_at, :custom, :type, :user]
+  defstruct [:created_at, :custom, :received_at, :target_user, :target_users, :type, :user]
+
+  @nested_components created_at: :datetime,
+                     received_at: :datetime,
+                     target_user: ExStreamClient.Model.UserResponseCommonFields,
+                     target_users: ExStreamClient.Model.UserResponseCommonFields,
+                     user: ExStreamClient.Model.UserResponseCommonFields
   def nested_components do
     @nested_components
   end
 
   @type t :: %__MODULE__{
           created_at: DateTime.t() | integer() | String.t(),
-          target_user: String.t() | nil,
-          target_users: [String.t()] | nil,
+          custom: %{optional(String.t()) => any()},
+          received_at: (DateTime.t() | integer() | String.t()) | nil,
+          target_user: ExStreamClient.Model.UserResponseCommonFields.t() | nil,
+          target_users: [ExStreamClient.Model.UserResponseCommonFields.t()] | nil,
           type: String.t(),
-          user: ExStreamClient.Model.User.t() | nil
+          user: ExStreamClient.Model.UserResponseCommonFields.t()
         }
 end

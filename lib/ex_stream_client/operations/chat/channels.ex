@@ -26,6 +26,50 @@ defmodule ExStreamClient.Operations.Chat.Channels do
           req_opts: keyword()
         ]
   @doc ~S"""
+  Mark the status of a channel message delivered.
+
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.MarkDeliveredRequest`
+  ### Optional Arguments:
+  - `user_id`
+  - All options from [Shared Options](#module-shared-options) are supported.
+  """
+  @spec mark_delivered(ExStreamClient.Model.MarkDeliveredRequest.t()) ::
+          {:ok, ExStreamClient.Model.MarkDeliveredResponse.t()} | {:error, any()}
+  @spec mark_delivered(ExStreamClient.Model.MarkDeliveredRequest.t(), [
+          {:user_id, String.t()} | shared_opts
+        ]) :: {:ok, ExStreamClient.Model.MarkDeliveredResponse.t()} | {:error, any()}
+  def mark_delivered(payload, opts \\ []) do
+    client = get_client(opts)
+
+    request_opts =
+      [
+        url: "/api/v2/chat/channels/delivered",
+        method: :post,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:user_id]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ [json: payload]
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
+    response_handlers = %{
+      201 => ExStreamClient.Model.MarkDeliveredResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
+  end
+
+  @doc ~S"""
 
 
 
@@ -121,10 +165,91 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   end
 
   @doc ~S"""
+  Update channels in batch
+
+  ### Sends events:
+  - `channel.frozen`
+  - `channel.hidden`
+  - `channel.unfrozen`
+  - `channel.updated`
+  - `channel.visible`
+  - `member.added`
+  - `member.removed`
+  - `member.updated`
+
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.ChannelBatchUpdateRequest`
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
+  """
+  @spec channel_batch_update(ExStreamClient.Model.ChannelBatchUpdateRequest.t()) ::
+          {:ok, ExStreamClient.Model.ChannelBatchUpdateResponse.t()} | {:error, any()}
+  @spec channel_batch_update(ExStreamClient.Model.ChannelBatchUpdateRequest.t(), shared_opts) ::
+          {:ok, ExStreamClient.Model.ChannelBatchUpdateResponse.t()} | {:error, any()}
+  def channel_batch_update(payload, opts \\ []) do
+    client = get_client(opts)
+
+    request_opts =
+      [url: "/api/v2/chat/channels/batch", method: :put, params: []] ++ [json: payload]
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
+    response_handlers = %{
+      201 => ExStreamClient.Model.ChannelBatchUpdateResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
+  end
+
+  @doc ~S"""
+  Query channels grouped into predefined buckets. Only available for enterprise apps.
+
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.GroupedQueryChannelsRequest`
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
+  """
+  @spec grouped_query_channels(ExStreamClient.Model.GroupedQueryChannelsRequest.t()) ::
+          {:ok, ExStreamClient.Model.GroupedQueryChannelsResponse.t()} | {:error, any()}
+  @spec grouped_query_channels(ExStreamClient.Model.GroupedQueryChannelsRequest.t(), shared_opts) ::
+          {:ok, ExStreamClient.Model.GroupedQueryChannelsResponse.t()} | {:error, any()}
+  def grouped_query_channels(payload, opts \\ []) do
+    client = get_client(opts)
+
+    request_opts =
+      [url: "/api/v2/chat/channels/grouped", method: :post, params: []] ++ [json: payload]
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
+    response_handlers = %{
+      201 => ExStreamClient.Model.GroupedQueryChannelsResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
+  end
+
+  @doc ~S"""
   Marks channels as read up to the specific message. If no channels is given, mark all channel as read
 
   ### Sends events:
-  - `message.read`
   - `message.read`
 
 
@@ -164,7 +289,6 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   Marks channel as hidden for current user
 
   ### Sends events:
-  - `channel.hidden`
   - `channel.hidden`
 
 
@@ -299,8 +423,6 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   ### Sends events:
   - `message.new`
   - `message.updated`
-  - `message.new`
-  - `message.updated`
 
 
   ### Required Arguments:
@@ -347,7 +469,6 @@ defmodule ExStreamClient.Operations.Chat.Channels do
 
   ### Sends events:
   - `channel.truncated`
-  - `channel.truncated`
 
 
   ### Required Arguments:
@@ -393,7 +514,6 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   Shows previously hidden channel
 
   ### Sends events:
-  - `channel.visible`
   - `channel.visible`
 
 
@@ -616,19 +736,22 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   ### Required Arguments:
   - `type`
   - `id`
-  - `payload`: `Elixir.ExStreamClient.Model.FileUploadRequest`
+  - `payload`: `Elixir.ExStreamClient.Model.UploadChannelFileRequest`
   ### Optional Arguments:
   - All options from [Shared Options](#module-shared-options) are supported.
   """
-  @spec upload_file(String.t(), String.t(), ExStreamClient.Model.FileUploadRequest.t()) ::
-          {:ok, ExStreamClient.Model.FileUploadResponse.t()} | {:error, any()}
-  @spec upload_file(
+  @spec upload_channel_file(
           String.t(),
           String.t(),
-          ExStreamClient.Model.FileUploadRequest.t(),
+          ExStreamClient.Model.UploadChannelFileRequest.t()
+        ) :: {:ok, ExStreamClient.Model.UploadChannelFileResponse.t()} | {:error, any()}
+  @spec upload_channel_file(
+          String.t(),
+          String.t(),
+          ExStreamClient.Model.UploadChannelFileRequest.t(),
           shared_opts
-        ) :: {:ok, ExStreamClient.Model.FileUploadResponse.t()} | {:error, any()}
-  def upload_file(type, id, payload, opts \\ []) do
+        ) :: {:ok, ExStreamClient.Model.UploadChannelFileResponse.t()} | {:error, any()}
+  def upload_channel_file(type, id, payload, opts \\ []) do
     client = get_client(opts)
 
     request_opts =
@@ -638,7 +761,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     response_handlers = %{
-      201 => ExStreamClient.Model.FileUploadResponse,
+      201 => ExStreamClient.Model.UploadChannelFileResponse,
       400 => ExStreamClient.Model.APIError,
       429 => ExStreamClient.Model.APIError
     }
@@ -663,11 +786,11 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `url`
   - All options from [Shared Options](#module-shared-options) are supported.
   """
-  @spec delete_file(String.t(), String.t()) ::
+  @spec delete_channel_file(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec delete_file(String.t(), String.t(), [{:url, String.t()} | shared_opts]) ::
+  @spec delete_channel_file(String.t(), String.t(), [{:url, String.t()} | shared_opts]) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  def delete_file(type, id, opts \\ []) do
+  def delete_channel_file(type, id, opts \\ []) do
     client = get_client(opts)
 
     request_opts =
@@ -700,7 +823,6 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   Marks channel as read up to the specific message
 
   ### Sends events:
-  - `message.read`
   - `message.read`
 
 
@@ -746,19 +868,22 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   ### Required Arguments:
   - `type`
   - `id`
-  - `payload`: `Elixir.ExStreamClient.Model.ImageUploadRequest`
+  - `payload`: `Elixir.ExStreamClient.Model.UploadChannelRequest`
   ### Optional Arguments:
   - All options from [Shared Options](#module-shared-options) are supported.
   """
-  @spec upload_image(String.t(), String.t(), ExStreamClient.Model.ImageUploadRequest.t()) ::
-          {:ok, ExStreamClient.Model.ImageUploadResponse.t()} | {:error, any()}
-  @spec upload_image(
+  @spec upload_channel_image(
           String.t(),
           String.t(),
-          ExStreamClient.Model.ImageUploadRequest.t(),
+          ExStreamClient.Model.UploadChannelRequest.t()
+        ) :: {:ok, ExStreamClient.Model.UploadChannelResponse.t()} | {:error, any()}
+  @spec upload_channel_image(
+          String.t(),
+          String.t(),
+          ExStreamClient.Model.UploadChannelRequest.t(),
           shared_opts
-        ) :: {:ok, ExStreamClient.Model.ImageUploadResponse.t()} | {:error, any()}
-  def upload_image(type, id, payload, opts \\ []) do
+        ) :: {:ok, ExStreamClient.Model.UploadChannelResponse.t()} | {:error, any()}
+  def upload_channel_image(type, id, payload, opts \\ []) do
     client = get_client(opts)
 
     request_opts =
@@ -768,7 +893,7 @@ defmodule ExStreamClient.Operations.Chat.Channels do
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     response_handlers = %{
-      201 => ExStreamClient.Model.ImageUploadResponse,
+      201 => ExStreamClient.Model.UploadChannelResponse,
       400 => ExStreamClient.Model.APIError,
       429 => ExStreamClient.Model.APIError
     }
@@ -793,11 +918,11 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `url`
   - All options from [Shared Options](#module-shared-options) are supported.
   """
-  @spec delete_image(String.t(), String.t()) ::
+  @spec delete_channel_image(String.t(), String.t()) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec delete_image(String.t(), String.t(), [{:url, String.t()} | shared_opts]) ::
+  @spec delete_channel_image(String.t(), String.t(), [{:url, String.t()} | shared_opts]) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  def delete_image(type, id, opts \\ []) do
+  def delete_channel_image(type, id, opts \\ []) do
     client = get_client(opts)
 
     request_opts =
@@ -884,11 +1009,6 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   - `member.removed`
   - `member.updated`
   - `message.new`
-  - `channel.updated`
-  - `member.added`
-  - `member.removed`
-  - `member.updated`
-  - `message.new`
 
 
   ### Required Arguments:
@@ -933,7 +1053,6 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   Updates certain fields of the channel
 
   ### Sends events:
-  - `channel.updated`
   - `channel.updated`
 
 
@@ -983,7 +1102,6 @@ defmodule ExStreamClient.Operations.Chat.Channels do
 
   ### Sends events:
   - `channel.deleted`
-  - `channel.deleted`
 
 
   ### Required Arguments:
@@ -1030,7 +1148,6 @@ defmodule ExStreamClient.Operations.Chat.Channels do
   Allows to delete several channels at once asynchronously
 
   ### Sends events:
-  - `channel.deleted`
   - `channel.deleted`
 
 

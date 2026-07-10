@@ -72,7 +72,6 @@ defmodule ExStreamClient.Operations.Chat.Moderation do
 
   ### Sends events:
   - `channel.unmuted`
-  - `channel.unmuted`
 
 
   ### Required Arguments:
@@ -112,7 +111,6 @@ defmodule ExStreamClient.Operations.Chat.Moderation do
   Mutes channel for user
 
   ### Sends events:
-  - `channel.muted`
   - `channel.muted`
 
 

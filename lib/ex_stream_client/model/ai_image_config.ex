@@ -2,7 +2,6 @@ defmodule ExStreamClient.Model.AIImageConfig do
   @moduledoc "Schema representing a AIImageConfig"
   use ExStreamClient.JSON
   use ExStreamClient.TypeInterner
-  @enforce_keys [:enabled, :ocr_rules, :rules]
   defstruct [:async, :enabled, :ocr_rules, :rules]
 
   @nested_components ocr_rules: ExStreamClient.Model.OCRRule,
@@ -13,8 +12,8 @@ defmodule ExStreamClient.Model.AIImageConfig do
 
   @type t :: %__MODULE__{
           async: boolean() | nil,
-          enabled: boolean(),
-          ocr_rules: [ExStreamClient.Model.OCRRule.t()],
-          rules: [ExStreamClient.Model.AWSRekognitionRule.t()]
+          enabled: boolean() | nil,
+          ocr_rules: [ExStreamClient.Model.OCRRule.t()] | nil,
+          rules: [ExStreamClient.Model.AWSRekognitionRule.t()] | nil
         }
 end

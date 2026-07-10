@@ -4,7 +4,7 @@ defmodule ExStreamClient.Model.CheckSQSResponse do
   use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :status]
   defstruct [:data, :duration, :error, :status]
-  @nested_components status: :enum
+  @nested_components []
   def nested_components do
     @nested_components
   end
@@ -13,6 +13,6 @@ defmodule ExStreamClient.Model.CheckSQSResponse do
           data: %{optional(String.t()) => any()} | nil,
           duration: String.t(),
           error: String.t() | nil,
-          status: :error | :ok
+          status: String.t()
         }
 end

@@ -3,8 +3,20 @@ defmodule ExStreamClient.Model.TranscriptionSettings do
   use ExStreamClient.JSON
   use ExStreamClient.TypeInterner
   @enforce_keys [:closed_caption_mode, :language, :languages, :mode]
-  defstruct [:closed_caption_mode, :language, :languages, :mode]
-  @nested_components closed_caption_mode: :enum, language: :enum, mode: :enum
+  defstruct [
+    :closed_caption_mode,
+    :language,
+    :languages,
+    :mode,
+    :speech_segment_config,
+    :translation
+  ]
+
+  @nested_components closed_caption_mode: :enum,
+                     language: :enum,
+                     mode: :enum,
+                     speech_segment_config: ExStreamClient.Model.SpeechSegmentConfig,
+                     translation: ExStreamClient.Model.TranslationSettings
   def nested_components do
     @nested_components
   end
@@ -50,6 +62,8 @@ defmodule ExStreamClient.Model.TranscriptionSettings do
             | :en
             | :auto,
           languages: any(),
-          mode: :"auto-on" | :disabled | :available
+          mode: :"auto-on" | :disabled | :available,
+          speech_segment_config: ExStreamClient.Model.SpeechSegmentConfig.t() | nil,
+          translation: ExStreamClient.Model.TranslationSettings.t() | nil
         }
 end

@@ -4,6 +4,7 @@ defmodule ExStreamClient.Model.QueryReviewQueueRequest do
   use ExStreamClient.TypeInterner
 
   defstruct [
+    :exclude_default_action_config,
     :filter,
     :limit,
     :lock_count,
@@ -24,6 +25,7 @@ defmodule ExStreamClient.Model.QueryReviewQueueRequest do
   end
 
   @type t :: %__MODULE__{
+          exclude_default_action_config: boolean() | nil,
           filter: %{optional(String.t()) => any()} | nil,
           limit: integer() | nil,
           lock_count: integer() | nil,

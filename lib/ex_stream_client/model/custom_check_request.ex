@@ -14,7 +14,7 @@ defmodule ExStreamClient.Model.CustomCheckRequest do
   ]
 
   @nested_components flags: ExStreamClient.Model.CustomCheckFlag,
-                     moderation_payload: ExStreamClient.Model.ModerationPayload,
+                     moderation_payload: ExStreamClient.Model.ModerationPayloadRequest,
                      user: ExStreamClient.Model.UserRequest
   def nested_components do
     @nested_components
@@ -25,7 +25,7 @@ defmodule ExStreamClient.Model.CustomCheckRequest do
           entity_id: String.t(),
           entity_type: String.t(),
           flags: [ExStreamClient.Model.CustomCheckFlag.t()],
-          moderation_payload: ExStreamClient.Model.ModerationPayload.t() | nil,
+          moderation_payload: ExStreamClient.Model.ModerationPayloadRequest.t() | nil,
           user: ExStreamClient.Model.UserRequest.t() | nil,
           user_id: String.t() | nil
         }

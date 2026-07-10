@@ -63,7 +63,7 @@ defmodule ExStreamClient.Model.OwnUserResponse do
                      last_active: :datetime,
                      mutes: ExStreamClient.Model.UserMuteResponse,
                      privacy_settings: ExStreamClient.Model.PrivacySettingsResponse,
-                     push_preferences: ExStreamClient.Model.PushPreferences,
+                     push_preferences: ExStreamClient.Model.PushPreferencesResponse,
                      revoke_tokens_issued_before: :datetime,
                      updated_at: :datetime
   def nested_components do
@@ -90,7 +90,7 @@ defmodule ExStreamClient.Model.OwnUserResponse do
           name: String.t() | nil,
           online: boolean(),
           privacy_settings: ExStreamClient.Model.PrivacySettingsResponse.t() | nil,
-          push_preferences: ExStreamClient.Model.PushPreferences.t() | nil,
+          push_preferences: ExStreamClient.Model.PushPreferencesResponse.t() | nil,
           revoke_tokens_issued_before: (DateTime.t() | integer() | String.t()) | nil,
           role: String.t(),
           teams: [String.t()],

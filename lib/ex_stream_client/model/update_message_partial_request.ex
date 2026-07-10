@@ -2,7 +2,7 @@ defmodule ExStreamClient.Model.UpdateMessagePartialRequest do
   @moduledoc "Schema representing a UpdateMessagePartialRequest"
   use ExStreamClient.JSON
   use ExStreamClient.TypeInterner
-  defstruct [:set, :skip_enrich_url, :unset, :user, :user_id]
+  defstruct [:set, :skip_enrich_url, :skip_push, :unset, :user, :user_id]
   @nested_components user: ExStreamClient.Model.UserRequest
   def nested_components do
     @nested_components
@@ -11,6 +11,7 @@ defmodule ExStreamClient.Model.UpdateMessagePartialRequest do
   @type t :: %__MODULE__{
           set: %{optional(String.t()) => any()} | nil,
           skip_enrich_url: boolean() | nil,
+          skip_push: boolean() | nil,
           unset: [String.t()] | nil,
           user: ExStreamClient.Model.UserRequest.t() | nil,
           user_id: String.t() | nil

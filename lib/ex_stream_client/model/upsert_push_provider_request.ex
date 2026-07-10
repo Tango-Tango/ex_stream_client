@@ -3,10 +3,10 @@ defmodule ExStreamClient.Model.UpsertPushProviderRequest do
   use ExStreamClient.JSON
   use ExStreamClient.TypeInterner
   defstruct [:push_provider]
-  @nested_components push_provider: ExStreamClient.Model.PushProvider
+  @nested_components push_provider: ExStreamClient.Model.PushProviderRequest
   def nested_components do
     @nested_components
   end
 
-  @type t :: %__MODULE__{push_provider: ExStreamClient.Model.PushProvider.t() | nil}
+  @type t :: %__MODULE__{push_provider: ExStreamClient.Model.PushProviderRequest.t() | nil}
 end

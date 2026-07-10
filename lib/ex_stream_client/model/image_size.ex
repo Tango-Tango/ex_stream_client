@@ -3,15 +3,15 @@ defmodule ExStreamClient.Model.ImageSize do
   use ExStreamClient.JSON
   use ExStreamClient.TypeInterner
   defstruct [:crop, :height, :resize, :width]
-  @nested_components crop: :enum, resize: :enum
+  @nested_components []
   def nested_components do
     @nested_components
   end
 
   @type t :: %__MODULE__{
-          crop: (:center | :right | :left | :bottom | :top) | nil,
+          crop: String.t() | nil,
           height: integer() | nil,
-          resize: (:fill | :scale | :crop | :clip) | nil,
+          resize: String.t() | nil,
           width: integer() | nil
         }
 end

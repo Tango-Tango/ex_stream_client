@@ -2,20 +2,20 @@ defmodule ExStreamClient.Model.RuleBuilderRule do
   @moduledoc "Schema representing a RuleBuilderRule"
   use ExStreamClient.JSON
   use ExStreamClient.TypeInterner
-  @enforce_keys [:action, :enabled, :id, :name, :rule_type]
+  @enforce_keys [:rule_type]
   defstruct [
     :action,
+    :action_sequences,
     :conditions,
     :cooldown_period,
-    :enabled,
     :groups,
     :id,
     :logic,
-    :name,
     :rule_type
   ]
 
   @nested_components action: ExStreamClient.Model.RuleBuilderAction,
+                     action_sequences: ExStreamClient.Model.CallRuleActionSequence,
                      conditions: ExStreamClient.Model.RuleBuilderCondition,
                      groups: ExStreamClient.Model.RuleBuilderConditionGroup
   def nested_components do
@@ -23,14 +23,13 @@ defmodule ExStreamClient.Model.RuleBuilderRule do
   end
 
   @type t :: %__MODULE__{
-          action: ExStreamClient.Model.RuleBuilderAction.t(),
+          action: ExStreamClient.Model.RuleBuilderAction.t() | nil,
+          action_sequences: [ExStreamClient.Model.CallRuleActionSequence.t()] | nil,
           conditions: [ExStreamClient.Model.RuleBuilderCondition.t()] | nil,
           cooldown_period: String.t() | nil,
-          enabled: boolean(),
           groups: [ExStreamClient.Model.RuleBuilderConditionGroup.t()] | nil,
-          id: String.t(),
+          id: String.t() | nil,
           logic: String.t() | nil,
-          name: String.t(),
           rule_type: String.t()
         }
 end

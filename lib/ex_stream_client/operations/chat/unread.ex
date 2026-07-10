@@ -30,15 +30,25 @@ defmodule ExStreamClient.Operations.Chat.Unread do
 
 
   ### Optional Arguments:
+  - `user_id`
   - All options from [Shared Options](#module-shared-options) are supported.
   """
   @spec unread_counts() ::
           {:ok, ExStreamClient.Model.WrappedUnreadCountsResponse.t()} | {:error, any()}
-  @spec unread_counts(shared_opts) ::
+  @spec unread_counts([{:user_id, String.t()} | shared_opts]) ::
           {:ok, ExStreamClient.Model.WrappedUnreadCountsResponse.t()} | {:error, any()}
   def unread_counts(opts \\ []) do
     client = get_client(opts)
-    request_opts = [url: "/api/v2/chat/unread", method: :get, params: []] ++ []
+
+    request_opts =
+      [
+        url: "/api/v2/chat/unread",
+        method: :get,
+        params:
+          Keyword.merge([], Keyword.take(opts, [:user_id]))
+          |> Enum.reject(fn {_k, v} -> is_nil(v) end)
+      ] ++ []
+
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
 
     response_handlers = %{

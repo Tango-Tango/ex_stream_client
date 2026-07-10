@@ -4,12 +4,14 @@ defmodule ExStreamClient.Model.ThreadStateResponse do
   use ExStreamClient.TypeInterner
 
   @enforce_keys [
+    :active_participant_count,
     :channel_cid,
     :created_at,
     :created_by_user_id,
     :custom,
     :latest_replies,
     :parent_message_id,
+    :participant_count,
     :title,
     :updated_at
   ]
@@ -51,7 +53,7 @@ defmodule ExStreamClient.Model.ThreadStateResponse do
   end
 
   @type t :: %__MODULE__{
-          active_participant_count: integer() | nil,
+          active_participant_count: integer(),
           channel: ExStreamClient.Model.ChannelResponse.t() | nil,
           channel_cid: String.t(),
           created_at: DateTime.t() | integer() | String.t(),
@@ -64,7 +66,7 @@ defmodule ExStreamClient.Model.ThreadStateResponse do
           latest_replies: [ExStreamClient.Model.MessageResponse.t()],
           parent_message: ExStreamClient.Model.MessageResponse.t() | nil,
           parent_message_id: String.t(),
-          participant_count: integer() | nil,
+          participant_count: integer(),
           read: [ExStreamClient.Model.ReadStateResponse.t()] | nil,
           reply_count: integer() | nil,
           thread_participants: [ExStreamClient.Model.ThreadParticipant.t()] | nil,

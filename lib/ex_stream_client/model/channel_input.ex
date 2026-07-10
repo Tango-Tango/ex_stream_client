@@ -11,6 +11,7 @@ defmodule ExStreamClient.Model.ChannelInput do
     :created_by_id,
     :custom,
     :disabled,
+    :filter_tags,
     :frozen,
     :invites,
     :members,
@@ -20,8 +21,8 @@ defmodule ExStreamClient.Model.ChannelInput do
 
   @nested_components config_overrides: ExStreamClient.Model.ChannelConfig,
                      created_by: ExStreamClient.Model.UserRequest,
-                     invites: ExStreamClient.Model.ChannelMember,
-                     members: ExStreamClient.Model.ChannelMember
+                     invites: ExStreamClient.Model.ChannelMemberRequest,
+                     members: ExStreamClient.Model.ChannelMemberRequest
   def nested_components do
     @nested_components
   end
@@ -34,9 +35,10 @@ defmodule ExStreamClient.Model.ChannelInput do
           created_by_id: String.t() | nil,
           custom: %{optional(String.t()) => any()} | nil,
           disabled: boolean() | nil,
+          filter_tags: [String.t()] | nil,
           frozen: boolean() | nil,
-          invites: [ExStreamClient.Model.ChannelMember.t()] | nil,
-          members: [ExStreamClient.Model.ChannelMember.t()] | nil,
+          invites: [ExStreamClient.Model.ChannelMemberRequest.t()] | nil,
+          members: [ExStreamClient.Model.ChannelMemberRequest.t()] | nil,
           team: String.t() | nil,
           truncated_by_id: String.t() | nil
         }

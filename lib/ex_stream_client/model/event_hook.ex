@@ -8,9 +8,13 @@ defmodule ExStreamClient.Model.EventHook do
     :created_at,
     :enabled,
     :event_types,
+    :failover_config,
     :hook_type,
     :id,
+    :product,
+    :should_send_custom_events,
     :sns_auth_type,
+    :sns_event_based_message_group_id_enabled,
     :sns_key,
     :sns_region,
     :sns_role_arn,
@@ -29,6 +33,7 @@ defmodule ExStreamClient.Model.EventHook do
 
   @nested_components callback: ExStreamClient.Model.AsyncModerationCallbackConfig,
                      created_at: :datetime,
+                     failover_config: ExStreamClient.Model.WebhookFailoverConfig,
                      updated_at: :datetime
   def nested_components do
     @nested_components
@@ -39,9 +44,13 @@ defmodule ExStreamClient.Model.EventHook do
           created_at: (DateTime.t() | integer() | String.t()) | nil,
           enabled: boolean() | nil,
           event_types: [String.t()] | nil,
+          failover_config: ExStreamClient.Model.WebhookFailoverConfig.t() | nil,
           hook_type: String.t() | nil,
           id: String.t() | nil,
+          product: String.t() | nil,
+          should_send_custom_events: boolean() | nil,
           sns_auth_type: String.t() | nil,
+          sns_event_based_message_group_id_enabled: boolean() | nil,
           sns_key: String.t() | nil,
           sns_region: String.t() | nil,
           sns_role_arn: String.t() | nil,

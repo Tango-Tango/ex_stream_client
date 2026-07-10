@@ -11,9 +11,12 @@ defmodule ExStreamClient.Model.UpdateChannelTypeRequest do
     :blocklist,
     :blocklist_behavior,
     :blocklists,
+    :chat_preferences,
     :commands,
     :connect_events,
+    :count_messages,
     :custom_events,
+    :delivery_events,
     :grants,
     :mark_messages_pending,
     :max_message_length,
@@ -22,6 +25,7 @@ defmodule ExStreamClient.Model.UpdateChannelTypeRequest do
     :partition_ttl,
     :permissions,
     :polls,
+    :push_level,
     :push_notifications,
     :quotes,
     :reactions,
@@ -42,7 +46,9 @@ defmodule ExStreamClient.Model.UpdateChannelTypeRequest do
                      automod_thresholds: ExStreamClient.Model.Thresholds,
                      blocklist_behavior: :enum,
                      blocklists: ExStreamClient.Model.BlockListOptions,
-                     permissions: ExStreamClient.Model.PolicyRequest
+                     chat_preferences: ExStreamClient.Model.ChatPreferences,
+                     permissions: ExStreamClient.Model.PolicyRequest,
+                     push_level: :enum
   def nested_components do
     @nested_components
   end
@@ -55,9 +61,12 @@ defmodule ExStreamClient.Model.UpdateChannelTypeRequest do
           blocklist: String.t() | nil,
           blocklist_behavior: (:shadow_block | :block | :flag) | nil,
           blocklists: [ExStreamClient.Model.BlockListOptions.t()] | nil,
+          chat_preferences: ExStreamClient.Model.ChatPreferences.t() | nil,
           commands: [String.t()] | nil,
           connect_events: boolean() | nil,
+          count_messages: boolean() | nil,
           custom_events: boolean() | nil,
+          delivery_events: boolean() | nil,
           grants: %{optional(String.t()) => [String.t()]} | nil,
           mark_messages_pending: boolean() | nil,
           max_message_length: integer(),
@@ -66,6 +75,7 @@ defmodule ExStreamClient.Model.UpdateChannelTypeRequest do
           partition_ttl: String.t() | nil,
           permissions: [ExStreamClient.Model.PolicyRequest.t()] | nil,
           polls: boolean() | nil,
+          push_level: (:none | :direct_mentions | :mentions | :all_mentions | :all) | nil,
           push_notifications: boolean() | nil,
           quotes: boolean() | nil,
           reactions: boolean() | nil,

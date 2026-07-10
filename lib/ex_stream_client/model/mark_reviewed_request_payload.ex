@@ -1,0 +1,22 @@
+defmodule ExStreamClient.Model.MarkReviewedRequestPayload do
+  @moduledoc "Schema representing a MarkReviewedRequestPayload"
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
+
+  defstruct [
+    :content_to_mark_as_reviewed_limit,
+    :decision_reason,
+    :disable_marking_content_as_reviewed
+  ]
+
+  @nested_components []
+  def nested_components do
+    @nested_components
+  end
+
+  @type t :: %__MODULE__{
+          content_to_mark_as_reviewed_limit: integer() | nil,
+          decision_reason: String.t() | nil,
+          disable_marking_content_as_reviewed: boolean() | nil
+        }
+end

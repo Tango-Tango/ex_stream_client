@@ -15,24 +15,24 @@ defmodule ExStreamClient.Model.PendingMessageEvent do
     :user
   ]
 
-  @nested_components channel: ExStreamClient.Model.Channel,
+  @nested_components channel: ExStreamClient.Model.ChannelResponse,
                      created_at: :datetime,
-                     message: ExStreamClient.Model.Message,
+                     message: ExStreamClient.Model.MessageResponse,
                      received_at: :datetime,
-                     user: ExStreamClient.Model.User
+                     user: ExStreamClient.Model.UserResponse
   def nested_components do
     @nested_components
   end
 
   @type t :: %__MODULE__{
-          channel: ExStreamClient.Model.Channel.t() | nil,
+          channel: ExStreamClient.Model.ChannelResponse.t() | nil,
           created_at: DateTime.t() | integer() | String.t(),
           custom: %{optional(String.t()) => any()},
-          message: ExStreamClient.Model.Message.t() | nil,
+          message: ExStreamClient.Model.MessageResponse.t() | nil,
           metadata: %{optional(String.t()) => String.t()} | nil,
           method: String.t(),
           received_at: (DateTime.t() | integer() | String.t()) | nil,
           type: String.t(),
-          user: ExStreamClient.Model.User.t() | nil
+          user: ExStreamClient.Model.UserResponse.t() | nil
         }
 end

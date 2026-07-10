@@ -12,9 +12,18 @@ defmodule ExStreamClient.Model.UpsertPushTemplateRequest do
   @type t :: %__MODULE__{
           enable_push: boolean() | nil,
           event_type:
-            :"notification.reminder_due" | :"reaction.new" | :"message.updated" | :"message.new",
+            :"feeds.notification_feed.updated"
+            | :"feeds.follow.created"
+            | :"feeds.comment.reaction.added"
+            | :"feeds.activity.reaction.added"
+            | :"feeds.comment.added"
+            | :"feeds.activity.added"
+            | :"notification.reminder_due"
+            | :"reaction.new"
+            | :"message.updated"
+            | :"message.new",
           push_provider_name: String.t() | nil,
-          push_provider_type: :apn | :firebase,
+          push_provider_type: :xiaomi | :huawei | :apn | :firebase,
           template: String.t() | nil
         }
 end

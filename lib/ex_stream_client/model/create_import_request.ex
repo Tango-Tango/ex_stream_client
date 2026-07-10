@@ -3,11 +3,11 @@ defmodule ExStreamClient.Model.CreateImportRequest do
   use ExStreamClient.JSON
   use ExStreamClient.TypeInterner
   @enforce_keys [:mode, :path]
-  defstruct [:mode, :path]
+  defstruct [:merge_custom, :mode, :path]
   @nested_components mode: :enum
   def nested_components do
     @nested_components
   end
 
-  @type t :: %__MODULE__{mode: :upsert | :insert, path: String.t()}
+  @type t :: %__MODULE__{merge_custom: boolean() | nil, mode: :upsert | :insert, path: String.t()}
 end

@@ -7,7 +7,7 @@ defmodule ExStreamClient.Model.ReviewQueueItemUpdatedEvent do
 
   @nested_components action: ExStreamClient.Model.ActionLogResponse,
                      created_at: :datetime,
-                     flags: ExStreamClient.Model.FlagResponse,
+                     flags: ExStreamClient.Model.ModerationFlagResponse,
                      received_at: :datetime,
                      review_queue_item: ExStreamClient.Model.ReviewQueueItemResponse
   def nested_components do
@@ -18,7 +18,7 @@ defmodule ExStreamClient.Model.ReviewQueueItemUpdatedEvent do
           action: ExStreamClient.Model.ActionLogResponse.t() | nil,
           created_at: DateTime.t() | integer() | String.t(),
           custom: %{optional(String.t()) => any()},
-          flags: [ExStreamClient.Model.FlagResponse.t()] | nil,
+          flags: [ExStreamClient.Model.ModerationFlagResponse.t()] | nil,
           received_at: (DateTime.t() | integer() | String.t()) | nil,
           review_queue_item: ExStreamClient.Model.ReviewQueueItemResponse.t() | nil,
           type: String.t()

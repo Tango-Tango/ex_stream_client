@@ -6,6 +6,7 @@ defmodule ExStreamClient.Model.ModerationV2Response do
   defstruct [
     :action,
     :blocklist_matched,
+    :blocklists_matched,
     :image_harms,
     :original_text,
     :platform_circumvented,
@@ -21,6 +22,7 @@ defmodule ExStreamClient.Model.ModerationV2Response do
   @type t :: %__MODULE__{
           action: String.t(),
           blocklist_matched: String.t() | nil,
+          blocklists_matched: [String.t()] | nil,
           image_harms: [String.t()] | nil,
           original_text: String.t(),
           platform_circumvented: boolean() | nil,

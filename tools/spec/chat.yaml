@@ -33706,6 +33706,11 @@ paths:
         Delete an existing moderation rule
       operationId: delete_moderation_rule
       parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
       - in: query
         name: user_id
         schema:
@@ -33740,6 +33745,12 @@ paths:
       description: |
         Get a specific moderation rule by ID
       operationId: get_moderation_rule
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
       responses:
         "200":
           content:

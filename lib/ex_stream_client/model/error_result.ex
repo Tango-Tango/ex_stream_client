@@ -10,7 +10,7 @@ defmodule ExStreamClient.Model.ErrorResult do
   end
 
   @type t :: %__MODULE__{
-          description: any(),
+          description: String.t(),
           stacktrace: String.t() | nil,
           type: String.t(),
           version: String.t() | nil

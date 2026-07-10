@@ -30,7 +30,6 @@ defmodule ExStreamClient.Operations.Chat.Threads do
 
   ### Sends events:
   - `thread.updated`
-  - `thread.updated`
 
 
   ### Required Arguments:

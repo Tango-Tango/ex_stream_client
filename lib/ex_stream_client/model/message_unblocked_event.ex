@@ -2,23 +2,25 @@ defmodule ExStreamClient.Model.MessageUnblockedEvent do
   @moduledoc "Schema representing a MessageUnblockedEvent"
   use ExStreamClient.JSON
   use ExStreamClient.TypeInterner
-  @enforce_keys [:cid, :created_at, :type]
-  defstruct [:cid, :created_at, :message, :thread_participants, :type, :user]
+  @enforce_keys [:created_at, :custom, :message, :message_id, :type]
+  defstruct [:cid, :created_at, :custom, :message, :message_id, :received_at, :type, :user]
 
   @nested_components created_at: :datetime,
-                     message: ExStreamClient.Model.Message,
-                     thread_participants: ExStreamClient.Model.User,
-                     user: ExStreamClient.Model.User
+                     message: ExStreamClient.Model.MessageResponse,
+                     received_at: :datetime,
+                     user: ExStreamClient.Model.UserResponseCommonFields
   def nested_components do
     @nested_components
   end
 
   @type t :: %__MODULE__{
-          cid: String.t(),
+          cid: String.t() | nil,
           created_at: DateTime.t() | integer() | String.t(),
-          message: ExStreamClient.Model.Message.t() | nil,
-          thread_participants: [ExStreamClient.Model.User.t()] | nil,
+          custom: %{optional(String.t()) => any()},
+          message: ExStreamClient.Model.MessageResponse.t(),
+          message_id: String.t(),
+          received_at: (DateTime.t() | integer() | String.t()) | nil,
           type: String.t(),
-          user: ExStreamClient.Model.User.t() | nil
+          user: ExStreamClient.Model.UserResponseCommonFields.t() | nil
         }
 end

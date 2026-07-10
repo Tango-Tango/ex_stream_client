@@ -5,7 +5,7 @@ defmodule ExStreamClient.Model.QueryMembersPayload do
   @enforce_keys [:filter_conditions, :type]
   defstruct [:filter_conditions, :id, :limit, :members, :offset, :sort, :type, :user, :user_id]
 
-  @nested_components members: ExStreamClient.Model.ChannelMember,
+  @nested_components members: ExStreamClient.Model.ChannelMemberRequest,
                      sort: ExStreamClient.Model.SortParamRequest,
                      user: ExStreamClient.Model.UserRequest
   def nested_components do
@@ -16,7 +16,7 @@ defmodule ExStreamClient.Model.QueryMembersPayload do
           filter_conditions: %{optional(String.t()) => any()},
           id: String.t() | nil,
           limit: integer() | nil,
-          members: [ExStreamClient.Model.ChannelMember.t()] | nil,
+          members: [ExStreamClient.Model.ChannelMemberRequest.t()] | nil,
           offset: integer() | nil,
           sort: [ExStreamClient.Model.SortParamRequest.t()] | nil,
           type: String.t(),

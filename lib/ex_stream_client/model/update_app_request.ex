@@ -4,6 +4,7 @@ defmodule ExStreamClient.Model.UpdateAppRequest do
   use ExStreamClient.TypeInterner
 
   defstruct [
+    :activity_metrics_config,
     :allowed_flag_reasons,
     :apn_config,
     :async_moderation_config,
@@ -16,6 +17,7 @@ defmodule ExStreamClient.Model.UpdateAppRequest do
     :datadog_info,
     :disable_auth_checks,
     :disable_permissions_checks,
+    :enable_hook_payload_compression,
     :enforce_unique_usernames,
     :event_hooks,
     :feeds_moderation_enabled,
@@ -29,9 +31,12 @@ defmodule ExStreamClient.Model.UpdateAppRequest do
     :image_moderation_enabled,
     :image_moderation_labels,
     :image_upload_config,
+    :max_aggregated_activities_length,
     :migrate_permissions_to_v2,
+    :moderation_analytics_enabled,
     :moderation_dashboard_preferences,
     :moderation_enabled,
+    :moderation_s3_image_access_role_arn,
     :moderation_webhook_url,
     :multi_tenant_enabled,
     :permission_version,
@@ -72,6 +77,7 @@ defmodule ExStreamClient.Model.UpdateAppRequest do
   end
 
   @type t :: %__MODULE__{
+          activity_metrics_config: %{optional(String.t()) => integer()} | nil,
           allowed_flag_reasons: [String.t()] | nil,
           apn_config: ExStreamClient.Model.APNConfig.t() | nil,
           async_moderation_config: ExStreamClient.Model.AsyncModerationConfiguration.t() | nil,
@@ -84,6 +90,7 @@ defmodule ExStreamClient.Model.UpdateAppRequest do
           datadog_info: ExStreamClient.Model.DataDogInfo.t() | nil,
           disable_auth_checks: boolean() | nil,
           disable_permissions_checks: boolean() | nil,
+          enable_hook_payload_compression: boolean() | nil,
           enforce_unique_usernames: (:team | :app | :no) | nil,
           event_hooks: [ExStreamClient.Model.EventHook.t()] | nil,
           feeds_moderation_enabled: boolean() | nil,
@@ -97,10 +104,13 @@ defmodule ExStreamClient.Model.UpdateAppRequest do
           image_moderation_enabled: boolean() | nil,
           image_moderation_labels: [String.t()] | nil,
           image_upload_config: ExStreamClient.Model.FileUploadConfig.t() | nil,
+          max_aggregated_activities_length: integer() | nil,
           migrate_permissions_to_v2: boolean() | nil,
+          moderation_analytics_enabled: boolean() | nil,
           moderation_dashboard_preferences:
             ExStreamClient.Model.ModerationDashboardPreferences.t() | nil,
           moderation_enabled: boolean() | nil,
+          moderation_s3_image_access_role_arn: String.t() | nil,
           moderation_webhook_url: String.t() | nil,
           multi_tenant_enabled: boolean() | nil,
           permission_version: (:v2 | :v1) | nil,

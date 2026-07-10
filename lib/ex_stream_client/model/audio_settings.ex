@@ -6,6 +6,7 @@ defmodule ExStreamClient.Model.AudioSettings do
   @enforce_keys [
     :access_request_enabled,
     :default_device,
+    :hifi_audio_enabled,
     :mic_default_on,
     :opus_dtx_enabled,
     :redundant_coding_enabled,
@@ -14,6 +15,7 @@ defmodule ExStreamClient.Model.AudioSettings do
   defstruct [
     :access_request_enabled,
     :default_device,
+    :hifi_audio_enabled,
     :mic_default_on,
     :noise_cancellation,
     :opus_dtx_enabled,
@@ -30,6 +32,7 @@ defmodule ExStreamClient.Model.AudioSettings do
   @type t :: %__MODULE__{
           access_request_enabled: boolean(),
           default_device: :earpiece | :speaker,
+          hifi_audio_enabled: boolean(),
           mic_default_on: boolean(),
           noise_cancellation: ExStreamClient.Model.NoiseCancellationSettings.t() | nil,
           opus_dtx_enabled: boolean(),

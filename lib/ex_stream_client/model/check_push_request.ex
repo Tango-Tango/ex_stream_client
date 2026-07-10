@@ -16,9 +16,7 @@ defmodule ExStreamClient.Model.CheckPushRequest do
     :user_id
   ]
 
-  @nested_components event_type: :enum,
-                     push_provider_type: :enum,
-                     user: ExStreamClient.Model.UserRequest
+  @nested_components event_type: :enum, user: ExStreamClient.Model.UserRequest
   def nested_components do
     @nested_components
   end
@@ -36,7 +34,7 @@ defmodule ExStreamClient.Model.CheckPushRequest do
           firebase_template: String.t() | nil,
           message_id: String.t() | nil,
           push_provider_name: String.t() | nil,
-          push_provider_type: (:xiaomi | :huawei | :apn | :firebase) | nil,
+          push_provider_type: String.t() | nil,
           skip_devices: boolean() | nil,
           user: ExStreamClient.Model.UserRequest.t() | nil,
           user_id: String.t() | nil

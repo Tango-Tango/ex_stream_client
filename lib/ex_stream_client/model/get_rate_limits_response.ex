@@ -5,19 +5,20 @@ defmodule ExStreamClient.Model.GetRateLimitsResponse do
   @enforce_keys [:duration]
   defstruct [:android, :duration, :ios, :server_side, :web]
 
-  @nested_components android: {:map, ExStreamClient.Model.LimitInfo},
-                     ios: {:map, ExStreamClient.Model.LimitInfo},
-                     server_side: {:map, ExStreamClient.Model.LimitInfo},
-                     web: {:map, ExStreamClient.Model.LimitInfo}
+  @nested_components android: {:map, ExStreamClient.Model.LimitInfoResponse},
+                     ios: {:map, ExStreamClient.Model.LimitInfoResponse},
+                     server_side: {:map, ExStreamClient.Model.LimitInfoResponse},
+                     web: {:map, ExStreamClient.Model.LimitInfoResponse}
   def nested_components do
     @nested_components
   end
 
   @type t :: %__MODULE__{
-          android: %{optional(String.t()) => ExStreamClient.Model.LimitInfo.t()} | nil,
+          android: %{optional(String.t()) => ExStreamClient.Model.LimitInfoResponse.t()} | nil,
           duration: String.t(),
-          ios: %{optional(String.t()) => ExStreamClient.Model.LimitInfo.t()} | nil,
-          server_side: %{optional(String.t()) => ExStreamClient.Model.LimitInfo.t()} | nil,
-          web: %{optional(String.t()) => ExStreamClient.Model.LimitInfo.t()} | nil
+          ios: %{optional(String.t()) => ExStreamClient.Model.LimitInfoResponse.t()} | nil,
+          server_side:
+            %{optional(String.t()) => ExStreamClient.Model.LimitInfoResponse.t()} | nil,
+          web: %{optional(String.t()) => ExStreamClient.Model.LimitInfoResponse.t()} | nil
         }
 end

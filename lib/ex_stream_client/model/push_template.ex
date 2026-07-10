@@ -13,7 +13,16 @@ defmodule ExStreamClient.Model.PushTemplate do
           created_at: DateTime.t() | integer() | String.t(),
           enable_push: boolean(),
           event_type:
-            :"notification.reminder_due" | :"reaction.new" | :"message.updated" | :"message.new",
+            :"feeds.notification_feed.updated"
+            | :"feeds.follow.created"
+            | :"feeds.comment.reaction.added"
+            | :"feeds.activity.reaction.added"
+            | :"feeds.comment.added"
+            | :"feeds.activity.added"
+            | :"notification.reminder_due"
+            | :"reaction.new"
+            | :"message.updated"
+            | :"message.new",
           template: String.t() | nil,
           updated_at: DateTime.t() | integer() | String.t()
         }

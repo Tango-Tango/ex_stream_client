@@ -2,7 +2,6 @@ defmodule ExStreamClient.Model.AutomodPlatformCircumventionConfig do
   @moduledoc "Schema representing a AutomodPlatformCircumventionConfig"
   use ExStreamClient.JSON
   use ExStreamClient.TypeInterner
-  @enforce_keys [:enabled, :rules]
   defstruct [:async, :enabled, :rules]
   @nested_components rules: ExStreamClient.Model.AutomodRule
   def nested_components do
@@ -11,7 +10,7 @@ defmodule ExStreamClient.Model.AutomodPlatformCircumventionConfig do
 
   @type t :: %__MODULE__{
           async: boolean() | nil,
-          enabled: boolean(),
-          rules: [ExStreamClient.Model.AutomodRule.t()]
+          enabled: boolean() | nil,
+          rules: [ExStreamClient.Model.AutomodRule.t()] | nil
         }
 end

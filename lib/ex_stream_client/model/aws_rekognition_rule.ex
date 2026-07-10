@@ -3,7 +3,7 @@ defmodule ExStreamClient.Model.AWSRekognitionRule do
   use ExStreamClient.JSON
   use ExStreamClient.TypeInterner
   @enforce_keys [:action, :label, :min_confidence]
-  defstruct [:action, :label, :min_confidence]
+  defstruct [:action, :label, :min_confidence, :subclassifications]
   @nested_components action: :enum
   def nested_components do
     @nested_components
@@ -12,6 +12,7 @@ defmodule ExStreamClient.Model.AWSRekognitionRule do
   @type t :: %__MODULE__{
           action: :bounce_remove | :bounce_flag | :bounce | :remove | :shadow | :flag,
           label: String.t(),
-          min_confidence: float()
+          min_confidence: float(),
+          subclassifications: %{optional(String.t()) => any()} | nil
         }
 end

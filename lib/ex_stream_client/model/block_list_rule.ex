@@ -2,7 +2,7 @@ defmodule ExStreamClient.Model.BlockListRule do
   @moduledoc "Schema representing a BlockListRule"
   use ExStreamClient.JSON
   use ExStreamClient.TypeInterner
-  @enforce_keys [:action, :name, :team]
+  @enforce_keys [:action]
   defstruct [:action, :name, :team]
   @nested_components action: :enum
   def nested_components do
@@ -12,7 +12,7 @@ defmodule ExStreamClient.Model.BlockListRule do
   @type t :: %__MODULE__{
           action:
             :bounce_remove | :bounce_flag | :bounce | :remove | :shadow | :mask_flag | :flag,
-          name: String.t(),
-          team: String.t()
+          name: String.t() | nil,
+          team: String.t() | nil
         }
 end

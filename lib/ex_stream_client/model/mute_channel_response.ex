@@ -7,7 +7,7 @@ defmodule ExStreamClient.Model.MuteChannelResponse do
 
   @nested_components channel_mute: ExStreamClient.Model.ChannelMute,
                      channel_mutes: ExStreamClient.Model.ChannelMute,
-                     own_user: ExStreamClient.Model.OwnUser
+                     own_user: ExStreamClient.Model.OwnUserResponse
   def nested_components do
     @nested_components
   end
@@ -16,6 +16,6 @@ defmodule ExStreamClient.Model.MuteChannelResponse do
           channel_mute: ExStreamClient.Model.ChannelMute.t() | nil,
           channel_mutes: [ExStreamClient.Model.ChannelMute.t()] | nil,
           duration: String.t(),
-          own_user: ExStreamClient.Model.OwnUser.t() | nil
+          own_user: ExStreamClient.Model.OwnUserResponse.t() | nil
         }
 end

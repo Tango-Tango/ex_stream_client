@@ -2,22 +2,34 @@ defmodule ExStreamClient.Model.ModerationCustomActionEvent do
   @moduledoc "Schema representing a ModerationCustomActionEvent"
   use ExStreamClient.JSON
   use ExStreamClient.TypeInterner
-  @enforce_keys [:created_at, :type]
-  defstruct [:created_at, :item, :message, :type, :user]
+  @enforce_keys [:action_id, :created_at, :custom, :review_queue_item, :type]
+  defstruct [
+    :action_id,
+    :action_options,
+    :created_at,
+    :custom,
+    :message,
+    :received_at,
+    :review_queue_item,
+    :type
+  ]
 
   @nested_components created_at: :datetime,
-                     item: ExStreamClient.Model.ReviewQueueItem,
-                     message: ExStreamClient.Model.Message,
-                     user: ExStreamClient.Model.User
+                     message: ExStreamClient.Model.MessageResponse,
+                     received_at: :datetime,
+                     review_queue_item: ExStreamClient.Model.ReviewQueueItemResponse
   def nested_components do
     @nested_components
   end
 
   @type t :: %__MODULE__{
+          action_id: String.t(),
+          action_options: %{optional(String.t()) => any()} | nil,
           created_at: DateTime.t() | integer() | String.t(),
-          item: ExStreamClient.Model.ReviewQueueItem.t() | nil,
-          message: ExStreamClient.Model.Message.t() | nil,
-          type: String.t(),
-          user: ExStreamClient.Model.User.t() | nil
+          custom: %{optional(String.t()) => any()},
+          message: ExStreamClient.Model.MessageResponse.t() | nil,
+          received_at: (DateTime.t() | integer() | String.t()) | nil,
+          review_queue_item: ExStreamClient.Model.ReviewQueueItemResponse.t(),
+          type: String.t()
         }
 end

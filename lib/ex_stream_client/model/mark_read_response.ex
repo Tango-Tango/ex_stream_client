@@ -4,13 +4,13 @@ defmodule ExStreamClient.Model.MarkReadResponse do
   use ExStreamClient.TypeInterner
   @enforce_keys [:duration]
   defstruct [:duration, :event]
-  @nested_components event: ExStreamClient.Model.MessageReadEvent
+  @nested_components event: ExStreamClient.Model.MarkReadResponseEvent
   def nested_components do
     @nested_components
   end
 
   @type t :: %__MODULE__{
           duration: String.t(),
-          event: ExStreamClient.Model.MessageReadEvent.t() | nil
+          event: ExStreamClient.Model.MarkReadResponseEvent.t() | nil
         }
 end

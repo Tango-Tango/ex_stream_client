@@ -34,11 +34,11 @@ defmodule ExStreamClient.Operations.Uploads do
   ### Optional Arguments:
   - All options from [Shared Options](#module-shared-options) are supported.
   """
-  @spec upload_image_global(ExStreamClient.Model.ImageUploadRequest.t()) ::
+  @spec upload_image(ExStreamClient.Model.ImageUploadRequest.t()) ::
           {:ok, ExStreamClient.Model.ImageUploadResponse.t()} | {:error, any()}
-  @spec upload_image_global(ExStreamClient.Model.ImageUploadRequest.t(), shared_opts) ::
+  @spec upload_image(ExStreamClient.Model.ImageUploadRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.ImageUploadResponse.t()} | {:error, any()}
-  def upload_image_global(payload, opts \\ []) do
+  def upload_image(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/uploads/image", method: :post, params: []] ++ [json: payload]
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
@@ -66,10 +66,10 @@ defmodule ExStreamClient.Operations.Uploads do
   - `url`
   - All options from [Shared Options](#module-shared-options) are supported.
   """
-  @spec delete_image_global() :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec delete_image_global([{:url, String.t()} | shared_opts]) ::
+  @spec delete_image() :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  @spec delete_image([{:url, String.t()} | shared_opts]) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  def delete_image_global(opts \\ []) do
+  def delete_image(opts \\ []) do
     client = get_client(opts)
 
     request_opts =
@@ -107,11 +107,11 @@ defmodule ExStreamClient.Operations.Uploads do
   ### Optional Arguments:
   - All options from [Shared Options](#module-shared-options) are supported.
   """
-  @spec upload_file_global(ExStreamClient.Model.FileUploadRequest.t()) ::
+  @spec upload_file(ExStreamClient.Model.FileUploadRequest.t()) ::
           {:ok, ExStreamClient.Model.FileUploadResponse.t()} | {:error, any()}
-  @spec upload_file_global(ExStreamClient.Model.FileUploadRequest.t(), shared_opts) ::
+  @spec upload_file(ExStreamClient.Model.FileUploadRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.FileUploadResponse.t()} | {:error, any()}
-  def upload_file_global(payload, opts \\ []) do
+  def upload_file(payload, opts \\ []) do
     client = get_client(opts)
     request_opts = [url: "/api/v2/uploads/file", method: :post, params: []] ++ [json: payload]
     request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
@@ -139,10 +139,10 @@ defmodule ExStreamClient.Operations.Uploads do
   - `url`
   - All options from [Shared Options](#module-shared-options) are supported.
   """
-  @spec delete_file_global() :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  @spec delete_file_global([{:url, String.t()} | shared_opts]) ::
+  @spec delete_file() :: {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
+  @spec delete_file([{:url, String.t()} | shared_opts]) ::
           {:ok, ExStreamClient.Model.Response.t()} | {:error, any()}
-  def delete_file_global(opts \\ []) do
+  def delete_file(opts \\ []) do
     client = get_client(opts)
 
     request_opts =

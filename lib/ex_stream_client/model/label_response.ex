@@ -1,0 +1,17 @@
+defmodule ExStreamClient.Model.LabelResponse do
+  @moduledoc "Schema representing a LabelResponse"
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
+  @enforce_keys [:name]
+  defstruct [:harm_labels, :name, :phrase_list_ids]
+  @nested_components []
+  def nested_components do
+    @nested_components
+  end
+
+  @type t :: %__MODULE__{
+          harm_labels: [String.t()] | nil,
+          name: String.t(),
+          phrase_list_ids: [integer()] | nil
+        }
+end

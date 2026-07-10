@@ -38,6 +38,7 @@ defmodule ExStreamClient.Model.ChannelOwnCapability do
           | :"join-channel"
           | :"freeze-channel"
           | :"flag-message"
+          | :"delivery-events"
           | :"delete-own-message"
           | :"delete-channel"
           | :"delete-any-message"

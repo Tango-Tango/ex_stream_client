@@ -35,11 +35,11 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
   ### Optional Arguments:
   - All options from [Shared Options](#module-shared-options) are supported.
   """
-  @spec schedule_campaign(String.t(), ExStreamClient.Model.StopCampaignRequest.t()) ::
+  @spec stop_campaign(String.t(), ExStreamClient.Model.StopCampaignRequest.t()) ::
           {:ok, ExStreamClient.Model.CampaignResponse.t()} | {:error, any()}
-  @spec schedule_campaign(String.t(), ExStreamClient.Model.StopCampaignRequest.t(), shared_opts) ::
+  @spec stop_campaign(String.t(), ExStreamClient.Model.StopCampaignRequest.t(), shared_opts) ::
           {:ok, ExStreamClient.Model.CampaignResponse.t()} | {:error, any()}
-  def schedule_campaign(id, payload, opts \\ []) do
+  def stop_campaign(id, payload, opts \\ []) do
     client = get_client(opts)
 
     request_opts =
@@ -49,6 +49,39 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
 
     response_handlers = %{
       201 => ExStreamClient.Model.CampaignResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
+  end
+
+  @doc ~S"""
+  Creates a campaign
+
+
+  ### Required Arguments:
+  - `payload`: `Elixir.ExStreamClient.Model.CreateCampaignRequest`
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
+  """
+  @spec create_campaign(ExStreamClient.Model.CreateCampaignRequest.t()) ::
+          {:ok, ExStreamClient.Model.CreateCampaignResponse.t()} | {:error, any()}
+  @spec create_campaign(ExStreamClient.Model.CreateCampaignRequest.t(), shared_opts) ::
+          {:ok, ExStreamClient.Model.CreateCampaignResponse.t()} | {:error, any()}
+  def create_campaign(payload, opts \\ []) do
+    client = get_client(opts)
+    request_opts = [url: "/api/v2/chat/campaigns", method: :post, params: []] ++ [json: payload]
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
+    response_handlers = %{
+      201 => ExStreamClient.Model.CreateCampaignResponse,
       400 => ExStreamClient.Model.APIError,
       429 => ExStreamClient.Model.APIError
     }
@@ -99,6 +132,43 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
   end
 
   @doc ~S"""
+  Updates a campaign
+
+
+  ### Required Arguments:
+  - `id`
+  - `payload`: `Elixir.ExStreamClient.Model.UpdateCampaignRequest`
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
+  """
+  @spec update_campaign(String.t(), ExStreamClient.Model.UpdateCampaignRequest.t()) ::
+          {:ok, ExStreamClient.Model.CampaignResponse.t()} | {:error, any()}
+  @spec update_campaign(String.t(), ExStreamClient.Model.UpdateCampaignRequest.t(), shared_opts) ::
+          {:ok, ExStreamClient.Model.CampaignResponse.t()} | {:error, any()}
+  def update_campaign(id, payload, opts \\ []) do
+    client = get_client(opts)
+
+    request_opts =
+      [url: "/api/v2/chat/campaigns/#{id}", method: :put, params: []] ++ [json: payload]
+
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
+    response_handlers = %{
+      201 => ExStreamClient.Model.CampaignResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
+  end
+
+  @doc ~S"""
   Get campaign by ID.
 
 
@@ -131,6 +201,39 @@ defmodule ExStreamClient.Operations.Chat.Campaigns do
 
     response_handlers = %{
       200 => ExStreamClient.Model.GetCampaignResponse,
+      400 => ExStreamClient.Model.APIError,
+      429 => ExStreamClient.Model.APIError
+    }
+
+    case client.request(
+           Req.new(request_opts),
+           get_request_opts(opts) ++ [response_handlers: response_handlers]
+         ) do
+      {:ok, response} -> response.body
+      {:error, error} -> {:error, error}
+    end
+  end
+
+  @doc ~S"""
+  Delete campaign
+
+
+  ### Required Arguments:
+  - `id`
+  ### Optional Arguments:
+  - All options from [Shared Options](#module-shared-options) are supported.
+  """
+  @spec delete_campaign(String.t()) ::
+          {:ok, ExStreamClient.Model.DeleteCampaignResponse.t()} | {:error, any()}
+  @spec delete_campaign(String.t(), shared_opts) ::
+          {:ok, ExStreamClient.Model.DeleteCampaignResponse.t()} | {:error, any()}
+  def delete_campaign(id, opts \\ []) do
+    client = get_client(opts)
+    request_opts = [url: "/api/v2/chat/campaigns/#{id}", method: :delete, params: []] ++ []
+    request_opts = Keyword.merge(request_opts, Keyword.get(opts, :req_opts, []))
+
+    response_handlers = %{
+      200 => ExStreamClient.Model.DeleteCampaignResponse,
       400 => ExStreamClient.Model.APIError,
       429 => ExStreamClient.Model.APIError
     }

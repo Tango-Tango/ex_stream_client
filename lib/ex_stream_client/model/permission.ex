@@ -16,7 +16,7 @@ defmodule ExStreamClient.Model.Permission do
     :tags
   ]
 
-  @nested_components level: :enum
+  @nested_components []
   def nested_components do
     @nested_components
   end
@@ -27,7 +27,7 @@ defmodule ExStreamClient.Model.Permission do
           custom: boolean(),
           description: String.t(),
           id: String.t(),
-          level: :channel | :app,
+          level: String.t(),
           name: String.t(),
           owner: boolean(),
           same_team: boolean(),

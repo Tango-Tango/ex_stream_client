@@ -4,10 +4,13 @@ defmodule ExStreamClient.Model.MembersResponse do
   use ExStreamClient.TypeInterner
   @enforce_keys [:duration, :members]
   defstruct [:duration, :members]
-  @nested_components members: ExStreamClient.Model.ChannelMember
+  @nested_components members: ExStreamClient.Model.ChannelMemberResponse
   def nested_components do
     @nested_components
   end
 
-  @type t :: %__MODULE__{duration: String.t(), members: [ExStreamClient.Model.ChannelMember.t()]}
+  @type t :: %__MODULE__{
+          duration: String.t(),
+          members: [ExStreamClient.Model.ChannelMemberResponse.t()]
+        }
 end

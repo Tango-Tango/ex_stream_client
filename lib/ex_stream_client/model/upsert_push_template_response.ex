@@ -4,13 +4,13 @@ defmodule ExStreamClient.Model.UpsertPushTemplateResponse do
   use ExStreamClient.TypeInterner
   @enforce_keys [:duration]
   defstruct [:duration, :template]
-  @nested_components template: ExStreamClient.Model.PushTemplate
+  @nested_components template: ExStreamClient.Model.PushTemplateResponse
   def nested_components do
     @nested_components
   end
 
   @type t :: %__MODULE__{
           duration: String.t(),
-          template: ExStreamClient.Model.PushTemplate.t() | nil
+          template: ExStreamClient.Model.PushTemplateResponse.t() | nil
         }
 end

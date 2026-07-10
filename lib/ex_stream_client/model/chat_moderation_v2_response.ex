@@ -1,0 +1,32 @@
+defmodule ExStreamClient.Model.ChatModerationV2Response do
+  @moduledoc "Schema representing a ChatModerationV2Response"
+  use ExStreamClient.JSON
+  use ExStreamClient.TypeInterner
+  @enforce_keys [:action, :original_text]
+  defstruct [
+    :action,
+    :blocklist_matched,
+    :blocklists_matched,
+    :image_harms,
+    :original_text,
+    :platform_circumvented,
+    :semantic_filter_matched,
+    :text_harms
+  ]
+
+  @nested_components []
+  def nested_components do
+    @nested_components
+  end
+
+  @type t :: %__MODULE__{
+          action: String.t(),
+          blocklist_matched: String.t() | nil,
+          blocklists_matched: [String.t()] | nil,
+          image_harms: [String.t()] | nil,
+          original_text: String.t(),
+          platform_circumvented: boolean() | nil,
+          semantic_filter_matched: String.t() | nil,
+          text_harms: [String.t()] | nil
+        }
+end

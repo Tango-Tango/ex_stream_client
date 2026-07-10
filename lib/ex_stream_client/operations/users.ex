@@ -107,7 +107,6 @@ defmodule ExStreamClient.Operations.Users do
   ### Sends events:
   - `user.presence.changed`
   - `user.updated`
-  - `user.presence.changed`
 
 
   ### Required Arguments:
@@ -305,7 +304,6 @@ defmodule ExStreamClient.Operations.Users do
   Reactivate users in batches
 
   ### Sends events:
-  - `user.reactivated`
   - `user.reactivated`
 
 

@@ -3,11 +3,16 @@ defmodule ExStreamClient.Model.IngressVideoEncodingOptions do
   use ExStreamClient.JSON
   use ExStreamClient.TypeInterner
   @enforce_keys [:layers]
-  defstruct [:layers]
-  @nested_components layers: ExStreamClient.Model.IngressVideoLayer
+  defstruct [:layers, :source]
+
+  @nested_components layers: ExStreamClient.Model.IngressVideoLayer,
+                     source: ExStreamClient.Model.IngressSource
   def nested_components do
     @nested_components
   end
 
-  @type t :: %__MODULE__{layers: [ExStreamClient.Model.IngressVideoLayer.t()]}
+  @type t :: %__MODULE__{
+          layers: [ExStreamClient.Model.IngressVideoLayer.t()],
+          source: ExStreamClient.Model.IngressSource.t() | nil
+        }
 end

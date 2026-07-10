@@ -5,11 +5,14 @@ defmodule ExStreamClient.Model.QueryChannelsRequest do
 
   defstruct [
     :filter_conditions,
+    :filter_values,
     :limit,
     :member_limit,
     :message_limit,
     :offset,
+    :predefined_filter,
     :sort,
+    :sort_values,
     :state,
     :user,
     :user_id
@@ -23,11 +26,14 @@ defmodule ExStreamClient.Model.QueryChannelsRequest do
 
   @type t :: %__MODULE__{
           filter_conditions: %{optional(String.t()) => any()} | nil,
+          filter_values: %{optional(String.t()) => any()} | nil,
           limit: integer() | nil,
           member_limit: integer() | nil,
           message_limit: integer() | nil,
           offset: integer() | nil,
+          predefined_filter: String.t() | nil,
           sort: [ExStreamClient.Model.SortParamRequest.t()] | nil,
+          sort_values: %{optional(String.t()) => any()} | nil,
           state: boolean() | nil,
           user: ExStreamClient.Model.UserRequest.t() | nil,
           user_id: String.t() | nil

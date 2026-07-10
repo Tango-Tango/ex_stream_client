@@ -9,5 +9,9 @@ defmodule ExStreamClient.Model.AutomodSemanticFiltersRule do
     @nested_components
   end
 
-  @type t :: %__MODULE__{action: :remove | :shadow | :flag, name: String.t(), threshold: float()}
+  @type t :: %__MODULE__{
+          action: :bounce_remove | :bounce_flag | :bounce | :remove | :shadow | :flag,
+          name: String.t(),
+          threshold: float()
+        }
 end
